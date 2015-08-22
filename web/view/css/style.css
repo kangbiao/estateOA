@@ -67,8 +67,6 @@ a.show-sidebar:hover {
 #sidebar-left {
   position:relative;
   z-index: inherit;
-  padding-bottom: 3000px !important;
-  margin-bottom: -3000px !important;
   background: #6AA6D6 url(../img/devoops_pattern_b10.png) 0 0 repeat;
   -webkit-transition: 0.2s;
   -moz-transition: 0.2s;
@@ -80,8 +78,7 @@ a.show-sidebar:hover {
   z-index: 10;
   background: #ebebeb;
   box-shadow: 0 0 6px #131313;
-  padding-bottom: 3000px !important;
-  margin-bottom: -2980px !important;
+  min-height: 100%;
   overflow: hidden;
   -webkit-transition: 0.2s;
   -moz-transition: 0.2s;

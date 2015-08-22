@@ -1908,6 +1908,24 @@ function DemoFormValidator(){
 					}
 				}
 			},
+			address:{
+				validators: {
+					notEmpty: {
+						message: '地址不能为空'
+					}
+				}
+			},
+			carNum:{
+				validators: {
+					notEmpty: {
+						message: '车牌号不能为空'
+					},
+					regexp: {
+						regexp: /^[0-9a-zA-Z]{5}$/,
+						message: '车牌号不合法'
+					}
+				}
+			},
 			email: {
 				validators: {
 					notEmpty: {
@@ -1927,8 +1945,12 @@ function DemoFormValidator(){
 			},
 			phoneNumber: {
 				validators: {
-					digits: {
-						message: 'The value can contain only digits'
+					notEmpty: {
+						message: '电话号码不能为空'
+					},
+					regexp: {
+						regexp: /^[0-9]{8,11}$/,
+						message: '电话号码不合法'
 					}
 				}
 			},

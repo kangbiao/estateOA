@@ -28,91 +28,71 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Country</label>
+                            <label class="col-sm-3 control-label">地址</label>
                             <div class="col-sm-5">
-                                <select class="populate placeholder" name="country" id="s2_country">
-                                    <option value="">-- Select a country --</option>
-                                    <option value="fr">France</option>
-                                    <option value="de">Germany</option>
-                                    <option value="it">Italy</option>
-                                    <option value="jp">Japan</option>
-                                    <option value="ru">Russia</option>
-                                    <option value="gb">United Kingdom</option>
-                                    <option value="us">United State</option>
-                                </select>
+                                <input type="text" class="form-control" name="address" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-9 col-sm-offset-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"  name="acceptTerms" /> Accept the terms and policies
-                                        <i class="fa fa-square-o small"></i>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Regular expression based validators</legend>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Email address</label>
+                            <label class="col-sm-3 control-label">车牌号</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="email" />
+                                <input type="text" class="form-control" name="carNum" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Website</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="website" placeholder="http://" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Phone number</label>
+                            <label class="col-sm-3 control-label">电话号码</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control" name="phoneNumber" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Hex color</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" name="color" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">US zip code</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" name="zipCode" />
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-3 control-label">入住时间</label>
+                            <div class="col-sm-5">
+                                <input type="text" id="liveDate" class="form-control" placeholder="">
+                                <span class="fa fa-calendar form-control-feedback"></span>
                             </div>
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>Identical validator</legend>
+                        <legend>户主信息</legend>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Password</label>
+                            <label class="col-sm-3 control-label">身份证号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="idCard" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属园区</label>
+                            <div class="col-sm-5">
+                                <select class="populate placeholder" name="estate" id="whichEstate">
+                                    <option value="">-- 选择园区 --</option>
+                                    <option value="1">园区1</option>
+                                    <option value="2">园区2</option>
+                                    <option value="3">园区3</option>
+                                    <option value="4">园区4</option>
+                                    <option value="5">园区5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>密码设置</legend>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">密码</label>
                             <div class="col-sm-5">
                                 <input type="password" class="form-control" name="password" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Retype password</label>
+                            <label class="col-sm-3 control-label">确认密码</label>
                             <div class="col-sm-5">
                                 <input type="password" class="form-control" name="confirmPassword" />
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset>
-                        <legend>Other validators</legend>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Ages</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" name="ages" />
-                            </div>
-                        </div>
-                    </fieldset>
                     <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-3">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">提交</button>
                         </div>
                     </div>
                 </form>
@@ -121,31 +101,25 @@
     </div>
 </div>
 <script type="text/javascript">
-    // Run Select2 plugin on elements
-    function DemoSelect2(){
-        $('#s2_with_tag').select2({placeholder: "Select OS"});
-        $('#s2_country').select2();
-    }
-    // Run timepicker
-    function DemoTimePicker(){
-        $('#input_time').timepicker({setDate: new Date()});
+    //选择所属园区
+    function selectEstate(){
+        $('#whichEstate').select2();
+        $.getScript('plugins/select2/select2_locale_zh-CN.js');
     }
     $(document).ready(function() {
-        // Create Wysiwig editor for textare
-        TinyMCEStart('#wysiwig_simple', null);
-        TinyMCEStart('#wysiwig_full', 'extreme');
-        // Add slider for change test input length
-        FormLayoutExampleInputLength($( ".slider-style" ));
-        // Initialize datepicker
-        $('#input_date').datepicker({setDate: new Date()});
-        // Load Timepicker plugin
-        LoadTimePickerScript(DemoTimePicker);
-        // Add tooltip to form-controls
-        $('.form-control').tooltip();
-        LoadSelect2Script(DemoSelect2);
-        // Load example of form validation
+        //初始化日期选择器
+        $('#liveDate').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
+        LoadSelect2Script(selectEstate);
         LoadBootstrapValidatorScript(DemoFormValidator);
-        // Add drag-n-drop feature to boxes
-//        WinMove();
     });
 </script>

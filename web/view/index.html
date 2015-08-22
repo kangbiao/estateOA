@@ -2,13 +2,13 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>DevOOPS</title>
+		<title>物业管理系统</title>
 		<meta name="description" content="description">
-		<meta name="author" content="DevOOPS">
+		<meta name="author" content="kangbiao">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
 		<link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome.css" rel="stylesheet">
 		<!--<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>-->
 		<link href="plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
 		<link href="plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
@@ -107,7 +107,7 @@
 <!--Start Container-->
 <div id="main" class="container-fluid">
 	<div class="row">
-		<div id="sidebar-left" class="col-xs-2 col-sm-2">
+		<div id="sidebar-left" style="position: fixed;" class="col-xs-2 col-sm-2">
 			<ul class="nav main-menu">
 				<li>
 					<a href="ajax/dashboard.html" class="active ajax-link">
@@ -117,7 +117,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-bar-chart-o"></i>
+						<i class="fa fa-users"></i>
 						<span class="hidden-xs">用户管理</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -128,18 +128,18 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-table"></i>
+						<i class="fa fa-cny"></i>
 						 <span class="hidden-xs">物业费管理</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/tables_simple.html">生成规则</a></li>
-						<li><a class="ajax-link" href="ajax/tables_datatables.html">支付接口管理</a></li>
+						<li><a class="ajax-link" href="ajax/tables_simple.html">项目列表</a></li>
+						<li><a class="ajax-link" href="ajax/estateFeeInfo.html">缴费情况</a></li>
 						<li><a class="ajax-link" href="ajax/tables_beauty.html">生成和推送配置</a></li>
 					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-pencil-square-o"></i>
+						<i class="fa fa-bullseye"></i>
 						 <span class="hidden-xs">停车管理</span>
 					</a>
 					<ul class="dropdown-menu">
@@ -151,7 +151,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-desktop"></i>
-						 <span class="hidden-xs">UI Elements</span>
+						 <span class="hidden-xs">增值服务</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/ui_grid.html">Grid</a></li>
@@ -161,122 +161,10 @@
 						<li><a class="ajax-link" href="ajax/ui_icons.html">Icons</a></li>
 					</ul>
 				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-list"></i>
-						 <span class="hidden-xs">Pages</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="ajax/page_login.html">Login</a></li>
-						<li><a href="ajax/page_register.html">Register</a></li>
-						<li><a id="locked-screen" class="submenu" href="ajax/page_locked.html">Locked Screen</a></li>
-						<li><a class="ajax-link" href="ajax/page_contacts.html">Contacts</a></li>
-						<li><a class="ajax-link" href="ajax/page_feed.html">Feed</a></li>
-						<li><a class="ajax-link add-full" href="ajax/page_messages.html">Messages</a></li>
-						<li><a class="ajax-link" href="ajax/page_pricing.html">Pricing</a></li>
-						<li><a class="ajax-link" href="ajax/page_invoice.html">Invoice</a></li>
-						<li><a class="ajax-link" href="ajax/page_search.html">Search Results</a></li>
-						<li><a class="ajax-link" href="ajax/page_404.html">Error 404</a></li>
-						<li><a href="ajax/page_500.html">Error 500</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-map-marker"></i>
-						<span class="hidden-xs">Maps</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/maps.html">OpenStreetMap</a></li>
-						<li><a class="ajax-link" href="ajax/map_fullscreen.html">Fullscreen map</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-picture-o"></i>
-						 <span class="hidden-xs">Gallery</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="ajax/gallery_simple.html">Simple Gallery</a></li>
-						<li><a class="ajax-link" href="ajax/gallery_flickr.html">Flickr Gallery</a></li>
-					</ul>
-				</li>
-				<li>
-					 <a class="ajax-link" href="ajax/typography.html">
-						 <i class="fa fa-font"></i>
-						 <span class="hidden-xs">Typography</span>
-					</a>
-				</li>
-				 <li>
-					<a class="ajax-link" href="ajax/calendar.html">
-						 <i class="fa fa-calendar"></i>
-						 <span class="hidden-xs">Calendar</span>
-					</a>
-				 </li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle">
-						<i class="fa fa-picture-o"></i>
-						 <span class="hidden-xs">Multilevel menu</span>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">First level menu</a></li>
-						<li><a href="#">First level menu</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle">
-								<i class="fa fa-plus-square"></i>
-								<span class="hidden-xs">Second level menu group</span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Second level menu</a></li>
-								<li><a href="#">Second level menu</a></li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle">
-										<i class="fa fa-plus-square"></i>
-										<span class="hidden-xs">Three level menu group</span>
-									</a>
-									<ul class="dropdown-menu">
-										<li><a href="#">Three level menu</a></li>
-										<li><a href="#">Three level menu</a></li>
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle">
-												<i class="fa fa-plus-square"></i>
-												<span class="hidden-xs">Four level menu group</span>
-											</a>
-											<ul class="dropdown-menu">
-												<li><a href="#">Four level menu</a></li>
-												<li><a href="#">Four level menu</a></li>
-												<li class="dropdown">
-													<a href="#" class="dropdown-toggle">
-														<i class="fa fa-plus-square"></i>
-														<span class="hidden-xs">Five level menu group</span>
-													</a>
-													<ul class="dropdown-menu">
-														<li><a href="#">Five level menu</a></li>
-														<li><a href="#">Five level menu</a></li>
-														<li class="dropdown">
-															<a href="#" class="dropdown-toggle">
-																<i class="fa fa-plus-square"></i>
-																<span class="hidden-xs">Six level menu group</span>
-															</a>
-															<ul class="dropdown-menu">
-																<li><a href="#">Six level menu</a></li>
-																<li><a href="#">Six level menu</a></li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-											</ul>
-										</li>
-										<li><a href="#">Three level menu</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
 			</ul>
 		</div>
 		<!--Start Content-->
-		<div id="content" class="col-xs-12 col-sm-10">
+		<div id="content" style="position: absolute;right: 0px" class="col-xs-12 col-sm-10">
 			<div class="preloader">
 				<img src="img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
 			</div>
