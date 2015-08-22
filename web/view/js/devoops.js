@@ -69,6 +69,7 @@ function LoadBootstrapValidatorScript(callback){
 			callback();
 		}
 	}
+
 }
 //
 //  Dynamically load jQuery Select2 plugin
@@ -1877,23 +1878,19 @@ function displayFlickrImages(data){
 // Example form validator function
 //
 function DemoFormValidator(){
-	$('#defaultForm').bootstrapValidator({
+	$('#adduserForm').bootstrapValidator({
 		message: 'This value is not valid',
 		fields: {
 			username: {
-				message: 'The username is not valid',
+				message: '用户名不合法',
 				validators: {
 					notEmpty: {
-						message: 'The username is required and can\'t be empty'
+						message: '用户名不能为空'
 					},
 					stringLength: {
-						min: 6,
-						max: 30,
-						message: 'The username must be more than 6 and less than 30 characters long'
-					},
-					regexp: {
-						regexp: /^[a-zA-Z0-9_\.]+$/,
-						message: 'The username can only consist of alphabetical, number, dot and underscore'
+						min: 2,
+						max: 10,
+						message: '用户名在2到10个字符之间'
 					}
 				}
 			},
