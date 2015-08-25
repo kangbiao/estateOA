@@ -1,0 +1,129 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">用户管理</a></li>
+            <li><a href="#">用户资料录入</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form id="addEstateForm" method="post" action="" class="form-horizontal">
+                    <fieldset>
+                        <legend>物业费项目录入</legend>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">费用名</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="estateName" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">单价</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="perPrice" name="perPrice" />
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-3 control-label">收费时间</label>
+                            <div class="col-sm-5">
+                                <input type="text" id="payTime" name="payTime" class="form-control" placeholder="">
+                                <span class="fa fa-calendar form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">逾期周期</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="outlineTime" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">迟滞金规则(月)</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="outlineMoney" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function estateAddValidator(){
+        $('#addEstateForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                estateName: {
+                    message: '费用名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '费用名不能为空'
+                        }
+                    }
+                },
+                perPrice: {
+                    validators: {
+                        notEmpty: {
+                            message: '单价不能为空'
+                        }
+                    }
+                },
+                payTime: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择收费时间'
+                        }
+                    }
+                },
+                outlineTime:{
+                    validators: {
+                        notEmpty: {
+                            message: '请输入逾期周期'
+                        }
+                    }
+                },
+                outlineMoney:{
+                    validators: {
+                        notEmpty: {
+                            message: '迟滞金规则不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]$/,
+                            message: '请输入数字'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    $(document).ready(function() {
+        //初始化日期选择器
+        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
+        LoadBootstrapValidatorScript(estateAddValidator);
+    });
+</script>

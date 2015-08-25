@@ -106,6 +106,55 @@
         $('#whichEstate').select2();
         $.getScript('plugins/select2/select2_locale_zh-CN.js');
     }
+    function userAddValidator(){
+        $('#adduserForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                username: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '用户名在2到10个字符之间'
+                        }
+                    }
+                },
+                address:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                carNum:{
+                    validators: {
+                        notEmpty: {
+                            message: '车牌号不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9a-zA-Z]{5}$/,
+                            message: '车牌号不合法'
+                        }
+                    }
+                },
+                phoneNumber: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9]{8,11}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        });
+    }
     $(document).ready(function() {
         //初始化日期选择器
         $('#liveDate').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
@@ -120,6 +169,6 @@
             dayNamesMin: ['日','一','二','三','四','五','六']
         });
         LoadSelect2Script(selectEstate);
-        LoadBootstrapValidatorScript(DemoFormValidator);
+        LoadBootstrapValidatorScript(userAddValidator);
     });
 </script>
