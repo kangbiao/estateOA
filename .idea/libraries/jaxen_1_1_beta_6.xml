@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jaxen-1.1-beta-6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/jaxen-1.1-beta-6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -26,8 +26,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="hibernate-5.0.0" level="project" />
-    <orderEntry type="library" name="jstl" level="project" />
-    <orderEntry type="library" name="dataTables.editor" level="application" />
+    <orderEntry type="library" exported="" name="hibernate-5.0.0" level="project" />
+    <orderEntry type="library" exported="" name="jstl" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.0.22" level="application_server_libraries" />
+    <orderEntry type="library" name="commons-codec-1.6" level="project" />
+    <orderEntry type="library" name="commons-httpclient-3.0.1" level="project" />
+    <orderEntry type="library" name="commons-logging-1.1.1" level="project" />
+    <orderEntry type="library" name="dom4j-1.6.1" level="project" />
+    <orderEntry type="library" name="jaxen-1.1-beta-6" level="project" />
   </component>
 </module>
