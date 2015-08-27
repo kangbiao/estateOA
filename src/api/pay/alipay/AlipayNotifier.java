@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,7 +25,7 @@ public class AlipayNotifier extends HttpServlet
         super.destroy();
     }
 
-    public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, UnsupportedEncodingException
+    public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException
     {
         Map<String,String> params = new HashMap<String,String>();
         Map requestParams = request.getParameterMap();
@@ -82,10 +82,10 @@ public class AlipayNotifier extends HttpServlet
 
             //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
-            System.out.println("success");	//请不要修改或删除
+            response.getWriter().print("success");	//请不要修改或删除
 
         }else{//验证失败
-            System.out.println("fail");
+            response.getWriter().print("fail");
         }
 
     }

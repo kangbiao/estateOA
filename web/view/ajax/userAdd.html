@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">车牌号</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="carNum" />
+                                <input type="text" class="form-control" placeholder="xxxxx;xxxxx" name="carNum" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -136,7 +136,7 @@
                             message: '车牌号不能为空'
                         },
                         regexp: {
-                            regexp: /^[0-9a-zA-Z]{5}$/,
+                            regexp: /^[0-9a-zA-Z]{5}(;[0-9a-zA-Z]{5})*$/,
                             message: '车牌号不合法'
                         }
                     }

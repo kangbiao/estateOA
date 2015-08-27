@@ -64,7 +64,7 @@ public class AlipayNotify {
      * @param Params 通知返回来的参数数组
      * @param sign 比对的签名结果
      * @return 生成的签名结果
-     */
+*/
 	private static boolean getSignVeryfy(Map<String, String> Params, String sign) {
     	//过滤空值、sign与sign_type参数
     	Map<String, String> sParaNew = AlipayCore.paraFilter(Params);

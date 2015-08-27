@@ -92,9 +92,7 @@ function LoadSelect2Script(callback){
 function LoadDataTablesScripts(callback){
 	function LoadDatatables(){
 		$.getScript('plugins/datatables/jquery.dataTables.js', function(){
-			$.getScript('plugins/datatables/dataTables.bootstrap.min.js', function() {
-				$.getScript('plugins/datatables/dataTables.select.min.js', callback)
-			});
+			$.getScript('plugins/datatables/dataTables.bootstrap.min.js',callback);
 		});
 	}
 	if (!$.fn.dataTables){
