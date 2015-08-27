@@ -1,4 +1,4 @@
-package api.pay.alipay.util.httpClient;
+package thirdApi.pay.alipay.util.httpClient;
 
 import org.apache.commons.httpclient.NameValuePair;
 

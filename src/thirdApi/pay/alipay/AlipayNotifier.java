@@ -1,6 +1,6 @@
-package api.pay.alipay;
+package thirdApi.pay.alipay;
 
-import api.pay.alipay.util.AlipayNotify;
+import thirdApi.pay.alipay.util.AlipayNotify;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * 该类接收支付宝服务器异步的通知，并且根据相关支付状态进行相关的业务操作
  */
-@WebServlet("/api/pay/aliPay/notify_url")
+@WebServlet("/thirdApi/pay/aliPay/notify_url")
 public class AlipayNotifier extends HttpServlet
 {
     public void destory()

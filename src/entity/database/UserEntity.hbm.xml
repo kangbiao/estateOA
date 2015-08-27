@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.database.UserEntity" table="user" schema="" catalog="estate">
+        <id name="userId">
+            <column name="userID" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar" length="32" not-null="true"/>
+        </property>
+        <property name="salt">
+            <column name="salt" sql-type="varchar" length="45"/>
+        </property>
+        <property name="username">
+            <column name="username" sql-type="varchar" length="20"/>
+        </property>
+        <property name="userCode">
+            <column name="userCode" sql-type="varchar" length="30"/>
+        </property>
+        <property name="carNum">
+            <column name="carNum" sql-type="varchar" length="45"/>
+        </property>
+        <property name="iDcard">
+            <column name="IDcard" sql-type="varchar" length="20"/>
+        </property>
+        <property name="unitId">
+            <column name="unitID" sql-type="int unsigned"/>
+        </property>
+        <property name="doorPart">
+            <column name="doorPart" sql-type="varchar" length="20"/>
+        </property>
+        <property name="joinTime">
+            <column name="joinTime" sql-type="varchar" length="15"/>
+        </property>
+        <property name="createTime">
+            <column name="createTime" sql-type="varchar" length="15"/>
+        </property>
+        <many-to-one name="unitByUnitId" class="entity.database.UnitEntity">
+            <column name="unitID"/>
+        </many-to-one>
+        <set name="complainsByUserId" inverse="true">
+            <key>
+                <column name="userID"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.database.ComplainEntity"/>
+        </set>
+        <set name="userServicesByUserId" inverse="true">
+            <key>
+                <column name="userID"/>
+            </key>
+            <one-to-many not-found="ignore" class="entity.database.UserServiceEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

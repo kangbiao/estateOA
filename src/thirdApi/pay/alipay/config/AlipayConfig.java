@@ -1,4 +1,4 @@
-package api.pay.alipay.config;
+package thirdApi.pay.alipay.config;
 
 /* *
  *类名：AlipayConfig

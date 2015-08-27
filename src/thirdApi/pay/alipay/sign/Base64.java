@@ -4,7 +4,7 @@
  * author: shiqun.shi@alipay.com
  */
 
-package api.pay.alipay.sign;
+package thirdApi.pay.alipay.sign;
 
 public final class Base64 {
 

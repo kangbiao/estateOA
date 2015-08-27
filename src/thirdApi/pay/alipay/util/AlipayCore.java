@@ -1,6 +1,6 @@
-package api.pay.alipay.util;
+package thirdApi.pay.alipay.util;
 
-import api.pay.alipay.config.AlipayConfig;
+import thirdApi.pay.alipay.config.AlipayConfig;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.methods.multipart.FilePartSource;
 import org.apache.commons.httpclient.methods.multipart.PartSource;

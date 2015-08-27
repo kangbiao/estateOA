@@ -1,7 +1,7 @@
-package api.pay.alipay.util;
+package thirdApi.pay.alipay.util;
 
-import api.pay.alipay.config.AlipayConfig;
-import api.pay.alipay.sign.RSA;
+import thirdApi.pay.alipay.config.AlipayConfig;
+import thirdApi.pay.alipay.sign.RSA;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
