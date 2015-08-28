@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="hibernate-5.0.0">
+  <library name="hibernate-4.3.11">
     <CLASSES>
       <root url="file://$USER_HOME$/javalib/hibernate-release-4.3.11.Final/lib/optional/c3p0" />
       <root url="file://$USER_HOME$/javalib/hibernate-release-4.3.11.Final/lib/optional/ehcache" />

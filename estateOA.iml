@@ -28,7 +28,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="hibernate-5.0.0" level="project" />
+    <orderEntry type="library" exported="" name="hibernate-4.3.11" level="project" />
     <orderEntry type="library" exported="" name="jstl" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 8.0.22" level="application_server_libraries" />
     <orderEntry type="library" name="commons-codec-1.6" level="project" />
@@ -38,5 +38,6 @@
     <orderEntry type="library" name="jaxen-1.1-beta-6" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.35-bin" level="project" />
     <orderEntry type="library" name="gson-2.3.1" level="project" />
+    <orderEntry type="library" name="log4j-2.3" level="project" />
   </component>
 </module>

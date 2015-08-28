@@ -8,7 +8,7 @@
           <element id="module-output" name="estateOA" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="hibernate-5.0.0" />
+          <element id="library" level="project" name="hibernate-4.3.11" />
           <element id="library" level="project" name="jstl" />
           <element id="library" level="project" name="commons-codec-1.6" />
           <element id="library" level="project" name="commons-httpclient-3.0.1" />
