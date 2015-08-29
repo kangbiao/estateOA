@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import common.util.LogUtil;
 import entity.json.BasicJson;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Test
         arrayList.add("2");
 
         basicJson.setJsonString(arrayList);
-        System.out.println(gson.toJson(basicJson));
+        LogUtil.I("sss");
     }
 
 }

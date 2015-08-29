@@ -20,7 +20,13 @@
             <div class="box-content">
                 <form id="adduserForm" method="post" action="" class="form-horizontal">
                     <fieldset>
-                        <legend>园区用户资料录入</legend>
+                        <legend>基本信息</legend>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">业主编号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="userCode" />
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">姓名</label>
                             <div class="col-sm-5">
@@ -28,9 +34,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">地址</label>
+                            <label class="col-sm-3 control-label">关系</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="address" />
+                                <select class="form-control" name="userType">
+                                    <option value="1">业主</option>
+                                    <option value="2">家属</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -45,6 +54,12 @@
                                 <input type="text" class="form-control" name="phoneNumber" />
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">身份证号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="idCard" />
+                            </div>
+                        </div>
                         <div class="form-group has-feedback">
                             <label class="col-sm-3 control-label">入住时间</label>
                             <div class="col-sm-5">
@@ -54,17 +69,32 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend>户主信息</legend>
+                        <legend>房屋信息</legend>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">身份证号</label>
+                            <label class="col-sm-3 control-label">房屋产权</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="idCard" />
+                                <input type="text" class="form-control" name="houseOwner" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">产权面积</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="houseArea" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">当前住户</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="currentHost">
+                                    <option value="1">出租</option>
+                                    <option value="2">自住</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">所属园区</label>
-                            <div class="col-sm-5">
-                                <select class="populate placeholder" name="estate" id="whichEstate">
+                            <div class="col-sm-2">
+                                <select class="form-control" name="gardenID" id="whichGarden">
                                     <option value="">-- 选择园区 --</option>
                                     <option value="1">园区1</option>
                                     <option value="2">园区2</option>
@@ -73,20 +103,29 @@
                                     <option value="5">园区5</option>
                                 </select>
                             </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>密码设置</legend>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">密码</label>
-                            <div class="col-sm-5">
-                                <input type="password" class="form-control" name="password" />
+                            <div class="col-sm-2">
+                                <select class="form-control" name="buildingID" id="whichBuilding">
+                                    <option value="">-- 选择楼栋 --</option>
+                                    <option value="1">楼栋1</option>
+                                    <option value="2">楼栋2</option>
+                                    <option value="3">楼栋3</option>
+                                    <option value="4">楼栋4</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <select class="form-control" name="unitID" id="whichUnit">
+                                    <option value="">-- 选择单元 --</option>
+                                    <option value="1">单元1</option>
+                                    <option value="2">单元2</option>
+                                    <option value="3">单元3</option>
+                                    <option value="4">单元4</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">确认密码</label>
+                            <label class="col-sm-3 control-label">房间编号</label>
                             <div class="col-sm-5">
-                                <input type="password" class="form-control" name="confirmPassword" />
+                                <input type="text" class="form-control" name="roomCode" />
                             </div>
                         </div>
                     </fieldset>

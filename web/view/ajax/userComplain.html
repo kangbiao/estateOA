@@ -28,11 +28,11 @@
                     <tr>
                         <th>序号</th>
                         <th>业主编号</th>
-                        <th class="text-center">姓名</th>
-                        <th>关系</th>
+                        <th>姓名</th>
                         <th>联系电话</th>
-                        <th>入住时间</th>
-                        <th>详细</th>
+                        <th>投诉时间</th>
+                        <th>处理状态</th>
+                        <th>用户打分</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -45,10 +45,10 @@
                         <th>序号</th>
                         <th>业主编号</th>
                         <th>姓名</th>
-                        <th>关系</th>
                         <th>联系电话</th>
-                        <th>入住时间</th>
-                        <th>详细</th>
+                        <th>投诉时间</th>
+                        <th>处理状态</th>
+                        <th>用户打分</th>
                         <th>操作</th>
                     </tr>
                     </tfoot>
@@ -224,15 +224,8 @@
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                "<button id='delrow' class='btn btn-primary' type='button'><i class='fa fa-trash-o'></i></button>&ensp;" +
-                "<button id='editrow' class='btn btn-primary' type='button'><i class='fa fa-edit'></i></button>"
-            },{
-                "targets": -2,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                "<button id='noreinfo' class='btn btn-primary' type='button'>点击查看</button>"
+                "<button id='pass' class='btn btn-primary' type='button'>处理</button>&ensp;" +
+                "<button id='back' class='btn btn-primary' type='button'>删除</i></button>"
             },{
                 "data": null,
                 "visible": true,

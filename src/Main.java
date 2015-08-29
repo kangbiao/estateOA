@@ -9,6 +9,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import java.util.Map;
 /**
  * Created by kangbiao on 15-8-22.
+ *
  */
 public class Main
 {

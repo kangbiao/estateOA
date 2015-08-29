@@ -2,6 +2,12 @@ package common.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
 
 /**
  * Created by kangbiao on 15-8-28.
@@ -9,15 +15,25 @@ import org.apache.logging.log4j.Logger;
  */
 public class LogUtil
 {
-    private static final String LogConf = "logconf.xml";
     private static Logger logger;
 
     private LogUtil() {
     }
 
     static {
+        ConfigurationSource source;
+        try {
+            String path="/config/log4j.xml";
+            URL url=LogUtil.class.getResource(path);
+            source = new ConfigurationSource(new FileInputStream(new File(url.getPath())),url);
+            Configurator.initialize(null, source);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (logger == null)
-            logger = LogManager.getLogger();
+            logger = LogManager.getLogger(LogUtil.class.getName());
     }
 
     public static void E(String message) {

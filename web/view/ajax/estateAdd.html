@@ -1,8 +1,8 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="#">用户管理</a></li>
-            <li><a href="#">用户资料录入</a></li>
+            <li><a href="#">物业费管理</a></li>
+            <li><a href="#">缴费情况</a></li>
         </ol>
     </div>
 </div>
@@ -18,44 +18,96 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="addEstateForm" method="post" action="" class="form-horizontal">
-                    <fieldset>
-                        <legend>物业费项目录入</legend>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">费用名</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="estateName" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">单价</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="perPrice" name="perPrice" />
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <label class="col-sm-3 control-label">收费时间</label>
-                            <div class="col-sm-5">
-                                <input type="text" id="payTime" name="payTime" class="form-control" placeholder="">
-                                <span class="fa fa-calendar form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">逾期周期</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="outlineTime" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">迟滞金规则(月)</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" name="outlineMoney" />
-                            </div>
-                        </div>
-                    </fieldset>
+                <h4 class="page-header">物业费配置</h4>
+                <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <div class="col-sm-9 col-sm-offset-3">
-                            <button type="submit" class="btn btn-primary">提交</button>
+                        <label class="col-sm-2 control-label">费用名称</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">费用单价</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">物业费</label>
+                        <div class="col-sm-4">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" checked="" name="radio-inline">按平米
+                                    <i class="fa fa-circle-o"></i>
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" checked="" name="radio-inline"> 按户
+                                    <i class="fa fa-circle-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">缴费时间</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" placeholder="开始时间">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" placeholder="结束时间">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">生效时间</label>
+                        <div class="col-sm-2">
+                            <input type="text" id="input_date" class="form-control" placeholder="Date">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="input_date" class="form-control" placeholder="Date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">滞纳金</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" checked="" name="1radio-inline">每月
+                                    <i class="fa fa-circle-o"></i>
+                                </label>
+                            </div>
+                            <div class="radio-inline">
+                                <label>
+                                    <input type="radio" checked="" name="1radio-inline"> 每日
+                                    <i class="fa fa-circle-o"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">门禁权限</label>
+                        <div class="col-sm-1">
+                            <div class="toggle-switch toggle-switch-success">
+                                <label>
+                                    <input type="checkbox" checked="">
+                                    <div class="toggle-switch-inner"></div>
+                                    <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" id="input_date" class="form-control" placeholder="超过几个月禁止门禁权限">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-2">
+                            <button type="submit" class="btn btn-primary btn-label-left">
+                                <span><i class="fa fa-clock-o"></i></span>
+                                Submit
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -64,66 +116,26 @@
     </div>
 </div>
 <script type="text/javascript">
-    function estateAddValidator(){
-        $('#addEstateForm').bootstrapValidator({
-            message: '存在非法输入',
-            fields: {
-                estateName: {
-                    message: '费用名不合法',
-                    validators: {
-                        notEmpty: {
-                            message: '费用名不能为空'
-                        }
-                    }
-                },
-                perPrice: {
-                    validators: {
-                        notEmpty: {
-                            message: '单价不能为空'
-                        }
-                    }
-                },
-                payTime: {
-                    validators: {
-                        notEmpty: {
-                            message: '请选择收费时间'
-                        }
-                    }
-                },
-                outlineTime:{
-                    validators: {
-                        notEmpty: {
-                            message: '请输入逾期周期'
-                        }
-                    }
-                },
-                outlineMoney:{
-                    validators: {
-                        notEmpty: {
-                            message: '迟滞金规则不能为空'
-                        },
-                        regexp: {
-                            regexp: /^[0-9]$/,
-                            message: '请输入数字'
-                        }
-                    }
-                }
-            }
-        });
+    // Run Select2 plugin on elements
+    function DemoSelect2(){
+        $('#s2_with_tag').select2({placeholder: "Select OS"});
+        $('#s2_country').select2();
+    }
+    // Run timepicker
+    function DemoTimePicker(){
+        $('#input_time').timepicker({setDate: new Date()});
     }
     $(document).ready(function() {
-        //初始化日期选择器
-        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
-            showButtonPanel:true,
-            closeText:"关闭",
-            yearSuffix: '年',
-            currentText:'今天',
-            showMonthAfterYear:true,
-            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-            dayNamesMin: ['日','一','二','三','四','五','六']
-        });
-        LoadBootstrapValidatorScript(estateAddValidator);
+        FormLayoutExampleInputLength($( ".slider-style" ));
+        // Initialize datepicker
+        $('#input_date').datepicker({setDate: new Date()});
+        // Load Timepicker plugin
+        LoadTimePickerScript(DemoTimePicker);
+        // Add tooltip to form-controls
+        LoadSelect2Script(DemoSelect2);
+        // Load example of form validation
+        LoadBootstrapValidatorScript(DemoFormValidator);
+        // Add drag-n-drop feature to boxes
+        WinMove();
     });
 </script>
