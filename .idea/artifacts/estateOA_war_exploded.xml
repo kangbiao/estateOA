@@ -7,17 +7,7 @@
         <element id="directory" name="classes">
           <element id="module-output" name="estateOA" />
         </element>
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="hibernate-4.3.11" />
-          <element id="library" level="project" name="jstl" />
-          <element id="library" level="project" name="commons-codec-1.6" />
-          <element id="library" level="project" name="commons-httpclient-3.0.1" />
-          <element id="library" level="project" name="commons-logging-1.1.1" />
-          <element id="library" level="project" name="dom4j-1.6.1" />
-          <element id="library" level="project" name="jaxen-1.1-beta-6" />
-          <element id="library" level="project" name="mysql-connector-java-5.1.35-bin" />
-          <element id="library" level="project" name="gson-2.3.1" />
-        </element>
+        <element id="directory" name="lib" />
       </element>
     </root>
   </artifact>
