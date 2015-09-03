@@ -23,7 +23,7 @@ public class LogUtil
     static {
         ConfigurationSource source;
         try {
-            String path="/config/log4j.xml";
+            String path= "/config/log4j.xml";
             URL url=LogUtil.class.getResource(path);
             source = new ConfigurationSource(new FileInputStream(new File(url.getPath())),url);
             Configurator.initialize(null, source);
