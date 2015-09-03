@@ -1,5 +1,7 @@
 package controller;
 
+import common.util.LogUtil;
+import entity.json.BasicJson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController
 {
     @RequestMapping(value = "/{userID}" ,method = RequestMethod.GET)
-    public ResponseEntity<String> login(@PathVariable String userID)
+    public ResponseEntity<BasicJson> login(@PathVariable String userID)
     {
-        String temp="fgdg";
-        ResponseEntity<String> responseResult = new ResponseEntity<String>(temp, HttpStatus.OK);
+        BasicJson temp=new BasicJson();
+        temp.setStatus(true);
+        temp.setErrorMsg("fdgdf");
+        temp.setJsonString("jsonstring");
+        ResponseEntity<BasicJson> responseResult = new ResponseEntity<BasicJson>(temp, HttpStatus.OK);
         System.out.println(userID);
+        LogUtil.E("Fgfdgf");
         return responseResult;
-
     }
 }

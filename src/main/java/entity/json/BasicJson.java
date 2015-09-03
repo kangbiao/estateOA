@@ -18,7 +18,7 @@ public class BasicJson
 
     public BasicJson(){}
 
-    public boolean isStatus()
+    public boolean getStatus()
     {
         return status;
     }

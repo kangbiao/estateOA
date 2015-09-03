@@ -12,6 +12,7 @@
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
     <context:component-scan base-package="controller"/>
 
     <!-- 导入外部的properties文件 -->

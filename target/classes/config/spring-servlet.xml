@@ -8,16 +8,37 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:annotation-config/>
+
+    <context:component-scan base-package="controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
     <mvc:annotation-driven/>
-    <context:component-scan base-package="controller" />
+
     <mvc:resources mapping="/view/**" location="/view/"/>
 
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+                <entry key="xml" value="application/xml"/>
+                <entry key="html" value="text/html"/>
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </list>
+        </property>
+    </bean>
+
+
    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-
-          <property name="prefix" value="/WEB-INF/jsp/"/>
-
-          <property name="suffix" value=".jsp"/>
-
+       <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+       <property name="prefix" value="/WEB-INF/jsp/"/>
+       <property name="suffix" value=".jsp"/>
    </bean>
 
 </beans>
