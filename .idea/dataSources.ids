@@ -1,6 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - estate@localhost" uuid="86309fe3-2efd-4c6a-8be5-97aa80e3b13e">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  <data-source name="MySQL - estate@localhost" uuid="0fc5e3eb-785a-4e21-bae3-fbda9a11ca58">
+    <database-info product="MySQL" version="5.5.44-0ubuntu0.14.10.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="estate"/>
+    <table name="admin" schema="" catalog="estate" type="TABLE">
+      <column name="adminID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="salt" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="55uQ"/>
+      <column name="email" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="groupID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5omA5bGe55So5oi357uE"/>
+      <column name="lastLogin" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="adminID"/>
+      <foreign-key name="FK_ADMIN_GROUP" columns="groupID" ref-table="group" ref-schema="" ref-catalog="estate" ref-columns="groupID" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_COMPLAIN_ADMIN" table="complain" schema="" catalog="estate" columns="adminID"/>
+      <index name="FK_ADMIN_GROUP_idx" unique="false" columns="groupID"/>
+    </table>
+    <table name="building" schema="" catalog="estate" type="TABLE">
+      <column name="buildingID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="buildingCode" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5qW85qCL57yW5Y+3"/>
+      <column name="buildingName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5qW85qCL5ZCN"/>
+      <column name="gardenID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="buildingID"/>
+      <foreign-key name="FK_BUILDING_GARDEN" columns="gardenID" ref-table="garden" ref-schema="" ref-catalog="estate" ref-columns="gardenID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_UNIT_BUILDING" table="unit" schema="" catalog="estate" columns="buildingID"/>
+      <index name="FK_BUILDING_GARDEN_idx" unique="false" columns="gardenID"/>
+    </table>
+    <table name="complain" schema="" catalog="estate" type="TABLE">
+      <column name="complainID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" remarks="5oqV6K+J5qCH6aKY"/>
+      <column name="detail" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5oqV6K+J5o+P6L+w"/>
+      <column name="picPath" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5oqV6K+J5Zu+54mH6Lev5b6E"/>
+      <column name="createTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5oqV6K+J5pe26Ze0"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="5oqV6K+J54q25oCB"/>
+      <column name="score" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="55So5oi35omT5YiG"/>
+      <column name="adminID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5aSE55CG5Lq6"/>
+      <column name="userID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="55So5oi3"/>
+      <primary-key name="PRIMARY" columns="complainID"/>
+      <foreign-key name="FK_COMPLAIN_ADMIN" columns="adminID" ref-table="admin" ref-schema="" ref-catalog="estate" ref-columns="adminID" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_COMPLAIN_USER" columns="userID" ref-table="user" ref-schema="" ref-catalog="estate" ref-columns="userID" update-rule="0" delete-rule="3" deferrability="2"/>
+      <index name="FK_COMPLAIN_ADMIN_idx" unique="false" columns="adminID"/>
+      <index name="FK_COMPLAIN_USER_idx" unique="false" columns="userID"/>
+    </table>
+    <table name="garden" schema="" catalog="estate" type="TABLE">
+      <column name="gardenID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="gardenCode" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Zut5Yy657yW5Y+3"/>
+      <column name="gardenName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Zut5Yy65ZCN5a2X"/>
+      <primary-key name="PRIMARY" columns="gardenID"/>
+      <exported-key name="FK_BUILDING_GARDEN" table="building" schema="" catalog="estate" columns="gardenID"/>
+    </table>
+    <table name="group" schema="" catalog="estate" type="TABLE">
+      <column name="groupID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="groupName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="57uE5ZCN"/>
+      <column name="auth" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5p2D6ZmQ"/>
+      <primary-key name="PRIMARY" columns="groupID"/>
+      <exported-key name="FK_ADMIN_GROUP" table="admin" schema="" catalog="estate" columns="groupID"/>
+    </table>
+    <table name="notice" schema="" catalog="estate" type="TABLE">
+      <column name="niticeID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5qCH6aKY"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5o+P6L+w"/>
+      <column name="detail" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5YWs5ZGK6K+m5oOF"/>
+      <column name="createTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="expireTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK6L+H5pyf5pe26Ze0"/>
+      <column name="picPath" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5Zu+54mH6Lev5b6E"/>
+      <column name="creater" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5Yib5bu65Lq6"/>
+      <primary-key name="PRIMARY" columns="niticeID"/>
+    </table>
+    <table name="service" schema="" catalog="estate" type="TABLE">
+      <column name="serviceID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="type" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" def="J+S6uuW3peacjeWKoSc="/>
+      <column name="feeInfo" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12" remarks="5pS26LS55qCH5YeG"/>
+      <column name="title" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5pyN5Yqh5ZCN56ew"/>
+      <column name="detail" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5pyN5Yqh5o+P6L+w"/>
+      <primary-key name="PRIMARY" columns="serviceID"/>
+      <exported-key name="FK_US_SERVICE" table="user_service" schema="" catalog="estate" columns="serviceID"/>
+    </table>
+    <table name="unit" schema="" catalog="estate" type="TABLE">
+      <column name="unitID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="unitCode" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Y2V5YWD57yW5Y+3"/>
+      <column name="unitName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Y2V5YWD5ZCN56ew"/>
+      <column name="buildingID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="unitID"/>
+      <foreign-key name="FK_UNIT_BUILDING" columns="buildingID" ref-table="building" ref-schema="" ref-catalog="estate" ref-columns="buildingID" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_USER_UNIT" table="user" schema="" catalog="estate" columns="unitID"/>
+      <index name="FK_UNIT_BUILDING_idx" unique="false" columns="buildingID"/>
+    </table>
+    <table name="user" schema="" catalog="estate" type="TABLE">
+      <column name="userID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="55So5oi355S16K+d"/>
+      <column name="password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="salt" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="55uQ"/>
+      <column name="username" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" remarks="55So5oi35ZCN"/>
+      <column name="userCode" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12" remarks="5Lia5Li757yW5Y+3"/>
+      <column name="carNum" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6L2m54mM5Y+3"/>
+      <column name="IDcard" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" remarks="6Lqr5Lu96K+B5Y+3"/>
+      <column name="unitID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Y2V5YWD5aSW6ZSu"/>
+      <column name="doorPart" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" remarks="6Zeo54mM5Y+3"/>
+      <column name="joinTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5YWl5L2P5pe26Ze0"/>
+      <column name="createTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5re75Yqg5pe26Ze0"/>
+      <primary-key name="PRIMARY" columns="userID"/>
+      <foreign-key name="FK_USER_UNIT" columns="unitID" ref-table="unit" ref-schema="" ref-catalog="estate" ref-columns="unitID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_COMPLAIN_USER" table="complain" schema="" catalog="estate" columns="userID"/>
+      <exported-key name="FK_US_USER" table="user_service" schema="" catalog="estate" columns="userID"/>
+      <index name="FK_USER_UNIT_idx" unique="false" columns="unitID"/>
+    </table>
+    <table name="user_service" schema="" catalog="estate" type="TABLE">
+      <column name="usID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="userID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="serviceID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="create_time" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="55Sz6K+35pe26Ze0"/>
+      <column name="payStatus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="5pSv5LuY54q25oCB"/>
+      <column name="serviceStatus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="5pyN5Yqh54q25oCB"/>
+      <column name="comment" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12" remarks="6K+E6K66"/>
+      <primary-key name="PRIMARY" columns="usID"/>
+      <foreign-key name="FK_US_SERVICE" columns="serviceID" ref-table="service" ref-schema="" ref-catalog="estate" ref-columns="serviceID" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_US_USER" columns="userID" ref-table="user" ref-schema="" ref-catalog="estate" ref-columns="userID" update-rule="0" delete-rule="3" deferrability="2"/>
+      <index name="FK_US_SERVICE_idx" unique="false" columns="serviceID"/>
+      <index name="FK_US_USER_idx" unique="false" columns="userID"/>
+    </table>
   </data-source>
 </component>

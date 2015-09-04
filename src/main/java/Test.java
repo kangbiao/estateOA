@@ -1,7 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import common.util.LogUtil;
-import entity.json.BasicJson;
+import estate.common.util.LogUtil;
+import estate.entity.json.BasicJson;
 
 import java.util.ArrayList;
 import java.util.HashMap;

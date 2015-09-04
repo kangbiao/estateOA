@@ -7,18 +7,8 @@
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="hbm2ddl.auto">update</property>
-
-        <!--&lt;!&ndash; 数据库映射文件 &ndash;&gt;-->
-        <!--<mapping resource="entity/database/hbmXML/AdminEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/BuildingEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/ComplainEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/GardenEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/GroupEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/NoticeEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/ServiceEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/UnitEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/UserEntity.hbm.xml"/>-->
-        <!--<mapping resource="entity/database/hbmXML/UserServiceEntity.hbm.xml"/>-->
+        <property name="connection.url">jdbc:mysql://localhost:3306/estate</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     </session-factory>
 
 </hibernate-configuration>

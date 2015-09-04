@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.ServiceEntity" table="service" schema="" catalog="estate">
+        <id name="serviceId">
+            <column name="serviceID" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="type">
+            <column name="type" sql-type="varchar" length="25"/>
+        </property>
+        <property name="feeInfo">
+            <column name="feeInfo" sql-type="varchar" length="32"/>
+        </property>
+        <property name="title">
+            <column name="title" sql-type="varchar" length="25"/>
+        </property>
+        <property name="detail">
+            <column name="detail" sql-type="text" length="65535"/>
+        </property>
+        <set name="userServicesByServiceId" inverse="true">
+            <key>
+                <column name="serviceID"/>
+            </key>
+            <one-to-many not-found="ignore" class="estate.entity.database.UserServiceEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>
