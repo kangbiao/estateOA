@@ -23,6 +23,9 @@
         <property name="expireTime">
             <column name="expireTime" sql-type="varchar" length="15"/>
         </property>
+        <property name="picPath">
+            <column name="picPath" sql-type="varchar" length="255"/>
+        </property>
         <property name="creater">
             <column name="creater" sql-type="varchar" length="25"/>
         </property>

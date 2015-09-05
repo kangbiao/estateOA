@@ -1,7 +1,10 @@
 package estate.service.impl;
 
+import estate.dao.NoticeDao;
 import estate.entity.database.NoticeEntity;
 import estate.service.NoticeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
@@ -9,11 +12,15 @@ import java.util.ArrayList;
  * Created by kangbiao on 15-9-4.
  *
  */
+@Service("notice")
 public class NoticeServiceImpl implements NoticeService
 {
     /**
      * 根据filterEntity获取对应的公告
      */
+    @Autowired
+    private NoticeDao noticeDao;
+
     public ArrayList<NoticeEntity> getAll()
     {
         return null;
@@ -27,7 +34,7 @@ public class NoticeServiceImpl implements NoticeService
      */
     public boolean add(NoticeEntity noticeEntity)
     {
-        return false;
+        return noticeDao.sava(noticeEntity);
     }
 
     /**
@@ -49,7 +56,7 @@ public class NoticeServiceImpl implements NoticeService
      */
     public NoticeEntity getOne(String noticeID)
     {
-        return null;
+        return noticeDao.getNoticeByID(noticeID);
     }
 
     /**

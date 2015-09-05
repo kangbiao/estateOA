@@ -22,7 +22,6 @@ public class UserController
     {
         BasicJson temp=new BasicJson();
         temp.setStatus(true);
-        temp.setErrorMsg("fdgdf");
         temp.setJsonString("jsonstring");
         ResponseEntity<BasicJson> responseResult = new ResponseEntity<BasicJson>(temp, HttpStatus.OK);
         System.out.println(userID);

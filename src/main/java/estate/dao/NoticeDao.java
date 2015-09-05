@@ -9,4 +9,10 @@ import estate.entity.database.NoticeEntity;
 public interface NoticeDao
 {
     NoticeEntity getNoticeByID(String noticeID);
+
+    boolean sava(NoticeEntity noticeEntity);
+
+    boolean delete(String noticeID);
+
+
 }

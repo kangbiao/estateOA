@@ -7,13 +7,38 @@ package estate.entity.json;
 public class BasicJson
 {
     protected boolean status=false;
-    protected String errorMsg=null;
+    protected ErrMsg errorMsg=new ErrMsg();
     protected Object jsonString;
 
-    public BasicJson(boolean status,String errorMsg)
+    public class ErrMsg
+    {
+        private String code=null;
+        private String description=null;
+
+        public String getCode()
+        {
+            return code;
+        }
+
+        public void setCode(String code)
+        {
+            this.code = code;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+
+        public void setDescription(String description)
+        {
+            this.description = description;
+        }
+    }
+
+    public BasicJson(boolean status)
     {
         this.status=status;
-        this.errorMsg=errorMsg;
     }
 
     public BasicJson(){}
@@ -38,12 +63,12 @@ public class BasicJson
         this.jsonString=object;
     }
 
-    public String getErrorMsg()
+    public ErrMsg getErrorMsg()
     {
         return errorMsg;
     }
 
-    public void setErrorMsg(String errorMsg)
+    public void setErrorMsg(ErrMsg errorMsg)
     {
         this.errorMsg = errorMsg;
     }

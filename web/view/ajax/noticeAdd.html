@@ -18,34 +18,42 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="adduserForm" method="post" action="" class="form-horizontal">
+                <form id="adduserForm" method="post" action="/oa/notice/add" enctype="multipart/form-data"
+                      class="form-horizontal">
                     <fieldset>
                         <legend>基本信息</legend>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">公告标题</label>
 
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="userCode"/>
+                                <input type="text" class="form-control" name="title"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">公告描述</label>
 
                             <div class="col-sm-6">
-                                <textarea class="form-control" name="ddd" id="" rows="5"></textarea>
+                                <textarea class="form-control" name="description" id="" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">公告详情</label>
 
                             <div class="col-sm-6">
-                                <textarea class="form-control" rows="5" id="wysiwig_simple"></textarea>
+                                <textarea class="form-control" name="detail" rows="5" id="wysiwig_simple"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">公告详情</label>
+
+                            <div class="col-sm-6">
+                                <input type="file" class="form-control" name="file">
                             </div>
                         </div>
                         <div class="form-group has-feedback">
                             <label class="col-sm-3 control-label">失效时间</label>
                             <div class="col-sm-6">
-                                <input type="text" id="liveDate" class="form-control" placeholder="">
+                                <input type="text" id="expireTime" class="form-control" placeholder="">
                                 <span class="fa fa-calendar form-control-feedback"></span>
                             </div>
                         </div>
