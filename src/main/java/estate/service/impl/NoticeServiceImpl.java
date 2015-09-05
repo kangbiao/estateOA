@@ -67,6 +67,12 @@ public class NoticeServiceImpl implements NoticeService
      */
     public ArrayList<NoticeEntity> getNewestNotice(Integer num)
     {
-        return null;
+        ArrayList<NoticeEntity> entities=new ArrayList<NoticeEntity>();
+        NoticeEntity entity=new NoticeEntity();
+        entity.setTitle("yi");
+        entity.setDescription("描述");
+        entities.add(entity);
+        entities.add(entity);
+        return entities;
     }
 }

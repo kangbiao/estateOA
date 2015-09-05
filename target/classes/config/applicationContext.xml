@@ -59,7 +59,7 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="txPoint" expression="execution(* estate.controller.*.*(..))"/>
+        <aop:pointcut id="txPoint" expression="execution(* estate.service.*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
     </aop:config>
 

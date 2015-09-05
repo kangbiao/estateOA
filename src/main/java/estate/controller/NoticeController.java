@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +62,7 @@ public class NoticeController
 
             if (!file.isEmpty())
             {
-                String filename = Config.picPath + String.valueOf(System.currentTimeMillis()) + file
+                String filename = Config.PICPATH + String.valueOf(System.currentTimeMillis()) + file
                         .getOriginalFilename();
                 try
                 {
@@ -93,4 +94,42 @@ public class NoticeController
         return new ResponseEntity<BasicJson>(basicJson, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/get/{noticeID}")
+    public ResponseEntity<BasicJson> get(@PathVariable String noticeID)
+    {
+        BasicJson basicJson=new BasicJson();
+        NoticeEntity noticeEntity=noticeService.getOne(noticeID);
+        if (noticeEntity.equals(null))
+        {
+            basicJson.setStatus(false);
+            basicJson.getErrorMsg().setCode("1000010");
+            basicJson.getErrorMsg().setDescription("该条公告不存在");
+            return new ResponseEntity<BasicJson>(basicJson, HttpStatus.OK);
+        }
+        basicJson.setStatus(true);
+        basicJson.setJsonString(noticeEntity);
+        return new ResponseEntity<BasicJson>(basicJson, HttpStatus.OK);
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
