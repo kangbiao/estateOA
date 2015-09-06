@@ -31,7 +31,6 @@ public class NoticeController
 {
     @Autowired
     private NoticeService noticeService;
-
     @RequestMapping(value = "/test" ,method = RequestMethod.GET)
     public ResponseEntity<BasicJson> test()
     {
