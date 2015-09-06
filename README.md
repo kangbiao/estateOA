@@ -5,18 +5,18 @@
 
 [toc]
 
->***编码规范***
->*错误代码*
+>***编码规范***<br/>
+>*错误代码*:
 >web端错误代码规范:采用7位数字作为错误代码
->最高两位为10,四五位为模块代码,二三位为错误详情,最后一位作为扩展
+>最高两位为10,四五位为模块代码,二三位为错误详情,最后一位作为扩展<br/>
 >app端错误代码规范:采用7位数字作为错误代码
 >最高两位为11,四五位为模块代码,二三位为错误详情,最后一位作为扩展
 >例:1000010:web端00模块的01方法发生错误.
 >
->*数据格式*
+>*数据格式*:
 >数据格式基于json
 >基本格式如下:
->```json
+```json
 {
     "status": true/false,
     "errorMsg": {
@@ -25,71 +25,148 @@
     },
     "jsonString": array or object or null
 }
->```
+```
 >如果status为false,客户端需要根据errorMsg进行相应的业务处理,如果为true,则从jsonString里面取出业务数据处理,展示
 
 **app端接口**
 --------------
 
-##登陆 (00)
->客户端请求参数
->phone: 18144240528
+##用户中心 (00)
+###登陆
+>**客户端请求**<br/>
+>*请求URL*:api/uc/login<br/>
+>*请求方法*:POST<br/>
+>*请求参数*:<br/>
+>phone: 18144240528<br/>
 >password: md5(123456)
 >
->服务器返回数据
->```json
->{"status":boolean,"errorMsg":{"code":10001,"description":"请输入11位手机号"}}
->```
->错误代码和错误描述对照表
-><table>
-><tr><td>序号</td><td>代码</td><td>描述</td></tr>
-><tr><td>1</td><td>1000001</td><td>手机号码不合法 </td></tr>
-><tr><td>2</td><td>1000002</td><td>用户不存在</td></tr>
-><tr><td>3</td><td>1000003</td><td>密码错误</td></tr>
-></table>
->
->
-
+>**服务器返回数据**
+```json
+{
+	"status":false,
+	"errorMsg":
+	{
+		"code":10001,
+		"description":"请输入11位手机号"
+	}
+}
+```
+错误代码和错误描述对照表
+<table>
+<tr><td>序号</td><td>代码</td><td>描述</td></tr>
+<tr><td>1</td><td>1000010</td><td>手机号码不合法 </td></tr>
+<tr><td>2</td><td>1000020</td><td>用户不存在</td></tr>
+<tr><td>3</td><td>1000030</td><td>密码错误</td></tr>
+</table>
+###密码找回
+>**客户端请求**<br/>
+>*请求URL*:api/uc/findPassword/{userPhone}<br/>
+>*请求方式*:GET<br/>
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null 
+}
+```
+>**客户端请求**<br/>
+>*请求URL*:api/uc/checkVerifyCode/{code}<br/>
+>*请求方式*:GET<br/>
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null 
+}
+```
+>**客户端请求**<br/>
+>*请求URL*:api/uc/resetPassword/{password}<br/>
+>*请求方式*:GET<br/>
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null 
+}
+```
 ##公告获取 (01)
 
 ###首页公告
->**客户端请求**
->*请求URL*:api/notice/getSome/{number}
+>**客户端请求**<br/>
+>*请求URL*:api/notice/getSome/{number}<br/>
 >*请求方式*:GET
 >
 >**服务器返回数据**
->```json
->{
->   "status": true,
->   "errorMsg": {
->       "code": null,
->       "description": null
->   },
->   "jsonString": [
->       {
->           "niticeId": 0,
->           "title": "yi",
->           "description": "描述",
->           "detail": null,
->           "createTime": null,
->           "expireTime": null,
->           "picPath": null,
->           "creater": null
->       },
->       {
->           "niticeId": 0,
->           "title": "yi",
->           "description": "描述",
->           "detail": null,
->         "createTime": null,
->          "expireTime": null,
->           "picPath": null,
->            "creater": null
->        }
->   ]
->}
->```
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": [
+       {
+           "niticeId": 0,
+           "title": "yi",
+           "description": "描述",
+           "detail": null,
+           "createTime": null,
+           "expireTime": null,
+           "picPath": "120.26.67.75/file/pic/14515121512-sdas.png",
+           "creater": null
+       },
+       {
+           "niticeId": 0,
+           "title": "yi",
+           "description": "描述",
+           "detail": null,
+         "createTime": null,
+          "expireTime": null,
+           "picPath": "120.26.67.75/file/pic/14515121512-sdas.png",
+            "creater": null
+        }
+   ]
+}
+```
+
+###查看公告详情
+>**客户端请求**<br/>
+>*请求URL*:api/notice/{noticeID}<br/>
+>*请求方式*:GET
 >
+>**服务器返回**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": {
+           "niticeId": 3,
+           "title": "物业通知",
+           "description": "描述",
+           "detail": "detaildetaildetaildetaildetaildetail",
+           "createTime": 2015-5-8,
+           "expireTime": 8,
+           "picPath": "120.26.67.75/file/pic/14515121512-sdas.png",
+           "creater": null
+     }
+       
+}
+```
 
 **web端接口**
 ------------------
