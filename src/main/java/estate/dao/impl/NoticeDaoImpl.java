@@ -1,9 +1,7 @@
 package estate.dao.impl;
 
-import estate.common.util.LogUtil;
 import estate.dao.NoticeDao;
 import estate.entity.database.NoticeEntity;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +24,10 @@ public class NoticeDaoImpl implements NoticeDao
 
     public NoticeEntity getNoticeByID(String noticeID)
     {
-        String hql="SELECT n FROM NoticeEntity n WHERE n.niticeId=?";
-        Query query= getSession().createQuery(hql).setString(0, noticeID);
-        return (NoticeEntity)query.uniqueResult();
+//        String hql="SELECT n FROM NoticeEntity n WHERE n.niticeId=?";
+//        Query query= getSession().createQuery(hql).setString(0, noticeID);
+//        getSession().get(NoticeEntity.class,noticeID);
+        return (NoticeEntity)getSession().get(NoticeEntity.class, Integer.valueOf(noticeID));
     }
 
     public boolean sava(NoticeEntity noticeEntity)
@@ -40,7 +39,7 @@ public class NoticeDaoImpl implements NoticeDao
         }
         catch (Exception e)
         {
-            LogUtil.E("NoticeDao:保存公告信息时失败");
+//            LogUtil.E(e.getMessage());
             return false;
         }
         return true;

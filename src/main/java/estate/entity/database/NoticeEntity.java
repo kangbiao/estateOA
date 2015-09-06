@@ -1,13 +1,18 @@
 package estate.entity.database;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by kangbiao on 15-9-4.
  */
 public class NoticeEntity
 {
     private int niticeId;
+    @NotNull(message = "公告标题不能为空")
     private String title;
+    @NotNull
     private String description;
+    @NotNull
     private String detail;
     private String createTime;
     private String expireTime;

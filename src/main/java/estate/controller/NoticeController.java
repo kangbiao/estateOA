@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,9 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-3.
@@ -47,9 +51,19 @@ public class NoticeController
 
     //增加公告
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
-    public ResponseEntity<BasicJson> add(NoticeEntity noticeEntity,HttpServletRequest request)
+    public ResponseEntity<BasicJson> add(@Valid NoticeEntity noticeEntity,BindingResult bindingResult,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
+        if (bindingResult.hasErrors())
+        {
+            List<FieldError> errors=bindingResult.getFieldErrors();
+            for (FieldError fieldError:errors)
+            {
+                LogUtil.E(fieldError.getField()+fieldError.getDefaultMessage());
+            }
+            basicJson.setJsonString(errors);
+            return new ResponseEntity<BasicJson>(basicJson, HttpStatus.OK);
+        }
         String time=String.valueOf(System.currentTimeMillis());
 
         noticeEntity.setCreateTime(time);
@@ -99,7 +113,7 @@ public class NoticeController
     {
         BasicJson basicJson=new BasicJson();
         NoticeEntity noticeEntity=noticeService.getOne(noticeID);
-        if (noticeEntity.equals(null))
+        if (noticeEntity==null)
         {
             basicJson.setStatus(false);
             basicJson.getErrorMsg().setCode("1000010");
