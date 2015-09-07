@@ -18,6 +18,7 @@
     <mvc:resources mapping="/view/**" location="/view/"/>
     <mvc:resources mapping="/file/**" location="/file/"/>
 
+    <!-- 以json,xml,html返回数据 -->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
         <property name="mediaTypes">
@@ -34,12 +35,14 @@
         </property>
     </bean>
 
+    <!--jsp解析 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10485760"/>
         <property name="defaultEncoding" value="UTF-8"/>

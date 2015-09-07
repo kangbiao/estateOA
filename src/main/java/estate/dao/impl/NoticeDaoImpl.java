@@ -1,5 +1,6 @@
 package estate.dao.impl;
 
+import estate.common.util.LogUtil;
 import estate.dao.NoticeDao;
 import estate.entity.database.NoticeEntity;
 import org.hibernate.Session;
@@ -34,12 +35,15 @@ public class NoticeDaoImpl implements NoticeDao
     {
         try
         {
+
             getSession().save(noticeEntity);
             getSession().flush();
+            getSession().clear();
+
         }
         catch (Exception e)
         {
-//            LogUtil.E(e.getMessage());
+            LogUtil.E(e.getMessage());
             return false;
         }
         return true;
@@ -47,6 +51,20 @@ public class NoticeDaoImpl implements NoticeDao
 
     public boolean delete(String noticeID)
     {
+//        String hql="DELETE FROM NoticeEntity n WHERE n.niticeId=?";
+//        Query query= getSession().createQuery(hql).setString(0, noticeID);
+        NoticeEntity noticeEntity=new NoticeEntity();
+        noticeEntity.setNiticeId(Integer.valueOf(noticeID));
+        try
+        {
+            getSession().clear();
+            getSession().delete(noticeEntity);
+            getSession().flush();
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+        }
         return false;
     }
 }

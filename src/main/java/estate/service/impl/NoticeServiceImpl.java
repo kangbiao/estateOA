@@ -45,7 +45,7 @@ public class NoticeServiceImpl implements NoticeService
      */
     public boolean delete(String noticeID)
     {
-        return false;
+        return noticeDao.delete(noticeID);
     }
 
     /**

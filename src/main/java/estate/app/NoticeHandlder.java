@@ -26,11 +26,10 @@ public class NoticeHandlder
     @RequestMapping(value = "/getSome/{number}",method = RequestMethod.GET)
     public BasicJson getSome(@PathVariable Integer number)
     {
-        BasicJson basicJson=new BasicJson();
+        BasicJson basicJson=new BasicJson(false);
         ArrayList<NoticeEntity> noticeEntities=noticeService.getNewestNotice(number);
-        if (noticeEntities.equals(null))
+        if (noticeEntities==null)
         {
-            basicJson.setStatus(false);
             basicJson.getErrorMsg().setCode("100123");
             basicJson.getErrorMsg().setDescription("为获取到相应公告");
             return basicJson;

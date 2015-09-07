@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-
+       <!-- 表单验证 -->
        <mvc:annotation-driven validator="validator" />
        <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
               <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
