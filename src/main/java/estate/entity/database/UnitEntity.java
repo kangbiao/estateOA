@@ -8,7 +8,6 @@ import java.util.Collection;
 public class UnitEntity
 {
     private int unitId;
-    private String unitCode;
     private String unitName;
     private Integer buildingId;
     private BuildingEntity buildingByBuildingId;
@@ -24,15 +23,6 @@ public class UnitEntity
         this.unitId = unitId;
     }
 
-    public String getUnitCode()
-    {
-        return unitCode;
-    }
-
-    public void setUnitCode(String unitCode)
-    {
-        this.unitCode = unitCode;
-    }
 
     public String getUnitName()
     {
@@ -66,8 +56,6 @@ public class UnitEntity
 
         if (unitId != that.unitId)
             return false;
-        if (unitCode != null ? !unitCode.equals(that.unitCode) : that.unitCode != null)
-            return false;
         if (unitName != null ? !unitName.equals(that.unitName) : that.unitName != null)
             return false;
         if (buildingId != null ? !buildingId.equals(that.buildingId) : that.buildingId != null)
@@ -80,7 +68,6 @@ public class UnitEntity
     public int hashCode()
     {
         int result = unitId;
-        result = 31 * result + (unitCode != null ? unitCode.hashCode() : 0);
         result = 31 * result + (unitName != null ? unitName.hashCode() : 0);
         result = 31 * result + (buildingId != null ? buildingId.hashCode() : 0);
         return result;

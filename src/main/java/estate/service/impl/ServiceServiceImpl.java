@@ -14,7 +14,6 @@ import java.util.ArrayList;
 @Service("service")
 public class ServiceServiceImpl implements ServiceService
 {
-
     public ArrayList<TableData> getRepairList(TableFilter tableFilter)
     {
         return null;

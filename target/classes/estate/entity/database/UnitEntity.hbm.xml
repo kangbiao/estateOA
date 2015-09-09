@@ -8,9 +8,6 @@
         <id name="unitId">
             <column name="unitID" sql-type="int unsigned" not-null="true"/>
         </id>
-        <property name="unitCode">
-            <column name="unitCode" sql-type="varchar" length="25"/>
-        </property>
         <property name="unitName">
             <column name="unitName" sql-type="varchar" length="25"/>
         </property>

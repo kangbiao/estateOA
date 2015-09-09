@@ -82,7 +82,6 @@
     </table>
     <table name="unit" schema="" catalog="estate" type="TABLE">
       <column name="unitID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="unitCode" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Y2V5YWD57yW5Y+3"/>
       <column name="unitName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Y2V5YWD5ZCN56ew"/>
       <column name="buildingID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="unitID"/>

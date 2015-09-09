@@ -10,7 +10,7 @@ public interface NoticeDao
 {
     NoticeEntity getNoticeByID(String noticeID);
 
-    boolean sava(NoticeEntity noticeEntity);
+    void sava(NoticeEntity noticeEntity);
 
     boolean delete(String noticeID);
 

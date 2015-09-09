@@ -12,41 +12,43 @@ import org.springframework.stereotype.Repository;
  * Created by kangbiao on 15-9-4.
  *
  */
-@Repository
+@Repository(value = "NoticeDao")
 public class NoticeDaoImpl implements NoticeDao
 {
-    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public NoticeEntity getNoticeByID(String noticeID)
+    {
+        //        String hql="SELECT n FROM NoticeEntity n WHERE n.niticeId=?";
+        //        Query query= getSession().createQuery(hql).setString(0, noticeID);
+        //        getSession().get(NoticeEntity.class,noticeID);
+        return (NoticeEntity)getSession().get(NoticeEntity.class, Integer.valueOf(noticeID));
+    }
 
     private Session getSession()
     {
         return sessionFactory.getCurrentSession();
     }
 
-    public NoticeEntity getNoticeByID(String noticeID)
+    public void sava(NoticeEntity noticeEntity)
     {
-//        String hql="SELECT n FROM NoticeEntity n WHERE n.niticeId=?";
-//        Query query= getSession().createQuery(hql).setString(0, noticeID);
-//        getSession().get(NoticeEntity.class,noticeID);
-        return (NoticeEntity)getSession().get(NoticeEntity.class, Integer.valueOf(noticeID));
-    }
+//      Session session=this.sessionFactory.openSession();
+        Session session=getSession();
+//      Transaction transaction=session.beginTransaction();
+            session.save(noticeEntity);
+            NoticeEntity noticeEntity1=new NoticeEntity();
+            noticeEntity1.setNiticeId(90);
+            noticeEntity1.setTitle("1233");
+            session.save(noticeEntity1);
 
-    public boolean sava(NoticeEntity noticeEntity)
-    {
-        try
-        {
-
-            getSession().save(noticeEntity);
-            getSession().flush();
-            getSession().clear();
-
-        }
-        catch (Exception e)
-        {
-            LogUtil.E(e.getMessage());
-            return false;
-        }
-        return true;
+//      transaction.commit();
+//        session.flush();
+//      getSession().clear();
     }
 
     public boolean delete(String noticeID)

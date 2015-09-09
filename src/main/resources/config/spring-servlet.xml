@@ -10,8 +10,10 @@
 
     <context:annotation-config/>
 
+    <!-- 配置spring自动扫描的包,如果开启了事务管理,一定要过滤掉相应的类 -->
     <context:component-scan base-package="estate">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="regex" expression=".*ServiceImpl"/>
     </context:component-scan>
 
     <mvc:annotation-driven/>

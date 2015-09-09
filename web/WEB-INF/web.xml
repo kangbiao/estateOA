@@ -24,6 +24,7 @@
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
     </listener>
 
+    <!-- 配置spring拦截器 -->
     <servlet>
         <servlet-name>estateOA</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -38,12 +39,27 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- 将url请求会话和hibernate会话绑定在一起,使得spring对hibernate可以进行事务管理 -->
     <filter>
         <filter-name>openSession</filter-name>
         <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>openSession</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- spring security认证拦截器 -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

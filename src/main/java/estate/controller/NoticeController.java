@@ -90,11 +90,15 @@ public class NoticeController
             }
         }
         catch (Exception ignored) {}
-        if (!noticeService.add(noticeEntity))
+        try
+        {
+            noticeService.add(noticeEntity);
+        }
+        catch (Exception e)
         {
             LogUtil.E("上传公告图片写入数据库失败");
             basicJson.getErrorMsg().setCode("100103");
-            basicJson.getErrorMsg().setDescription("上传图片失败");
+            basicJson.getErrorMsg().setDescription("公告增加失败,请检查您的输入");
             return basicJson;
         }
         basicJson.setStatus(true);
