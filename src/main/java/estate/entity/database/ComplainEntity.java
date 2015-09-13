@@ -1,30 +1,31 @@
 package estate.entity.database;
 
 /**
- * Created by kangbiao on 15-9-4.
+ * Created by kangbiao on 15-9-13.
  */
 public class ComplainEntity
 {
-    private int complainId;
+    private int id;
     private String title;
-    private String detail;
-    private String picPath;
-    private String createTime;
-    private Integer status;
-    private Integer score;
-    private Integer adminId;
+    private String content;
+    private String description;
     private Integer userId;
-    private AdminEntity adminByAdminId;
-    private UserEntity userByUserId;
+    private Long time;
+    private String imageIdList;
+    private Byte type;
+    private Byte status;
+    private Integer adminId;
+    private Byte remark;
+    private String result;
 
-    public int getComplainId()
+    public int getId()
     {
-        return complainId;
+        return id;
     }
 
-    public void setComplainId(int complainId)
+    public void setId(int id)
     {
-        this.complainId = complainId;
+        this.id = id;
     }
 
     public String getTitle()
@@ -37,64 +38,24 @@ public class ComplainEntity
         this.title = title;
     }
 
-    public String getDetail()
+    public String getContent()
     {
-        return detail;
+        return content;
     }
 
-    public void setDetail(String detail)
+    public void setContent(String content)
     {
-        this.detail = detail;
+        this.content = content;
     }
 
-    public String getPicPath()
+    public String getDescription()
     {
-        return picPath;
+        return description;
     }
 
-    public void setPicPath(String picPath)
+    public void setDescription(String description)
     {
-        this.picPath = picPath;
-    }
-
-    public String getCreateTime()
-    {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime)
-    {
-        this.createTime = createTime;
-    }
-
-    public Integer getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(Integer status)
-    {
-        this.status = status;
-    }
-
-    public Integer getScore()
-    {
-        return score;
-    }
-
-    public void setScore(Integer score)
-    {
-        this.score = score;
-    }
-
-    public Integer getAdminId()
-    {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId)
-    {
-        this.adminId = adminId;
+        this.description = description;
     }
 
     public Integer getUserId()
@@ -107,6 +68,76 @@ public class ComplainEntity
         this.userId = userId;
     }
 
+    public Long getTime()
+    {
+        return time;
+    }
+
+    public void setTime(Long time)
+    {
+        this.time = time;
+    }
+
+    public String getImageIdList()
+    {
+        return imageIdList;
+    }
+
+    public void setImageIdList(String imageIdList)
+    {
+        this.imageIdList = imageIdList;
+    }
+
+    public Byte getType()
+    {
+        return type;
+    }
+
+    public void setType(Byte type)
+    {
+        this.type = type;
+    }
+
+    public Byte getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(Byte status)
+    {
+        this.status = status;
+    }
+
+    public Integer getAdminId()
+    {
+        return adminId;
+    }
+
+    public void setAdminId(Integer adminId)
+    {
+        this.adminId = adminId;
+    }
+
+    public Byte getRemark()
+    {
+        return remark;
+    }
+
+    public void setRemark(Byte remark)
+    {
+        this.remark = remark;
+    }
+
+    public String getResult()
+    {
+        return result;
+    }
+
+    public void setResult(String result)
+    {
+        this.result = result;
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -117,23 +148,29 @@ public class ComplainEntity
 
         ComplainEntity that = (ComplainEntity) o;
 
-        if (complainId != that.complainId)
+        if (id != that.id)
             return false;
         if (title != null ? !title.equals(that.title) : that.title != null)
             return false;
-        if (detail != null ? !detail.equals(that.detail) : that.detail != null)
+        if (content != null ? !content.equals(that.content) : that.content != null)
             return false;
-        if (picPath != null ? !picPath.equals(that.picPath) : that.picPath != null)
+        if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
-        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null)
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null)
+            return false;
+        if (time != null ? !time.equals(that.time) : that.time != null)
+            return false;
+        if (imageIdList != null ? !imageIdList.equals(that.imageIdList) : that.imageIdList != null)
+            return false;
+        if (type != null ? !type.equals(that.type) : that.type != null)
             return false;
         if (status != null ? !status.equals(that.status) : that.status != null)
             return false;
-        if (score != null ? !score.equals(that.score) : that.score != null)
-            return false;
         if (adminId != null ? !adminId.equals(that.adminId) : that.adminId != null)
             return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null)
+        if (remark != null ? !remark.equals(that.remark) : that.remark != null)
+            return false;
+        if (result != null ? !result.equals(that.result) : that.result != null)
             return false;
 
         return true;
@@ -142,35 +179,18 @@ public class ComplainEntity
     @Override
     public int hashCode()
     {
-        int result = complainId;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (detail != null ? detail.hashCode() : 0);
-        result = 31 * result + (picPath != null ? picPath.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (score != null ? score.hashCode() : 0);
-        result = 31 * result + (adminId != null ? adminId.hashCode() : 0);
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        return result;
-    }
-
-    public AdminEntity getAdminByAdminId()
-    {
-        return adminByAdminId;
-    }
-
-    public void setAdminByAdminId(AdminEntity adminByAdminId)
-    {
-        this.adminByAdminId = adminByAdminId;
-    }
-
-    public UserEntity getUserByUserId()
-    {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(UserEntity userByUserId)
-    {
-        this.userByUserId = userByUserId;
+        int result1 = id;
+        result1 = 31 * result1 + (title != null ? title.hashCode() : 0);
+        result1 = 31 * result1 + (content != null ? content.hashCode() : 0);
+        result1 = 31 * result1 + (description != null ? description.hashCode() : 0);
+        result1 = 31 * result1 + (userId != null ? userId.hashCode() : 0);
+        result1 = 31 * result1 + (time != null ? time.hashCode() : 0);
+        result1 = 31 * result1 + (imageIdList != null ? imageIdList.hashCode() : 0);
+        result1 = 31 * result1 + (type != null ? type.hashCode() : 0);
+        result1 = 31 * result1 + (status != null ? status.hashCode() : 0);
+        result1 = 31 * result1 + (adminId != null ? adminId.hashCode() : 0);
+        result1 = 31 * result1 + (remark != null ? remark.hashCode() : 0);
+        result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
+        return result1;
     }
 }

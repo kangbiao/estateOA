@@ -1,6 +1,6 @@
 package estate.service;
 
-import estate.entity.database.UserEntity;
+import estate.entity.database.AppUserEntity;
 
 /**
  * Created by kangbiao on 15-9-4.
@@ -10,7 +10,7 @@ public interface UserService
 {
     boolean login(String phone);
 
-    boolean add(UserEntity userEntity);
+    boolean add(AppUserEntity userEntity);
 
     boolean delete(String userID);
 

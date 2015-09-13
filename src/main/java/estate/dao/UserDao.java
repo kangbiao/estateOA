@@ -1,6 +1,6 @@
 package estate.dao;
 
-import estate.entity.database.UserEntity;
+import estate.entity.database.AppUserEntity;
 
 /**
  * Created by kangbiao on 15-9-4.
@@ -10,10 +10,10 @@ public interface UserDao
 {
     /**
      * 根据用户id获取用户信息
-     * @param userID
+     * @param phone
      * @return
      */
-    UserEntity getUserByID(String userID);
+    AppUserEntity getUserByPhone(String phone);
 
 
 

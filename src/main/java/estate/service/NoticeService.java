@@ -20,7 +20,7 @@ public interface NoticeService
      * @param noticeEntity 公告实体
      * @return 返回true或false
      */
-    boolean add(NoticeEntity noticeEntity);
+    void add(NoticeEntity noticeEntity);
 
     /**
      * 根据公告ID删除公告

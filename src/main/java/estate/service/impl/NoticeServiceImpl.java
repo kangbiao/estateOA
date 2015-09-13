@@ -5,7 +5,6 @@ import estate.entity.database.NoticeEntity;
 import estate.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -31,12 +30,10 @@ public class NoticeServiceImpl implements NoticeService
      * 添加公告信息
      *
      * @param noticeEntity 公告实体
-     * @return 返回true或false
      */
-    public boolean add(NoticeEntity noticeEntity)
+    public void add(NoticeEntity noticeEntity)
     {
         noticeDao.sava(noticeEntity);
-        return true;
     }
 
     /**
@@ -45,8 +42,7 @@ public class NoticeServiceImpl implements NoticeService
      * @param noticeID 公告ID
      * @return 返回true或false
      */
-    @Transactional
-    public boolean delete(String noticeID)
+    public boolean delete  (String noticeID)
     {
         return noticeDao.delete(noticeID);
     }
@@ -70,12 +66,6 @@ public class NoticeServiceImpl implements NoticeService
      */
     public ArrayList<NoticeEntity> getNewestNotice(Integer num)
     {
-        ArrayList<NoticeEntity> entities=new ArrayList<NoticeEntity>();
-        NoticeEntity entity=new NoticeEntity();
-        entity.setTitle("yi");
-        entity.setDescription("描述");
-        entities.add(entity);
-        entities.add(entity);
-        return entities;
+        return noticeDao.getSome(num);
     }
 }

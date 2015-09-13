@@ -1,31 +1,28 @@
 package estate.entity.database;
 
-import javax.validation.constraints.NotNull;
-
 /**
- * Created by kangbiao on 15-9-4.
- *
+ * Created by kangbiao on 15-9-13.
  */
 public class NoticeEntity
 {
-    private int niticeId;
-    @NotNull(message = "公告标题不能为空")
+    private int noticeId;
     private String title;
+    private String content;
+    private String time;
+    private String pictureIdList;
     private String description;
-    private String detail;
-    private String createTime;
-    private String expireTime;
-    private String picPath;
-    private String creater;
+    private Byte type;
+    private Integer expiretime;
+    private Integer cuId;
 
-    public int getNiticeId()
+    public int getNoticeId()
     {
-        return niticeId;
+        return noticeId;
     }
 
-    public void setNiticeId(int niticeId)
+    public void setNoticeId(int noticeId)
     {
-        this.niticeId = niticeId;
+        this.noticeId = noticeId;
     }
 
     public String getTitle()
@@ -38,6 +35,36 @@ public class NoticeEntity
         this.title = title;
     }
 
+    public String getContent()
+    {
+        return content;
+    }
+
+    public void setContent(String content)
+    {
+        this.content = content;
+    }
+
+    public String getTime()
+    {
+        return time;
+    }
+
+    public void setTime(String time)
+    {
+        this.time = time;
+    }
+
+    public String getPictureIdList()
+    {
+        return pictureIdList;
+    }
+
+    public void setPictureIdList(String pictureIdList)
+    {
+        this.pictureIdList = pictureIdList;
+    }
+
     public String getDescription()
     {
         return description;
@@ -48,54 +75,34 @@ public class NoticeEntity
         this.description = description;
     }
 
-    public String getDetail()
+    public Byte getType()
     {
-        return detail;
+        return type;
     }
 
-    public void setDetail(String detail)
+    public void setType(Byte type)
     {
-        this.detail = detail;
+        this.type = type;
     }
 
-    public String getCreateTime()
+    public Integer getExpiretime()
     {
-        return createTime;
+        return expiretime;
     }
 
-    public void setCreateTime(String createTime)
+    public void setExpiretime(Integer expiretime)
     {
-        this.createTime = createTime;
+        this.expiretime = expiretime;
     }
 
-    public String getExpireTime()
+    public Integer getCuId()
     {
-        return expireTime;
+        return cuId;
     }
 
-    public void setExpireTime(String expireTime)
+    public void setCuId(Integer cuId)
     {
-        this.expireTime = expireTime;
-    }
-
-    public String getPicPath()
-    {
-        return picPath;
-    }
-
-    public void setPicPath(String picPath)
-    {
-        this.picPath = picPath;
-    }
-
-    public String getCreater()
-    {
-        return creater;
-    }
-
-    public void setCreater(String creater)
-    {
-        this.creater = creater;
+        this.cuId = cuId;
     }
 
     @Override
@@ -108,21 +115,23 @@ public class NoticeEntity
 
         NoticeEntity that = (NoticeEntity) o;
 
-        if (niticeId != that.niticeId)
+        if (noticeId != that.noticeId)
             return false;
         if (title != null ? !title.equals(that.title) : that.title != null)
             return false;
+        if (content != null ? !content.equals(that.content) : that.content != null)
+            return false;
+        if (time != null ? !time.equals(that.time) : that.time != null)
+            return false;
+        if (pictureIdList != null ? !pictureIdList.equals(that.pictureIdList) : that.pictureIdList != null)
+            return false;
         if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
-        if (detail != null ? !detail.equals(that.detail) : that.detail != null)
+        if (type != null ? !type.equals(that.type) : that.type != null)
             return false;
-        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null)
+        if (expiretime != null ? !expiretime.equals(that.expiretime) : that.expiretime != null)
             return false;
-        if (expireTime != null ? !expireTime.equals(that.expireTime) : that.expireTime != null)
-            return false;
-        if (picPath != null ? !picPath.equals(that.picPath) : that.picPath != null)
-            return false;
-        if (creater != null ? !creater.equals(that.creater) : that.creater != null)
+        if (cuId != null ? !cuId.equals(that.cuId) : that.cuId != null)
             return false;
 
         return true;
@@ -131,14 +140,15 @@ public class NoticeEntity
     @Override
     public int hashCode()
     {
-        int result = niticeId;
+        int result = noticeId;
         result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (pictureIdList != null ? pictureIdList.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (detail != null ? detail.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        result = 31 * result + (expireTime != null ? expireTime.hashCode() : 0);
-        result = 31 * result + (picPath != null ? picPath.hashCode() : 0);
-        result = 31 * result + (creater != null ? creater.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (expiretime != null ? expiretime.hashCode() : 0);
+        result = 31 * result + (cuId != null ? cuId.hashCode() : 0);
         return result;
     }
 }

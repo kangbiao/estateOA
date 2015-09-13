@@ -1,126 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - estate@localhost" uuid="0fc5e3eb-785a-4e21-bae3-fbda9a11ca58">
+  <data-source name="MySQL - PropertySystem@localhost" uuid="0fc5e3eb-785a-4e21-bae3-fbda9a11ca58">
     <database-info product="MySQL" version="5.5.44-0ubuntu0.14.10.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
-    <schema name="" catalog="estate"/>
-    <table name="admin" schema="" catalog="estate" type="TABLE">
-      <column name="adminID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="username" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <column name="password" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <column name="salt" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="55uQ"/>
+    <schema name="" catalog="PropertySystem"/>
+    <table name="apartment" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="apartment_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="unit_code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5qW85qCL5Y2V5YWD5Y+3"/>
+      <column name="code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5oi/5Y+3"/>
+      <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+    </table>
+    <table name="app_user" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="5omL5py65Y+356CB"/>
+      <column name="passwd" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="user_role" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS3ms6jlhoznlKjmiLfvvJsyLeS4muS4u+e7keWumueUqOaIt++8mzMt5a625bGe55So5oi377ybNC3np5/miLfvvJs1LeeJqeS4muiupOivgeeUqOaItw=="/>
+      <column name="user_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="register_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" remarks="5pe26Ze05oiz"/>
+      <primary-key name="PRIMARY" columns="phone"/>
+    </table>
+    <table name="authenticated_record" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="applicant" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="55Sz6K+35Lq6Cg=="/>
+      <column name="application_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="application_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS7kurLlsZ4y56ef5oi3M+eJqeS4muiupOWPr+S6uuWRmA=="/>
+      <column name="auth_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5o6I5p2D5Lq6aWTljbPkuJrkuLtpZO+8iG93bmVyX2lk77yJ5oiW6ICF5piv54mp5Lia566h55CG5Lq65ZGY5YW35pyJ55u45bqU5p2D6ZmQ55qEaWTvvIhjb25zb2xlX3VzZXJfaWTvvIk="/>
+      <column name="auth_result" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="auth_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="authenticated_user" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="au_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="identity_id" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="owner_relationship" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="birthday" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="register_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="sex" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="bound_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="is_bound" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="familycol" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="owner_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="au_id"/>
+    </table>
+    <table name="bill" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="fee_item_fee" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5a2Y5pS+55SxZmVlX2l0ZW1faWTjgIrvvJ3jgItmZWVfYW1vdW5057uE5oiQ55qE6ZSu5YC85a+577yM5Lul6YCX5Y+36Ze06ZqU44CC"/>
+      <column name="pay_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="pay_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="pay_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="bill_generation_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="overdue_fee" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3"/>
+      <column name="payer" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5LuY5qy+5Lq6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="building" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Zut5Yy65ZKM5qW85qCL5p6E5oiQ5Li76ZSu"/>
+      <column name="description" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="building_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="building_id"/>
+    </table>
+    <table name="complain" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="image_id_list" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="admin_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="remark" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="5aSE55CG5oqV6K+J5Lq65ZGY5aGr5YaZ5aSE55CG6K+05piO"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="console_group" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="cg_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="authorization" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="cg_id"/>
+    </table>
+    <table name="console_user" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="password" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="phone" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="email" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="groupID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5omA5bGe55So5oi357uE"/>
-      <column name="lastLogin" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="adminID"/>
-      <foreign-key name="FK_ADMIN_GROUP" columns="groupID" ref-table="group" ref-schema="" ref-catalog="estate" ref-columns="groupID" update-rule="0" delete-rule="3" deferrability="2"/>
-      <exported-key name="FK_COMPLAIN_ADMIN" table="complain" schema="" catalog="estate" columns="adminID"/>
-      <index name="FK_ADMIN_GROUP_idx" unique="false" columns="groupID"/>
+      <column name="console_group_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="identity_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="identity_id" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="remark" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="54mp5Lia5Lq65ZGY5pS25Yiw55qE6K+E5Lu3"/>
+      <primary-key name="PRIMARY" columns="cu_id"/>
     </table>
-    <table name="building" schema="" catalog="estate" type="TABLE">
-      <column name="buildingID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="buildingCode" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5qW85qCL57yW5Y+3"/>
-      <column name="buildingName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5qW85qCL5ZCN"/>
-      <column name="gardenID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="buildingID"/>
-      <foreign-key name="FK_BUILDING_GARDEN" columns="gardenID" ref-table="garden" ref-schema="" ref-catalog="estate" ref-columns="gardenID" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="FK_UNIT_BUILDING" table="unit" schema="" catalog="estate" columns="buildingID"/>
-      <index name="FK_BUILDING_GARDEN_idx" unique="false" columns="gardenID"/>
+    <table name="family" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="family_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="birthday" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="urgent_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="urgent_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="identity_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="identity_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="owner_elationship" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="authentication_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" remarks="5pS+5Yiw5a6h5om56K6w5b2V6KGo"/>
+      <column name="vehicle_id_list" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="auth_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="family_id"/>
     </table>
-    <table name="complain" schema="" catalog="estate" type="TABLE">
-      <column name="complainID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="title" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" remarks="5oqV6K+J5qCH6aKY"/>
-      <column name="detail" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5oqV6K+J5o+P6L+w"/>
-      <column name="picPath" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5oqV6K+J5Zu+54mH6Lev5b6E"/>
-      <column name="createTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5oqV6K+J5pe26Ze0"/>
-      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="5oqV6K+J54q25oCB"/>
-      <column name="score" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="55So5oi35omT5YiG"/>
-      <column name="adminID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5aSE55CG5Lq6"/>
-      <column name="userID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="55So5oi3"/>
-      <primary-key name="PRIMARY" columns="complainID"/>
-      <foreign-key name="FK_COMPLAIN_ADMIN" columns="adminID" ref-table="admin" ref-schema="" ref-catalog="estate" ref-columns="adminID" update-rule="0" delete-rule="3" deferrability="2"/>
-      <foreign-key name="FK_COMPLAIN_USER" columns="userID" ref-table="user" ref-schema="" ref-catalog="estate" ref-columns="userID" update-rule="0" delete-rule="3" deferrability="2"/>
-      <index name="FK_COMPLAIN_ADMIN_idx" unique="false" columns="adminID"/>
-      <index name="FK_COMPLAIN_USER_idx" unique="false" columns="userID"/>
+    <table name="fee_item" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="fs_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="decription" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fee_type_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="rule_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="is_periodic" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="fs_id"/>
     </table>
-    <table name="garden" schema="" catalog="estate" type="TABLE">
-      <column name="gardenID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="gardenCode" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Zut5Yy657yW5Y+3"/>
-      <column name="gardenName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Zut5Yy65ZCN5a2X"/>
-      <primary-key name="PRIMARY" columns="gardenID"/>
-      <exported-key name="FK_BUILDING_GARDEN" table="building" schema="" catalog="estate" columns="gardenID"/>
+    <table name="fee_item_order" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="fee_item_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5YWB6K646YeN5aSN77yI5LiA5qyh5oCn55qE6LS555So77yJ"/>
+      <column name="is_billed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
-    <table name="group" schema="" catalog="estate" type="TABLE">
-      <column name="groupID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="groupName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="57uE5ZCN"/>
-      <column name="auth" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5p2D6ZmQ"/>
-      <primary-key name="PRIMARY" columns="groupID"/>
-      <exported-key name="FK_ADMIN_GROUP" table="admin" schema="" catalog="estate" columns="groupID"/>
+    <table name="fee_type" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="ft_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="ft_id"/>
     </table>
-    <table name="notice" schema="" catalog="estate" type="TABLE">
-      <column name="niticeID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="title" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5qCH6aKY"/>
-      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5o+P6L+w"/>
-      <column name="detail" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5YWs5ZGK6K+m5oOF"/>
-      <column name="createTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
-      <column name="expireTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK6L+H5pyf5pe26Ze0"/>
-      <column name="picPath" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5Zu+54mH6Lev5b6E"/>
-      <column name="creater" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5YWs5ZGK5Yib5bu65Lq6"/>
-      <primary-key name="PRIMARY" columns="niticeID"/>
+    <table name="notice" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="notice_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="6YCa55+l5Zu+5paH5L+h5oGv"/>
+      <column name="time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="picture_id_list" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12" remarks="MS4="/>
+      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="expiretime" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5aGr5YaZ5pyJ5pWI5pe26Ze077yM5Lul5aSp5Li65Y2V5L2N"/>
+      <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Y+R5biD6ICF55qEaWQ="/>
+      <primary-key name="PRIMARY" columns="notice_id"/>
     </table>
-    <table name="service" schema="" catalog="estate" type="TABLE">
-      <column name="serviceID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="type" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" def="J+S6uuW3peacjeWKoSc="/>
-      <column name="feeInfo" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12" remarks="5pS26LS55qCH5YeG"/>
-      <column name="title" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5pyN5Yqh5ZCN56ew"/>
-      <column name="detail" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1" remarks="5pyN5Yqh5o+P6L+w"/>
-      <primary-key name="PRIMARY" columns="serviceID"/>
-      <exported-key name="FK_US_SERVICE" table="user_service" schema="" catalog="estate" columns="serviceID"/>
+    <table name="open_door_record" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="open_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="open_code" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
-    <table name="unit" schema="" catalog="estate" type="TABLE">
-      <column name="unitID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="unitName" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12" remarks="5Y2V5YWD5ZCN56ew"/>
-      <column name="buildingID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="unitID"/>
-      <foreign-key name="FK_UNIT_BUILDING" columns="buildingID" ref-table="building" ref-schema="" ref-catalog="estate" ref-columns="buildingID" update-rule="0" delete-rule="3" deferrability="2"/>
-      <exported-key name="FK_USER_UNIT" table="user" schema="" catalog="estate" columns="unitID"/>
-      <index name="FK_UNIT_BUILDING_idx" unique="false" columns="buildingID"/>
+    <table name="owner" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="owner_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="birthday" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="urgent_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="urgent_phone" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="identity_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="6K+B5Lu257G75Z6L"/>
+      <column name="identity_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6K+B5Lu25Luj56CB"/>
+      <column name="vehicle_id_ist" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" remarks="MS1u5Liq6L2m54mM55So5YiG6ZqU56ym77yD5L2c5Li65YiG6ZqU56ym"/>
+      <column name="property_id_list" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" remarks="MS1u5Liq54mp5Lia77yM55So77yM5Y+35L2c5Li65YiG6ZqU56ym"/>
+      <column name="authentication_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" remarks="5pS+5Yiw5a6h5om56K6w5b2V6KGo"/>
+      <primary-key name="PRIMARY" columns="owner_id"/>
     </table>
-    <table name="user" schema="" catalog="estate" type="TABLE">
-      <column name="userID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="55So5oi355S16K+d"/>
-      <column name="password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
-      <column name="salt" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="55uQ"/>
-      <column name="username" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" remarks="55So5oi35ZCN"/>
-      <column name="userCode" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12" remarks="5Lia5Li757yW5Y+3"/>
-      <column name="carNum" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6L2m54mM5Y+3"/>
-      <column name="IDcard" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" remarks="6Lqr5Lu96K+B5Y+3"/>
-      <column name="unitID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Y2V5YWD5aSW6ZSu"/>
-      <column name="doorPart" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" remarks="6Zeo54mM5Y+3"/>
-      <column name="joinTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5YWl5L2P5pe26Ze0"/>
-      <column name="createTime" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="5re75Yqg5pe26Ze0"/>
-      <primary-key name="PRIMARY" columns="userID"/>
-      <foreign-key name="FK_USER_UNIT" columns="unitID" ref-table="unit" ref-schema="" ref-catalog="estate" ref-columns="unitID" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="FK_COMPLAIN_USER" table="complain" schema="" catalog="estate" columns="userID"/>
-      <exported-key name="FK_US_USER" table="user_service" schema="" catalog="estate" columns="userID"/>
-      <index name="FK_USER_UNIT_idx" unique="false" columns="unitID"/>
+    <table name="parking_lot" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6L2m5L2N57yW5Y+3"/>
+      <column name="floor" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5qW85bGC5Lmm"/>
+      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MTrmoIflh4bovabkvY3vvIwy77ya5aSn6L2m5L2N77yMM++8muWtkOavjei9puS9je+8jDTvvIzlsI/ovabkvY3vvIw177yM5Zyw5LiK5Li05pe25L2N"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
     </table>
-    <table name="user_service" schema="" catalog="estate" type="TABLE">
-      <column name="usID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="userID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="serviceID" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="create_time" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12" remarks="55Sz6K+35pe26Ze0"/>
-      <column name="payStatus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="5pSv5LuY54q25oCB"/>
-      <column name="serviceStatus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="5pyN5Yqh54q25oCB"/>
-      <column name="comment" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12" remarks="6K+E6K66"/>
-      <primary-key name="PRIMARY" columns="usID"/>
-      <foreign-key name="FK_US_SERVICE" columns="serviceID" ref-table="service" ref-schema="" ref-catalog="estate" ref-columns="serviceID" update-rule="0" delete-rule="3" deferrability="2"/>
-      <foreign-key name="FK_US_USER" columns="userID" ref-table="user" ref-schema="" ref-catalog="estate" ref-columns="userID" update-rule="0" delete-rule="3" deferrability="2"/>
-      <index name="FK_US_SERVICE_idx" unique="false" columns="serviceID"/>
-      <index name="FK_US_USER_idx" unique="false" columns="userID"/>
+    <table name="picture" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="picture_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dir" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="picture_id"/>
+    </table>
+    <table name="property" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5oi/5Lqn6K+B57yW56CB"/>
+      <column name="owner_name_list" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="location" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12" remarks="5oi/5Lqn6K+B5LiK5L2N572u5L+h5oGv"/>
+      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MTrmma7pgJrkvY/miL/vvJsyOuWVhumTuu+8mzM66L2m5L2N"/>
+      <column name="property_square" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3"/>
+      <column name="owner_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="Me+8muS4quS6uuaJgOacie+8mzI654mp5Lia5omA5pyJ"/>
+      <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Zut5Yy6"/>
+      <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS7oh6rkvY8g77yP5Ye656efCjIu5bey5YWl5L2P77yP5pyq5YWl5L2PCjMu5bey5pS25oi/77yP5pyq5pS25oi/"/>
+      <primary-key name="PRIMARY" columns="property_id"/>
+    </table>
+    <table name="property_owner_info" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="po_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="owner_identity_id" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="open_door_allowed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="po_id"/>
+    </table>
+    <table name="repair" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="image_id_list" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS7mnKrmj5DkuqQyLuW3suaPkOS6pOacquWkhOeQhjMu5aSE55CG5LitNOWkhOeQhuWujA=="/>
+      <column name="remark" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="remark_text" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="admin_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="57u05L+u5Lq65ZGY5aGr5YaZ55qE5aSE55CG6K+05piO"/>
+      <column name="repirman_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="rule" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="rule_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="unit_price" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3" remarks="5Y2V5L2N5Lu35qC8"/>
+      <column name="unit" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="overdue_unit_price" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3"/>
+      <column name="overdue_unit" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="start_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="end_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="rule_id"/>
+    </table>
+    <table name="shop" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6KGX6YGT6Zeo54mM5Y+3"/>
+      <column name="village_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+    </table>
+    <table name="tenant" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="tenant_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="birthday" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="urgent_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="urgent_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="identity_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="identity_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="start_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="end_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="authentication_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="auth_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="tenant_id"/>
+    </table>
+    <table name="village" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="village_id"/>
     </table>
   </data-source>
 </component>

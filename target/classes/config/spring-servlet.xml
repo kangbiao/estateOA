@@ -10,6 +10,7 @@
 
     <context:annotation-config/>
 
+    <!-- 配置spring自动扫描的包,如果开启了事务管理,一定要过滤掉相应的类 -->
     <context:component-scan base-package="estate">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="regex" expression=".*ServiceImpl"/>
@@ -18,6 +19,17 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/view/**" location="/view/"/>
     <mvc:resources mapping="/file/**" location="/file/"/>
+
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--&lt;!&ndash; 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller &ndash;&gt;-->
+            <!--<mvc:mapping path="/" />-->
+            <!--<mvc:mapping path="/user/**" />-->
+            <!--<mvc:mapping path="/test/**" />-->
+            <!--<bean class="com.alibaba.interceptor.CommonInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+        <!--&lt;!&ndash; 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 &ndash;&gt;-->
+    <!--</mvc:interceptors>-->
 
     <!-- 以json,xml,html返回数据 -->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

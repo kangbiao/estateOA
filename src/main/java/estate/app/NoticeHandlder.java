@@ -17,12 +17,17 @@ import java.util.ArrayList;
  * 提供公告推送的API
  */
 @RestController
-@RequestMapping("/notice")
+@RequestMapping("/api/notice")
 public class NoticeHandlder
 {
     @Autowired
     private NoticeService noticeService;
 
+    /**
+     * 获取指定数量的公告,按时间排序
+     * @param number 数量
+     * @return
+     */
     @RequestMapping(value = "/getSome/{number}",method = RequestMethod.GET)
     public BasicJson getSome(@PathVariable Integer number)
     {
@@ -37,6 +42,27 @@ public class NoticeHandlder
         basicJson.setStatus(true);
         basicJson.setJsonString(noticeEntities);
         LogUtil.E(String.valueOf(number));
+        return basicJson;
+    }
+
+    /**
+     * 根据id获取某个公告的详细信息
+     * @param noticeID
+     * @return
+     */
+    @RequestMapping(value = "/get/{noticeID}")
+    public BasicJson get(@PathVariable String noticeID)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        NoticeEntity noticeEntity=noticeService.getOne(noticeID);
+        if (noticeEntity==null)
+        {
+            basicJson.getErrorMsg().setCode("1000010");
+            basicJson.getErrorMsg().setDescription("该条公告不存在");
+            return basicJson;
+        }
+        basicJson.setStatus(true);
+        basicJson.setJsonString(noticeEntity);
         return basicJson;
     }
 }

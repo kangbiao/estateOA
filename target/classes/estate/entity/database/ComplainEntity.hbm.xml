@@ -4,39 +4,42 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="estate.entity.database.ComplainEntity" table="complain" schema="" catalog="estate">
-        <id name="complainId">
-            <column name="complainID" sql-type="int unsigned" not-null="true"/>
+    <class name="estate.entity.database.ComplainEntity" table="complain" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
         </id>
         <property name="title">
-            <column name="title" sql-type="varchar" length="50"/>
+            <column name="title" sql-type="varchar" length="100"/>
         </property>
-        <property name="detail">
-            <column name="detail" sql-type="text" length="65535"/>
+        <property name="content">
+            <column name="content" sql-type="text" length="65535"/>
         </property>
-        <property name="picPath">
-            <column name="picPath" sql-type="varchar"/>
-        </property>
-        <property name="createTime">
-            <column name="createTime" sql-type="varchar" length="15"/>
-        </property>
-        <property name="status">
-            <column name="status" sql-type="int"/>
-        </property>
-        <property name="score">
-            <column name="score" sql-type="int"/>
-        </property>
-        <property name="adminId">
-            <column name="adminID" sql-type="int unsigned"/>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="100"/>
         </property>
         <property name="userId">
-            <column name="userID" sql-type="int unsigned"/>
+            <column name="user_id" sql-type="int unsigned"/>
         </property>
-        <many-to-one name="adminByAdminId" insert="false" update="false" class="estate.entity.database.AdminEntity">
-            <column name="adminID"/>
-        </many-to-one>
-        <many-to-one name="userByUserId" update="false" insert="false" class="estate.entity.database.UserEntity">
-            <column name="userID"/>
-        </many-to-one>
+        <property name="time">
+            <column name="time" sql-type="bigint"/>
+        </property>
+        <property name="imageIdList">
+            <column name="image_id_list" sql-type="varchar" length="50"/>
+        </property>
+        <property name="type">
+            <column name="type" sql-type="tinyint"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="tinyint"/>
+        </property>
+        <property name="adminId">
+            <column name="admin_id" sql-type="int"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="tinyint"/>
+        </property>
+        <property name="result">
+            <column name="result" sql-type="varchar" length="200"/>
+        </property>
     </class>
 </hibernate-mapping>

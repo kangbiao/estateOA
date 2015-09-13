@@ -1,11 +1,11 @@
 package estate.controller;
 
-import estate.common.util.Config;
 import estate.common.util.LogUtil;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
+import estate.entity.json.TableFilter;
 import estate.service.NoticeService;
-import org.apache.commons.io.FileUtils;
+import estate.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -18,9 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,25 +30,23 @@ public class NoticeController
 {
     @Autowired
     private NoticeService noticeService;
-    @RequestMapping(value = "/test" ,method = RequestMethod.GET)
-    public BasicJson test()
-    {
-        ArrayList<NoticeEntity> arrayList=new ArrayList<NoticeEntity>();
-        arrayList.add(noticeService.getOne("1"));
-        arrayList.add(noticeService.getOne("2"));
+    @Autowired
+    private PictureService pictureService;
 
-        BasicJson json=new BasicJson();
-        json.setStatus(true);
-        json.setErrorMsg(null);
-        json.setJsonString(arrayList);
-        return json;
-    }
 
-    //增加公告
+    /**
+     * 增加一条公告信息
+     * @param noticeEntity
+     * @param bindingResult
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
     public BasicJson add(@Valid NoticeEntity noticeEntity,BindingResult bindingResult,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
+
+        //验证失败
         if (bindingResult.hasErrors())
         {
             List<FieldError> errors=bindingResult.getFieldErrors();
@@ -62,29 +57,27 @@ public class NoticeController
             basicJson.setJsonString(errors);
             return basicJson;
         }
-        String time=String.valueOf(System.currentTimeMillis());
 
-        noticeEntity.setCreateTime(time);
-        noticeEntity.setPicPath(null);
+        String time=String.valueOf(System.currentTimeMillis());
+        noticeEntity.setTime(time);
+        noticeEntity.setCuId(2);
         try
         {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            MultipartFile file = multipartRequest.getFile("file");
+            MultipartFile file = multipartRequest.getFile("picture");
 
             if (!file.isEmpty())
             {
-                String filename = Config.PICPATH + String.valueOf(System.currentTimeMillis()) + file
-                        .getOriginalFilename();
-                try
+                // TODO 捕捉图片上传异常
+                String id=pictureService.saveAndReturnID(file);
+                if(id!=null)
                 {
-                    FileUtils.copyInputStreamToFile(file.getInputStream(), new File(filename));
-                    noticeEntity.setPicPath(time + "-" + file.getOriginalFilename());
+                    noticeEntity.setPictureIdList(id);
                 }
-                catch (IOException e)
+                else
                 {
-                    LogUtil.E("上传公告图片写入文件失败" + e.getMessage());
-                    basicJson.getErrorMsg().setCode("100102");
-                    basicJson.getErrorMsg().setDescription("上传图片失败");
+                    basicJson.getErrorMsg().setCode("");
+                    basicJson.getErrorMsg().setDescription("上传图片失败,请重试");
                     return basicJson;
                 }
             }
@@ -96,7 +89,7 @@ public class NoticeController
         }
         catch (Exception e)
         {
-            LogUtil.E("上传公告图片写入数据库失败");
+            LogUtil.E("公告写入数据库失败-"+e.getMessage());
             basicJson.getErrorMsg().setCode("100103");
             basicJson.getErrorMsg().setDescription("公告增加失败,请检查您的输入");
             return basicJson;
@@ -106,7 +99,11 @@ public class NoticeController
         return basicJson;
     }
 
-
+    /**
+     * 根据公告id获取公告的详细信息
+     * @param noticeID
+     * @return
+     */
     @RequestMapping(value = "/get/{noticeID}")
     public BasicJson get(@PathVariable String noticeID)
     {
@@ -123,7 +120,11 @@ public class NoticeController
         return basicJson;
     }
 
-
+    /**
+     * 根据公告id删除指定的公告
+     * @param noticeID
+     * @return
+     */
     @RequestMapping(value = "/delete/{noticeID}")
     public BasicJson delete(@PathVariable String noticeID)
     {
@@ -141,7 +142,18 @@ public class NoticeController
         return basicJson;
     }
 
+    /**
+     * 根据datatable获取某一页的数据内容
+     * @param tableFilter datatable的筛选条件
+     * @return
+     */
+    @RequestMapping(value = "/get/list",method = RequestMethod.POST)
+    public BasicJson pageList(TableFilter tableFilter)
+    {
+        BasicJson basicJson=new BasicJson(false);
 
+        return basicJson;
+    }
 
 }
 

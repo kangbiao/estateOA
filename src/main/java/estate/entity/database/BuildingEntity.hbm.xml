@@ -4,27 +4,18 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="estate.entity.database.BuildingEntity" table="building" schema="" catalog="estate">
+    <class name="estate.entity.database.BuildingEntity" table="building" schema="" catalog="PropertySystem">
         <id name="buildingId">
-            <column name="buildingID" sql-type="int unsigned" not-null="true"/>
+            <column name="building_id" sql-type="int unsigned" not-null="true"/>
         </id>
+        <property name="villageId">
+            <column name="village_id" sql-type="int unsigned"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="45"/>
+        </property>
         <property name="buildingCode">
-            <column name="buildingCode" sql-type="varchar" length="25"/>
+            <column name="building_code" sql-type="varchar" length="45"/>
         </property>
-        <property name="buildingName">
-            <column name="buildingName" sql-type="varchar" length="25"/>
-        </property>
-        <property name="gardenId">
-            <column name="gardenID" sql-type="int unsigned"/>
-        </property>
-        <many-to-one name="gardenByGardenId" update="false" insert="false" class="estate.entity.database.GardenEntity">
-            <column name="gardenID"/>
-        </many-to-one>
-        <set name="unitsByBuildingId" inverse="true">
-            <key>
-                <column name="buildingID"/>
-            </key>
-            <one-to-many not-found="ignore" class="estate.entity.database.UnitEntity"/>
-        </set>
     </class>
 </hibernate-mapping>
