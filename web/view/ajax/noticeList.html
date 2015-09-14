@@ -4,8 +4,8 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="#">物业费管理</a></li>
-            <li><a href="#">费用项目</a></li>
+            <li><a href="#">公告管理</a></li>
+            <li><a href="#">历史公告</a></li>
         </ol>
     </div>
 </div>
@@ -21,7 +21,8 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content no-padding">
-                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
+                <table class="display table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="estateListTable">
                     <thead>
                     <tr>
                         <th>序号</th>
@@ -32,10 +33,6 @@
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <!-- Start: list_row -->
-                    <!-- End: list_row -->
-                    </tbody>
                     <tfoot>
                     <tr>
                         <th>序号</th>
@@ -51,7 +48,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" id="formModel">
+<div class="modal fade" role="dialog" id="noticeModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -60,9 +57,10 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
+                    <h2 id="title"></h2>
+                    <p id="description"></p>
                     <div class="row">
-                        <div class="col-md-12">
-
+                        <div class="col-md-12" id="content">
                         </div>
                     </div>
                 </div>
@@ -77,10 +75,11 @@
     var editTable;//全局的datatable变量
 
     //删除数据
-    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
+    $('#estateListTable').on( 'click', 'button#delrow', function () {
         var comfirm=confirm("确定删除该公告?");
         if(comfirm) {
             var data = editTable.row($(this).parents('tr')).data();
+
             $.ajax({
                 type: "get",
                 async: false,
@@ -89,11 +88,12 @@
                 success: function (result) {
                     if (result.status) {
                         alert("删除成功!");
+                        editTable.row($(this)).remove().draw(false);
                     } else {
                         alert(result.errorMsg.description);
                     }
                 },
-                error: function (errorMsg) {
+                error: function () {
                     alert("服务器连接失败,请重试!");
                 }
             });
@@ -102,7 +102,6 @@
 
     //初始化表格数据
     function initDataTable(){
-        console.log(urlConfig.noticeList);
         editTable=$('#estateListTable').DataTable({
             "processing": true,
             "serverSide": true,
@@ -127,7 +126,7 @@
             },{
                 "targets": 0,
                 "data": "noticeId",
-                "visible": true,
+                "visible": false,
                 "orderable": false,
                 "searchable": false
 
@@ -167,7 +166,7 @@
                 "thousands":      ",",
                 "lengthMenu":     "每页显示 _MENU_ 条",
                 "loadingRecords": "加载中",
-                "processing":     "数据处理中",
+                "processing":     "数据加载中...",
                 "search":         "搜索:",
                 "zeroRecords":    "没有找到匹配数据",
                 "paginate": {
@@ -185,31 +184,22 @@
         editTable.on( 'order.dt search.dt', function () {
             editTable.column(0).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
-                console.log(cell);
-                console.log(i);
+//                console.log(cell);
+//                console.log(i);
             } );
         } ).draw();
         $('#estateListTable tbody').on( 'click', '#moreinfo', function () {
             var data = editTable.row( $(this).parents('tr') ).data();
             console.log(data);
-            $("#formModel").modal("show");//弹出框show
-            $("#formModel").find('.modal-title').text("编辑费用项目");
-            alert("ffsfs");
+            $("#noticeModal").modal("show");//弹出框show
+            $("#noticeModal").find('.modal-title').text("公告详细信息");
+            $("#noticeModal").find("#title").text(data['title']);
+            $("#noticeModal").find("#description").text(data['description']);
+            $("#noticeModal").find("#content").html(data['content']);
         } );
-
     }
+
     $(document).ready(function() {
-        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
-            showButtonPanel:true,
-            closeText:"关闭",
-            yearSuffix: '年',
-            currentText:'今天',
-            showMonthAfterYear:true,
-            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-            dayNamesMin: ['日','一','二','三','四','五','六']
-        });
         LoadDataTablesScripts(initDataTable);
     });
 </script>

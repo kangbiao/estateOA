@@ -19,17 +19,17 @@
             </div>
             <div class="box-content">
                 <h4 class="page-header">物业费配置</h4>
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form" id="estate_fee_form">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">费用名称</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" name="fee_name" class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">费用单价</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -37,13 +37,13 @@
                         <div class="col-sm-4">
                             <div class="radio-inline">
                                 <label>
-                                    <input type="radio" checked="" name="radio-inline">按平米
+                                    <input type="radio" checked="" name="unit_type" value="squre">按平米
                                     <i class="fa fa-circle-o"></i>
                                 </label>
                             </div>
                             <div class="radio-inline">
                                 <label>
-                                    <input type="radio" checked="" name="radio-inline"> 按户
+                                    <input type="radio" checked="" name="unit_type" value="family"> 按户
                                     <i class="fa fa-circle-o"></i>
                                 </label>
                             </div>
@@ -52,36 +52,36 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">缴费时间</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" placeholder="开始时间">
+                            <input type="text" class="form-control input_date" placeholder="开始时间">
                         </div>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" placeholder="结束时间">
+                            <input type="text" class="form-control input_date" placeholder="结束时间">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">生效时间</label>
                         <div class="col-sm-2">
-                            <input type="text" id="input_date" class="form-control" placeholder="Date">
+                            <input type="text" class="form-control input_date" name="start_time" placeholder="">
                         </div>
                         <div class="col-sm-2">
-                            <input type="text" id="input_date" class="form-control" placeholder="Date">
+                            <input type="text" class="form-control input_date" name="end_time" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">滞纳金</label>
                         <div class="col-sm-1">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" name="overdue_unit_price" placeholder="">
                         </div>
                         <div class="col-sm-3">
                             <div class="radio-inline">
                                 <label>
-                                    <input type="radio" checked="" name="1radio-inline">每月
+                                    <input type="radio" checked="" name="overdue_unit_type" value="month">每月
                                     <i class="fa fa-circle-o"></i>
                                 </label>
                             </div>
                             <div class="radio-inline">
                                 <label>
-                                    <input type="radio" checked="" name="1radio-inline"> 每日
+                                    <input type="radio" checked="" name="overdue_unit_type" value="day"> 每日
                                     <i class="fa fa-circle-o"></i>
                                 </label>
                             </div>
@@ -92,7 +92,7 @@
                         <div class="col-sm-1">
                             <div class="toggle-switch toggle-switch-success">
                                 <label>
-                                    <input type="checkbox" checked="">
+                                    <input type="checkbox" name="door_authority" checked="">
                                     <div class="toggle-switch-inner"></div>
                                     <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
                                 </label>
@@ -104,10 +104,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-2">
-                            <button type="submit" class="btn btn-primary btn-label-left">
-                                <span><i class="fa fa-clock-o"></i></span>
-                                增加费用
-                            </button>
+                            <input type="button" onclick="submitForm()" id="add_estate_fee"
+                                   class="btn btn-primary btn-label-left" value="确认增加">
                         </div>
                     </div>
                 </form>
@@ -116,26 +114,86 @@
     </div>
 </div>
 <script type="text/javascript">
-    // Run Select2 plugin on elements
-    function DemoSelect2(){
-        $('#s2_with_tag').select2({placeholder: "Select OS"});
-        $('#s2_country').select2();
+    function submitForm()
+    {
+        var fields = $("#estate_fee_form").serializeArray();
+        console.log(fields);
+
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.addFee,
+            data: fields,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
     }
-    // Run timepicker
-    function DemoTimePicker(){
-        $('#input_time').timepicker({setDate: new Date()});
+    function estateFeeAddValidator() {
+        $('#estate_fee_form').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                fee_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '费用名不能为空'
+                        },
+                        regexp: {
+                            regexp: /^\w*$/,
+                            message: '费用名不合法'
+                        }
+                    }
+                },
+                fee_unit_price: {
+                    validators: {
+                        notEmpty: {
+                            message: '单价不能为空'
+                        },
+                        regexp: {
+                            regexp: /^\d+[.]*\d*$/,
+                            message: '单价不合法'
+                        }
+                    }
+                },
+                overdue_unit_price: {
+                    validators: {
+                        notEmpty: {
+                            message: '滞纳金不能为空'
+                        },
+                        regexp: {
+                            regexp: /^\d+[.]*\d*$/,
+                            message: '滞纳金不合法'
+                        }
+                    }
+                }
+            }
+        });
     }
     $(document).ready(function() {
-        FormLayoutExampleInputLength($( ".slider-style" ));
+//        FormLayoutExampleInputLength($( ".slider-style" ));
         // Initialize datepicker
-        $('#input_date').datepicker({setDate: new Date()});
-        // Load Timepicker plugin
-        LoadTimePickerScript(DemoTimePicker);
-        // Add tooltip to form-controls
-        LoadSelect2Script(DemoSelect2);
-        // Load example of form validation
-        LoadBootstrapValidatorScript(DemoFormValidator);
-        // Add drag-n-drop feature to boxes
-        WinMove();
+        $('.input_date').datepicker({
+            setDate: new Date(), dateFormat: "yy-mm-dd",
+            showButtonPanel: true,
+            closeText: "关闭",
+            yearSuffix: '年',
+            currentText: '今天',
+            showMonthAfterYear: true,
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+            dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+            dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
+        });
+        LoadBootstrapValidatorScript(estateFeeAddValidator);
     });
 </script>

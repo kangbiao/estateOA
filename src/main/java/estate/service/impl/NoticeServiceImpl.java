@@ -30,6 +30,8 @@ public class NoticeServiceImpl implements NoticeService
         noticeEntity.setTitle("Ds");
         noticeEntity.setExpiretime(7);
         noticeEntity.setTime("1905-5-6");
+        noticeEntity.setDescription("这是描述");
+        noticeEntity.setContent("<p>这是详情</p>");
         entities.add(noticeEntity);
         entities.add(noticeEntity);
         entities.add(noticeEntity);entities.add(noticeEntity);entities.add(noticeEntity);

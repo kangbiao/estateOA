@@ -3,6 +3,7 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/web/view/ajax/estateAdd.html" value="file://$PROJECT_DIR$/web/view/ajax" />
         <entry key="file://$PROJECT_DIR$/web/view/index.html" value="file://$PROJECT_DIR$/web/view" />
       </map>
     </option>

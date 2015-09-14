@@ -6,5 +6,9 @@
 var host="/oa/";
 var urlConfig={};
 
+//公告部分的url
 urlConfig.noticeDelete=host+"notice/delete";
 urlConfig.noticeList=host+"notice/list";
+
+//费用相关的URL
+urlConfig.addFee=host+"fee/add";
