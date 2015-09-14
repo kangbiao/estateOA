@@ -3,6 +3,7 @@ package estate.controller;
 import estate.common.util.LogUtil;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
+import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.NoticeService;
 import estate.service.PictureService;
@@ -147,12 +148,14 @@ public class NoticeController
      * @param tableFilter datatable的筛选条件
      * @return
      */
-    @RequestMapping(value = "/get/list",method = RequestMethod.POST)
-    public BasicJson pageList(TableFilter tableFilter)
+    @RequestMapping(value = "/list")
+    public TableData pageList(TableFilter tableFilter)
     {
-        BasicJson basicJson=new BasicJson(false);
-
-        return basicJson;
+        TableData tableData=new TableData();
+        tableData.setJsonString(noticeService.getList(tableFilter));
+        tableData.setRecordsFiltered("21");
+        tableData.setRecordsTotal("333");
+        return tableData;
     }
 
 }
