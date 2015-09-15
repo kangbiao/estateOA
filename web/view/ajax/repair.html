@@ -72,14 +72,14 @@
                         <div class="col-md-12">
                             <form id="editForm" method="post" action="" class="form-horizontal">
                                 <div class="form-group">
-                                    <div class="col-sm-7">
-                                        <input type="hidden" class="form-control" name="estateID" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-3 control-label">维修人员电话</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="estateName" />
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="repair" id="repairManList">
+                                            <option value="">-- 选择维修人员 --</option>
+                                            <option value="1">小明</option>
+                                            <option value="2">小红</option>
+                                            <option value="3">张三</option>
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -95,9 +95,16 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script type="text/javascript">
+
+
     var editTable;//全局的datatable变量
 
+    $('#estateListTable tbody').on( 'click', 'button#chooseRepirman', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        console.log(data);
+        $("#formModel").modal("show");//弹出框show
 
+    });
     //初始化表格数据
     function initDataTable(){
         editTable=$('#estateListTable').DataTable({
@@ -115,60 +122,64 @@
                 "defaultContent":
                         "<button id='delrow' class='btn btn-primary' type='button'>删除</button>"
             },{
-                "targets": -2,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                        "<button id='moreinfo' class='btn btn-primary' type='button'>编辑</button>"
-            },{
                 "targets": 0,
-                "data": "fiId",
+                "data": "id",
                 "visible": false,
                 "orderable": false,
                 "searchable": false
 
             },{
                 "targets": 1,
-                "data": "name",
+                "data": "title",
                 "visible": true,
                 "orderable": true,
                 "searchable": true
 
             },{
                 "targets": 2,
-                "data": "ruleEntity.unitPrice",
+                "data": "userId",
                 "visible": true,
                 "orderable": true,
                 "searchable": true
 
             },{
                 "targets": 3,
-                "data": "ruleEntity.unit",
+                "data": "time",
                 "visible": true,
                 "orderable": true,
                 "searchable": true
 
             },{
                 "targets": 4,
-                "data": "ruleEntity.startTime",
+                "data": "status",
                 "visible": true,
                 "orderable": true,
                 "searchable": true
 
             },{
                 "targets": 5,
-                "data": "ruleEntity.overdueUnitPrice",
+                "data": "remark",
                 "visible": true,
                 "orderable": true,
-                "searchable": true
+                "searchable": true,
+                "defaultContent":"--"
 
             },{
                 "targets": 6,
-                "data": "ruleEntity.overdueUnit",
+                "data": "repirmanId",
                 "visible": true,
                 "orderable": true,
-                "searchable": true
+                "searchable": true,
+                "defaultContent":
+                        "<button id='chooseRepirman' class='btn btn-primary' type='button'>设置</button>"
+
+            },{
+                "targets": 7,
+                "data": "adminId",
+                "visible": true,
+                "orderable": true,
+                "searchable": true,
+                "defaultContent":"--"
 
             }
             ],
@@ -202,6 +213,12 @@
         });
 
     }
+
+    function selectRepairMan(){
+        $('#repairManList').select2();
+        $.getScript('plugins/select2/select2_locale_zh-CN.js');
+    }
+
     $(document).ready(function() {
         $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
             showButtonPanel:true,
@@ -214,6 +231,7 @@
             dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
             dayNamesMin: ['日','一','二','三','四','五','六']
         });
+        LoadSelect2Script(selectRepairMan);
         LoadDataTablesScripts(initDataTable);
     });
 </script>
