@@ -190,7 +190,70 @@
     //初始化表格数据
     function initDataTable(){
         editTable=$('#estateListTable').DataTable({
-            "ajax":"testdata/data.txt",
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.feeList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": -1,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='delrow' class='btn btn-primary' type='button'>删除</button>"
+            },{
+                "targets": -2,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='moreinfo' class='btn btn-primary' type='button'>编辑</button>"
+            },{
+                "targets": 0,
+                "data": "fiId",
+                "visible": false,
+                "orderable": false,
+                "searchable": false
+
+            },{
+                "targets": 1,
+                "data": "name",
+                "visible": true,
+                "orderable": true,
+                "searchable": true
+
+            },{
+                "targets": 2,
+                "data": "isPeriodic",
+                "visible": true,
+                "orderable": true,
+                "searchable": true
+
+            },{
+                "targets": 3,
+                "data": "ruleEntity.unitPrice",
+                "visible": true,
+                "orderable": true,
+                "searchable": true
+
+            },{
+                "targets": 4,
+                "data": "ruleEntity.unit",
+                "visible": true,
+                "orderable": true,
+                "searchable": true
+
+            },{
+                "targets": 5,
+                "data": "ruleEntity.overdueUnitPrice",
+                "visible": true,
+                "orderable": true,
+                "searchable": true
+
+            }
+            ],
             "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,
             "sDom":
@@ -218,25 +281,6 @@
                     "sortDescending": ":倒序"
                 }
             },
-            "columnDefs": [{
-                "targets": -2,//编辑
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent": "<button id='editrow' class='btn btn-primary' type='button'><i class='fa fa-edit'></i></button>"
-            },{
-                "targets": -1,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent": "<button id='delrow' class='btn btn-primary' type='button'><i class='fa fa-trash-o'></i></button>"
-            },{
-                "visible": false,
-                "orderable": false,
-                "searchable": false,
-                "targets": 0
-            }
-            ]
         });
 
     }

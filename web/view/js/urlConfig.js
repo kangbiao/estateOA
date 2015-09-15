@@ -12,3 +12,4 @@ urlConfig.noticeList=host+"notice/list";
 
 //费用相关的URL
 urlConfig.addFee=host+"fee/add";
+urlConfig.feeList=host+"fee/list";

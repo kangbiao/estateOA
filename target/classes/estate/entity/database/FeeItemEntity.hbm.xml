@@ -5,8 +5,9 @@
 <hibernate-mapping>
 
     <class name="estate.entity.database.FeeItemEntity" table="fee_item" schema="" catalog="PropertySystem">
-        <id name="fsId">
-            <column name="fs_id" sql-type="int unsigned" not-null="true"/>
+        <id name="fiId">
+            <column name="fi_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar" length="100"/>
@@ -26,5 +27,8 @@
         <property name="villageId">
             <column name="village_id" sql-type="int unsigned"/>
         </property>
+        <many-to-one name="ruleEntity" insert="false" update="false" class="estate.entity.database.RuleEntity">
+            <column name="rule_id"/>
+         </many-to-one>
     </class>
 </hibernate-mapping>

@@ -9,6 +9,13 @@ public class TableData extends BasicJson
     private String recordsTotal;
     private String recordsFiltered;
 
+    public TableData(){}
+
+    public TableData(Boolean status)
+    {
+        super(status);
+    }
+
     public String getRecordsFiltered()
     {
         return recordsFiltered;

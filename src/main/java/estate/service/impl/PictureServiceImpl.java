@@ -1,6 +1,6 @@
 package estate.service.impl;
 
-import estate.common.util.Config;
+import estate.common.Config;
 import estate.dao.PictureDao;
 import estate.entity.database.PictureEntity;
 import estate.service.PictureService;

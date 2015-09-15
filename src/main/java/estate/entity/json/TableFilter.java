@@ -6,5 +6,28 @@ package estate.entity.json;
  */
 public class TableFilter
 {
-    
+    private Integer length;
+    private Integer start;
+
+    public Integer getLength()
+    {
+        return length;
+    }
+
+    public void setLength(Integer length)
+    {
+        this.length = length;
+    }
+
+
+
+    public Integer getStart()
+    {
+        return start;
+    }
+
+    public void setStart(Integer start)
+    {
+        this.start = start;
+    }
 }
