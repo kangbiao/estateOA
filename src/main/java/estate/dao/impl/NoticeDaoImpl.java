@@ -62,7 +62,7 @@ public class NoticeDaoImpl implements NoticeDao
     {
         Session session=getSession();
         TableData tableData=new TableData();
-        ArrayList<NoticeEntity> entities=new ArrayList<NoticeEntity>();
+        ArrayList<NoticeEntity> entities;
         Query query;
 
         if (!tableFilter.getSearchValue().equals(""))
