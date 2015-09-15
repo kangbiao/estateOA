@@ -5,17 +5,17 @@ package estate.entity.database;
  */
 public class FeeItemOrderEntity
 {
-    private int id;
+    private Integer id;
     private Integer propertyId;
     private Integer feeItemId;
     private Byte isBilled;
 
-    public int getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }

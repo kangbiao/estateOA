@@ -7,6 +7,7 @@
     <class name="estate.entity.database.RuleEntity" table="rule" schema="" catalog="PropertySystem">
         <id name="ruleId">
             <column name="rule_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="unitPrice">
             <column name="unit_price" sql-type="decimal" precision="11" scale="2"/>

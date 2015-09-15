@@ -12,6 +12,7 @@
       <column name="unit_code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5qW85qCL5Y2V5YWD5Y+3"/>
       <column name="code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5oi/5Y+3"/>
       <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
     </table>
     <table name="app_user" schema="" catalog="PropertySystem" type="TABLE">
       <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="5omL5py65Y+356CB"/>
@@ -115,14 +116,14 @@
       <primary-key name="PRIMARY" columns="family_id"/>
     </table>
     <table name="fee_item" schema="" catalog="PropertySystem" type="TABLE">
-      <column name="fs_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fi_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="decription" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
       <column name="fee_type_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="rule_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="is_periodic" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="fs_id"/>
+      <primary-key name="PRIMARY" columns="fi_id"/>
     </table>
     <table name="fee_item_order" schema="" catalog="PropertySystem" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -177,6 +178,7 @@
       <column name="floor" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5qW85bGC5Lmm"/>
       <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MTrmoIflh4bovabkvY3vvIwy77ya5aSn6L2m5L2N77yMM++8muWtkOavjei9puS9je+8jDTvvIzlsI/ovabkvY3vvIw177yM5Zyw5LiK5Li05pe25L2N"/>
       <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
     </table>
     <table name="picture" schema="" catalog="PropertySystem" type="TABLE">
       <column name="picture_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

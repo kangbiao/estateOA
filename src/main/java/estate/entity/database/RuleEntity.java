@@ -1,37 +1,35 @@
 package estate.entity.database;
 
-import java.math.BigDecimal;
-
 /**
  * Created by kangbiao on 15-9-13.
  */
 public class RuleEntity
 {
-    private int ruleId;
-    private BigDecimal unitPrice;
+    private Integer ruleId;
+    private String unitPrice;
     private String unit;
     private String description;
-    private BigDecimal overdueUnitPrice;
+    private String overdueUnitPrice;
     private String overdueUnit;
     private Long startTime;
     private Long endTime;
 
-    public int getRuleId()
+    public Integer getRuleId()
     {
         return ruleId;
     }
 
-    public void setRuleId(int ruleId)
+    public void setRuleId(Integer ruleId)
     {
         this.ruleId = ruleId;
     }
 
-    public BigDecimal getUnitPrice()
+    public String getUnitPrice()
     {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice)
+    public void setUnitPrice(String unitPrice)
     {
         this.unitPrice = unitPrice;
     }
@@ -56,12 +54,12 @@ public class RuleEntity
         this.description = description;
     }
 
-    public BigDecimal getOverdueUnitPrice()
+    public String getOverdueUnitPrice()
     {
         return overdueUnitPrice;
     }
 
-    public void setOverdueUnitPrice(BigDecimal overdueUnitPrice)
+    public void setOverdueUnitPrice(String overdueUnitPrice)
     {
         this.overdueUnitPrice = overdueUnitPrice;
     }
@@ -96,47 +94,4 @@ public class RuleEntity
         this.endTime = endTime;
     }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        RuleEntity that = (RuleEntity) o;
-
-        if (ruleId != that.ruleId)
-            return false;
-        if (unitPrice != null ? !unitPrice.equals(that.unitPrice) : that.unitPrice != null)
-            return false;
-        if (unit != null ? !unit.equals(that.unit) : that.unit != null)
-            return false;
-        if (description != null ? !description.equals(that.description) : that.description != null)
-            return false;
-        if (overdueUnitPrice != null ? !overdueUnitPrice.equals(that.overdueUnitPrice) : that.overdueUnitPrice != null)
-            return false;
-        if (overdueUnit != null ? !overdueUnit.equals(that.overdueUnit) : that.overdueUnit != null)
-            return false;
-        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null)
-            return false;
-        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = ruleId;
-        result = 31 * result + (unitPrice != null ? unitPrice.hashCode() : 0);
-        result = 31 * result + (unit != null ? unit.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (overdueUnitPrice != null ? overdueUnitPrice.hashCode() : 0);
-        result = 31 * result + (overdueUnit != null ? overdueUnit.hashCode() : 0);
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        return result;
-    }
 }
