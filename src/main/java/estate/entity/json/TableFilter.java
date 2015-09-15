@@ -8,6 +8,7 @@ public class TableFilter
 {
     private Integer length;
     private Integer start;
+    private String searchValue;
 
     public Integer getLength()
     {
@@ -20,7 +21,6 @@ public class TableFilter
     }
 
 
-
     public Integer getStart()
     {
         return start;
@@ -29,5 +29,15 @@ public class TableFilter
     public void setStart(Integer start)
     {
         this.start = start;
+    }
+
+    public String getSearchValue()
+    {
+        return searchValue;
+    }
+
+    public void setSearchValue(String searchValue)
+    {
+        this.searchValue = searchValue;
     }
 }

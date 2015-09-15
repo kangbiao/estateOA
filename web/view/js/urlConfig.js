@@ -13,3 +13,6 @@ urlConfig.noticeList=host+"notice/list";
 //费用相关的URL
 urlConfig.addFee=host+"fee/add";
 urlConfig.feeList=host+"fee/list";
+
+//维修相关的URL
+urlConfig.repairList=host+"repair/list";

@@ -1,6 +1,8 @@
 package estate.dao;
 
 import estate.entity.database.NoticeEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 
 import java.util.ArrayList;
 
@@ -26,6 +28,10 @@ public interface NoticeDao
     boolean delete(String noticeID);
 
     ArrayList<NoticeEntity> getSome(Integer num);
+
+    TableData getList(TableFilter tableFilter);
+
+    Integer count();
 
 
 }

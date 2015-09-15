@@ -2,6 +2,7 @@ package estate.service.impl;
 
 import estate.dao.NoticeDao;
 import estate.entity.database.NoticeEntity;
+import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +23,9 @@ public class NoticeServiceImpl implements NoticeService
     @Autowired
     private NoticeDao noticeDao;
 
-    public ArrayList<NoticeEntity> getList(TableFilter filter)
+    public TableData getList(TableFilter filter)
     {
-        ArrayList<NoticeEntity> entities=new ArrayList<NoticeEntity>();
-        NoticeEntity noticeEntity=new NoticeEntity();
-        noticeEntity.setNoticeId(2);
-        noticeEntity.setTitle("Ds");
-        noticeEntity.setExpiretime(7);
-        noticeEntity.setTime("1905-5-6");
-        noticeEntity.setDescription("这是描述");
-        noticeEntity.setContent("<p>这是详情</p>");
-        entities.add(noticeEntity);
-        entities.add(noticeEntity);
-        entities.add(noticeEntity);entities.add(noticeEntity);entities.add(noticeEntity);
-        entities.add(noticeEntity);entities.add(noticeEntity);entities.add(noticeEntity);
-
-
-
-        return entities;
+        return noticeDao.getList(filter);
     }
 
     /**

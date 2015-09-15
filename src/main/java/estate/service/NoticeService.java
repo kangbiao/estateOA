@@ -1,6 +1,7 @@
 package estate.service;
 
 import estate.entity.database.NoticeEntity;
+import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public interface NoticeService
     /**
      * 根据filterEntity获取对应的公告
      */
-    ArrayList<NoticeEntity> getList(TableFilter filter);
+    TableData getList(TableFilter filter);
 
     /**
      * 添加公告信息

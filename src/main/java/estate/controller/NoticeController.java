@@ -149,14 +149,10 @@ public class NoticeController
      * @return
      */
     @RequestMapping(value = "/list")
-    public TableData pageList(TableFilter tableFilter) throws InterruptedException
+    public TableData pageList(TableFilter tableFilter,HttpServletRequest request)
     {
-        TableData tableData=new TableData();
-        tableData.setJsonString(noticeService.getList(tableFilter));
-        tableData.setRecordsFiltered("21");
-        tableData.setRecordsTotal("333");
-        Thread.sleep(2000);
-        return tableData;
+        tableFilter.setSearchValue(request.getParameter("search[value]"));
+        return noticeService.getList(tableFilter);
     }
 
 }

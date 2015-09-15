@@ -2,6 +2,8 @@ package estate.dao.impl;
 
 import estate.dao.NoticeDao;
 import estate.entity.database.NoticeEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -54,5 +56,38 @@ public class NoticeDaoImpl implements NoticeDao
         Query query=session.createQuery(hql).setFirstResult(0).setMaxResults(num);
         entities= (ArrayList<NoticeEntity>) query.list();
         return entities;
+    }
+
+    public TableData getList(TableFilter tableFilter)
+    {
+        Session session=getSession();
+        TableData tableData=new TableData();
+        ArrayList<NoticeEntity> entities=new ArrayList<NoticeEntity>();
+        Query query;
+
+        if (!tableFilter.getSearchValue().equals(""))
+        {
+            String hql="from NoticeEntity n where n.title like (?)";
+            query=session.createQuery(hql).setString(0,"%"+tableFilter.getSearchValue()+"%");
+        }
+        else
+        {
+            String hql = "from NoticeEntity n";
+            query = session.createQuery(hql);
+        }
+        Integer count=query.list().size();
+        entities=(ArrayList<NoticeEntity>)query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter
+                .getLength()).list();
+        tableData.setRecordsTotal(this.count());
+        tableData.setRecordsFiltered(count);
+        tableData.setJsonString(entities);
+        return tableData;
+    }
+
+    public Integer count()
+    {
+        Session session=getSession();
+        String hql="select count(*) from NoticeEntity ";
+        return ((Long)session.createQuery(hql).uniqueResult()).intValue();
     }
 }

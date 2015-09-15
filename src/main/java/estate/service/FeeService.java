@@ -1,9 +1,8 @@
 package estate.service;
 
 import estate.entity.database.FeeItemEntity;
+import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
-
-import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-15.
@@ -22,6 +21,6 @@ public interface FeeService
      * @param tableFilter
      * @return
      */
-    ArrayList<FeeItemEntity> feeList(TableFilter tableFilter);
+    TableData feeList(TableFilter tableFilter);
 
 }

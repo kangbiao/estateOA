@@ -6,8 +6,8 @@ package estate.entity.json;
  */
 public class TableData extends BasicJson
 {
-    private String recordsTotal;
-    private String recordsFiltered;
+    private Integer recordsTotal;
+    private Integer recordsFiltered;
 
     public TableData(){}
 
@@ -16,22 +16,22 @@ public class TableData extends BasicJson
         super(status);
     }
 
-    public String getRecordsFiltered()
+    public Integer getRecordsFiltered()
     {
         return recordsFiltered;
     }
 
-    public void setRecordsFiltered(String recordsFiltered)
+    public void setRecordsFiltered(Integer recordsFiltered)
     {
         this.recordsFiltered = recordsFiltered;
     }
 
-    public String getRecordsTotal()
+    public Integer getRecordsTotal()
     {
         return recordsTotal;
     }
 
-    public void setRecordsTotal(String recordsTotal)
+    public void setRecordsTotal(Integer recordsTotal)
     {
         this.recordsTotal = recordsTotal;
     }

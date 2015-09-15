@@ -80,10 +80,12 @@ public class FeeController
     @RequestMapping(value = "/list")
     public TableData feeList(TableFilter tableFilter,HttpServletRequest request)
     {
+        LogUtil.E(request.getParameter("search[value]"));
+        tableFilter.setSearchValue(request.getParameter("search[value]"));
         TableData tableData=new TableData(false);
         try
         {
-            tableData.setJsonString(feeService.feeList(tableFilter));
+            return feeService.feeList(tableFilter);
         }
         catch (Exception e)
         {
@@ -93,7 +95,6 @@ public class FeeController
             return tableData;
         }
 
-        return tableData;
     }
 
 }

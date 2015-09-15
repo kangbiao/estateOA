@@ -94,4 +94,5 @@ public class RuleEntity
         this.endTime = endTime;
     }
 
+
 }
