@@ -1,6 +1,7 @@
 package estate.service.impl;
 
 import estate.dao.RepairDao;
+import estate.entity.database.RepairEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.RepairService;
@@ -19,5 +20,11 @@ public class RepairServiceImpl implements RepairService
     public TableData getList(TableFilter tableFilter)
     {
         return repairDao.getList(tableFilter);
+    }
+
+    public void setRepairMan(RepairEntity repairEntity)
+    {
+
+        //TODO 写入数据库成功后调用短信发送接口
     }
 }

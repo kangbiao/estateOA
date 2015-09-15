@@ -1,5 +1,8 @@
 package estate.controller;
 
+import estate.common.util.LogUtil;
+import estate.entity.database.RepairEntity;
+import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.RepairService;
@@ -29,5 +32,27 @@ public class RepairController
             tableFilter.setSearchValue("");
 
         return repairService.getList(tableFilter);
+    }
+
+    @RequestMapping(value = "/setRepairMan")
+    public BasicJson setRepairMan(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        RepairEntity repairEntity=new RepairEntity();
+        repairEntity.setId(Integer.valueOf(request.getParameter("repairID")));
+        repairEntity.setRepirmanId(Integer.valueOf(request.getParameter("repairManID")));
+        try
+        {
+            repairService.setRepairMan(repairEntity);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            basicJson.getErrorMsg().setCode("100015");
+            basicJson.getErrorMsg().setDescription("操作失败");
+            return basicJson;
+        }
+        basicJson.setStatus(true);
+        return basicJson;
     }
 }

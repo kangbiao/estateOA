@@ -2,6 +2,7 @@ package estate.entity.database;
 
 /**
  * Created by kangbiao on 15-9-13.
+ *
  */
 public class NoticeEntity
 {

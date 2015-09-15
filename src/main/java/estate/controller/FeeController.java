@@ -80,7 +80,6 @@ public class FeeController
     @RequestMapping(value = "/list")
     public TableData feeList(TableFilter tableFilter,HttpServletRequest request)
     {
-        LogUtil.E(request.getParameter("search[value]"));
         tableFilter.setSearchValue(request.getParameter("search[value]"));
         TableData tableData=new TableData(false);
         try
@@ -96,5 +95,6 @@ public class FeeController
         }
 
     }
+
 
 }
