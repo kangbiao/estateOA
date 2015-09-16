@@ -50,7 +50,7 @@ public class PropertyServiceImpl implements PropertyService
         Set<Property> properties=new HashSet<Property>();
         for (Integer id:ids)
         {
-            properties.add(this.get(2));
+            properties.add(this.get(id));
         }
         return properties;
     }
