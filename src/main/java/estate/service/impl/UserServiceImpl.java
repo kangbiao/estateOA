@@ -5,8 +5,9 @@ import estate.dao.PropertyDao;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
+import estate.entity.database.TenantEntity;
 import estate.entity.display.Owner;
-import estate.entity.display.Property;
+import estate.entity.display.Tenant;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.BaseService;
@@ -16,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -67,7 +66,6 @@ public class UserServiceImpl implements UserService,BaseService
         for (OwnerEntity ownerEntity:entities)
         {
             Owner owner=new Owner();
-            Set<Property> properties=new HashSet();
             owner.setName(ownerEntity.getName());
             owner.setPhone(ownerEntity.getPhone());
             owner.setSex(Convert.num2sex(ownerEntity.getSex()));
@@ -80,12 +78,7 @@ public class UserServiceImpl implements UserService,BaseService
             owner.setUrgentName(ownerEntity.getUrgentName());
             owner.setUrgentPhone(ownerEntity.getUrgentPhone());
 
-//            properties.add(propertyDao.get(1));
-//            properties.add(propertyService.get(1));
             owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
-
-//            owner.setPropertyEntities(properties);
-
             owners.add(owner);
         }
         tableData.setJsonString(owners);
@@ -94,7 +87,31 @@ public class UserServiceImpl implements UserService,BaseService
 
     public TableData getTenantList(TableFilter tableFilter)
     {
-        return null;
+        TableData tableData=userDao.getTenantList(tableFilter);
+        ArrayList<TenantEntity> entities = (ArrayList<TenantEntity>) tableData.getJsonString();
+        ArrayList<Tenant> tenans=new ArrayList<Tenant>();
+
+        for(TenantEntity tenantEntity:entities)
+        {
+            Tenant tenant=new Tenant();
+
+            tenant.setBirthday(Convert.num2time(tenantEntity.getBirthday()));
+            tenant.setSex(Convert.num2sex(tenantEntity.getSex()));
+            tenant.setName(tenantEntity.getName());
+            tenant.setAuthenticationTime(Convert.num2time(tenantEntity.getAuthenticationTime()));
+            tenant.setStartTime(Convert.num2time(tenantEntity.getStartTime()));
+            tenant.setEndTime(Convert.num2time(tenantEntity.getEndTime()));
+            tenant.setIdentityType(Convert.num2idtype(tenantEntity.getIdentityType()));
+            tenant.setIdentityCode(tenantEntity.getIdentityCode());
+            tenant.setPhone(tenantEntity.getPhone());
+            tenant.setUrgentName(tenantEntity.getUrgentName());
+            tenant.setUrgentPhone(tenantEntity.getUrgentPhone());
+            tenant.setProperty(propertyService.get(tenantEntity.getPropertyId()));
+
+            tenans.add(tenant);
+        }
+        tableData.setJsonString(tenans);
+        return tableData;
     }
 
     public TableData getAuthenticatedUserList(TableFilter tableFilter)

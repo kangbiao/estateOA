@@ -44,6 +44,8 @@ public class PropertyServiceImpl implements PropertyService
 
     public Set<Property> getPropertiesByString(String string)
     {
+        //TODO 需要检查物业ID是否存在,不存在则不返回
+
         List<Integer> ids=Convert.string2ints(string,";");
         Set<Property> properties=new HashSet<Property>();
         for (Integer id:ids)

@@ -49,18 +49,15 @@ public class UserController
         else
             tableFilter.setSearchValue("");
 
-        return userService.getOwnerList(tableFilter);
-    }
-
-    /**
-     * 获取租客列表
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/authenticatedUserList")
-    public TableData getTenantList(HttpServletRequest request)
-    {
-        return null;
+        try
+        {
+            return userService.getOwnerList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -68,12 +65,49 @@ public class UserController
      * @param request
      * @return
      */
-    @RequestMapping(value = "/tenantList")
-    public TableData getAuthList(HttpServletRequest request)
+    @RequestMapping(value = "/authenticatedUserList")
+    public TableData getTenantList(TableFilter tableFilter,HttpServletRequest request)
     {
-        return null;
+        if(request.getParameter("search[value]")!=null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+
+        try
+        {
+            return userService.getAuthenticatedUserList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getClass()+e.getMessage());
+            return null;
+        }
+
     }
 
+    /**
+     * 获取租客列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/tenantList")
+    public TableData getAuthList(TableFilter tableFilter,HttpServletRequest request)
+    {
+        if(request.getParameter("search[value]")!=null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+
+        try
+        {
+            return userService.getTenantList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getClass()+e.getMessage());
+            return null;
+        }
+    }
 
 
 }

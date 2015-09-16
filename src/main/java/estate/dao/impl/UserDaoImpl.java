@@ -70,26 +70,69 @@ public class UserDaoImpl implements UserDao, BaseDao
 
         tableData.setRecordsFiltered(count);
         tableData.setJsonString(list);
-        tableData.setRecordsTotal(this.ownerCount());
+        tableData.setRecordsTotal(this.count("OwnerEntity"));
 
         return tableData;
     }
 
-    public Integer ownerCount()
+    public Integer count(String table)
     {
         Session session=getSession();
-        String hql="select count(*) from OwnerEntity ";
+        String hql="select count(*) from "+table;
         return ((Long)session.createQuery(hql).uniqueResult()).intValue();
     }
 
 
     public TableData getTenantList(TableFilter tableFilter)
     {
-        return null;
+        Session session = getSession();
+        TableData tableData = new TableData(true);
+        Query query;
+        if (!tableFilter.getSearchValue().equals(""))
+        {
+            String hql = "from TenantEntity t where t.name like (?) or t.phone like (?)";
+            query = session.createQuery(hql).setString(0, "%" + tableFilter.getSearchValue() + "%")
+                    .setString(1, "%" + tableFilter.getSearchValue() + "%");
+        }
+        else
+        {
+            String hql = "from TenantEntity t";
+            query = session.createQuery(hql);
+        }
+        Integer count=query.list().size();
+        List list=query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter.getLength()).list();
+
+        tableData.setRecordsFiltered(count);
+        tableData.setJsonString(list);
+        tableData.setRecordsTotal(this.count("TenantEntity"));
+
+        return tableData;
     }
+
+
 
     public TableData getAuthenticatedUserList(TableFilter tableFilter)
     {
-        return null;
+        Session session = getSession();
+        TableData tableData = new TableData(true);
+        Query query;
+        if (!tableFilter.getSearchValue().equals(""))
+        {
+            String hql = "from AuthenticatedUserEntity t where t.name like (?)";
+            query = session.createQuery(hql).setString(0, "%" + tableFilter.getSearchValue() + "%");
+        }
+        else
+        {
+            String hql = "from AuthenticatedUserEntity t";
+            query = session.createQuery(hql);
+        }
+        Integer count=query.list().size();
+        List list=query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter.getLength()).list();
+
+        tableData.setRecordsFiltered(count);
+        tableData.setJsonString(list);
+        tableData.setRecordsTotal(this.count("AuthenticatedUserEntity"));
+
+        return tableData;
     }
 }
