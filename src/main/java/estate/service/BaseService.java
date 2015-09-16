@@ -6,4 +6,10 @@ package estate.service;
  */
 public interface BaseService
 {
+    Integer save(Object object);
+
+    Object get(Integer id);
+
+    void delete(Object object);
+
 }

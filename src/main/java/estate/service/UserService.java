@@ -1,6 +1,8 @@
 package estate.service;
 
 import estate.entity.database.AppUserEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 
 /**
  * Created by kangbiao on 15-9-4.
@@ -8,11 +10,16 @@ import estate.entity.database.AppUserEntity;
  */
 public interface UserService
 {
-    boolean login(String phone);
-
     boolean add(AppUserEntity userEntity);
 
     boolean delete(String userID);
+
+    TableData getOwnerList(TableFilter tableFilter);
+
+    TableData getTenantList(TableFilter tableFilter);
+
+    TableData getAuthenticatedUserList(TableFilter tableFilter);
+
 
 
 }

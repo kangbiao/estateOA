@@ -4,6 +4,8 @@ import estate.common.util.LogUtil;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/user")
 public class UserController
 {
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/{userID}" ,method = RequestMethod.GET)
     public BasicJson login(@PathVariable String userID)
     {
@@ -44,7 +49,7 @@ public class UserController
         else
             tableFilter.setSearchValue("");
 
-        return null;
+        return userService.getOwnerList(tableFilter);
     }
 
     /**

@@ -27,24 +27,30 @@
                        id="ownerListTable">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>姓名</th>
                         <th>性别</th>
                         <th>电话</th>
                         <th>证件类型</th>
                         <th>证件号码</th>
-                        <th>园区信息</th>
+                        <th>出生日期</th>
+                        <th>详细信息</th>
+                        <th>详细信息</th>
                         <th>详细信息</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
+                        <th>ID</th>
                         <th>姓名</th>
                         <th>性别</th>
                         <th>电话</th>
                         <th>证件类型</th>
                         <th>证件号码</th>
-                        <th>园区信息</th>
+                        <th>出生日期</th>
+                        <th>详细信息</th>
+                        <th>详细信息</th>
                         <th>详细信息</th>
                         <th>操作</th>
                     </tr>
@@ -56,54 +62,28 @@
 </div>
 
 <div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="width: 800px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">新增业主信息</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel"></h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
-                            <form id="editForm" method="post" action="" class="form-horizontal">
-                                <div class="form-group">
-                                    <div class="col-sm-7">
-                                        <input type="hidden" class="form-control" name="estateID" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">费用名</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="estateName" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">单价</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="perPrice" name="perPrice" />
-                                    </div>
-                                </div>
-                                <div class="form-group has-feedback">
-                                    <label class="col-sm-3 control-label">收费时间</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" id="payTime" name="payTime" class="form-control" placeholder="">
-                                        <span class="fa fa-calendar form-control-feedback"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">逾期周期</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="outlineTime" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">迟滞金规则(月)</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="outlineMoney" />
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="col-md-12" id="ownerInfo">
+                            <h3>个人信息</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">姓名: <span id="name"></span></li>
+                                <li class="list-group-item">证件类型: <span id="identityType"></span></li>
+                                <li class="list-group-item">证件号码: <span id="identityCode"></span></li>
+                                <li class="list-group-item">认证时间: <span id="authenticationTime"></span></li>
+                                <li class="list-group-item">紧急联系人: <span id="urgent"></span></li>
+                            </ul>
+                            <h3>物业信息</h3>
+                            <ul class="list-group" id="propertyInfo">
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -146,17 +126,43 @@
         });
     });
 
-    //编辑数据
-    $('#estateListTable tbody').on( 'click', 'button#editrow', function () {
+
+    $('#ownerListTable').on( 'click', 'button#detailRow', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         var fields = $("#editForm").serializeArray();
         console.log(data);
-        jQuery.each( fields, function(i, field){
-            $(":input[name='"+field.name+"']").val(data[i]);
-        });
-        $(":input[name='action']").val("edit");
+
+
+
+        $("#ownerInfo #name").text(data.name);
+        $("#ownerInfo #identityType").text(data.identityType);
+        $("#ownerInfo #identityTCode").text(data.identityCode);
+        $("#ownerInfo #authenticationTime").text(data.authenticationTime);
+        $("#ownerInfo #identityType").text(data.identityType);
+        $("#ownerInfo #urgent").text(data.urgentName+"("+data.urgentPhone+")");
+        $("#propertyInfo").empty();
+        for(var i in data.propertyEntities)
+        {
+            var temp='<ul class="list-group">' +
+                        '<li class="list-group-item">物业编号: <span id="code">'+data.propertyEntities[i].code+'</span></li>'+
+                        '<li class="list-group-item">物业地址: <span id="location">'+data.propertyEntities[i].location+'</span></li>'+
+                        '<li class="list-group-item">状态: <span id="status">'+data.propertyEntities[i].status+'</span></li>' +
+                        '<li class="list-group-item">物业面积: <span id="propertySquare">'+data.propertyEntities[i].propertySquare+'</span></li>'+
+                    '</ul>';
+            $("#propertyInfo").append(temp);
+
+        }
+
+//        $("#ownerInfo #name").text(data.name);
+
+
+
+//        jQuery.each( fields, function(i, field){
+//            $(":input[name='"+field.name+"']").val(data[i]);
+//        });
+//        $(":input[name='action']").val("edit");
         $("#formModel").modal("show");//弹出框show
-        $("#formModel").find('.modal-title').text("编辑费用项目");
+//        $("#formModel").find('.modal-title').text("编辑费用项目");
 
     });
 
@@ -200,10 +206,10 @@
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>" +
+                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>&ensp;" +
                         "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
             },{
-                "targets": -2,//删除
+                "targets": -2,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
@@ -211,7 +217,7 @@
                         "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
             },{
                 "targets": 0,
-                "data": "fiId",
+                "data": "ownerId",
                 "visible": false,
                 "orderable": false,
                 "searchable": false
@@ -225,36 +231,50 @@
 
             },{
                 "targets": 2,
-                "data": "ruleEntity.unitPrice",
+                "data": "sex",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
                 "targets": 3,
-                "data": "ruleEntity.unit",
+                "data": "phone",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
                 "targets": 4,
-                "data": "ruleEntity.startTime",
+                "data": "identityType",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
                 "targets": 5,
-                "data": "ruleEntity.overdueUnitPrice",
+                "data": "identityCode",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
                 "targets": 6,
-                "data": "ruleEntity.overdueUnit",
+                "data": "birthday",
                 "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 7,
+                "data": "propertyIdList",
+                "visible": false,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 8,
+                "data": "vehicleIdIst",
+                "visible": false,
                 "orderable": false,
                 "searchable": true
 
@@ -288,11 +308,6 @@
                 }
             }
         });
-        editTable.on( 'order.dt search.dt', function () {
-            editTable.column(0).nodes().each( function (cell, i) {
-                cell.innerHTML = i+1;
-            } );
-        } ).draw();
 
     }
     $(document).ready(function() {

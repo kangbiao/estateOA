@@ -1,6 +1,8 @@
 package estate.dao;
 
 import estate.entity.database.AppUserEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 
 /**
  * Created by kangbiao on 15-9-4.
@@ -14,6 +16,14 @@ public interface UserDao
      * @return
      */
     AppUserEntity getUserByPhone(String phone);
+
+
+
+    TableData getOwnerList(TableFilter tableFilter);
+
+    TableData getTenantList(TableFilter tableFilter);
+
+    TableData getAuthenticatedUserList(TableFilter tableFilter);
 
 
 
