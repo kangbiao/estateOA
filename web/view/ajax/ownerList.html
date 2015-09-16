@@ -23,32 +23,29 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content no-padding">
-                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="ownerListTable">
                     <thead>
                     <tr>
-                        <th>序号</th>
-                        <th>业主编号</th>
-                        <th class="text-center">姓名</th>
-                        <th>关系</th>
-                        <th>联系电话</th>
-                        <th>入住时间</th>
-                        <th>详细</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>证件类型</th>
+                        <th>证件号码</th>
+                        <th>园区信息</th>
+                        <th>详细信息</th>
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <!-- Start: list_row -->
-                    <!-- End: list_row -->
-                    </tbody>
                     <tfoot>
                     <tr>
-                        <th>序号</th>
-                        <th>业主编号</th>
                         <th>姓名</th>
-                        <th>关系</th>
-                        <th>联系电话</th>
-                        <th>入住时间</th>
-                        <th>详细</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>证件类型</th>
+                        <th>证件号码</th>
+                        <th>园区信息</th>
+                        <th>详细信息</th>
                         <th>操作</th>
                     </tr>
                     </tfoot>
@@ -57,12 +54,13 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" role="dialog" id="formModel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">编辑费用项目</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">新增业主信息</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -181,7 +179,7 @@
                     alert(result.errorMsg);
                 }
             },
-            error: function (errorMsg) {
+            error: function () {
                 alert("服务器连接失败,请重试!");
             }
         });
@@ -189,8 +187,79 @@
 
     //初始化表格数据
     function initDataTable(){
-        editTable=$('#estateListTable').DataTable({
-            "ajax":"testdata/data.txt",
+        editTable=$('#ownerListTable').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.ownerList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": -1,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>" +
+                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
+            },{
+                "targets": -2,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
+            },{
+                "targets": 0,
+                "data": "fiId",
+                "visible": false,
+                "orderable": false,
+                "searchable": false
+
+            },{
+                "targets": 1,
+                "data": "name",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 2,
+                "data": "ruleEntity.unitPrice",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 3,
+                "data": "ruleEntity.unit",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 4,
+                "data": "ruleEntity.startTime",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 5,
+                "data": "ruleEntity.overdueUnitPrice",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 6,
+                "data": "ruleEntity.overdueUnit",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            }
+            ],
             "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,
             "sDom":
@@ -217,30 +286,7 @@
                     "sortAscending":  ":正序",
                     "sortDescending": ":倒序"
                 }
-            },
-            "columnDefs": [{
-                "targets": -1,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                "<button id='delrow' class='btn btn-primary' type='button'><i class='fa fa-trash-o'></i></button>&ensp;" +
-                "<button id='editrow' class='btn btn-primary' type='button'><i class='fa fa-edit'></i></button>"
-            },{
-                "targets": -2,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                "<button id='noreinfo' class='btn btn-primary' type='button'>查看</button>"
-            },{
-                "data": null,
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "targets": 0
             }
-            ]
         });
         editTable.on( 'order.dt search.dt', function () {
             editTable.column(0).nodes().each( function (cell, i) {

@@ -80,10 +80,14 @@ public class FeeController
     @RequestMapping(value = "/list")
     public TableData feeList(TableFilter tableFilter,HttpServletRequest request)
     {
-        tableFilter.setSearchValue(request.getParameter("search[value]"));
+        if(request.getParameter("search[value]")!=null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
         TableData tableData=new TableData(false);
         try
         {
+            Thread.sleep(2000);
             return feeService.feeList(tableFilter);
         }
         catch (Exception e)

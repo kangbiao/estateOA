@@ -16,3 +16,8 @@ urlConfig.feeList=host+"fee/list";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";
+
+//用户相关的URL
+urlConfig.ownerList=host+"user/ownerList";
+urlConfig.authenticatedUserList=host+"user/authenticatedUserList";
+urlConfig.tenantList=host+"user/tenantList";
