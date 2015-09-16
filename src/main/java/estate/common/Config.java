@@ -13,6 +13,8 @@ public class Config
     public static final String PICPATH=System.getProperty("WEB.ROOT")+"file/picture/";
     public static final String DOCPATH=System.getProperty("WEB.ROOT")+"file/documentPath/";
 
+    public static final String PICWEBPATH="/oa/file/picture/";
+
     //常量配置
     public static HashMap<Integer,String> KV=new HashMap<Integer,String>();
 

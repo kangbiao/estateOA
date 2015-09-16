@@ -40,6 +40,9 @@
                         <th>操作</th>
                     </tr>
                     </thead>
+                    <tbody>
+
+                    </tbody>
                     <tfoot>
                     <tr>
                         <th>ID</th>
@@ -66,7 +69,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">业主详细信息</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -98,31 +101,38 @@
     var editTable;//全局的datatable变量
 
     //删除数据
-    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
-        var data = editTable.row($(this).parents('tr') ).data();
-        $.ajax({
-            type: "post",
-            async: false,
-            url: "statis.do",
-            data: {
-                action:"delete",
-                estateID:data[0]
-            },
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.success) {
-
-                    $(result.jsonString).each(function () {
-                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
-                    });
-                } else {
-                    alert(result.errorMsg);
-                }
-            },
-            error: function (errorMsg) {
-                alert("服务器连接失败,请重试!");
-            }
-        });
+//    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
+//        var data = editTable.row($(this).parents('tr') ).data();
+//        $.ajax({
+//            type: "post",
+//            async: false,
+//            url: "statis.do",
+//            data: {
+//                action:"delete",
+//                estateID:data[0]
+//            },
+//            dataType: "json", //返回数据形式为json
+//            success: function (result) {
+//                if (result.success) {
+//
+//                    $(result.jsonString).each(function () {
+//                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
+//                    });
+//                } else {
+//                    alert(result.errorMsg);
+//                }
+//            },
+//            error: function (errorMsg) {
+//                alert("服务器连接失败,请重试!");
+//            }
+//        });
+//    });
+    $('#ownerListTable tbody').on( 'click', 'button#delRow', function () {
+        var comfirm=confirm("确定删除?");
+        if(comfirm)
+        {
+            alert("删除成功");
+        }
     });
 
 

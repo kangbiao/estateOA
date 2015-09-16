@@ -21,6 +21,25 @@ public class Convert
     private static final int TENANTING=0;
     private static final int USING=1;
 
+    private static final int DEFAULTSTATUS=0;
+
+    private static final int PROCESSING=1;
+
+
+
+    public static String complainStatus2String(int status)
+    {
+        switch (status)
+        {
+            case DEFAULTSTATUS:
+                return "待处理";
+            case PROCESSING:
+                return "处理中";
+            default:
+                return "未知状态";
+        }
+    }
+
 
 
     public static String propertyStatus2string(int status)

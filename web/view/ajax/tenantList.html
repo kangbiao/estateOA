@@ -24,7 +24,7 @@
             </div>
             <div class="box-content no-padding">
                 <table class="table table-bordered table-striped table-hover table-heading table-datatable"
-                       id="ownerListTable">
+                       id="tenantListTable">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -40,6 +40,9 @@
                         <th>操作</th>
                     </tr>
                     </thead>
+                    <tbody>
+
+                    </tbody>
                     <tfoot>
                     <tr>
                         <th>ID</th>
@@ -66,12 +69,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">租户详细信息</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12" id="ownerInfo">
+                        <div class="col-md-12" id="tenantInfo">
                             <h3>租客信息</h3>
                             <ul class="list-group">
                                 <li class="list-group-item">姓名: <span id="name"></span></li>
@@ -98,43 +101,51 @@
     var editTable;//全局的datatable变量
 
     //删除数据
-    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
-        var data = editTable.row($(this).parents('tr') ).data();
-        $.ajax({
-            type: "post",
-            async: false,
-            url: "statis.do",
-            data: {
-                action:"delete",
-                estateID:data[0]
-            },
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.success) {
+//    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
+//        var data = editTable.row($(this).parents('tr') ).data();
+//        $.ajax({
+//            type: "post",
+//            async: false,
+//            url: "statis.do",
+//            data: {
+//                action:"delete",
+//                estateID:data[0]
+//            },
+//            dataType: "json", //返回数据形式为json
+//            success: function (result) {
+//                if (result.success) {
+//
+//                    $(result.jsonString).each(function () {
+//                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
+//                    });
+//                } else {
+//                    alert(result.errorMsg);
+//                }
+//            },
+//            error: function (errorMsg) {
+//                alert("服务器连接失败,请重试!");
+//            }
+//        });
+//    });
 
-                    $(result.jsonString).each(function () {
-                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
-                    });
-                } else {
-                    alert(result.errorMsg);
-                }
-            },
-            error: function (errorMsg) {
-                alert("服务器连接失败,请重试!");
-            }
-        });
+    $('#tenantListTable tbody').on( 'click', 'button#delRow', function () {
+        var comfirm=confirm("确定删除?");
+        if(comfirm)
+        {
+            alert("删除成功");
+        }
     });
 
 
-    $('#ownerListTable').on( 'click', 'button#detailRow', function () {
+    $('#tenantListTable').on( 'click', 'button#detailRow', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
-        $("#ownerInfo #name").text(data.name);
-        $("#ownerInfo #identityType").text(data.identityType);
-        $("#ownerInfo #identityCode").text(data.identityCode);
-        $("#ownerInfo #authenticationTime").text(data.authenticationTime);
-        $("#ownerInfo #identityType").text(data.identityType);
-        $("#ownerInfo #urgent").text(data.urgentName+"("+data.urgentPhone+")");
+        $("#tenantInfo #name").text(data.name);
+        $("#tenantInfo #identityType").text(data.identityType);
+        $("#tenantInfo #identityCode").text(data.identityCode);
+        $("#tenantInfo #authenticationTime").text(data.authenticationTime);
+        $("#tenantInfo #identityType").text(data.identityType);
+        $("#tenantInfo #urgent").text(data.urgentName+"("+data.urgentPhone+")");
         var temp='<ul class="list-group">' +
                 '<li class="list-group-item">物业编号: <span id="code">'+data.property.code+'</span></li>'+
                 '<li class="list-group-item">物业地址: <span id="location">'+data.property.location+'</span></li>'+
@@ -142,49 +153,14 @@
                 '<li class="list-group-item">物业面积: <span id="propertySquare">'+data.property.propertySquare+'</span></li>'+
                 '</ul>';
         $("#propertyInfo").html(temp);
-
-
-//        $("#ownerInfo #name").text(data.name);
-
-
-
-//        jQuery.each( fields, function(i, field){
-//            $(":input[name='"+field.name+"']").val(data[i]);
-//        });
-//        $(":input[name='action']").val("edit");
         $("#formModel").modal("show");//弹出框show
-//        $("#formModel").find('.modal-title').text("编辑费用项目");
 
     });
 
-    $("#submitEstate").click(function(){
-        var data=$("#editForm").serializeArray();
-        data.push({name:"action",value:"edit"});
-        $.ajax({
-            type: "post",
-            async: false,
-            url: "statis.do",
-            data: data,
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.success) {
-
-                    $(result.jsonString).each(function () {
-                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
-                    });
-                } else {
-                    alert(result.errorMsg);
-                }
-            },
-            error: function () {
-                alert("服务器连接失败,请重试!");
-            }
-        });
-    });
 
     //初始化表格数据
     function initDataTable(){
-        editTable=$('#ownerListTable').DataTable({
+        editTable=$('#tenantListTable').DataTable({
             "processing":true,
             "serverSide": true,
             "ajax":{

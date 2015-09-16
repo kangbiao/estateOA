@@ -39,4 +39,10 @@ public class PictureServiceImpl implements PictureService
             return null;
         }
     }
+
+    public String getPathByID(Integer id)
+    {
+        PictureEntity pictureEntity=pictureDao.get(id);
+        return Config.PICWEBPATH+pictureEntity.getDir();
+    }
 }

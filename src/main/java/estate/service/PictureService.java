@@ -14,5 +14,11 @@ public interface PictureService
      */
     String saveAndReturnID(MultipartFile file);
 
+    /**
+     * 根据图片ID获取图片路径
+     * @param id
+     * @return
+     */
+    String getPathByID(Integer id);
 
 }
