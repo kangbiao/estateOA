@@ -128,10 +128,7 @@
 
     $('#ownerListTable').on( 'click', 'button#detailRow', function () {
         var data = editTable.row($(this).parents('tr') ).data();
-        var fields = $("#editForm").serializeArray();
         console.log(data);
-
-
 
         $("#ownerInfo #name").text(data.name);
         $("#ownerInfo #identityType").text(data.identityType);
@@ -151,18 +148,7 @@
             $("#propertyInfo").append(temp);
 
         }
-
-//        $("#ownerInfo #name").text(data.name);
-
-
-
-//        jQuery.each( fields, function(i, field){
-//            $(":input[name='"+field.name+"']").val(data[i]);
-//        });
-//        $(":input[name='action']").val("edit");
         $("#formModel").modal("show");//弹出框show
-//        $("#formModel").find('.modal-title').text("编辑费用项目");
-
     });
 
     $("#submitEstate").click(function(){

@@ -27,14 +27,13 @@
                     <thead>
                     <tr>
                         <th>id</th>
-                        <th>费用名</th>
-                        <th>单价</th>
-                        <th>收费规则</th>
-                        <th>收费时间</th>
-                        <th>迟滞金单价</th>
-                        <th>迟滞金规则</th>
-                        <th>编辑</th>
-                        <th>删除</th>
+                        <th>主题</th>
+                        <th>用户姓名</th>
+                        <th>投诉时间</th>
+                        <th>状态</th>
+                        <th>评分</th>
+                        <th>处理人</th>
+                        <th>详情</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,14 +43,13 @@
                     <tfoot>
                     <tr>
                         <th>id</th>
-                        <th>费用名</th>
-                        <th>单价</th>
-                        <th>收费规则</th>
-                        <th>收费时间</th>
-                        <th>迟滞金单价</th>
-                        <th>迟滞金规则</th>
-                        <th>编辑</th>
-                        <th>删除</th>
+                        <th>主题</th>
+                        <th>用户姓名</th>
+                        <th>投诉时间</th>
+                        <th>状态</th>
+                        <th>评分</th>
+                        <th>处理人</th>
+                        <th>详情</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -64,57 +62,31 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">编辑费用项目</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">投诉处理</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
-                            <form id="editForm" method="post" action="" class="form-horizontal">
-                                <div class="form-group">
-                                    <div class="col-sm-7">
-                                        <input type="hidden" class="form-control" name="estateID" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">费用名</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="estateName" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">单价</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" id="perPrice" name="perPrice" />
-                                    </div>
-                                </div>
-                                <div class="form-group has-feedback">
-                                    <label class="col-sm-3 control-label">收费方式</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" id="payTime" name="payTime" class="form-control" placeholder="">
-                                        <span class="fa fa-calendar form-control-feedback"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">迟滞金单价</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="outlineTime" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">迟滞金规则</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="outlineMoney" />
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="col-md-12" id="ownerInfo">
+                            <h3>个人信息</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">姓名: <span id="name"></span></li>
+                                <li class="list-group-item">证件类型: <span id="identityType"></span></li>
+                                <li class="list-group-item">证件号码: <span id="identityCode"></span></li>
+                                <li class="list-group-item">认证时间: <span id="authenticationTime"></span></li>
+                                <li class="list-group-item">紧急联系人: <span id="urgent"></span></li>
+                            </ul>
+                            <h3>物业信息</h3>
+                            <ul class="list-group" id="propertyInfo">
+
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="submitEstate">提交</button>
+                <button type="button" class="btn btn-primary" id="submitEstate">处理</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
