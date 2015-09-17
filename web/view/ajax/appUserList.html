@@ -1,0 +1,182 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">用户管理</a></li>
+            <li><a href="#">APP用户管理</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="appUserListTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>手机</th>
+                        <th>用户类型</th>
+                        <th>注册时间</th>
+                        <th>门禁记录</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>2</td>
+                        <td>康彪</td>
+                        <td>18144240528</td>
+                        <td>户主</td>
+                        <td>2014-3-4</td>
+                        <td><button class='detailRow btn btn-primary' type='button'>查看</button></td>
+                        <td>
+                            <button class='disableRow btn btn-primary' type='button'>禁用</button>&ensp;
+                            <button class='delRow btn btn-primary' type='button'>删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>何科松</td>
+                        <td>1814424066</td>
+                        <td>租户</td>
+                        <td>2014-9-4</td>
+                        <td><button class='detailRow btn btn-primary' type='button'>查看</button></td>
+                        <td>
+                            <button class='disableRow btn btn-primary' type='button'>禁用</button>&ensp;
+                            <button class='delRow btn btn-primary' type='button'>删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>手机</th>
+                        <th>用户类型</th>
+                        <th>注册时间</th>
+                        <th>门禁记录</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="formModel">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">门禁记录</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12" id="appUserDoorInfo">
+                            <ul class="list-group">
+                                <li class="list-group-item">开门时间: <span id="name">2015-5-8 22:00:19</span></li>
+                                <li class="list-group-item">门禁代码: <span id="identityType">CDSESH</span></li>
+                            </ul>
+                            <ul class="list-group">
+                                <li class="list-group-item">开门时间: <span id="name">2015-8-5 23:18:25</span></li>
+                                <li class="list-group-item">门禁代码: <span id="identityType">CDSESH</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+
+
+    $('#appUserListTable tbody').on( 'click', 'button.detailRow', function () {
+        $("#formModel").modal("show");//弹出框show
+
+    });
+
+    $('#appUserListTable tbody').on( 'click', 'button.delRow', function () {
+        var comfirm=confirm("确定删除该用户?");
+        if(comfirm)
+        {
+            alert("删除成功");
+        }
+    });
+
+    $('#appUserListTable tbody').on( 'click', 'button.disableRow', function () {
+        var comfirm=confirm("确定禁止该用户门禁权限?");
+        if(comfirm)
+        {
+            alert("操作成功");
+        }
+    });
+
+
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#appUserListTable').DataTable({
+            "processing":true,
+            "orderable":false,
+            "columnDefs": [{
+                "targets": 0,
+                "visible": false,
+                "orderable": false,
+                "searchable": false
+
+            }],
+            "aaSorting": [[ 1, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+
+    }
+    $(document).ready(function() {
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>
