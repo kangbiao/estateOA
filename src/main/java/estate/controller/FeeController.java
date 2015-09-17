@@ -87,7 +87,6 @@ public class FeeController
         TableData tableData=new TableData(false);
         try
         {
-            Thread.sleep(2000);
             return feeService.feeList(tableFilter);
         }
         catch (Exception e)
