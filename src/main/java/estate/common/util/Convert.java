@@ -26,7 +26,11 @@ public class Convert
     private static final int PROCESSING=1;
 
 
-
+    /**
+     * 投诉状态转换
+     * @param status
+     * @return
+     */
     public static String complainStatus2String(int status)
     {
         switch (status)
@@ -41,7 +45,11 @@ public class Convert
     }
 
 
-
+    /**
+     * 物业状态转换
+     * @param status
+     * @return
+     */
     public static String propertyStatus2string(int status)
     {
         switch (status)
@@ -76,6 +84,11 @@ public class Convert
         }
     }
 
+    /**
+     * 证件类型和代码的相互转化
+     * @param num
+     * @return
+     */
     public static String num2idtype(int num)
     {
         switch (num)
@@ -96,6 +109,8 @@ public class Convert
      */
     public static String num2time(Long num)
     {
+        if (num==null)
+            return null;
         Date date=new Date(num);
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         sdf.format(date);
@@ -104,6 +119,8 @@ public class Convert
 
     public static Long time2num(String time)
     {
+        if (time==null)
+            return null;
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         Date date;
         try
@@ -120,6 +137,8 @@ public class Convert
 
     public static String num2time(Long num,String formater)
     {
+        if (num==null)
+            return null;
         Date date=new Date(num);
         SimpleDateFormat sdf=new SimpleDateFormat(formater);
         sdf.format(date);
@@ -128,6 +147,8 @@ public class Convert
 
     public static Long time2num(String time,String formater)
     {
+        if (time==null)
+            return null;
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat(formater);
         Date date;
         try

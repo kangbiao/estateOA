@@ -32,8 +32,11 @@
         <property name="identityCode">
             <column name="identity_code" sql-type="varchar" length="45"/>
         </property>
-        <property name="ownerElationship">
-            <column name="owner_elationship" sql-type="varchar" length="20"/>
+        <property name="ownerRelationship">
+            <column name="owner_relationship" sql-type="varchar" length="20"/>
+        </property>
+        <property name="ownerId">
+            <column name="owner_id" sql-type="int unsigned"/>
         </property>
         <property name="authenticationTime">
             <column name="authentication_time" sql-type="bigint"/>

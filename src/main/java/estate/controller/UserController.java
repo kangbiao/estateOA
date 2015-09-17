@@ -49,15 +49,7 @@ public class UserController
         else
             tableFilter.setSearchValue("");
 
-        try
-        {
             return userService.getOwnerList(tableFilter);
-        }
-        catch (Exception e)
-        {
-            LogUtil.E(e.getMessage());
-            return null;
-        }
     }
 
     /**

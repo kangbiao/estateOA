@@ -5,7 +5,7 @@ package estate.entity.database;
  */
 public class FamilyEntity
 {
-    private int familyId;
+    private Integer familyId;
     private String phone;
     private String name;
     private Byte sex;
@@ -14,29 +14,70 @@ public class FamilyEntity
     private String urgentPhone;
     private Byte identityType;
     private String identityCode;
-    private String ownerElationship;
+    private String ownerRelationship;
     private Long authenticationTime;
     private String vehicleIdList;
     private Byte authStatus;
+    private Integer ownerId;
 
-    public int getFamilyId()
+    public Long getAuthenticationTime()
+    {
+        return authenticationTime;
+    }
+
+    public void setAuthenticationTime(Long authenticationTime)
+    {
+        this.authenticationTime = authenticationTime;
+    }
+
+    public Byte getAuthStatus()
+    {
+        return authStatus;
+    }
+
+    public void setAuthStatus(Byte authStatus)
+    {
+        this.authStatus = authStatus;
+    }
+
+    public Long getBirthday()
+    {
+        return birthday;
+    }
+
+    public void setBirthday(Long birthday)
+    {
+        this.birthday = birthday;
+    }
+
+    public Integer getFamilyId()
     {
         return familyId;
     }
 
-    public void setFamilyId(int familyId)
+    public void setFamilyId(Integer familyId)
     {
         this.familyId = familyId;
     }
 
-    public String getPhone()
+    public String getIdentityCode()
     {
-        return phone;
+        return identityCode;
     }
 
-    public void setPhone(String phone)
+    public void setIdentityCode(String identityCode)
     {
-        this.phone = phone;
+        this.identityCode = identityCode;
+    }
+
+    public Byte getIdentityType()
+    {
+        return identityType;
+    }
+
+    public void setIdentityType(Byte identityType)
+    {
+        this.identityType = identityType;
     }
 
     public String getName()
@@ -49,6 +90,27 @@ public class FamilyEntity
         this.name = name;
     }
 
+
+    public Integer getOwnerId()
+    {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId)
+    {
+        this.ownerId = ownerId;
+    }
+
+    public String getPhone()
+    {
+        return phone;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
+    }
+
     public Byte getSex()
     {
         return sex;
@@ -57,16 +119,6 @@ public class FamilyEntity
     public void setSex(Byte sex)
     {
         this.sex = sex;
-    }
-
-    public Long getBirthday()
-    {
-        return birthday;
-    }
-
-    public void setBirthday(Long birthday)
-    {
-        this.birthday = birthday;
     }
 
     public String getUrgentName()
@@ -89,46 +141,6 @@ public class FamilyEntity
         this.urgentPhone = urgentPhone;
     }
 
-    public Byte getIdentityType()
-    {
-        return identityType;
-    }
-
-    public void setIdentityType(Byte identityType)
-    {
-        this.identityType = identityType;
-    }
-
-    public String getIdentityCode()
-    {
-        return identityCode;
-    }
-
-    public void setIdentityCode(String identityCode)
-    {
-        this.identityCode = identityCode;
-    }
-
-    public String getOwnerElationship()
-    {
-        return ownerElationship;
-    }
-
-    public void setOwnerElationship(String ownerElationship)
-    {
-        this.ownerElationship = ownerElationship;
-    }
-
-    public Long getAuthenticationTime()
-    {
-        return authenticationTime;
-    }
-
-    public void setAuthenticationTime(Long authenticationTime)
-    {
-        this.authenticationTime = authenticationTime;
-    }
-
     public String getVehicleIdList()
     {
         return vehicleIdList;
@@ -137,16 +149,6 @@ public class FamilyEntity
     public void setVehicleIdList(String vehicleIdList)
     {
         this.vehicleIdList = vehicleIdList;
-    }
-
-    public Byte getAuthStatus()
-    {
-        return authStatus;
-    }
-
-    public void setAuthStatus(Byte authStatus)
-    {
-        this.authStatus = authStatus;
     }
 
     @Override
@@ -177,7 +179,7 @@ public class FamilyEntity
             return false;
         if (identityCode != null ? !identityCode.equals(that.identityCode) : that.identityCode != null)
             return false;
-        if (ownerElationship != null ? !ownerElationship.equals(that.ownerElationship) : that.ownerElationship != null)
+        if (ownerRelationship != null ? !ownerRelationship.equals(that.ownerRelationship) : that.ownerRelationship != null)
             return false;
         if (authenticationTime != null ? !authenticationTime.equals(that.authenticationTime) : that
                 .authenticationTime != null)
@@ -202,10 +204,20 @@ public class FamilyEntity
         result = 31 * result + (urgentPhone != null ? urgentPhone.hashCode() : 0);
         result = 31 * result + (identityType != null ? identityType.hashCode() : 0);
         result = 31 * result + (identityCode != null ? identityCode.hashCode() : 0);
-        result = 31 * result + (ownerElationship != null ? ownerElationship.hashCode() : 0);
+        result = 31 * result + (ownerRelationship != null ? ownerRelationship.hashCode() : 0);
         result = 31 * result + (authenticationTime != null ? authenticationTime.hashCode() : 0);
         result = 31 * result + (vehicleIdList != null ? vehicleIdList.hashCode() : 0);
         result = 31 * result + (authStatus != null ? authStatus.hashCode() : 0);
         return result;
+    }
+
+    public String getOwnerRelationship()
+    {
+        return ownerRelationship;
+    }
+
+    public void setOwnerRelationship(String ownerRelationship)
+    {
+        this.ownerRelationship = ownerRelationship;
     }
 }

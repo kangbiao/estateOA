@@ -1,7 +1,6 @@
 package estate.service.impl;
 
 import estate.common.util.Convert;
-import estate.dao.PropertyDao;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
@@ -11,6 +10,7 @@ import estate.entity.display.Tenant;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.BaseService;
+import estate.service.FamilyService;
 import estate.service.PropertyService;
 import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService,BaseService
     @Autowired
     private PropertyService propertyService;
     @Autowired
-    private PropertyDao propertyDao;
+    private FamilyService familyService;
 
     public Integer save(Object object)
     {
@@ -66,20 +66,25 @@ public class UserServiceImpl implements UserService,BaseService
         for (OwnerEntity ownerEntity:entities)
         {
             Owner owner=new Owner();
+
             owner.setName(ownerEntity.getName());
             owner.setPhone(ownerEntity.getPhone());
-            owner.setSex(Convert.num2sex(ownerEntity.getSex()));
-            owner.setIdentityType(Convert.num2idtype(ownerEntity.getIdentityType()));
             owner.setIdentityCode(ownerEntity.getIdentityCode());
-            owner.setAuthenticationTime(Convert.num2time(ownerEntity.getAuthenticationTime()));
-            owner.setBirthday(Convert.num2time(ownerEntity.getBirthday()));
             owner.setPropertyIdList(ownerEntity.getPropertyIdList());
             owner.setVehicleIdIst(ownerEntity.getVehicleIdIst());
             owner.setUrgentName(ownerEntity.getUrgentName());
             owner.setUrgentPhone(ownerEntity.getUrgentPhone());
 
+            owner.setSex(Convert.num2sex(ownerEntity.getSex()));
+            owner.setIdentityType(Convert.num2idtype(ownerEntity.getIdentityType()));
+            owner.setAuthenticationTime(Convert.num2time(ownerEntity.getAuthenticationTime()));
+            owner.setBirthday(Convert.num2time(ownerEntity.getBirthday()));
+
+            owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getOwnerId()));
             owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
+
             owners.add(owner);
+
         }
         tableData.setJsonString(owners);
         return tableData;

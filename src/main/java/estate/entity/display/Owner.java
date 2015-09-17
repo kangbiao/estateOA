@@ -22,6 +22,8 @@ public class Owner
 
     private Set<Property> propertyEntities;
 
+    private Set<Family> families;
+
     public String getAuthenticationTime()
     {
         return authenticationTime;
@@ -150,5 +152,15 @@ public class Owner
     public void setPropertyEntities(Set<Property> propertyEntities)
     {
         this.propertyEntities = propertyEntities;
+    }
+
+    public Set<Family> getFamilies()
+    {
+        return families;
+    }
+
+    public void setFamilies(Set<Family> families)
+    {
+        this.families = families;
     }
 }

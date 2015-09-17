@@ -109,10 +109,11 @@
       <column name="urgent_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <column name="identity_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="identity_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="owner_elationship" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="owner_relationship" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="authentication_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" remarks="5pS+5Yiw5a6h5om56K6w5b2V6KGo"/>
       <column name="vehicle_id_list" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="auth_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="owner_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="family_id"/>
     </table>
     <table name="fee_item" schema="" catalog="PropertySystem" type="TABLE">
