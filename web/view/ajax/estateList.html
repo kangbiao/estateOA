@@ -65,7 +65,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel"></h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">添加物业费</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -103,10 +103,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">缴费时间</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input_date" placeholder="开始时间">
+                                        <input type="text" class="form-control input_date" name="pay_start_time"
+                                               placeholder="开始时间">
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input_date" placeholder="结束时间">
+                                        <input type="text" class="form-control input_date" name="pay_end_time"
+                                               placeholder="结束时间">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -150,7 +152,13 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="text" id="input_date" class="form-control" placeholder="超过几个月禁止门禁权限">
+                                        <input type="text" id="input_date" class="form-control"
+                                               placeholder="超过几个月禁止门禁权限">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-2">
+                                        <button type="submit" class="btn btn-primary">确认添加</button>
                                     </div>
                                 </div>
                             </form>
@@ -159,7 +167,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="addEstateFeeButton">确认添加</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -171,7 +178,26 @@
             $("#formModel").modal("show");//弹出框show
     });
 
-    $("#addEstateFeeButton").click(function () {
+
+    //编辑数据
+    $('#estateListTable tbody').on( 'click', 'button#editRow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var fields = $("#estateFeeFrom").serializeArray();
+//        console.log(data);
+//        console.log(fields);
+//        jQuery.each( fields, function(i, field){
+//            console.log(field);
+//            $(field).val(data[i]);
+//        });
+        $(":input[name='action']").val("edit");
+        $("#formModel").modal("show");//弹出框show
+        $("#formModel").find('.modal-title').text("编辑费用项目");
+
+    });
+
+    //ajax添加物业费项目
+    function submitForm()
+    {
         var fields = $("#estateFeeFrom").serializeArray();
         console.log(fields);
 
@@ -194,25 +220,95 @@
                 alert("服务器连接失败,请重试!");
             }
         });
-    });
+    }
+
+    //增加物业费时进行表单验证
+    function estateFeeAddValidator() {
+        $('#estateFeeFrom').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                fee_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '费用名不能为空'
+                        },
+                        regexp: {
+                            regexp: /^([A-Za-z]|[\u4E00-\u9FA5])+$/,
+                            message: '费用名只能是汉字或者字母'
+                        }
+                    }
+                },
+                fee_unit_price: {
+                    validators: {
+                        notEmpty: {
+                            message: '单价不能为空'
+                        },
+                        regexp: {
+                            regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
+                            message: '费用单价只能为两位小数或整数'
+                        }
+                    }
+                },
+                overdue_unit_price: {
+                    validators: {
+                        notEmpty: {
+                            message: '滞纳金不能为空'
+                        },
+                        regexp: {
+                            regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
+                            message: '滞纳金单价只能为两位小数或整数'
+                        }
+                    }
+                },
+                start_time:{
+                    validators: {
+                        notEmpty: {
+                            message: '时间不能为空'
+                        },
+                        date: {
+                            format: 'YYYY-DD-MM'
+                        }
+                    }
+                },
+                end_time:{
+                    validators: {
+                        notEmpty: {
+                            message: '时间不能为空'
+                        },
+                        date: {
+                            format: 'YYYY-DD-MM'
+                        }
+                    }
+                },
+                pay_start_time:{
+                    validators: {
+                        notEmpty: {
+                            message: '时间不能为空'
+                        },
+                        date: {
+                            format: 'YYYY-DD-MM'
+                        }
+                    }
+                },
+                pay_end_time:{
+                    validators: {
+                        notEmpty: {
+                            message: '时间不能为空'
+                        },
+                        date: {
+                            format: 'YYYY-DD-MM'
+                        }
+                    }
+                }
+            }
+        })
+                .on("success.form.bv",function(e){
+                    e.preventDefault();
+                    submitForm();
+                });
+    }
 
 
-
-    //编辑数据
-    $('#estateListTable tbody').on( 'click', 'button#editRow', function () {
-        var data = editTable.row($(this).parents('tr') ).data();
-        var fields = $("#estateFeeFrom").serializeArray();
-//        console.log(data);
-//        console.log(fields);
-//        jQuery.each( fields, function(i, field){
-//            console.log(field);
-//            $(field).val(data[i]);
-//        });
-        $(":input[name='action']").val("edit");
-        $("#formModel").modal("show");//弹出框show
-        $("#formModel").find('.modal-title').text("编辑费用项目");
-
-    });
 
     //初始化表格数据
     function initDataTable(){
@@ -328,6 +424,7 @@
         });
 
     }
+
     $(document).ready(function() {
         $('.input_date').datepicker({
             setDate: new Date(), dateFormat: "yy-mm-dd",
@@ -342,5 +439,6 @@
             dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
         });
         LoadDataTablesScripts(initDataTable);
+        LoadBootstrapValidatorScript(estateFeeAddValidator);
     });
 </script>

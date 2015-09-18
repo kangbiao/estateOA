@@ -56,13 +56,13 @@ function LoadTimePickerScript(callback){
 		}
 	}
 }
-//
-//  Dynamically load Bootstrap Validator Plugin
-//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
-//
+
+//加载bootstrapValidator验证
 function LoadBootstrapValidatorScript(callback){
 	if (!$.fn.bootstrapValidator){
-		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
+		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', function(){
+			$.getScript('plugins/bootstrapvalidator/zh_CN.js',callback);
+		});
 	}
 	else {
 		if (callback && typeof(callback) === "function") {
