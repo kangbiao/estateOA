@@ -1,5 +1,7 @@
 package estate.controller;
 
+import estate.common.Config;
+import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.entity.database.FeeItemEntity;
 import estate.entity.database.RuleEntity;
@@ -18,7 +20,7 @@ import java.util.Date;
 
 /**
  * Created by kangbiao on 15-9-14.
- *
+ * 提供缴费管理的所有费用类型的增删改查
  */
 
 @RestController
@@ -28,7 +30,7 @@ public class FeeController
     @Autowired
     FeeService feeService;
 
-    /**-------------以下为物业费增删改查------------------*/
+    /****-------------以下为物业费增删改查------------------****/
 
     @RequestMapping(value = "/estateAdd")
     public BasicJson addFeeItem(HttpServletRequest request)
@@ -102,12 +104,41 @@ public class FeeController
     }
 
 
-    /**-------------以下为服务费增删改查------------------*/
+    /****-------------以下为服务费增删改查------------------****/
+
+    public BasicJson serviceFeeAdd(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+
+        return null;
+    }
+
+    @RequestMapping("serviceList")
+    public TableData serviceList(TableFilter tableFilter,HttpServletRequest request)
+    {
+        RuleEntity ruleEntity=new RuleEntity();
+        FeeItemEntity feeItemEntity=new FeeItemEntity();
+        TableData tableData=new TableData();
+
+        ruleEntity.setStartTime(Convert.time2num(request.getParameter("start_time")));
+        ruleEntity.setEndTime(Convert.time2num(request.getParameter("end_time")));
+        ruleEntity.setUnitPrice(request.getParameter("fee_unit_price"));
+        ruleEntity.setUnit(request.getParameter("unit_type"));
+
+        feeItemEntity.setName(request.getParameter("fee_name"));
+        feeItemEntity.setDecription(request.getParameter("description"));
+        feeItemEntity.setRuleEntity(ruleEntity);
+
+        feeItemEntity.setFeeTypeId(Config.SERVICE);
+        feeItemEntity.setIsPeriodic(Config.FALSE);
+        tableData.setJsonString(feeItemEntity);
+
+        return tableData;
+    }
 
 
 
-
-    /**-------------以下为车位费增删改查------------------*/
+    /****-------------以下为车位费增删改查------------------****/
 
 
 }

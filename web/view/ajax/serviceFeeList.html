@@ -94,12 +94,12 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">有效时间</label>
-                                <div class="col-sm-4">
+                                <div id="start_time" class="col-sm-4">
                                     <input type="text" class="form-control input_date" name="start_time"
                                            placeholder="开始时间">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="end_time"
+                                    <input type="text" id="end_time" class="form-control input_date" name="end_time"
                                            placeholder="结束时间">
                                 </div>
                             </div>
@@ -158,7 +158,7 @@
         $.ajax({
             type: "post",
             async: false,
-            url: urlConfig.addFee,
+            url: urlConfig.addServiceFee,
             data: fields,
             dataType: "json", //返回数据形式为json
             success: function (result) {
@@ -223,16 +223,6 @@
                         }
                     }
                 },
-                pay_start_time:{
-                    validators: {
-                        notEmpty: {
-                            message: '时间不能为空'
-                        },
-                        date: {
-                            format: 'YYYY-DD-MM'
-                        }
-                    }
-                },
                 description:{
                     validators: {
                         notEmpty: {
@@ -241,11 +231,10 @@
                     }
                 }
             }
-        })
-                .on("success.form.bv",function(e){
-                    e.preventDefault();
-                    submitForm();
-                });
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
     }
 
 
@@ -256,7 +245,7 @@
             "processing":true,
             "serverSide": true,
             "ajax":{
-                "url": urlConfig.feeList,
+                "url": urlConfig.serviceFeeList,
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
