@@ -28,7 +28,9 @@ public class FeeController
     @Autowired
     FeeService feeService;
 
-    @RequestMapping(value = "/add")
+    /**-------------以下为物业费增删改查------------------*/
+
+    @RequestMapping(value = "/estateAdd")
     public BasicJson addFeeItem(HttpServletRequest request)
     {
         RuleEntity ruleEntity=new RuleEntity();
@@ -77,7 +79,7 @@ public class FeeController
         return basicJson;
     }
 
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = "/estateList")
     public TableData feeList(TableFilter tableFilter,HttpServletRequest request)
     {
         if(request.getParameter("search[value]")!=null)
@@ -98,6 +100,14 @@ public class FeeController
         }
 
     }
+
+
+    /**-------------以下为服务费增删改查------------------*/
+
+
+
+
+    /**-------------以下为车位费增删改查------------------*/
 
 
 }

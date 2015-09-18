@@ -10,15 +10,25 @@ var urlConfig={};
 urlConfig.noticeDelete=host+"notice/delete";
 urlConfig.noticeList=host+"notice/list";
 
+
 //费用相关的URL
-urlConfig.addFee=host+"fee/add";
-urlConfig.feeList=host+"fee/list";
+urlConfig.addFee=host+"fee/estateAdd";
+urlConfig.feeList=host+"fee/estateList";
+
+urlConfig.addServiceFee=host+"fee/serviceAdd";
+urlConfig.serviceFeeList=host+"fee/serviceList";
+
+urlConfig.addParkingLotFee=host+"fee/parkingLotAdd";
+urlConfig.parkingLotFeeList=host+"fee/parkingLotList";
+
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";
 
+
 //投诉相关的URL
 urlConfig.complainList=host+"complain/list";
+
 
 //用户相关的URL
 urlConfig.ownerList=host+"user/ownerList";

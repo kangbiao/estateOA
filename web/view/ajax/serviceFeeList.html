@@ -1,11 +1,8 @@
-<link href="css/buttons.dataTables.min.css" rel="stylesheet">
-<link href="css/select.dataTables.min.css" rel="stylesheet">
-
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="#">物业费管理</a></li>
-            <li><a href="#">费用项目</a></li>
+            <li><a href="#">缴费管理</a></li>
+            <li><a href="#">服务费</a></li>
         </ol>
     </div>
 </div>
@@ -14,7 +11,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
-                    <button id="addEstateFee" class="btn btn-info">添加费用项目</button>
+                    <button id="addServiceFee" class="btn btn-info">添加费用项目</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -24,16 +21,14 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content no-padding">
-                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="serviceFeeListTable">
                     <thead>
                     <tr>
                         <th>id</th>
                         <th>费用名</th>
                         <th>单价</th>
                         <th>收费规则</th>
-                        <th>收费时间</th>
-                        <th>迟滞金单价</th>
-                        <th>迟滞金规则</th>
                         <th>编辑</th>
                         <th>删除</th>
                     </tr>
@@ -48,9 +43,6 @@
                         <th>费用名</th>
                         <th>单价</th>
                         <th>收费规则</th>
-                        <th>收费时间</th>
-                        <th>迟滞金单价</th>
-                        <th>迟滞金规则</th>
                         <th>编辑</th>
                         <th>删除</th>
                     </tr>
@@ -65,103 +57,65 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">添加物业费</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">添加服务费</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <form class="form-horizontal" role="form" id="estateFeeFrom">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">费用名称</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="fee_name" class="form-control" placeholder="">
+                        <form class="form-horizontal" role="form" id="serviceFeeFrom">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">费用名称</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="fee_name" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">费用单价</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">收费方式</label>
+                                <div class="col-sm-8">
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" checked="" name="unit_type" value="squre">按平米
+                                            <i class="fa fa-circle-o"></i>
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" checked="" name="unit_type" value="per"> 按次
+                                            <i class="fa fa-circle-o"></i>
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">费用单价</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">有效时间</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input_date" name="start_time"
+                                           placeholder="开始时间">
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">收费方式</label>
-                                    <div class="col-sm-8">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" checked="" name="unit_type" value="squre">按平米
-                                                <i class="fa fa-circle-o"></i>
-                                            </label>
-                                        </div>
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" checked="" name="unit_type" value="family"> 按户
-                                                <i class="fa fa-circle-o"></i>
-                                            </label>
-                                        </div>
-                                    </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input_date" name="end_time"
+                                           placeholder="结束时间">
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">缴费时间</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control input_date" name="pay_start_time"
-                                               placeholder="开始时间">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control input_date" name="pay_end_time"
-                                               placeholder="结束时间">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">费用说明</label>
+                                <div class="col-sm-8">
+                                    <textarea  class="form-control" rows="5" name="description"
+                                               placeholder="输入服务的相关说明或者注意事项"></textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">生效时间</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control input_date" name="start_time" placeholder="">
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control input_date" name="end_time" placeholder="">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-2">
+                                    <button type="submit" class="btn btn-primary">确认添加</button>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">滞纳金</label>
-                                    <div class="col-sm-2">
-                                        <input type="text" class="form-control" name="overdue_unit_price" placeholder="">
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" checked="" name="overdue_unit_type" value="month">每月
-                                                <i class="fa fa-circle-o"></i>
-                                            </label>
-                                        </div>
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" checked="" name="overdue_unit_type" value="day"> 每日
-                                                <i class="fa fa-circle-o"></i>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">门禁权限</label>
-                                    <div class="col-sm-2">
-                                        <div class="toggle-switch toggle-switch-success">
-                                            <label>
-                                                <input type="checkbox" name="door_authority" checked="">
-                                                <div class="toggle-switch-inner"></div>
-                                                <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="text" id="input_date" class="form-control"
-                                               placeholder="超过几个月禁止门禁权限">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-2">
-                                        <button type="submit" class="btn btn-primary">确认添加</button>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -174,8 +128,8 @@
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
-    $("#addEstateFee").click(function(){
-            $("#formModel").modal("show");//弹出框show
+    $("#addServiceFee").click(function(){
+        $("#formModel").modal("show");//弹出框show
     });
 
 
@@ -198,7 +152,7 @@
     //ajax添加物业费项目
     function submitForm()
     {
-        var fields = $("#estateFeeFrom").serializeArray();
+        var fields = $("#serviceFeeFrom").serializeArray();
         console.log(fields);
 
         $.ajax({
@@ -223,8 +177,8 @@
     }
 
     //增加物业费时进行表单验证
-    function estateFeeAddValidator() {
-        $('#estateFeeFrom').bootstrapValidator({
+    function serviceFeeAddValidator() {
+        $('#serviceFeeFrom').bootstrapValidator({
             message: '存在非法输入',
             fields: {
                 fee_name: {
@@ -246,17 +200,6 @@
                         regexp: {
                             regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
                             message: '费用单价只能为两位小数或整数'
-                        }
-                    }
-                },
-                overdue_unit_price: {
-                    validators: {
-                        notEmpty: {
-                            message: '滞纳金不能为空'
-                        },
-                        regexp: {
-                            regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
-                            message: '滞纳金单价只能为两位小数或整数'
                         }
                     }
                 },
@@ -290,13 +233,10 @@
                         }
                     }
                 },
-                pay_end_time:{
+                description:{
                     validators: {
                         notEmpty: {
-                            message: '时间不能为空'
-                        },
-                        date: {
-                            format: 'YYYY-DD-MM'
+                            message: '请填写费用说明'
                         }
                     }
                 }
@@ -312,7 +252,7 @@
 
     //初始化表格数据
     function initDataTable(){
-        editTable=$('#estateListTable').DataTable({
+        editTable=$('#serviceFeeListTable').DataTable({
             "processing":true,
             "serverSide": true,
             "ajax":{
@@ -439,6 +379,6 @@
             dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
         });
         LoadDataTablesScripts(initDataTable);
-        LoadBootstrapValidatorScript(estateFeeAddValidator);
+        LoadBootstrapValidatorScript(serviceFeeAddValidator);
     });
 </script>
