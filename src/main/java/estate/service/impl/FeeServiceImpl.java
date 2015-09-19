@@ -23,7 +23,6 @@ public class FeeServiceImpl implements FeeService
     @Autowired
     private FeeItemDao feeItemDao;
 
-
     public void estateFeeAdd(FeeItemEntity feeItemEntity)
     {
         RuleEntity ruleEntity=feeItemEntity.getRuleEntity();
@@ -33,8 +32,11 @@ public class FeeServiceImpl implements FeeService
         feeItemDao.save(feeItemEntity);
     }
 
-    public TableData feeList(TableFilter tableFilter)
+    public TableData feeList(TableFilter tableFilter,int feeType)
     {
-        return feeItemDao.getList(tableFilter);
+        return feeItemDao.getList(tableFilter,feeType);
     }
+
+
+    
 }

@@ -16,8 +16,8 @@ public interface FeeItemDao
 
     FeeItemEntity get(Integer feeItemID);
 
-    TableData getList(TableFilter tableFilter);
+    TableData getList(TableFilter tableFilter,int feeType);
 
-    Integer count();
+    Integer count(int feeType);
 
 }

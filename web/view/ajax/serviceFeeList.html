@@ -29,6 +29,7 @@
                         <th>费用名</th>
                         <th>单价</th>
                         <th>收费规则</th>
+                        <th>生效时间</th>
                         <th>编辑</th>
                         <th>删除</th>
                     </tr>
@@ -43,6 +44,7 @@
                         <th>费用名</th>
                         <th>单价</th>
                         <th>收费规则</th>
+                        <th>生效时间</th>
                         <th>编辑</th>
                         <th>删除</th>
                     </tr>
@@ -249,20 +251,6 @@
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
-                "targets": -1,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
-            },{
-                "targets": -2,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>"
-            },{
                 "targets": 0,
                 "data": "fiId",
                 "visible": false,
@@ -273,46 +261,58 @@
                 "targets": 1,
                 "data": "name",
                 "visible": true,
-                "orderable": true,
+                "orderable": false,
                 "searchable": true
 
             },{
                 "targets": 2,
                 "data": "ruleEntity.unitPrice",
                 "visible": true,
-                "orderable": true,
+                "orderable": false,
                 "searchable": true
 
             },{
                 "targets": 3,
                 "data": "ruleEntity.unit",
                 "visible": true,
-                "orderable": true,
-                "searchable": true
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, row ) {
+                    return langConvert[data];
+                }
+
 
             },{
                 "targets": 4,
                 "data": "ruleEntity.startTime",
                 "visible": true,
-                "orderable": true,
-                "searchable": true
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, row ) {
+//                    console.log(row);
+                    var start_date=new Date();
+                    var end_date=new Date();
+                    start_date.setTime(data);
+                    end_date.setTime(row.ruleEntity.endTime);
+                    var str=start_date.toLocaleDateString().replace(/\//g, "-")+"&nbsp;&nbsp;至&nbsp;&nbsp;"+end_date.toLocaleDateString().replace(/\//g, "-");
+                    return str;
+                }
 
             },{
-                "targets": 5,
-                "data": "ruleEntity.overdueUnitPrice",
-                "visible": true,
-                "orderable": true,
-                "searchable": true
-
+                "targets": 5,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>"
             },{
-                "targets": 6,
-                "data": "ruleEntity.overdueUnit",
-                "visible": true,
-                "orderable": true,
-                "searchable": true
-
-            }
-            ],
+                "targets": 6,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
+            }],
             "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,
             "sDom":

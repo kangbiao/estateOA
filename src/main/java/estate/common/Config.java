@@ -28,6 +28,7 @@ public class Config
     public static final int ESTATE=0;
     public static final int SERVICE=1;
     public static final int PARKING_LOT=2;
+    //费用单位配置
     //    private static void initKV()
 //    {
 //        KV.put()

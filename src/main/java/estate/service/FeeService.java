@@ -10,9 +10,10 @@ import estate.entity.json.TableFilter;
  */
 public interface FeeService
 {
+
     /**
-     * 增加物业费项目
-     * @param feeItemEntity 物业费的信息
+     * 增加费用项目
+     * @param feeItemEntity
      */
     void estateFeeAdd(FeeItemEntity feeItemEntity);
 
@@ -21,6 +22,9 @@ public interface FeeService
      * @param tableFilter
      * @return
      */
-    TableData feeList(TableFilter tableFilter);
+    TableData feeList(TableFilter tableFilter,int feeType);
+
+
+
 
 }

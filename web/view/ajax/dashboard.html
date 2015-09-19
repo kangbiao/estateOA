@@ -1,0 +1,68 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li>首页</li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-search"></i>
+                    <span>保修记录统计</span>
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <div id="morris-chart-4" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function MorrisChart(){
+        // Use Morris.Bar
+        Morris.Bar({
+            element: 'morris-chart-4',
+            data: [
+                {x: '2011-2', y: 5},
+                {x: '2011-3', y: 1},
+                {x: '2011-4', y: 7},
+                {x: '2011-5', y: 9},
+                {x: '2012-6', y: 4},
+                {x: '2012-7', y: 5},
+                {x: '2012-8', y: 6},
+                {x: '2012-9', y: 7},
+                {x: '2013-10', y: 8},
+                {x: '2013-11', y: 7},
+                {x: '2013-12', y: 6}
+            ],
+            xkey: 'x',
+            ykeys: ['y'],
+            labels: ['报修次数'],
+            barColors: function (row, series, type) {
+                if (type === 'bar') {
+                    var red = Math.ceil(255 * row.y / this.ymax);
+                    return 'rgb(' + red + ',0,0)';
+                }
+                else {
+                    return '#000';
+                }
+            }
+        });
+    }
+    $(document).ready(function() {
+        // Load required scripts and draw graphs
+        LoadMorrisScripts(MorrisChart);
+    });
+</script>
+

@@ -48,7 +48,7 @@ public class FeeItemDaoImpl implements FeeItemDao
         return (FeeItemEntity)getSession().get(FeeItemEntity.class,feeItemID);
     }
 
-    public TableData getList(TableFilter tableFilter)
+    public TableData getList(TableFilter tableFilter,int feeType)
     {
         Session session=getSession();
         TableData tableData=new TableData();
@@ -57,13 +57,13 @@ public class FeeItemDaoImpl implements FeeItemDao
 
         if (!tableFilter.getSearchValue().equals(""))
         {
-            String hql="from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.name like (?)";
-            query=session.createQuery(hql).setString(0,"%"+tableFilter.getSearchValue()+"%");
+            String hql="from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.name like (?) and f.feeTypeId=?";
+            query=session.createQuery(hql).setString(0,"%"+tableFilter.getSearchValue()+"%").setInteger(1,feeType);
         }
         else
         {
-            String hql = "from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId";
-            query = session.createQuery(hql);
+            String hql = "from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.feeTypeId=?";
+            query = session.createQuery(hql).setInteger(0,feeType);
         }
         Integer count=query.list().size();
         query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter.getLength());
@@ -71,18 +71,27 @@ public class FeeItemDaoImpl implements FeeItemDao
         for (Object aList : list)
         {
             Object[] objects = (Object[]) aList;
-            entities.add((FeeItemEntity) objects[0]);
+            FeeItemEntity feeItemEntity=(FeeItemEntity) objects[0];
+            String[] array=feeItemEntity.getName().split(";");
+            feeItemEntity.setName(array[0]);
+            try
+            {
+                feeItemEntity.setPayStartTime(array[1]);
+                feeItemEntity.setPayEndTime(array[2]);
+            }
+            catch (Exception ignored){}
+            entities.add(feeItemEntity);
         }
-        tableData.setRecordsTotal(this.count());
+        tableData.setRecordsTotal(this.count(feeType));
         tableData.setRecordsFiltered(count);
         tableData.setJsonString(entities);
         return tableData;
     }
 
-    public Integer count()
+    public Integer count(int feeType)
     {
         Session session=getSession();
-        String hql="select count(*) from FeeItemEntity";
-        return ((Long)session.createQuery(hql).uniqueResult()).intValue();
+        String hql="select count(*) from FeeItemEntity f where f.feeTypeId=?";
+        return ((Long)session.createQuery(hql).setInteger(0,feeType).uniqueResult()).intValue();
     }
 }

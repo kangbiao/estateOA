@@ -1036,39 +1036,7 @@ function MorrisChart3(){
 //
 // Graph4 created in element with id = morris-chart-4
 //
-function MorrisChart4(){
-	// Use Morris.Bar
-	Morris.Bar({
-		element: 'morris-chart-4',
-		data: [
-			{x: '2011 Q1', y: 0},
-			{x: '2011 Q2', y: 1},
-			{x: '2011 Q3', y: 2},
-			{x: '2011 Q4', y: 3},
-			{x: '2012 Q1', y: 4},
-			{x: '2012 Q2', y: 5},
-			{x: '2012 Q3', y: 6},
-			{x: '2012 Q4', y: 7},
-			{x: '2013 Q1', y: 8},
-			{x: '2013 Q2', y: 7},
-			{x: '2013 Q3', y: 6},
-			{x: '2013 Q4', y: 5},
-			{x: '2014 Q1', y: 9}
-		],
-		xkey: 'x',
-		ykeys: ['y'],
-		labels: ['Y'],
-		barColors: function (row, series, type) {
-			if (type === 'bar') {
-				var red = Math.ceil(255 * row.y / this.ymax);
-				return 'rgb(' + red + ',0,0)';
-			}
-			else {
-				return '#000';
-			}
-		}
-	});
-}
+
 //
 // Graph5 created in element with id = morris-chart-5
 //

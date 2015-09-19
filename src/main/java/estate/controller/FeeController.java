@@ -54,13 +54,18 @@ public class FeeController
             LogUtil.E(e.getMessage());
         }
 
+
+
         //将post过来的费用信息保存在实体里面
         ruleEntity.setUnit(request.getParameter("unit_type"));
         ruleEntity.setUnitPrice(request.getParameter("fee_unit_price"));
         ruleEntity.setOverdueUnit(request.getParameter("overdue_unit_type"));
         ruleEntity.setOverdueUnitPrice(request.getParameter("overdue_unit_price"));
         feeItemEntity.setRuleEntity(ruleEntity);
-        feeItemEntity.setName(request.getParameter("fee_name"));
+        String payStartTime=String.valueOf(Convert.time2num(request.getParameter("pay_start_time")));
+        String payEndTime=String.valueOf(Convert.time2num(request.getParameter("pay_end_time")));
+        feeItemEntity.setName(request.getParameter("fee_name")+";"+payStartTime+";"+payEndTime);
+        feeItemEntity.setFeeTypeId(Config.ESTATE);
 
         // TODO 判断物业费项目是否唯一
 
@@ -91,7 +96,7 @@ public class FeeController
         TableData tableData=new TableData(false);
         try
         {
-            return feeService.feeList(tableFilter);
+            return feeService.feeList(tableFilter,Config.ESTATE);
         }
         catch (Exception e)
         {
@@ -106,19 +111,12 @@ public class FeeController
 
     /****-------------以下为服务费增删改查------------------****/
 
+    @RequestMapping("serviceAdd")
     public BasicJson serviceFeeAdd(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
-
-        return null;
-    }
-
-    @RequestMapping("serviceList")
-    public TableData serviceList(TableFilter tableFilter,HttpServletRequest request)
-    {
         RuleEntity ruleEntity=new RuleEntity();
         FeeItemEntity feeItemEntity=new FeeItemEntity();
-        TableData tableData=new TableData();
 
         ruleEntity.setStartTime(Convert.time2num(request.getParameter("start_time")));
         ruleEntity.setEndTime(Convert.time2num(request.getParameter("end_time")));
@@ -131,9 +129,44 @@ public class FeeController
 
         feeItemEntity.setFeeTypeId(Config.SERVICE);
         feeItemEntity.setIsPeriodic(Config.FALSE);
-        tableData.setJsonString(feeItemEntity);
+        basicJson.setJsonString(feeItemEntity);
 
-        return tableData;
+        try
+        {
+            feeService.estateFeeAdd(feeItemEntity);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            basicJson.getErrorMsg().setCode("1000250");
+            basicJson.getErrorMsg().setDescription("费用信息增加失败");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        basicJson.setJsonString(feeItemEntity);
+        return basicJson;
+    }
+
+    @RequestMapping("serviceList")
+    public TableData serviceList(TableFilter tableFilter,HttpServletRequest request)
+    {
+        if(request.getParameter("search[value]")!=null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+        TableData tableData=new TableData(false);
+        try
+        {
+            return feeService.feeList(tableFilter,Config.SERVICE);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            tableData.getErrorMsg().setCode("1000520");
+            tableData.getErrorMsg().setDescription("获取费用列表失败,请重试");
+            return tableData;
+        }
     }
 
 

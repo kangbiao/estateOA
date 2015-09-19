@@ -14,7 +14,8 @@ public class FeeItemEntity
     private Byte isPeriodic;
     private Integer villageId;
     private RuleEntity ruleEntity;
-    private String timePeriod;
+    private String payStartTime;
+    private String payEndTime;
 
     public Integer getFiId()
     {
@@ -95,13 +96,25 @@ public class FeeItemEntity
         this.ruleEntity = ruleEntity;
     }
 
-    public String getTimePeriod()
+
+
+    public String getPayStartTime()
     {
-        return timePeriod;
+        return payStartTime;
     }
 
-    public void setTimePeriod(String timePeriod)
+    public void setPayStartTime(String payStartTime)
     {
-        this.timePeriod = timePeriod;
+        this.payStartTime = payStartTime;
+    }
+
+    public String getPayEndTime()
+    {
+        return payEndTime;
+    }
+
+    public void setPayEndTime(String payEndTime)
+    {
+        this.payEndTime = payEndTime;
     }
 }
