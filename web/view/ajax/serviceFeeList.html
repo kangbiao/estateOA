@@ -96,8 +96,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">有效时间</label>
-                                <div id="start_time" class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="start_time"
+                                <div class="col-sm-4">
+                                    <input type="text" id="start_time" class="form-control input_date" name="start_time"
                                            placeholder="开始时间">
                                 </div>
                                 <div class="col-sm-4">
@@ -154,9 +154,14 @@
     //ajax添加物业费项目
     function submitForm()
     {
+
         var fields = $("#serviceFeeFrom").serializeArray();
         console.log(fields);
-
+        if($('#start_time').val()==""||$('#end_time').val()=="")
+        {
+            alert("请选择时间");
+        }
+        else
         $.ajax({
             type: "post",
             async: false,
@@ -202,26 +207,6 @@
                         regexp: {
                             regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
                             message: '费用单价只能为两位小数或整数'
-                        }
-                    }
-                },
-                start_time:{
-                    validators: {
-                        notEmpty: {
-                            message: '时间不能为空'
-                        },
-                        date: {
-                            format: 'YYYY-DD-MM'
-                        }
-                    }
-                },
-                end_time:{
-                    validators: {
-                        notEmpty: {
-                            message: '时间不能为空'
-                        },
-                        date: {
-                            format: 'YYYY-DD-MM'
                         }
                     }
                 },
