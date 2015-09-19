@@ -15,15 +15,13 @@ urlConfig.noticeList=host+"notice/list";
 //费用相关的URL
 urlConfig.addFee=host+"fee/add/estate";
 urlConfig.feeList=host+"fee/list/estate";
-urlConfig.deleteEstateFee=host+"fee/delete/estate";
+urlConfig.deleteFee=host+"fee/delete/";
 
 urlConfig.addServiceFee=host+"fee/add/service";
 urlConfig.serviceFeeList=host+"fee/list/service";
-urlConfig.deleteServiceFee=host+"fee/delete/service/";
 
 urlConfig.addParkingLotFee=host+"fee/add/parkingLot";
 urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
-urlConfig.deleteParkingLotFee=host+"fee/delete/parkingLot/";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";

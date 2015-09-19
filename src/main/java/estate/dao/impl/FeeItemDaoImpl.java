@@ -39,8 +39,12 @@ public class FeeItemDaoImpl implements FeeItemDao
     public void delete(Integer feeItemID)
     {
         Session session=getSession();
-        String hql="delete from FeeItemEntity f where f.fiId=?";
-        session.createQuery(hql).setInteger(0, feeItemID);
+        String sql= "delete from RuleEntity r where r.ruleId=:ruleid";
+        Integer ruleID=this.get(feeItemID).getRuleId();
+
+        String hql="delete from FeeItemEntity f where f.fiId=:fiid";
+        session.createQuery(hql).setInteger("fiid", feeItemID).executeUpdate();
+        session.createQuery(sql).setInteger("ruleid",ruleID).executeUpdate();
     }
 
     public FeeItemEntity get(Integer feeItemID)
@@ -52,18 +56,19 @@ public class FeeItemDaoImpl implements FeeItemDao
     {
         Session session=getSession();
         TableData tableData=new TableData(true);
-        ArrayList<FeeItemEntity> entities=new ArrayList<FeeItemEntity>();
+        ArrayList<FeeItemEntity> entities= new ArrayList<>();
         Query query;
 
         if (!tableFilter.getSearchValue().equals(""))
         {
-            String hql="from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.name like (?) and f.feeTypeId=?";
-            query=session.createQuery(hql).setString(0,"%"+tableFilter.getSearchValue()+"%").setInteger(1,feeType);
+            String hql="from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.name like (:name) and f.feeTypeId=:id";
+            query=session.createQuery(hql).setString("name","%"+tableFilter.getSearchValue()+"%").setInteger("id",
+                    feeType);
         }
         else
         {
-            String hql = "from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.feeTypeId=?";
-            query = session.createQuery(hql).setInteger(0,feeType);
+            String hql = "from FeeItemEntity f , RuleEntity r where r.ruleId=f.ruleId and f.feeTypeId=:id";
+            query = session.createQuery(hql).setInteger("id",feeType);
         }
         Integer count=query.list().size();
         query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter.getLength());
@@ -91,7 +96,7 @@ public class FeeItemDaoImpl implements FeeItemDao
     public Integer count(int feeType)
     {
         Session session=getSession();
-        String hql="select count(*) from FeeItemEntity f where f.feeTypeId=?";
-        return ((Long)session.createQuery(hql).setInteger(0,feeType).uniqueResult()).intValue();
+        String hql="select count(*) from FeeItemEntity f where f.feeTypeId=:id";
+        return ((Long)session.createQuery(hql).setInteger("id",feeType).uniqueResult()).intValue();
     }
 }

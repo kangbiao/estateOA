@@ -60,7 +60,7 @@
         <tx:attributes>
             <tx:method name="get*" read-only="true"/>
             <tx:method name="save*" propagation="REQUIRED" read-only="false"/>
-            <tx:method name="add" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED" read-only="false"/>
         </tx:attributes>
     </tx:advice>
 

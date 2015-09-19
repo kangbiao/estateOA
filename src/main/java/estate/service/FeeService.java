@@ -24,7 +24,10 @@ public interface FeeService
      */
     TableData feeList(TableFilter tableFilter,int feeType);
 
-
-
+    /**
+     * 会同时删除与之相关的规则
+     * @param id
+     */
+    void deleteFee(Integer id);
 
 }

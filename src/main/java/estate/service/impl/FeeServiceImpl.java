@@ -37,6 +37,8 @@ public class FeeServiceImpl implements FeeService
         return feeItemDao.getList(tableFilter,feeType);
     }
 
-
-    
+    public void deleteFee(Integer id)
+    {
+        feeItemDao.delete(id);
+    }
 }

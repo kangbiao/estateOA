@@ -103,7 +103,6 @@ public class FeeController
             switch (feeType)
             {
                 case "estate":
-                    LogUtil.E("Dfsd",FeeController.class);
                     return feeService.feeList(tableFilter,Config.ESTATE);
                 case "service":
                     return feeService.feeList(tableFilter,Config.SERVICE);
@@ -125,35 +124,20 @@ public class FeeController
 
     /**
      * 删除费用信息
-     * @param feeType
-     * @param id
      * @param request
      * @return
      */
-    @RequestMapping(value = "/delete/{feeType}/{id}")
-    public BasicJson feeDelete(@PathVariable String feeType,@PathVariable Integer id,HttpServletRequest request)
+    @RequestMapping(value = "/delete/{feeId}")
+    public BasicJson feeDelete(@PathVariable Integer feeId,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
         try
         {
-
-            switch (feeType)
-            {
-                case "estate":
-                    break;
-                case "service":
-                    break;
-                case "parkingLot":
-                    break;
-                default:
-                    basicJson.getErrorMsg().setCode("1052250");
-                    basicJson.getErrorMsg().setDescription("请求路径错误");
-                    return basicJson;
-            }
+            feeService.deleteFee(feeId);
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage(),FeeController.class);
+            LogUtil.E(e.getMessage(), FeeController.class);
             basicJson.getErrorMsg().setDescription("删除出错,请重试");
             return basicJson;
         }
