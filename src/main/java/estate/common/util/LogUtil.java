@@ -31,12 +31,10 @@ public class LogUtil
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if (logger == null)
-            logger = LogManager.getLogger(LogUtil.class.getName());
     }
 
-    public static void E(String message) {
+    public static void E(String message,Class cla) {
+        logger=LogManager.getLogger(cla);
         logger.error(message);
     }
 

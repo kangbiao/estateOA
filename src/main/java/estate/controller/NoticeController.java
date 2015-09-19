@@ -1,6 +1,5 @@
 package estate.controller;
 
-import estate.common.util.LogUtil;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
@@ -53,7 +52,7 @@ public class NoticeController
             List<FieldError> errors=bindingResult.getFieldErrors();
             for (FieldError fieldError:errors)
             {
-                LogUtil.E(fieldError.getField()+fieldError.getDefaultMessage());
+//                LogUtil.E(fieldError.getField()+fieldError.getDefaultMessage());
             }
             basicJson.setJsonString(errors);
             return basicJson;
@@ -90,7 +89,7 @@ public class NoticeController
         }
         catch (Exception e)
         {
-            LogUtil.E("公告写入数据库失败-"+e.getMessage());
+//            LogUtil.E("公告写入数据库失败-"+e.getMessage());
             basicJson.getErrorMsg().setCode("100103");
             basicJson.getErrorMsg().setDescription("公告增加失败,请检查您的输入");
             return basicJson;

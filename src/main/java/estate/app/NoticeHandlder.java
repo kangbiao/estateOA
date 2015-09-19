@@ -41,7 +41,7 @@ public class NoticeHandlder
         }
         basicJson.setStatus(true);
         basicJson.setJsonString(noticeEntities);
-        LogUtil.E(String.valueOf(number));
+//        LogUtil.E(String.valueOf(number));
         return basicJson;
     }
 

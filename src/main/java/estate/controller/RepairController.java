@@ -1,6 +1,5 @@
 package estate.controller;
 
-import estate.common.util.LogUtil;
 import estate.entity.database.RepairEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
@@ -47,7 +46,7 @@ public class RepairController
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage());
+//            LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setCode("100015");
             basicJson.getErrorMsg().setDescription("操作失败");
             return basicJson;

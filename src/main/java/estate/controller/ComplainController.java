@@ -1,6 +1,5 @@
 package estate.controller;
 
-import estate.common.util.LogUtil;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.ComplainService;
@@ -34,7 +33,7 @@ public class ComplainController
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage());
+//            LogUtil.E(e.getMessage());
             return null;
 
         }

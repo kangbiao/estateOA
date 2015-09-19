@@ -51,7 +51,7 @@ public class FeeItemDaoImpl implements FeeItemDao
     public TableData getList(TableFilter tableFilter,int feeType)
     {
         Session session=getSession();
-        TableData tableData=new TableData();
+        TableData tableData=new TableData(true);
         ArrayList<FeeItemEntity> entities=new ArrayList<FeeItemEntity>();
         Query query;
 

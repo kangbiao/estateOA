@@ -13,14 +13,17 @@ urlConfig.noticeList=host+"notice/list";
 
 
 //费用相关的URL
-urlConfig.addFee=host+"fee/estateAdd";
-urlConfig.feeList=host+"fee/estateList";
+urlConfig.addFee=host+"fee/add/estate";
+urlConfig.feeList=host+"fee/list/estate";
+urlConfig.deleteEstateFee=host+"fee/delete/estate";
 
-urlConfig.addServiceFee=host+"fee/serviceAdd";
-urlConfig.serviceFeeList=host+"fee/serviceList";
+urlConfig.addServiceFee=host+"fee/add/service";
+urlConfig.serviceFeeList=host+"fee/list/service";
+urlConfig.deleteServiceFee=host+"fee/delete/service/";
 
-urlConfig.addParkingLotFee=host+"fee/parkingLotAdd";
-urlConfig.parkingLotFeeList=host+"fee/parkingLotList";
+urlConfig.addParkingLotFee=host+"fee/add/parkingLot";
+urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
+urlConfig.deleteParkingLotFee=host+"fee/delete/parkingLot/";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";

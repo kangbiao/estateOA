@@ -1,6 +1,5 @@
 package estate.controller;
 
-import estate.common.util.LogUtil;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -31,7 +30,7 @@ public class UserController
         temp.setStatus(true);
         temp.setJsonString("jsonstring");
         System.out.println(userID);
-        LogUtil.E("Fgfdgf");
+//        LogUtil.E("Fgfdgf");
         return temp;
     }
 
@@ -71,7 +70,7 @@ public class UserController
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getClass()+e.getMessage());
+//            LogUtil.E(e.getClass()+e.getMessage());
             return null;
         }
 
@@ -96,7 +95,7 @@ public class UserController
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getClass()+e.getMessage());
+//            LogUtil.E(e.getClass()+e.getMessage());
             return null;
         }
     }

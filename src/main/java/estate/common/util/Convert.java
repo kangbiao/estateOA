@@ -130,7 +130,7 @@ public class Convert
         }
         catch (ParseException e)
         {
-            LogUtil.E(e.getMessage());
+//            LogUtil.E(e.getMessage());
             return null;
         }
     }
@@ -158,7 +158,7 @@ public class Convert
         }
         catch (ParseException e)
         {
-            LogUtil.E(e.getMessage());
+//            LogUtil.E(e.getMessage());
             return null;
         }
     }
