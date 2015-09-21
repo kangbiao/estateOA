@@ -1,6 +1,5 @@
 package estate.dao.impl;
 
-import estate.dao.BaseDao;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.json.TableData;
@@ -8,6 +7,7 @@ import estate.entity.json.TableFilter;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by kangbiao on 15-9-16.
  */
 @Repository("userDao")
-public class UserDaoImpl implements UserDao, BaseDao
+public class UserDaoImpl implements UserDao
 {
     @Autowired
     private SessionFactory sessionFactory;
@@ -46,7 +46,15 @@ public class UserDaoImpl implements UserDao, BaseDao
 
     public AppUserEntity getUserByPhone(String phone)
     {
+        System.out.print("dsfds");
         return null;
+    }
+
+    @Test
+    public void test ()
+    {
+        this.getUserByPhone("18122392");
+        System.out.print("dsfds");
     }
 
     public TableData getOwnerList(TableFilter tableFilter)

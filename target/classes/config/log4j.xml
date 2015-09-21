@@ -6,7 +6,7 @@
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %p %C{1.} [%t] %m%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
         </Console>
         <File name="File" fileName="${filename}/web.log">
             <PatternLayout>

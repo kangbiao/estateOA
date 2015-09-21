@@ -17,5 +17,8 @@
         <property name="buildingCode">
             <column name="building_code" sql-type="varchar" length="45"/>
         </property>
+        <property name="secretKey">
+            <column name="secret_key" sql-type="varchar" length="255"/>
+        </property>
     </class>
 </hibernate-mapping>

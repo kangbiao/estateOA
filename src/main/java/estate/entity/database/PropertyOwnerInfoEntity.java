@@ -5,39 +5,20 @@ package estate.entity.database;
  */
 public class PropertyOwnerInfoEntity
 {
-    private int poId;
+    private Integer id;
     private Integer propertyId;
-    private String ownerIdentityId;
+    private String ownerPhone;
+    private Integer buildingId;
     private Byte openDoorAllowed;
 
-    public int getPoId()
+    public Integer getId()
     {
-        return poId;
+        return id;
     }
 
-    public void setPoId(int poId)
+    public void setId(Integer id)
     {
-        this.poId = poId;
-    }
-
-    public Integer getPropertyId()
-    {
-        return propertyId;
-    }
-
-    public void setPropertyId(Integer propertyId)
-    {
-        this.propertyId = propertyId;
-    }
-
-    public String getOwnerIdentityId()
-    {
-        return ownerIdentityId;
-    }
-
-    public void setOwnerIdentityId(String ownerIdentityId)
-    {
-        this.ownerIdentityId = ownerIdentityId;
+        this.id = id;
     }
 
     public Byte getOpenDoorAllowed()
@@ -50,35 +31,33 @@ public class PropertyOwnerInfoEntity
         this.openDoorAllowed = openDoorAllowed;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public String getOwnerPhone()
     {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        PropertyOwnerInfoEntity that = (PropertyOwnerInfoEntity) o;
-
-        if (poId != that.poId)
-            return false;
-        if (propertyId != null ? !propertyId.equals(that.propertyId) : that.propertyId != null)
-            return false;
-        if (ownerIdentityId != null ? !ownerIdentityId.equals(that.ownerIdentityId) : that.ownerIdentityId != null)
-            return false;
-        if (openDoorAllowed != null ? !openDoorAllowed.equals(that.openDoorAllowed) : that.openDoorAllowed != null)
-            return false;
-
-        return true;
+        return ownerPhone;
     }
 
-    @Override
-    public int hashCode()
+    public void setOwnerPhone(String ownerPhone)
     {
-        int result = poId;
-        result = 31 * result + (propertyId != null ? propertyId.hashCode() : 0);
-        result = 31 * result + (ownerIdentityId != null ? ownerIdentityId.hashCode() : 0);
-        result = 31 * result + (openDoorAllowed != null ? openDoorAllowed.hashCode() : 0);
-        return result;
+        this.ownerPhone = ownerPhone;
+    }
+
+    public Integer getPropertyId()
+    {
+        return propertyId;
+    }
+
+    public void setPropertyId(Integer propertyId)
+    {
+        this.propertyId = propertyId;
+    }
+
+    public Integer getBuildingId()
+    {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId)
+    {
+        this.buildingId = buildingId;
     }
 }

@@ -99,36 +99,133 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="anotherFormModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">添加物业费</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <form class="form-horizontal" role="form" id="estateFeeFrom">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">费用名称</label>
+                                <div class="col-sm-8">
+                                    <select id="s2_with_tag" multiple="multiple" class="populate placeholder">
+                                        <option>Linux</option>
+                                        <option>Windows</option>
+                                        <option>OpenSolaris</option>
+                                        <option>FirefoxOS</option>
+                                        <option>MeeGo</option>
+                                        <option>Android</option>
+                                        <option>Sailfish OS</option>
+                                        <option>Plan9</option>
+                                        <option>DOS</option>
+                                        <option>AIX</option>
+                                        <option>HP/UP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">费用单价</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">收费方式</label>
+                                <div class="col-sm-8">
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" checked="" name="unit_type" value="squre">按平米
+                                            <i class="fa fa-circle-o"></i>
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" checked="" name="unit_type" value="family"> 按户
+                                            <i class="fa fa-circle-o"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">缴费时间</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input_date" name="pay_start_time"
+                                           placeholder="开始时间">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input_date" name="pay_end_time"
+                                           placeholder="结束时间">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">生效时间</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input_date" name="start_time" placeholder="">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input_date" name="end_time" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">滞纳金</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" name="overdue_unit_price" placeholder="">
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" checked="" name="overdue_unit_type" value="month">每月
+                                            <i class="fa fa-circle-o"></i>
+                                        </label>
+                                    </div>
+                                    <div class="radio-inline">
+                                        <label>
+                                            <input type="radio" checked="" name="overdue_unit_type" value="day"> 每日
+                                            <i class="fa fa-circle-o"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">门禁权限</label>
+                                <div class="col-sm-2">
+                                    <div class="toggle-switch toggle-switch-success">
+                                        <label>
+                                            <input type="checkbox" name="door_authority" checked="">
+                                            <div class="toggle-switch-inner"></div>
+                                            <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" id="input_date" class="form-control"
+                                           placeholder="超过几个月禁止门禁权限">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-2">
+                                    <button type="submit" class="btn btn-primary">确认添加</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
-    //删除数据
-//    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
-//        var data = editTable.row($(this).parents('tr') ).data();
-//        $.ajax({
-//            type: "post",
-//            async: false,
-//            url: "statis.do",
-//            data: {
-//                action:"delete",
-//                estateID:data[0]
-//            },
-//            dataType: "json", //返回数据形式为json
-//            success: function (result) {
-//                if (result.success) {
-//
-//                    $(result.jsonString).each(function () {
-//                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
-//                    });
-//                } else {
-//                    alert(result.errorMsg);
-//                }
-//            },
-//            error: function (errorMsg) {
-//                alert("服务器连接失败,请重试!");
-//            }
-//        });
-//    });
     $('#ownerListTable tbody').on( 'click', 'button#delRow', function () {
         var comfirm=confirm("确定删除?");
         if(comfirm)
@@ -137,7 +234,11 @@
         }
     });
 
+    $("#ownerListTable tbody").on('click','button#editRow',function(){
+        $("#anotherFormModel").modal("show");
+    });
 
+    //显示业主的个人信息和房产信息
     $('#ownerListTable').on( 'click', 'button#detailRow', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
@@ -163,6 +264,7 @@
         $("#formModel").modal("show");//弹出框show
     });
 
+    //显示业主的家庭成员信息
     function format ( d ) {
         console.log(d);
         html="";
@@ -339,6 +441,12 @@
         } );
 
     }
+
+    function initSelect2()
+    {
+        $('#s2_with_tag').select2({placeholder: "选择一个或多个物业信息"});
+    }
+
     $(document).ready(function() {
         $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
             showButtonPanel:true,
@@ -352,5 +460,6 @@
             dayNamesMin: ['日','一','二','三','四','五','六']
         });
         LoadDataTablesScripts(initDataTable);
+        LoadSelect2Script(initSelect2);
     });
 </script>

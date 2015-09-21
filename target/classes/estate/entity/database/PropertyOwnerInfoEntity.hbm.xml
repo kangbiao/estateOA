@@ -6,14 +6,17 @@
 
     <class name="estate.entity.database.PropertyOwnerInfoEntity" table="property_owner_info" schema=""
            catalog="PropertySystem">
-        <id name="poId">
+        <id name="id">
             <column name="po_id" sql-type="int unsigned" not-null="true"/>
         </id>
         <property name="propertyId">
             <column name="property_id" sql-type="int unsigned"/>
         </property>
-        <property name="ownerIdentityId">
-            <column name="owner_identity_id" sql-type="varchar" length="45"/>
+        <property name="ownerPhone">
+            <column name="owner_phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="buildingId">
+            <column name="building_id" sql-type="int unsigned"/>
         </property>
         <property name="openDoorAllowed">
             <column name="open_door_allowed" sql-type="tinyint"/>

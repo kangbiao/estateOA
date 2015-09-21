@@ -79,7 +79,7 @@ public class FeeController
         }
         catch (Exception e)
         {
-            LogUtil.E("费用信息写入数据库失败",this.getClass());
+//            LogUtil.E("费用信息写入数据库失败","FeeController");
             basicJson.getErrorMsg().setCode("1000550");
             basicJson.getErrorMsg().setDescription("费用信息增加失败,请重试");
             return basicJson;
@@ -93,6 +93,7 @@ public class FeeController
     @RequestMapping(value = "/list/{feeType}")
     public TableData feeList(@PathVariable String feeType, TableFilter tableFilter,HttpServletRequest request)
     {
+        LogUtil.E(FeeController.class.getName());
         if(request.getParameter("search[value]")!=null)
             tableFilter.setSearchValue(request.getParameter("search[value]"));
         else
@@ -115,7 +116,7 @@ public class FeeController
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage(),this.getClass());
+//            LogUtil.E(e.getMessage(),"FeeController");
             tableData.getErrorMsg().setCode("1000520");
             tableData.getErrorMsg().setDescription("获取费用列表失败,请重试");
             return tableData;
@@ -137,7 +138,7 @@ public class FeeController
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage(), FeeController.class);
+//            LogUtil.E(e.getMessage(), "FeeController");
             basicJson.getErrorMsg().setDescription("删除出错,请重试");
             return basicJson;
         }

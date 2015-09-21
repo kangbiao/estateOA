@@ -18,7 +18,8 @@ public interface BaseDao
      * @param id
      * @return
      */
-    Object get(Integer id);
+    Object get(Integer id,Object object);
+
 
     /**
      * 根据对象信息删除某个对象

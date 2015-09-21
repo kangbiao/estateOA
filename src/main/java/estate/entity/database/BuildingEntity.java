@@ -9,6 +9,7 @@ public class BuildingEntity
     private Integer villageId;
     private String description;
     private String buildingCode;
+    private String secretKey;
 
     public int getBuildingId()
     {
@@ -80,5 +81,15 @@ public class BuildingEntity
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (buildingCode != null ? buildingCode.hashCode() : 0);
         return result;
+    }
+
+    public String getSecretKey()
+    {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey)
+    {
+        this.secretKey = secretKey;
     }
 }

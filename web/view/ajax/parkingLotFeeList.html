@@ -72,36 +72,25 @@
                     <div class="row">
                         <form class="form-horizontal" role="form" id="estateFeeFrom">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">费用名称</label>
+                                <label class="col-sm-2 control-label">车位类型</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="fee_name" class="form-control" placeholder="">
+                                    <select name="" id="" class="form-control">
+                                        <option value="">--请选择---</option>
+                                        <option value="">小型车位</option>
+                                        <option value="">中型车位</option>
+                                        <option value="">大型车位</option>
+                                    </select>
+                                    <!--<input type="text" name="fee_name" class="form-control" placeholder="">-->
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">费用单价</label>
+                                <label class="col-sm-2 control-label">单价</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">收费方式</label>
-                                <div class="col-sm-8">
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" checked="" name="unit_type" value="squre">按平米
-                                            <i class="fa fa-circle-o"></i>
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" checked="" name="unit_type" value="family"> 按户
-                                            <i class="fa fa-circle-o"></i>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">缴费时间</label>
+                                <label class="col-sm-2 control-label">收费时间</label>
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control input_date" name="pay_start_time"
                                            placeholder="开始时间">
@@ -138,22 +127,6 @@
                                             <i class="fa fa-circle-o"></i>
                                         </label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">门禁权限</label>
-                                <div class="col-sm-2">
-                                    <div class="toggle-switch toggle-switch-success">
-                                        <label>
-                                            <input type="checkbox" name="door_authority" checked="">
-                                            <div class="toggle-switch-inner"></div>
-                                            <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" id="input_date" class="form-control"
-                                           placeholder="超过几个月禁止门禁权限">
                                 </div>
                             </div>
                             <div class="form-group">
