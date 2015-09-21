@@ -7,19 +7,9 @@ public class AppUserEntity
 {
     private String phone;
     private String passwd;
-    private Byte userRole;
+    private int userRole;
     private String userName;
     private Long registerTime;
-
-    public String getPhone()
-    {
-        return phone;
-    }
-
-    public void setPhone(String phone)
-    {
-        this.phone = phone;
-    }
 
     public String getPasswd()
     {
@@ -31,24 +21,14 @@ public class AppUserEntity
         this.passwd = passwd;
     }
 
-    public Byte getUserRole()
+    public String getPhone()
     {
-        return userRole;
+        return phone;
     }
 
-    public void setUserRole(Byte userRole)
+    public void setPhone(String phone)
     {
-        this.userRole = userRole;
-    }
-
-    public String getUserName()
-    {
-        return userName;
-    }
-
-    public void setUserName(String userName)
-    {
-        this.userName = userName;
+        this.phone = phone;
     }
 
     public Long getRegisterTime()
@@ -61,38 +41,23 @@ public class AppUserEntity
         this.registerTime = registerTime;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public String getUserName()
     {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        AppUserEntity that = (AppUserEntity) o;
-
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null)
-            return false;
-        if (passwd != null ? !passwd.equals(that.passwd) : that.passwd != null)
-            return false;
-        if (userRole != null ? !userRole.equals(that.userRole) : that.userRole != null)
-            return false;
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null)
-            return false;
-        if (registerTime != null ? !registerTime.equals(that.registerTime) : that.registerTime != null)
-            return false;
-
-        return true;
+        return userName;
     }
 
-    @Override
-    public int hashCode()
+    public void setUserName(String userName)
     {
-        int result = phone != null ? phone.hashCode() : 0;
-        result = 31 * result + (passwd != null ? passwd.hashCode() : 0);
-        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (registerTime != null ? registerTime.hashCode() : 0);
-        return result;
+        this.userName = userName;
+    }
+
+    public int getUserRole()
+    {
+        return userRole;
+    }
+
+    public void setUserRole(int userRole)
+    {
+        this.userRole = userRole;
     }
 }

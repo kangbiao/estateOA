@@ -47,6 +47,7 @@ public class AuthorityHandler
             return basicJson;
         }
 
+        //取出当前用户能进入的所有楼栋的ID
         ArrayList<Integer> ids=authorityService.getAuthorityBuildingIDsByPhone(phone);
         if(ids.contains(ssidSecretEntity.getBuildingId()))
         {

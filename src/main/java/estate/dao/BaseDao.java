@@ -27,4 +27,12 @@ public interface BaseDao
      */
     void delete(Object object);
 
+
+    /**
+     * 根据sql语句计算总数
+     * @param sql
+     * @return
+     */
+    Integer count(String sql);
+
 }

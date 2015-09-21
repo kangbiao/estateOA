@@ -8,7 +8,7 @@ public interface BaseService
 {
     Integer save(Object object);
 
-    Object get(Integer id);
+    Object get(Integer id,Object object);
 
     void delete(Object object);
 

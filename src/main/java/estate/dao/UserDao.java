@@ -25,6 +25,6 @@ public interface UserDao
 
     TableData getAuthenticatedUserList(TableFilter tableFilter);
 
-
+    TableData getAppUserList(TableFilter tableFilter);
 
 }

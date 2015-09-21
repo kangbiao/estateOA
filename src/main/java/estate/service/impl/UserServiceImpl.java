@@ -2,14 +2,12 @@ package estate.service.impl;
 
 import estate.common.util.Convert;
 import estate.dao.UserDao;
-import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.TenantEntity;
 import estate.entity.display.Owner;
 import estate.entity.display.Tenant;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
-import estate.service.BaseService;
 import estate.service.FamilyService;
 import estate.service.PropertyService;
 import estate.service.UserService;
@@ -22,7 +20,7 @@ import java.util.ArrayList;
  * Created by kangbiao on 15-9-16.
  */
 @Service("userService")
-public class UserServiceImpl implements UserService,BaseService
+public class UserServiceImpl implements UserService
 {
     @Autowired
     private UserDao userDao;
@@ -30,31 +28,6 @@ public class UserServiceImpl implements UserService,BaseService
     private PropertyService propertyService;
     @Autowired
     private FamilyService familyService;
-
-    public Integer save(Object object)
-    {
-        return null;
-    }
-
-    public Object get(Integer id)
-    {
-        return null;
-    }
-
-    public void delete(Object object)
-    {
-
-    }
-
-    public boolean add(AppUserEntity userEntity)
-    {
-        return false;
-    }
-
-    public boolean delete(String userID)
-    {
-        return false;
-    }
 
 
 
@@ -122,5 +95,41 @@ public class UserServiceImpl implements UserService,BaseService
     public TableData getAuthenticatedUserList(TableFilter tableFilter)
     {
         return null;
+    }
+
+    @Override
+    public TableData getAppUserList(TableFilter tableFilter)
+    {
+        return userDao.getAppUserList(tableFilter);
+    }
+
+    @Override
+    public TableData getList(TableFilter tableFilter, Object object)
+    {
+        TableData tableData=userDao.getTenantList(tableFilter);
+        ArrayList<TenantEntity> entities = (ArrayList<TenantEntity>) tableData.getJsonString();
+        ArrayList<Tenant> tenans=new ArrayList<Tenant>();
+
+        for(TenantEntity tenantEntity:entities)
+        {
+            Tenant tenant=new Tenant();
+
+            tenant.setBirthday(Convert.num2time(tenantEntity.getBirthday()));
+            tenant.setSex(Convert.num2sex(tenantEntity.getSex()));
+            tenant.setName(tenantEntity.getName());
+            tenant.setAuthenticationTime(Convert.num2time(tenantEntity.getAuthenticationTime()));
+            tenant.setStartTime(Convert.num2time(tenantEntity.getStartTime()));
+            tenant.setEndTime(Convert.num2time(tenantEntity.getEndTime()));
+            tenant.setIdentityType(Convert.num2idtype(tenantEntity.getIdentityType()));
+            tenant.setIdentityCode(tenantEntity.getIdentityCode());
+            tenant.setPhone(tenantEntity.getPhone());
+            tenant.setUrgentName(tenantEntity.getUrgentName());
+            tenant.setUrgentPhone(tenantEntity.getUrgentPhone());
+            tenant.setProperty(propertyService.get(tenantEntity.getPropertyId()));
+
+            tenans.add(tenant);
+        }
+        tableData.setJsonString(tenans);
+        return tableData;
     }
 }

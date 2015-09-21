@@ -1,6 +1,5 @@
 package estate.service;
 
-import estate.entity.database.AppUserEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
@@ -10,9 +9,6 @@ import estate.entity.json.TableFilter;
  */
 public interface UserService
 {
-    boolean add(AppUserEntity userEntity);
-
-    boolean delete(String userID);
 
     TableData getOwnerList(TableFilter tableFilter);
 
@@ -20,6 +16,7 @@ public interface UserService
 
     TableData getAuthenticatedUserList(TableFilter tableFilter);
 
+    TableData getAppUserList(TableFilter tableFilter);
 
-
+    TableData getList(TableFilter tableFilter,Object object);
 }

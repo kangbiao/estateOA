@@ -143,4 +143,30 @@ public class UserDaoImpl implements UserDao
 
         return tableData;
     }
+
+    @Override
+    public TableData getAppUserList(TableFilter tableFilter)
+    {
+        Session session = getSession();
+        TableData tableData = new TableData(true);
+        Query query;
+        if (!tableFilter.getSearchValue().equals(""))
+        {
+            String hql = "from AppUserEntity t where t.userName like (?)";
+            query = session.createQuery(hql).setString(0, "%" + tableFilter.getSearchValue() + "%");
+        }
+        else
+        {
+            String hql = "from AppUserEntity t";
+            query = session.createQuery(hql);
+        }
+        Integer count=query.list().size();
+        List list=query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter.getLength()).list();
+
+        tableData.setRecordsFiltered(count);
+        tableData.setJsonString(list);
+        tableData.setRecordsTotal(this.count("AppUserEntity"));
+
+        return tableData;
+    }
 }
