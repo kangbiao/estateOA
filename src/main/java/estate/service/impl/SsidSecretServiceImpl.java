@@ -1,5 +1,6 @@
 package estate.service.impl;
 
+import estate.dao.BaseDao;
 import estate.dao.SsidSecretDao;
 import estate.entity.database.SsidSecretEntity;
 import estate.service.SsidSecretService;
@@ -15,6 +16,8 @@ public class SsidSecretServiceImpl implements SsidSecretService
 {
     @Autowired
     SsidSecretDao ssidSecretDao;
+    @Autowired
+    BaseDao baseDao;
 
     @Override
     public SsidSecretEntity getSelfBySsid(String ssid)

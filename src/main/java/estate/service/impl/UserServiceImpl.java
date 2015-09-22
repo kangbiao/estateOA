@@ -1,7 +1,9 @@
 package estate.service.impl;
 
 import estate.common.util.Convert;
+import estate.dao.BaseDao;
 import estate.dao.UserDao;
+import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.TenantEntity;
 import estate.entity.display.Owner;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService
     private PropertyService propertyService;
     @Autowired
     private FamilyService familyService;
+    @Autowired
+    private BaseDao baseDao;
 
 
 
@@ -101,6 +105,40 @@ public class UserServiceImpl implements UserService
     public TableData getAppUserList(TableFilter tableFilter)
     {
         return userDao.getAppUserList(tableFilter);
+    }
+
+    public Owner getOnerInfoByID(Integer id)
+    {
+        OwnerEntity ownerEntity=new OwnerEntity();
+        Owner owner=new Owner();
+        ownerEntity=(OwnerEntity)baseDao.get(id,ownerEntity);
+
+        owner.setName(ownerEntity.getName());
+        owner.setPhone(ownerEntity.getPhone());
+        owner.setIdentityCode(ownerEntity.getIdentityCode());
+        owner.setPropertyIdList(ownerEntity.getPropertyIdList());
+        owner.setVehicleIdIst(ownerEntity.getVehicleIdIst());
+        owner.setUrgentName(ownerEntity.getUrgentName());
+        owner.setUrgentPhone(ownerEntity.getUrgentPhone());
+
+        owner.setSex(Convert.num2sex(ownerEntity.getSex()));
+        owner.setIdentityType(Convert.num2idtype(ownerEntity.getIdentityType()));
+        owner.setAuthenticationTime(Convert.num2time(ownerEntity.getAuthenticationTime()));
+        owner.setBirthday(Convert.num2time(ownerEntity.getBirthday()));
+
+        owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getOwnerId()));
+        owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
+
+        return owner;
+    }
+
+    @Override
+    public void changeAppUserStatus(AppUserEntity appUserEntity)
+    {
+        AppUserEntity appUserEntity1;
+        appUserEntity1=(AppUserEntity)baseDao.get(appUserEntity.getPhone(), appUserEntity);
+        appUserEntity1.setStatus(appUserEntity.getStatus());
+        baseDao.save(appUserEntity1);
     }
 
     @Override

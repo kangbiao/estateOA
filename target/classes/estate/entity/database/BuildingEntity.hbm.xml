@@ -7,6 +7,7 @@
     <class name="estate.entity.database.BuildingEntity" table="building" schema="" catalog="PropertySystem">
         <id name="buildingId">
             <column name="building_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="villageId">
             <column name="village_id" sql-type="int unsigned"/>
@@ -17,8 +18,8 @@
         <property name="buildingCode">
             <column name="building_code" sql-type="varchar" length="45"/>
         </property>
-        <property name="secretKey">
-            <column name="secret_key" sql-type="varchar" length="255"/>
+        <property name="buildingName">
+            <column name="building_name" sql-type="varchar" length="45"/>
         </property>
     </class>
 </hibernate-mapping>

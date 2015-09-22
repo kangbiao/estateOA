@@ -9,7 +9,7 @@ public class BuildingEntity
     private Integer villageId;
     private String description;
     private String buildingCode;
-    private String secretKey;
+    private String buildingName;
 
     public int getBuildingId()
     {
@@ -83,13 +83,13 @@ public class BuildingEntity
         return result;
     }
 
-    public String getSecretKey()
+    public String getBuildingName()
     {
-        return secretKey;
+        return buildingName;
     }
 
-    public void setSecretKey(String secretKey)
+    public void setBuildingName(String buildingName)
     {
-        this.secretKey = secretKey;
+        this.buildingName = buildingName;
     }
 }

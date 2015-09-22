@@ -36,7 +36,11 @@ urlConfig.authenticatedUserList=host+"user/authenticatedUserList";
 urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";
 urlConfig.disableAppUser=host+"user/disableAppUser";
+urlConfig.getOwerInfoByID=host+"user/ownerInfo";
 
+
+urlConfig.addSecret=host+"secret/add";
+urlConfig.secretList=host+"secret/list";
 
 
 /**********----------------语言配置----------------**********/

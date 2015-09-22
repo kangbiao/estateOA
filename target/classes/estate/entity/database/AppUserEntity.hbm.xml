@@ -20,5 +20,11 @@
         <property name="registerTime">
             <column name="register_time" sql-type="bigint"/>
         </property>
+        <property name="ownerId">
+            <column name="owner_id"  sql-type="int unsigned"/>
+        </property>
+        <property name="status">
+            <column name="status"  sql-type="int"/>
+        </property>
     </class>
 </hibernate-mapping>

@@ -129,6 +129,25 @@ public class UserController
         }
     }
 
+    @RequestMapping(value = "/ownerInfo/{id}")
+    public BasicJson getOwnerInfoByID(@PathVariable Integer id)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            basicJson.setJsonString(userService.getOnerInfoByID(id));
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("100660");
+            basicJson.getErrorMsg().setDescription("获取业主信息错误");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
     @RequestMapping(value = "/disableAppUser" ,method = RequestMethod.POST)
     public BasicJson disableAppUser(HttpServletRequest request)
     {
@@ -144,10 +163,10 @@ public class UserController
         {
             AppUserEntity appUserEntity=new AppUserEntity();
             appUserEntity.setPhone(phone);
-            appUserEntity.setUserRole(-1);
+            appUserEntity.setStatus(-1);
             try
             {
-                baseService.save(appUserEntity);
+                userService.changeAppUserStatus(appUserEntity);
             }
             catch (Exception e)
             {

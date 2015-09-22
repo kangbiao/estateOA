@@ -9,6 +9,7 @@ public class SsidSecretEntity
     private Integer buildingId;
     private String ssid;
     private String secret;
+    private String buildingCode;
 
     public Integer getBuildingId()
     {
@@ -48,5 +49,15 @@ public class SsidSecretEntity
     public void setSsid(String ssid)
     {
         this.ssid = ssid;
+    }
+
+    public String getBuildingCode()
+    {
+        return buildingCode;
+    }
+
+    public void setBuildingCode(String buildingCode)
+    {
+        this.buildingCode = buildingCode;
     }
 }

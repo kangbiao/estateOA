@@ -1,7 +1,7 @@
 package estate.dao.impl;
 
-import estate.dao.SsidSecretDao;
-import estate.entity.database.SsidSecretEntity;
+import estate.dao.BuildingDao;
+import estate.entity.database.BuildingEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by kangbiao on 15-9-21.
+ * Created by kangbiao on 15-9-22.
  *
  */
-@Repository("ssidSecretDao")
-public class SsidSecretDaoImpl implements SsidSecretDao
+@Repository("buildingDao")
+public class BuildingDaoImpl implements BuildingDao
 {
     @Autowired
     private SessionFactory sessionFactory;
@@ -25,13 +25,13 @@ public class SsidSecretDaoImpl implements SsidSecretDao
     }
 
     @Override
-    public SsidSecretEntity getBySSID(String ssid)
+    public BuildingEntity getByCode(String code)
     {
         Session session=getSession();
-        String hql="from SsidSecretEntity s where s.ssid=:ssid";
-        List list=session.createQuery(hql).setString("ssid",ssid).list();
-        if (list.size()>0)
-            return (SsidSecretEntity)list.get(0);
+        String hql="from BuildingEntity b where b.buildingCode=:code";
+        List list=session.createQuery(hql).setString("code",code).list();
+        if (list.size()==1)
+            return (BuildingEntity)list.get(0);
         else
             return null;
     }

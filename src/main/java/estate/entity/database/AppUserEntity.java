@@ -10,6 +10,8 @@ public class AppUserEntity
     private int userRole;
     private String userName;
     private Long registerTime;
+    private Integer ownerId;
+    private int status;
 
     public String getPasswd()
     {
@@ -59,5 +61,25 @@ public class AppUserEntity
     public void setUserRole(int userRole)
     {
         this.userRole = userRole;
+    }
+
+    public Integer getOwnerId()
+    {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId)
+    {
+        this.ownerId = ownerId;
+    }
+
+    public int getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(int status)
+    {
+        this.status = status;
     }
 }

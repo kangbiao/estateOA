@@ -14,4 +14,5 @@ public interface SsidSecretService
      * @return
      */
     SsidSecretEntity getSelfBySsid(String ssid);
+
 }

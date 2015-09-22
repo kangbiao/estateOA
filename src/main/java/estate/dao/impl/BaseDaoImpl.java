@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -51,7 +52,7 @@ public class BaseDaoImpl implements BaseDao
 
 
     @Override
-    public Object get(Integer id,Object object)
+    public Object get(Serializable id,Object object)
     {
         return getSession().get(object.getClass(),id);
     }

@@ -1,5 +1,7 @@
 package estate.dao;
 
+import java.io.Serializable;
+
 /**
  * Created by kangbiao on 15-9-16.
  * 定义每个DAO具有的基础的增删改查操作
@@ -18,7 +20,7 @@ public interface BaseDao
      * @param id
      * @return
      */
-    Object get(Integer id,Object object);
+    Object get(Serializable id,Object object);
 
 
     /**

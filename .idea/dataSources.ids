@@ -20,6 +20,8 @@
       <column name="user_role" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS3ms6jlhoznlKjmiLfvvJsyLeS4muS4u+e7keWumueUqOaIt++8mzMt5a625bGe55So5oi377ybNC3np5/miLfvvJs1LeeJqeS4muiupOivgeeUqOaItw=="/>
       <column name="user_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="register_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" remarks="5pe26Ze05oiz"/>
+      <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MQ=="/>
+      <column name="owner_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="phone"/>
     </table>
     <table name="authenticated_record" schema="" catalog="PropertySystem" type="TABLE">
@@ -64,7 +66,7 @@
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Zut5Yy65ZKM5qW85qCL5p6E5oiQ5Li76ZSu"/>
       <column name="description" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="building_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="secret_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="building_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="building_id"/>
     </table>
     <table name="complain" schema="" catalog="PropertySystem" type="TABLE">
