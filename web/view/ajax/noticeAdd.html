@@ -18,7 +18,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="addNoticeForm" method="post" enctype="multipart/form-data"
+                <form id="addNoticeForm" method="post"
                       class="form-horizontal">
                     <fieldset>
                         <legend>基本信息</legend>
@@ -39,7 +39,7 @@
                         <div class="form-group has-feedback">
                             <label class="col-sm-3 control-label">失效时间</label>
                             <div class="col-sm-6">
-                                <input type="text" id="expireTime" class="input_date form-control" placeholder="">
+                                <input type="text" id="expireTime" name="expiretime" class="input_date form-control" placeholder="">
                                 <span class="fa fa-calendar form-control-feedback"></span>
                             </div>
                         </div>
@@ -47,13 +47,12 @@
                             <label class="col-sm-3 control-label">公告详情</label>
 
                             <div class="col-sm-6">
-                                <textarea class="form-control" name="detail" style="height: 300px;"
+                                <textarea class="form-control" name="content" style="height: 300px;"
                                           id="kindEditor"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">公告详情</label>
-
+                            <label class="col-sm-3 control-label">首页图片</label>
                             <div class="col-sm-6">
                                 <input type="button" value="选择轮播图片" id="browse">
                             </div>
@@ -69,11 +68,24 @@
         </div>
     </div>
 </div>
-
+<script charset="utf-8" src="plugins/plupload/js/plupload.full.min.js"></script>
 <script charset="utf-8" src="plugins/kindeditor/kindeditor-min.js"></script>
 <script charset="utf-8" src="plugins/kindeditor/zh_CN.js"></script>
 <script type="text/javascript">
-    //选择所属园区
+
+    var uploader=new plupload.Uploader({
+        browse_button : 'browse',
+        url : '',
+        flash_swf_url : 'js/Moxie.swf',
+        silverlight_xap_url : 'js/Moxie.xap',
+        filters: {
+            mime_types : [ //只允许上传图片文件
+                { title : "图片文件", extensions : "jpg,gif,png" }
+            ]
+        }
+    });
+    uploader.init();
+
     var editor;
     KindEditor.ready(function(K) {
         editor = K.create('#kindEditor',
@@ -94,8 +106,26 @@
 
     function submitForm()
     {
-        var html=editor.html();
-        console.log(html);
+        var fields=$("#addNoticeForm").serializeArray();
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.addNotice,
+            data:fields ,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
     }
 
     function noticeAddValidator() {
@@ -116,7 +146,7 @@
                         }
                     }
                 },
-                detail:{
+                content:{
                     validators: {
                         notEmpty: {
                             message: '详情不能为空'

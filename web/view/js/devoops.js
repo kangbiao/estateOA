@@ -58,6 +58,7 @@ function LoadTimePickerScript(callback){
 }
 
 
+
 //加载bootstrapValidator验证
 function LoadBootstrapValidatorScript(callback){
 	if (!$.fn.bootstrapValidator){

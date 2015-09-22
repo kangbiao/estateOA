@@ -10,6 +10,7 @@ var urlConfig={};
 //公告部分的url
 urlConfig.noticeDelete=host+"notice/delete";
 urlConfig.noticeList=host+"notice/list";
+urlConfig.addNotice=host+"notice/add";
 
 http://www.kangbiao.org/notice/getSome/3
 
