@@ -1,8 +1,8 @@
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="#">用户管理</a></li>
-            <li><a href="#">用户资料录入</a></li>
+            <li><a href="#">公告管理</a></li>
+            <li><a href="#">添加公告</a></li>
         </ol>
     </div>
 </div>
@@ -18,7 +18,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="adduserForm" method="post" action="/oa/notice/add" enctype="multipart/form-data"
+                <form id="addNoticeForm" method="post" enctype="multipart/form-data"
                       class="form-horizontal">
                     <fieldset>
                         <legend>基本信息</legend>
@@ -36,24 +36,26 @@
                                 <textarea class="form-control" name="description" id="" rows="5"></textarea>
                             </div>
                         </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-3 control-label">失效时间</label>
+                            <div class="col-sm-6">
+                                <input type="text" id="expireTime" class="input_date form-control" placeholder="">
+                                <span class="fa fa-calendar form-control-feedback"></span>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">公告详情</label>
 
                             <div class="col-sm-6">
-                                <textarea class="form-control" name="detail" rows="5" id="wysiwig_simple"></textarea>
+                                <textarea class="form-control" name="detail" style="height: 300px;"
+                                          id="kindEditor"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">公告图片</label>
+                            <label class="col-sm-3 control-label">公告详情</label>
+
                             <div class="col-sm-6">
-                                <input type="file" class="form-control" name="file">
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <label class="col-sm-3 control-label">失效时间</label>
-                            <div class="col-sm-6">
-                                <input type="text" id="expireTime" class="form-control" placeholder="">
-                                <span class="fa fa-calendar form-control-feedback"></span>
+                                <input type="button" value="选择轮播图片" id="browse">
                             </div>
                         </div>
                     </fieldset>
@@ -67,65 +69,68 @@
         </div>
     </div>
 </div>
+
+<script charset="utf-8" src="plugins/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="plugins/kindeditor/zh_CN.js"></script>
 <script type="text/javascript">
     //选择所属园区
-    function selectEstate() {
-        $('#whichEstate').select2();
-        $.getScript('plugins/select2/select2_locale_zh-CN.js');
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#kindEditor',
+        {
+            width:"100%",
+            items:[ 'undo', 'redo', '|', 'preview', 'code', 'cut', 'copy', 'paste',
+                'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+                'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons',
+                'anchor', 'link', 'unlink', '|', 'about'],
+            allowFileManager : false,
+            uploadJson:urlConfig.uploadJson
+        });
+    });
+
+    function submitForm()
+    {
+        var html=editor.html();
+        console.log(html);
     }
-    function userAddValidator() {
-        $('#adduserForm').bootstrapValidator({
+
+    function noticeAddValidator() {
+        $('#addNoticeForm').bootstrapValidator({
             message: '存在非法输入',
             fields: {
-                username: {
-                    message: '用户名不合法',
+                title: {
                     validators: {
                         notEmpty: {
-                            message: '用户名不能为空'
-                        },
-                        stringLength: {
-                            min: 2,
-                            max: 10,
-                            message: '用户名在2到10个字符之间'
+                            message: '标题不能为空'
                         }
                     }
                 },
-                address: {
+                description: {
                     validators: {
                         notEmpty: {
-                            message: '地址不能为空'
+                            message: '描述不能为空'
                         }
                     }
                 },
-                carNum: {
+                detail:{
                     validators: {
                         notEmpty: {
-                            message: '车牌号不能为空'
-                        },
-                        regexp: {
-                            regexp: /^[0-9a-zA-Z]{5}(;[0-9a-zA-Z]{5})*$/,
-                            message: '车牌号不合法'
-                        }
-                    }
-                },
-                phoneNumber: {
-                    validators: {
-                        notEmpty: {
-                            message: '电话号码不能为空'
-                        },
-                        regexp: {
-                            regexp: /^[0-9]{8,11}$/,
-                            message: '电话号码不合法'
+                            message: '详情不能为空'
                         }
                     }
                 }
             }
-        });
+        }).on("success.form.bv",function(e){
+                    e.preventDefault();
+                    submitForm();
+                });
     }
     $(document).ready(function () {
-        //初始化日期选择器
-        TinyMCEStart('#wysiwig_simple', null);
-        $('#liveDate').datepicker({
+        $('.input_date').datepicker({
             setDate: new Date(), dateFormat: "yy-mm-dd",
             showButtonPanel: true,
             closeText: "关闭",
@@ -137,7 +142,6 @@
             dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
         });
-        LoadSelect2Script(selectEstate);
-        LoadBootstrapValidatorScript(userAddValidator);
+        LoadBootstrapValidatorScript(noticeAddValidator);
     });
 </script>

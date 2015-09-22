@@ -11,6 +11,7 @@ var urlConfig={};
 urlConfig.noticeDelete=host+"notice/delete";
 urlConfig.noticeList=host+"notice/list";
 
+http://www.kangbiao.org/notice/getSome/3
 
 //费用相关的URL
 urlConfig.addFee=host+"fee/add/estate";
@@ -43,6 +44,9 @@ urlConfig.addSecret=host+"secret/add";
 urlConfig.secretList=host+"secret/list";
 
 
+//配置kindeditor路径
+urlConfig.uploadJson=host+"upload/kindeditor";
+
 /**********----------------语言配置----------------**********/
 var langConvert=[];
 langConvert['squre']="按平米";
@@ -50,3 +54,5 @@ langConvert["per"]="按次";
 langConvert["family"]="按户";
 langConvert["month"]="按月";
 langConvert["day"]="按日";
+
+

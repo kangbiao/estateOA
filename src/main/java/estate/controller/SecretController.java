@@ -3,6 +3,8 @@ package estate.controller;
 import estate.common.util.LogUtil;
 import estate.entity.database.SsidSecretEntity;
 import estate.entity.json.BasicJson;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 import estate.service.BaseService;
 import estate.service.BuildingService;
 import estate.service.SsidSecretService;
@@ -67,5 +69,25 @@ public class SecretController
 
         basicJson.setStatus(true);
         return basicJson;
+    }
+
+    @RequestMapping(value = "/list")
+    public TableData getList(TableFilter tableFilter,HttpServletRequest request)
+    {
+        TableData tableData=new TableData();
+        if(request.getParameter("search[value]")!=null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+        try
+        {
+            tableData=ssidSecretService.getList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            tableData.setJsonString(null);
+        }
+        return tableData;
     }
 }

@@ -64,9 +64,11 @@ public class BaseDaoImpl implements BaseDao
     }
 
     @Override
-    public Integer count(String sql)
+    public Integer count(String table)
     {
         Session session=getSession();
-        return ((Long)session.createQuery(sql).uniqueResult()).intValue();
+        String hql="select count(*) from "+table;
+        return ((Long)session.createQuery(hql).uniqueResult()).intValue();
     }
+
 }

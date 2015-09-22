@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class Config
 {
     //路径配置
+    public static final String FILEPATH=System.getProperty("WEB.ROOT")+"file/";
     public static final String PICPATH=System.getProperty("WEB.ROOT")+"file/picture/";
     public static final String DOCPATH=System.getProperty("WEB.ROOT")+"file/documentPath/";
 

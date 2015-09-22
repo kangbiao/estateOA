@@ -31,10 +31,10 @@ public interface BaseDao
 
 
     /**
-     * 根据sql语句计算总数
-     * @param sql
+     * 根据表名计算总数
+     * @param table
      * @return
      */
-    Integer count(String sql);
+    Integer count(String table);
 
 }
