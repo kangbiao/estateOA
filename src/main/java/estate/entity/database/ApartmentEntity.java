@@ -5,20 +5,13 @@ package estate.entity.database;
  */
 public class ApartmentEntity
 {
-    private Integer apartmentId;
+    private Integer id;
     private Integer unitCode;
-    private Integer code;
+    private String code;
     private Integer buildingId;
+    private Integer propertyId;
 
-    public Integer getApartmentId()
-    {
-        return apartmentId;
-    }
 
-    public void setApartmentId(Integer apartmentId)
-    {
-        this.apartmentId = apartmentId;
-    }
 
     public Integer getUnitCode()
     {
@@ -30,12 +23,12 @@ public class ApartmentEntity
         this.unitCode = unitCode;
     }
 
-    public Integer getCode()
+    public String getCode()
     {
         return code;
     }
 
-    public void setCode(Integer code)
+    public void setCode(String code)
     {
         this.code = code;
     }
@@ -50,39 +43,15 @@ public class ApartmentEntity
         this.buildingId = buildingId;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public Integer getPropertyId()
     {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        ApartmentEntity that = (ApartmentEntity) o;
-
-        if (apartmentId != null ? !apartmentId.equals(that.apartmentId) : that.apartmentId != null)
-            return false;
-        if (unitCode != null ? !unitCode.equals(that.unitCode) : that.unitCode != null)
-            return false;
-        if (code != null ? !code.equals(that.code) : that.code != null)
-            return false;
-        if (buildingId != null ? !buildingId.equals(that.buildingId) : that.buildingId != null)
-            return false;
-
-        return true;
+        return propertyId;
     }
 
-    @Override
-    public int hashCode()
+    public void setPropertyId(Integer propertyId)
     {
-        int result = apartmentId != null ? apartmentId.hashCode() : 0;
-        result = 31 * result + (unitCode != null ? unitCode.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (buildingId != null ? buildingId.hashCode() : 0);
-        return result;
+        this.propertyId = propertyId;
     }
-
-    private Integer id;
 
     public Integer getId()
     {

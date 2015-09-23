@@ -5,6 +5,7 @@ package estate.entity.database;
  */
 public class ShopEntity
 {
+    private Integer id;
     private Integer propertyId;
     private String code;
     private Integer villageId;
@@ -67,8 +68,6 @@ public class ShopEntity
         result = 31 * result + (villageId != null ? villageId.hashCode() : 0);
         return result;
     }
-
-    private Integer id;
 
     public Integer getId()
     {

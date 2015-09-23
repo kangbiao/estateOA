@@ -2,6 +2,8 @@ package estate.dao.impl;
 
 import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,12 @@ public class PropertyDaoImpl implements PropertyDao
     public void delete(PropertyEntity object)
     {
 
+    }
+
+    @Override
+    public TableData getList(TableFilter tableFilter)
+    {
+        return null;
     }
 
 

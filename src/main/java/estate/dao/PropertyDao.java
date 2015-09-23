@@ -1,6 +1,8 @@
 package estate.dao;
 
 import estate.entity.database.PropertyEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -27,5 +29,8 @@ public interface PropertyDao
      * @param object
      */
     void delete(PropertyEntity object);
+
+
+    TableData getList(TableFilter tableFilter);
 
 }

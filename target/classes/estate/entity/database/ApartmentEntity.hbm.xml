@@ -5,18 +5,21 @@
 <hibernate-mapping>
 
     <class name="estate.entity.database.ApartmentEntity" table="apartment" schema="" catalog="PropertySystem">
-        <id name="id"/>
-        <property name="apartmentId">
-            <column name="apartment_id" sql-type="int unsigned"/>
-        </property>
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
         <property name="unitCode">
             <column name="unit_code" sql-type="int"/>
         </property>
         <property name="code">
-            <column name="code" sql-type="int"/>
+            <column name="code" sql-type="varchar" length="50"/>
         </property>
         <property name="buildingId">
             <column name="building_id" sql-type="int unsigned"/>
+        </property>
+        <property name="propertyId">
+            <column name="property_id" sql-type="int unsigned"/>
         </property>
     </class>
 </hibernate-mapping>

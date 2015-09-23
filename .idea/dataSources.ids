@@ -8,11 +8,12 @@
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
     <schema name="" catalog="PropertySystem"/>
     <table name="apartment" schema="" catalog="PropertySystem" type="TABLE">
-      <column name="apartment_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="unit_code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5qW85qCL5Y2V5YWD5Y+3"/>
       <column name="code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5oi/5Y+3"/>
       <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="app_user" schema="" catalog="PropertySystem" type="TABLE">
       <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="5omL5py65Y+356CB"/>
