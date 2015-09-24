@@ -5,7 +5,7 @@
 <hibernate-mapping>
 
     <class name="estate.entity.database.FeeItemEntity" table="fee_item" schema="" catalog="PropertySystem">
-        <id name="fiId">
+        <id name="id">
             <column name="fi_id" sql-type="int unsigned" not-null="true"/>
             <generator class="identity"/>
         </id>

@@ -32,6 +32,8 @@ public class PropertyController
     private ApartmentService apartmentService;
     @Autowired
     protected UserService userService;
+    @Autowired
+    private FeeItemOrderService feeItemOrderService;
 
     /**
      * 获取商户信息列表
@@ -119,14 +121,14 @@ public class PropertyController
         switch (type)
         {
             case "fee":
-                FeeItemOrderEntity feeItemOrderEntity=(FeeItemOrderEntity)baseService.get(propertyID,FeeItemOrderEntity
-                        .class);
-                if (feeItemOrderEntity==null)
-                {
-                    basicJson.getErrorMsg().setDescription("该物业未绑定费用信息");
-                    return basicJson;
-                }
-                basicJson.setJsonString("");
+//                FeeItemOrderEntity feeItemOrderEntity=(FeeItemOrderEntity)baseService.get(propertyID,FeeItemOrderEntity
+//                        .class);
+//                if (feeItemOrderEntity==null)
+//                {
+//                    basicJson.getErrorMsg().setDescription("该物业未绑定费用信息");
+//                    return basicJson;
+//                }
+                basicJson.setJsonString(feeItemOrderService.getFeeItemsByPropertyID(propertyID));
                 break;
             case "owner":
                 PropertyOwnerInfoEntity propertyOwnerInfoEntity=(PropertyOwnerInfoEntity)baseService.get(propertyID,

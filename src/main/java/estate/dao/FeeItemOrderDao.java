@@ -1,5 +1,7 @@
 package estate.dao;
 
+import estate.entity.database.FeeItemOrderEntity;
+
 import java.util.ArrayList;
 
 /**
@@ -12,6 +14,6 @@ public interface FeeItemOrderDao
      * @param id
      * @return
      */
-    ArrayList<Object> getFeeItemOrdersByPropertyID(Integer id);
+    ArrayList<FeeItemOrderEntity> getFeeItemOrdersByPropertyID(Integer id);
 
 }

@@ -7,8 +7,9 @@ public class FeeItemOrderEntity
 {
     private Integer id;
     private Integer propertyId;
-    private Integer feeItemId;
+//    private Integer feeItemId;
     private Byte isBilled;
+    private FeeItemEntity feeItemEntity;
 
     public Integer getId()
     {
@@ -30,15 +31,15 @@ public class FeeItemOrderEntity
         this.propertyId = propertyId;
     }
 
-    public Integer getFeeItemId()
-    {
-        return feeItemId;
-    }
-
-    public void setFeeItemId(Integer feeItemId)
-    {
-        this.feeItemId = feeItemId;
-    }
+//    public Integer getFeeItemId()
+//    {
+//        return feeItemId;
+//    }
+//
+//    public void setFeeItemId(Integer feeItemId)
+//    {
+//        this.feeItemId = feeItemId;
+//    }
 
     public Byte getIsBilled()
     {
@@ -50,35 +51,13 @@ public class FeeItemOrderEntity
         this.isBilled = isBilled;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public FeeItemEntity getFeeItemEntity()
     {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        FeeItemOrderEntity that = (FeeItemOrderEntity) o;
-
-        if (id != that.id)
-            return false;
-        if (propertyId != null ? !propertyId.equals(that.propertyId) : that.propertyId != null)
-            return false;
-        if (feeItemId != null ? !feeItemId.equals(that.feeItemId) : that.feeItemId != null)
-            return false;
-        if (isBilled != null ? !isBilled.equals(that.isBilled) : that.isBilled != null)
-            return false;
-
-        return true;
+        return feeItemEntity;
     }
 
-    @Override
-    public int hashCode()
+    public void setFeeItemEntity(FeeItemEntity feeItemEntity)
     {
-        int result = id;
-        result = 31 * result + (propertyId != null ? propertyId.hashCode() : 0);
-        result = 31 * result + (feeItemId != null ? feeItemId.hashCode() : 0);
-        result = 31 * result + (isBilled != null ? isBilled.hashCode() : 0);
-        return result;
+        this.feeItemEntity = feeItemEntity;
     }
 }

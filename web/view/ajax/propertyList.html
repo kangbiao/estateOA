@@ -125,7 +125,17 @@
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    var html='------';
+                    if(result.jsonString.length>0)
+                        html="";
+                    else
+                        html="该物业未绑定费用";
+                    for(var i in result.jsonString) {
+                        html += '<li class="list-group-item">' +
+                                '费用名称: <span id="name">' + result.jsonString[i].feeItemEntity.name + '</span>' +
+                                '&ensp;费用单价:<span id="name">' + result.jsonString[i].feeItemEntity.ruleEntity.unitPrice +
+                                '</span>'+
+                                '</li>';
+                    }
                     $("#feeInfo").html(html);
                 }
                 else

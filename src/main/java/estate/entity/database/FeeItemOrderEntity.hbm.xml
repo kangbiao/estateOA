@@ -11,11 +11,14 @@
         <property name="propertyId">
             <column name="property_id" sql-type="int unsigned"/>
         </property>
-        <property name="feeItemId">
-            <column name="fee_item_id" sql-type="int unsigned"/>
-        </property>
+        <!--<property name="feeItemId">-->
+            <!--<column name="fee_item_id" sql-type="int unsigned"/>-->
+        <!--</property>-->
         <property name="isBilled">
             <column name="is_billed" sql-type="tinyint"/>
         </property>
+        <many-to-one name="feeItemEntity" class="estate.entity.database.FeeItemEntity">
+            <column name="fee_item_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

@@ -33,7 +33,7 @@ public class FeeItemDaoImpl implements FeeItemDao
     {
         Session session=getSession();
         session.saveOrUpdate(feeItemEntity);
-        return feeItemEntity.getFiId();
+        return feeItemEntity.getId();
     }
 
     public void delete(Integer feeItemID)
@@ -42,7 +42,7 @@ public class FeeItemDaoImpl implements FeeItemDao
         String sql= "delete from RuleEntity r where r.ruleId=:ruleid";
         Integer ruleID=this.get(feeItemID).getRuleId();
 
-        String hql="delete from FeeItemEntity f where f.fiId=:fiid";
+        String hql="delete from FeeItemEntity f where f.id=:fiid";
         session.createQuery(hql).setInteger("fiid", feeItemID).executeUpdate();
         session.createQuery(sql).setInteger("ruleid",ruleID).executeUpdate();
     }

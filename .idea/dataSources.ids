@@ -131,6 +131,7 @@
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="fi_id"/>
       <foreign-key name="FK_mqd7psd6dy1apcdpf38h51m9v" columns="rule_id" ref-table="rule" ref-schema="" ref-catalog="PropertySystem" ref-columns="rule_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_2eom30ry9yaakqhlrplfvs9u9" table="fee_item_order" schema="" catalog="PropertySystem" columns="fee_item_id"/>
       <index name="FK_mqd7psd6dy1apcdpf38h51m9v" unique="false" columns="rule_id"/>
     </table>
     <table name="fee_item_order" schema="" catalog="PropertySystem" type="TABLE">
@@ -139,6 +140,8 @@
       <column name="fee_item_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5YWB6K646YeN5aSN77yI5LiA5qyh5oCn55qE6LS555So77yJ"/>
       <column name="is_billed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_2eom30ry9yaakqhlrplfvs9u9" columns="fee_item_id" ref-table="fee_item" ref-schema="" ref-catalog="PropertySystem" ref-columns="fi_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_2eom30ry9yaakqhlrplfvs9u9" unique="false" columns="fee_item_id"/>
     </table>
     <table name="fee_type" schema="" catalog="PropertySystem" type="TABLE">
       <column name="ft_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

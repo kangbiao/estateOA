@@ -6,7 +6,7 @@ package estate.entity.database;
  */
 public class FeeItemEntity
 {
-    private Integer fiId;
+    private Integer id;
     private String name;
     private String decription;
     private Integer feeTypeId;
@@ -17,15 +17,6 @@ public class FeeItemEntity
     private String payStartTime;
     private String payEndTime;
 
-    public Integer getFiId()
-    {
-        return fiId;
-    }
-
-    public void setFiId(Integer fsId)
-    {
-        this.fiId = fsId;
-    }
 
     public String getName()
     {
@@ -116,5 +107,15 @@ public class FeeItemEntity
     public void setPayEndTime(String payEndTime)
     {
         this.payEndTime = payEndTime;
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 }

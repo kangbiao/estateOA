@@ -340,7 +340,7 @@ CREATE TABLE `fee_item` (
 
 LOCK TABLES `fee_item` WRITE;
 /*!40000 ALTER TABLE `fee_item` DISABLE KEYS */;
-INSERT INTO `fee_item` VALUES (2,'fdgfdg',NULL,0,2,1,NULL),(3,'gbbcv',NULL,0,3,1,NULL),(4,'bvcbcv',NULL,0,4,1,NULL),(5,'bvcbcvb',NULL,0,5,1,NULL),(6,'dfdsfd','gfdgdfgssss',1,6,0,NULL),(7,'dfdsfd','gfdgdfgssssm',1,7,0,NULL),(8,'规范的广泛的','546',1,8,0,NULL),(9,'干活你发个','回滚',1,9,0,NULL),(10,'dsadfsad',NULL,0,10,NULL,NULL),(11,'efds;545;545',NULL,0,11,NULL,NULL),(12,'df',NULL,0,12,NULL,NULL),(13,'dds','21',1,13,0,NULL),(14,'rtrt','121',1,14,0,NULL),(15,'fdg','323',1,15,0,NULL),(16,'fdg','323v',1,16,0,NULL);
+INSERT INTO `fee_item` VALUES (1,'gbbcv','543653',0,3,1,NULL),(2,'fdgfdg','653653',0,2,1,NULL),(4,'bvcbcv',NULL,0,4,1,NULL),(5,'bvcbcvb',NULL,0,5,1,NULL),(6,'dfdsfd','gfdgdfgssss',1,6,0,NULL),(7,'dfdsfd','gfdgdfgssssm',1,7,0,NULL),(8,'规范的广泛的','546',1,8,0,NULL),(9,'干活你发个','回滚',1,9,0,NULL),(10,'dsadfsad',NULL,0,10,NULL,NULL),(11,'efds;545;545',NULL,0,11,NULL,NULL),(12,'df',NULL,0,12,NULL,NULL),(13,'dds','21',1,13,0,NULL),(14,'rtrt','121',1,14,0,NULL),(15,'fdg','323',1,15,0,NULL),(16,'fdg','323v',1,16,0,NULL);
 /*!40000 ALTER TABLE `fee_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,8 +356,10 @@ CREATE TABLE `fee_item_order` (
   `property_id` int(10) unsigned DEFAULT NULL,
   `fee_item_id` int(10) unsigned DEFAULT NULL COMMENT '允许重复（一次性的费用）',
   `is_billed` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FK_2eom30ry9yaakqhlrplfvs9u9` (`fee_item_id`),
+  CONSTRAINT `FK_2eom30ry9yaakqhlrplfvs9u9` FOREIGN KEY (`fee_item_id`) REFERENCES `fee_item` (`fi_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,6 +368,7 @@ CREATE TABLE `fee_item_order` (
 
 LOCK TABLES `fee_item_order` WRITE;
 /*!40000 ALTER TABLE `fee_item_order` DISABLE KEYS */;
+INSERT INTO `fee_item_order` VALUES (1,1,1,NULL),(2,1,2,NULL);
 /*!40000 ALTER TABLE `fee_item_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -581,7 +584,7 @@ CREATE TABLE `property_owner_info` (
   `owner_phone` varchar(15) DEFAULT NULL,
   `open_door_allowed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`po_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,6 +593,7 @@ CREATE TABLE `property_owner_info` (
 
 LOCK TABLES `property_owner_info` WRITE;
 /*!40000 ALTER TABLE `property_owner_info` DISABLE KEYS */;
+INSERT INTO `property_owner_info` VALUES (1,1,1,'18144240528',1);
 /*!40000 ALTER TABLE `property_owner_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -781,4 +785,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-23 22:16:44
+-- Dump completed on 2015-09-24 22:24:53
