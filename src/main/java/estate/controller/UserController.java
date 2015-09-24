@@ -148,11 +148,25 @@ public class UserController
         return basicJson;
     }
 
-    @RequestMapping(value = "/disableAppUser" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/appUserStatus" ,method = RequestMethod.POST)
     public BasicJson disableAppUser(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
         String phone=request.getParameter("phone");
+        String statusStr=request.getParameter("status");
+        int status;
+        switch (statusStr)
+        {
+            case "enable":
+                status = 1;
+                break;
+            case "disable":
+                status = -1;
+                break;
+            default:
+                basicJson.getErrorMsg().setDescription("参数错误!");
+                return basicJson;
+        }
         if (phone==null)
         {
             basicJson.getErrorMsg().setCode("0");
@@ -163,7 +177,7 @@ public class UserController
         {
             AppUserEntity appUserEntity=new AppUserEntity();
             appUserEntity.setPhone(phone);
-            appUserEntity.setStatus(-1);
+            appUserEntity.setStatus(status);
             try
             {
                 userService.changeAppUserStatus(appUserEntity);

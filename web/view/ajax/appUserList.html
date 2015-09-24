@@ -137,8 +137,14 @@
         }
     });
 
-    $('#appUserListTable tbody').on( 'click', 'button#disableRow', function () {
-        var comfirm=confirm("确定禁止该用户门禁权限?");
+    $('#appUserListTable tbody').on( 'click', 'button#changeStatus', function () {
+        var status=$(this).attr("status");
+        console.log(status);
+        var comfirm;
+        if(status=="enable")
+            comfirm=confirm("确定启用该用户门禁权限?");
+        else
+            comfirm=confirm("确定禁用该用户门禁权限?");
         if(comfirm)
         {
             var data = editTable.row($(this).parents('tr') ).data();
@@ -146,14 +152,19 @@
             $.ajax({
                 type: "post",
                 async: false,
-                url: urlConfig.disableAppUser,
+                url: urlConfig.changeAppUserStatus,
                 data: {
-                    phone:data.phone
+                    phone:data.phone,
+                    status:status
                 },
                 dataType: "json", //返回数据形式为json
                 success: function (result) {
                     if (result.status) {
-                        alert("禁用成功");
+                        if(status=="enable")
+                            alert("启用成功");
+                        else
+                            alert("禁用成功");
+                        editTable.ajax.reload( null, false );
                     }
                     else
                     {
@@ -296,12 +307,17 @@
                         "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
             },{
                 "targets": 7,
-                "data": null,
+                "data": "status",
                 "orderable": false,
                 "searchable": false,
-                "defaultContent":
-                        "<button id='disableRow' class='btn btn-primary' type='button'>禁用</button>"+
-                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
+                "render": function ( data, type, row ) {
+                    if(data==-1)
+                        return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用" +
+                                "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
+                    else
+                        return "<button id='changeStatus' status='disable' class='btn btn-primary' type='button'>禁用" +
+                                "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
+                }
             }],
             "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,

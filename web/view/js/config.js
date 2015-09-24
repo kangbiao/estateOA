@@ -37,7 +37,7 @@ urlConfig.ownerList=host+"user/ownerList";
 urlConfig.authenticatedUserList=host+"user/authenticatedUserList";
 urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";
-urlConfig.disableAppUser=host+"user/disableAppUser";
+urlConfig.changeAppUserStatus=host+"user/appUserStatus";
 urlConfig.getOwerInfoByID=host+"user/ownerInfo";
 
 

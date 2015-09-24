@@ -69,9 +69,8 @@
     </div>
 </div>
 <script charset="utf-8" src="plugins/plupload/js/plupload.full.min.js"></script>
-<script charset="utf-8" src="plugins/kindeditor/kindeditor-min.js"></script>
-<script charset="utf-8" src="plugins/kindeditor/zh_CN.js"></script>
 <script type="text/javascript">
+    var editor;
 
     var uploader=new plupload.Uploader({
         browse_button : 'browse',
@@ -86,23 +85,23 @@
     });
     uploader.init();
 
-    var editor;
-    KindEditor.ready(function(K) {
-        editor = K.create('#kindEditor',
-        {
-            width:"100%",
-            items:[ 'undo', 'redo', '|', 'preview', 'code', 'cut', 'copy', 'paste',
-                'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-                'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-                'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-                'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-                'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-                'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons',
-                'anchor', 'link', 'unlink', '|', 'about'],
-            allowFileManager : false,
-            uploadJson:urlConfig.uploadJson
-        });
-    });
+    function initEditor() {
+        editor = KindEditor.create('#kindEditor',
+                {
+                    width: "100%",
+                    items: ['undo', 'redo', '|', 'preview', 'code', 'cut', 'copy', 'paste',
+                        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+                        'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons',
+                        'anchor', 'link', 'unlink', '|', 'about'],
+                    basePath:"plugins/kindeditor/",
+                    allowFileManager: false,
+                    uploadJson: urlConfig.uploadJson
+                });
+    }
 
     function submitForm()
     {
@@ -173,5 +172,6 @@
             dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
         });
         LoadBootstrapValidatorScript(noticeAddValidator);
+        LoadKindEditorScript(initEditor);
     });
 </script>

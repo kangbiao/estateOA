@@ -57,6 +57,18 @@ function LoadTimePickerScript(callback){
 	}
 }
 
+function LoadKindEditorScript(callback){
+    if (!$.fn.KindEditor) {
+        $.getScript("plugins/kindeditor/kindeditor-min.js", function () {
+            $.getScript("plugins/kindeditor/zh_CN.js", callback);
+        });
+    }
+    else {
+        if (callback && typeof(callback) === "function") {
+            callback();
+        }
+    }
+}
 
 
 //加载bootstrapValidator验证
