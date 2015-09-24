@@ -4,10 +4,13 @@ import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -43,7 +46,27 @@ public class PropertyDaoImpl implements PropertyDao
     @Override
     public TableData getList(TableFilter tableFilter)
     {
-        return null;
+        Session session=getSession();
+        TableData tableData=new TableData();
+        ArrayList<PropertyEntity> entities;
+        Query query;
+
+        if (!tableFilter.getSearchValue().equals(""))
+        {
+            String hql="from PropertyEntity n where n.code like (?)";
+            query=session.createQuery(hql).setString(0,"%"+tableFilter.getSearchValue()+"%");
+        }
+        else
+        {
+            String hql = "from PropertyEntity n";
+            query = session.createQuery(hql);
+        }
+        Integer count=query.list().size();
+        entities=(ArrayList<PropertyEntity>)query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter
+                .getLength()).list();
+        tableData.setRecordsFiltered(count);
+        tableData.setJsonString(entities);
+        return tableData;
     }
 
 

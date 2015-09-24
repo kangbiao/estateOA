@@ -10,6 +10,8 @@ public interface BaseService
 
     Object get(Integer id,Object object);
 
+    Object get(Integer id,Class object);
+
     void delete(Object object);
 
 }

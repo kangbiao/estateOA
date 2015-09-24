@@ -2,6 +2,8 @@ package estate.service;
 
 import estate.entity.database.PropertyEntity;
 import estate.entity.display.Property;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 
 import java.util.Set;
 
@@ -18,5 +20,7 @@ public interface PropertyService
     Property get(Integer id);
 
     Set<Property> getPropertiesByString(String string);
+
+    TableData getList(TableFilter tableFilter);
 
 }

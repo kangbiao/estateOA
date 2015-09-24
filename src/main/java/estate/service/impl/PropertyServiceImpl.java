@@ -1,9 +1,12 @@
 package estate.service.impl;
 
 import estate.common.util.Convert;
+import estate.dao.BaseDao;
 import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
 import estate.entity.display.Property;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class PropertyServiceImpl implements PropertyService
 {
     @Autowired
     private PropertyDao propertyDao;
+    @Autowired
+    private BaseDao baseDao;
 
     public Integer save(PropertyEntity propertyEntity)
     {
@@ -53,5 +58,13 @@ public class PropertyServiceImpl implements PropertyService
             properties.add(this.get(id));
         }
         return properties;
+    }
+
+    @Override
+    public TableData getList(TableFilter tableFilter)
+    {
+        TableData tableData = propertyDao.getList(tableFilter);
+        tableData.setRecordsTotal(baseDao.count("PropertyEntity"));
+        return tableData;
     }
 }

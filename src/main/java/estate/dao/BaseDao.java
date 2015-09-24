@@ -21,6 +21,7 @@ public interface BaseDao
      * @return
      */
     Object get(Serializable id,Object object);
+    Object get(Serializable id,Class object);
 
 
     /**

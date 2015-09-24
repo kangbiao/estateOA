@@ -18,10 +18,8 @@ http://www.kangbiao.org/notice/getSome/3
 urlConfig.addFee=host+"fee/add/estate";
 urlConfig.feeList=host+"fee/list/estate";
 urlConfig.deleteFee=host+"fee/delete/";
-
 urlConfig.addServiceFee=host+"fee/add/service";
 urlConfig.serviceFeeList=host+"fee/list/service";
-
 urlConfig.addParkingLotFee=host+"fee/add/parkingLot";
 urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
 
@@ -40,11 +38,14 @@ urlConfig.appUserList=host+"user/appUserList";
 urlConfig.changeAppUserStatus=host+"user/appUserStatus";
 urlConfig.getOwerInfoByID=host+"user/ownerInfo";
 
-
+//密钥相关的url
 urlConfig.addSecret=host+"secret/add";
 urlConfig.secretList=host+"secret/list";
 
-
+//物业信息相关的url
+urlConfig.propertyList=host+"property/propertyList";
+urlConfig.getOwnerInfoByPropertyID=host+"property/owner/";
+urlConfig.getFeeInfoByPropertyID=host+"property/fee/";
 //配置kindeditor路径
 urlConfig.uploadJson=host+"upload/kindeditor";
 

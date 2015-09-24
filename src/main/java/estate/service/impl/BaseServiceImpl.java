@@ -28,6 +28,12 @@ public class BaseServiceImpl implements BaseService
     }
 
     @Override
+    public Object get(Integer id, Class cls)
+    {
+        return baseDao.get(id,cls);
+    }
+
+    @Override
     public void delete(Object object)
     {
         baseDao.delete(object);

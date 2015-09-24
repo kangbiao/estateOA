@@ -1,5 +1,6 @@
 package estate.dao.impl;
 
+import estate.common.UserType;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.json.TableData;
@@ -168,5 +169,20 @@ public class UserDaoImpl implements UserDao
         tableData.setRecordsTotal(this.count("AppUserEntity"));
 
         return tableData;
+    }
+
+    @Override
+    public Object getUserInfoBYPhone(String phone, int type)
+    {
+        Session session=getSession();
+        String hql;
+        if (type== UserType.TENANT)
+            hql="from TenantEntity t where t.phone=:phone";
+        else if (type==UserType.FAMILY)
+            hql="from FamilyEntity t where t.phone=:phone";
+        else
+            hql="from OwnerEntity t where t.phone=:phone";
+        List list=session.createQuery(hql).setString("phone",phone).list();
+        return list.get(0);
     }
 }

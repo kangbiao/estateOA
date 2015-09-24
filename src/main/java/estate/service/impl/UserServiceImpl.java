@@ -142,6 +142,12 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
+    public Object getUserInfoBYPhone(String phone,int type)
+    {
+        return userDao.getUserInfoBYPhone(phone, type);
+    }
+
+    @Override
     public TableData getList(TableFilter tableFilter, Object object)
     {
         TableData tableData=userDao.getTenantList(tableFilter);

@@ -25,4 +25,6 @@ public interface UserService
     Owner getOnerInfoByID(Integer id);
 
     void changeAppUserStatus(AppUserEntity appUserEntity);
+
+    Object getUserInfoBYPhone(String phone,int type);
 }

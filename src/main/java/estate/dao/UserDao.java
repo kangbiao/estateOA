@@ -27,4 +27,12 @@ public interface UserDao
 
     TableData getAppUserList(TableFilter tableFilter);
 
+    /**
+     * 通过用户类型和电话号码获取用户信息
+     * @param phone
+     * @param type
+     * @return 返回对应的用户实体
+     */
+    Object getUserInfoBYPhone(String phone ,int type);
+
 }

@@ -58,6 +58,12 @@ public class BaseDaoImpl implements BaseDao
     }
 
     @Override
+    public Object get(Serializable id, Class cls)
+    {
+        return getSession().get(cls,id);
+    }
+
+    @Override
     public void delete(Object object)
     {
 
