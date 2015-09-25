@@ -1,6 +1,6 @@
 package estate.app;
 
-import estate.common.util.LogUtil;
+import estate.common.HtmlSplit;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.service.NoticeService;
@@ -64,5 +64,16 @@ public class NoticeHandlder
         basicJson.setStatus(true);
         basicJson.setJsonString(noticeEntity);
         return basicJson;
+    }
+
+    @RequestMapping(value = "/getContent/{noticeID}",produces = "text/html;charset=UTF-8")
+    public String getCOntent(@PathVariable String noticeID)
+    {
+        NoticeEntity noticeEntity=noticeService.getOne(noticeID);
+        if (noticeEntity==null)
+        {
+            return null;
+        }
+        return HtmlSplit.header+noticeEntity.getContent()+HtmlSplit.footer;
     }
 }

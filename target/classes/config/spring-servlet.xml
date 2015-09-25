@@ -33,7 +33,7 @@
 
     <!-- 以json,xml,html返回数据 -->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1"/>
+        <!--<property name="order" value="1"/>-->
         <property name="mediaTypes">
             <map>
                 <entry key="json" value="application/json"/>

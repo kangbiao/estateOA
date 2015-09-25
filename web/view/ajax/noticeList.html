@@ -58,9 +58,11 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <h2 id="title"></h2>
+                    <hr/>
                     <p id="description"></p>
+                    <hr/>
                     <div class="row">
-                        <div class="col-md-12" id="content">
+                        <div class="col-md-12" id="detail">
                         </div>
                     </div>
                 </div>
@@ -195,7 +197,7 @@
             $("#noticeModal").find('.modal-title').text("公告详细信息");
             $("#noticeModal").find("#title").text(data['title']);
             $("#noticeModal").find("#description").text(data['description']);
-            $("#noticeModal").find("#content").html(data['content']);
+            $("#noticeModal").find("#detail").html(data['content']);
         } );
     }
 

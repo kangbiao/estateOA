@@ -295,11 +295,11 @@
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if (data==1)
-                        return "商户";
+                        return "<font color='#0000cd'>商户</font>";
                     else if (data==2)
-                        return "住宅";
+                        return "<font color='#b8860b'>住宅</font>";
                     else if(data==3)
-                        return "车位";
+                        return "<font color='#d2691e'>车位</font>";
                     else
                         return "<font color='red'>数据异常</font>"
                 }
@@ -328,9 +328,9 @@
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if (data==-1)
-                        return "出租";
+                        return "<font color='#00008b'>出租</font>";
                     else if (data==1)
-                        return "自用";
+                        return "<font color='green'>自用</font>";
                     else
                         return "<font color='red'>数据异常</font>"
                 }

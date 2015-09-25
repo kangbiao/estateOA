@@ -8,17 +8,13 @@ import estate.service.NoticeService;
 import estate.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-3.
@@ -47,42 +43,42 @@ public class NoticeController
         BasicJson basicJson=new BasicJson(false);
 
         //验证失败
-        if (bindingResult.hasErrors())
-        {
-            List<FieldError> errors=bindingResult.getFieldErrors();
-            for (FieldError fieldError:errors)
-            {
-//                LogUtil.E(fieldError.getField()+fieldError.getDefaultMessage());
-            }
-            basicJson.setJsonString(errors);
-            return basicJson;
-        }
+//        if (bindingResult.hasErrors())
+//        {
+//            List<FieldError> errors=bindingResult.getFieldErrors();
+//            for (FieldError fieldError:errors)
+//            {
+//                LogUtil.E(fieldError.getField() + fieldError.getDefaultMessage());
+//            }
+//            basicJson.setJsonString(errors);
+//            return basicJson;
+//        }
 
         String time=String.valueOf(System.currentTimeMillis());
         noticeEntity.setTime(time);
         noticeEntity.setCuId(2);
-        try
-        {
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            MultipartFile file = multipartRequest.getFile("picture");
-
-            if (!file.isEmpty())
-            {
-                // TODO 捕捉图片上传异常
-                String id=pictureService.saveAndReturnID(file);
-                if(id!=null)
-                {
-                    noticeEntity.setPictureIdList(id);
-                }
-                else
-                {
-                    basicJson.getErrorMsg().setCode("");
-                    basicJson.getErrorMsg().setDescription("上传图片失败,请重试");
-                    return basicJson;
-                }
-            }
-        }
-        catch (Exception ignored) {}
+//        try
+//        {
+//            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+//            MultipartFile file = multipartRequest.getFile("picture");
+//
+//            if (!file.isEmpty())
+//            {
+//                // TODO 捕捉图片上传异常
+//                String id=pictureService.saveAndReturnID(file);
+//                if(id!=null)
+//                {
+//                    noticeEntity.setPictureIdList(id);
+//                }
+//                else
+//                {
+//                    basicJson.getErrorMsg().setCode("");
+//                    basicJson.getErrorMsg().setDescription("上传图片失败,请重试");
+//                    return basicJson;
+//                }
+//            }
+//        }
+//        catch (Exception ignored) {}
         try
         {
             noticeService.add(noticeEntity);
