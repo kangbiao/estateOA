@@ -40,7 +40,6 @@ public class FeeItemOrderDaoImpl implements FeeItemOrderDao
             LogUtil.E(String.valueOf(objects.length));
             arrayList.add(objects[0]);
         }
-
         return (ArrayList<FeeItemOrderEntity>) arrayList;
     }
 }
