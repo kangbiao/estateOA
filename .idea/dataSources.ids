@@ -231,8 +231,14 @@
       <column name="remark_text" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="admin_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="57u05L+u5Lq65ZGY5aGr5YaZ55qE5aSE55CG6K+05piO"/>
-      <column name="repirman_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="repirman_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="repair_man" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="rp_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="5omL5py65Y+356CB"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="rp_id"/>
     </table>
     <table name="rule" schema="" catalog="PropertySystem" type="TABLE">
       <column name="rule_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -250,7 +256,8 @@
       <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6KGX6YGT6Zeo54mM5Y+3"/>
       <column name="village_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="ssid_secret" schema="" catalog="PropertySystem" type="TABLE">
       <column name="sc_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

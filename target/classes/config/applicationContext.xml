@@ -62,6 +62,7 @@
             <tx:method name="save*" propagation="REQUIRED" read-only="false"/>
             <tx:method name="delete*" propagation="REQUIRED" read-only="false"/>
             <tx:method name="change*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="set*" propagation="REQUIRED" read-only="false"/>
         </tx:attributes>
     </tx:advice>
 

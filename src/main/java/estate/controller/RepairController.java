@@ -39,14 +39,18 @@ public class RepairController
         BasicJson basicJson=new BasicJson(false);
         RepairEntity repairEntity=new RepairEntity();
         repairEntity.setId(Integer.valueOf(request.getParameter("repairID")));
-        repairEntity.setRepirmanId(Integer.valueOf(request.getParameter("repairManID")));
+        repairEntity.setRepirmanPhone(request.getParameter("repair"));
         try
         {
-            repairService.setRepairMan(repairEntity);
+            String msg=repairService.setRepairMan(repairEntity);
+            if (!msg.equals("succ"))
+            {
+                basicJson.getErrorMsg().setDescription(msg);
+                return basicJson;
+            }
         }
         catch (Exception e)
         {
-//            LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setCode("100015");
             basicJson.getErrorMsg().setDescription("操作失败");
             return basicJson;

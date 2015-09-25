@@ -182,6 +182,7 @@
     });
     $('#propertyListTable tbody').on( 'click', 'button#detailRow', function () {
         $("#moreInfoModel").modal("show");
+        var data = editTable.row($(this).parents('tr') ).data();
         $.ajax({
             type: "get",
             async: false,

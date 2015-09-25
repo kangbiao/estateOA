@@ -25,6 +25,7 @@ urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";
+urlConfig.setRepairMan=host+"repair/setRepairMan";
 
 //投诉相关的URL
 urlConfig.complainList=host+"complain/list";

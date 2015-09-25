@@ -7,6 +7,7 @@
     <class name="estate.entity.database.RepairEntity" table="repair" schema="" catalog="PropertySystem">
         <id name="id">
             <column name="id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="title">
             <column name="title" sql-type="varchar" length="100"/>
@@ -41,8 +42,8 @@
         <property name="result">
             <column name="result" sql-type="varchar" length="200"/>
         </property>
-        <property name="repirmanId">
-            <column name="repirman_id" sql-type="int unsigned"/>
+        <property name="repirmanPhone">
+            <column name="repirman_phone" sql-type="varchar" length="15"/>
         </property>
     </class>
 </hibernate-mapping>

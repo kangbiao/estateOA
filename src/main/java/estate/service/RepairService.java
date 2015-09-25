@@ -16,6 +16,5 @@ public interface RepairService
      * 设置维修人员,设置后还要向维修人员异步发送短信通知
      * @param repairEntity
      */
-    void setRepairMan(RepairEntity repairEntity);
-
+    String setRepairMan(RepairEntity repairEntity);
 }
