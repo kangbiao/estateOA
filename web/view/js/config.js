@@ -33,6 +33,7 @@ urlConfig.complainList=host+"complain/list";
 
 //用户相关的URL
 urlConfig.ownerList=host+"user/ownerList";
+urlConfig.addOwner=host+"user/addOwner";
 urlConfig.authenticatedUserList=host+"user/authenticatedUserList";
 urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";

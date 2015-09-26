@@ -1,0 +1,190 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">用户管理</a></li>
+            <li><a href="#">增加业主</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form id="ownerAddForm" method="post" action="" class="form-horizontal">
+                    <fieldset>
+                        <legend>基本信息</legend>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">姓名</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="sex">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车牌号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" placeholder="xxxxx;xxxxx"
+                                       name="vehicleIdList" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">电话号码</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">证件类型</label>
+                            <div class="col-sm-5">
+                                <select name="identityType" class="form-control" id="identityType">
+                                    <option value="1">身份证</option>
+                                    <option value="2">军人证</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">证件号码</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="identityCode" />
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-3 control-label">入住时间</label>
+                            <div class="col-sm-5">
+                                <input type="text" id="authTime" name="authTime"
+                                       class="form-control input_date" placeholder="">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function submitForm()
+    {
+        var data=$("#ownerAddForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addOwner,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
+    function ownerAddValidator(){
+        $('#ownerAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '用户名在2到10个字符之间'
+                        }
+                    }
+                },
+                address:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                identityCode:{
+                    validators: {
+                        notEmpty: {
+                            message: '证件号码不能为空'
+                        },
+                        regexp: {
+                            regexp:/^[A-Za-z0-9]+$/,
+                            message: '证件号码只能为数字或者字母的组合'
+                        }
+                    }
+                },
+//                identityCode:{
+//                    validators: {
+//                        notEmpty: {
+//                            message: '车牌号不能为空'
+//                        },
+//                        regexp: {
+//                            regexp: /^[0-9a-zA-Z]{5}(;[0-9a-zA-Z]{5})*$/,
+//                            message: '车牌号不合法'
+//                        }
+//                    }
+//                },
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+    $(document).ready(function() {
+        //初始化日期选择器
+        $('.input_date').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
+        LoadBootstrapValidatorScript(ownerAddValidator);
+    });
+</script>

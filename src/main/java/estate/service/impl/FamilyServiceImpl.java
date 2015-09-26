@@ -26,6 +26,8 @@ public class FamilyServiceImpl implements FamilyService
     public Set<Family> getFamiliesByOwnerID(Integer id)
     {
         ArrayList<FamilyEntity> entities=familyDao.getFamilyEntitiesByOwnerId(id);
+        if (entities==null)
+            return null;
         Set<Family> families=new HashSet<Family>();
         for (FamilyEntity familyEntity:entities)
         {

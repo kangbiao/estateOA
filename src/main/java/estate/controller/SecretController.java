@@ -86,7 +86,8 @@ public class SecretController
         catch (Exception e)
         {
             LogUtil.E(e.getMessage());
-            tableData.setJsonString(null);
+            tableData.getErrorMsg().setCode("1938340");
+            tableData.getErrorMsg().setDescription("获取失败");
         }
         return tableData;
     }

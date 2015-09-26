@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-22.
+ *
  */
 public interface BuildingDao
 {

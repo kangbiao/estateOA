@@ -49,12 +49,12 @@ public class SsidSecretDaoImpl implements SsidSecretDao
         Query query;
         if (!tableFilter.getSearchValue().equals(""))
         {
-            String hql = "from SsidSecretEntity t ,BuildingEntity b where t.ssid like (?) and b.buildingId=t.buildingId";
+            String hql = "from SsidSecretEntity t ,BuildingEntity b where t.ssid like (?) and b.id=t.buildingId";
             query = session.createQuery(hql).setString(0, "%" + tableFilter.getSearchValue() + "%");
         }
         else
         {
-            String hql = "from SsidSecretEntity t,BuildingEntity b where b.buildingId=t.buildingId";
+            String hql = "from SsidSecretEntity t,BuildingEntity b where b.id=t.buildingId";
             query = session.createQuery(hql);
         }
         Integer count=query.list().size();

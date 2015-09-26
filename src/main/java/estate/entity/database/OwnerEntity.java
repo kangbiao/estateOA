@@ -5,7 +5,7 @@ package estate.entity.database;
  */
 public class OwnerEntity
 {
-    private int ownerId;
+    private Integer id;
     private String phone;
     private String name;
     private Byte sex;
@@ -26,15 +26,6 @@ public class OwnerEntity
         this.phone=phone;
     }
 
-    public int getOwnerId()
-    {
-        return ownerId;
-    }
-
-    public void setOwnerId(int ownerId)
-    {
-        this.ownerId = ownerId;
-    }
 
     public String getPhone()
     {
@@ -146,60 +137,14 @@ public class OwnerEntity
         this.authenticationTime = authenticationTime;
     }
 
-    @Override
-    public boolean equals(Object o)
+
+    public Integer getId()
     {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        OwnerEntity that = (OwnerEntity) o;
-
-        if (ownerId != that.ownerId)
-            return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null)
-            return false;
-        if (name != null ? !name.equals(that.name) : that.name != null)
-            return false;
-        if (sex != null ? !sex.equals(that.sex) : that.sex != null)
-            return false;
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null)
-            return false;
-        if (urgentName != null ? !urgentName.equals(that.urgentName) : that.urgentName != null)
-            return false;
-        if (urgentPhone != null ? !urgentPhone.equals(that.urgentPhone) : that.urgentPhone != null)
-            return false;
-        if (identityType != null ? !identityType.equals(that.identityType) : that.identityType != null)
-            return false;
-        if (identityCode != null ? !identityCode.equals(that.identityCode) : that.identityCode != null)
-            return false;
-        if (vehicleIdIst != null ? !vehicleIdIst.equals(that.vehicleIdIst) : that.vehicleIdIst != null)
-            return false;
-        if (propertyIdList != null ? !propertyIdList.equals(that.propertyIdList) : that.propertyIdList != null)
-            return false;
-        if (authenticationTime != null ? !authenticationTime.equals(that.authenticationTime) : that
-                .authenticationTime != null)
-            return false;
-
-        return true;
+        return id;
     }
 
-    @Override
-    public int hashCode()
+    public void setId(Integer id)
     {
-        int result = ownerId;
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (urgentName != null ? urgentName.hashCode() : 0);
-        result = 31 * result + (urgentPhone != null ? urgentPhone.hashCode() : 0);
-        result = 31 * result + (identityType != null ? identityType.hashCode() : 0);
-        result = 31 * result + (identityCode != null ? identityCode.hashCode() : 0);
-        result = 31 * result + (vehicleIdIst != null ? vehicleIdIst.hashCode() : 0);
-        result = 31 * result + (propertyIdList != null ? propertyIdList.hashCode() : 0);
-        result = 31 * result + (authenticationTime != null ? authenticationTime.hashCode() : 0);
-        return result;
+        this.id = id;
     }
 }

@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService
             owner.setAuthenticationTime(Convert.num2time(ownerEntity.getAuthenticationTime()));
             owner.setBirthday(Convert.num2time(ownerEntity.getBirthday()));
 
-            owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getOwnerId()));
-            owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
+            owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getId()));
+//            owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
 
             owners.add(owner);
 
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService
         owner.setAuthenticationTime(Convert.num2time(ownerEntity.getAuthenticationTime()));
         owner.setBirthday(Convert.num2time(ownerEntity.getBirthday()));
 
-        owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getOwnerId()));
+        owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getId()));
         owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
 
         return owner;

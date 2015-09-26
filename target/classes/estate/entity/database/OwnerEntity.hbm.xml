@@ -5,8 +5,9 @@
 <hibernate-mapping>
 
     <class name="estate.entity.database.OwnerEntity" table="owner" schema="" catalog="PropertySystem">
-        <id name="ownerId">
+        <id name="id">
             <column name="owner_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="phone">
             <column name="phone" sql-type="varchar" length="15"/>

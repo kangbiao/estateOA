@@ -1,7 +1,9 @@
 package estate.controller;
 
+import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
+import estate.entity.database.OwnerEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -28,15 +30,30 @@ public class UserController
     @Autowired
     private BaseService baseService;
 
-    @RequestMapping(value = "/{userID}" ,method = RequestMethod.GET)
-    public BasicJson login(@PathVariable String userID)
+    /**
+     * 增加业主信息
+     * @return
+     */
+    @RequestMapping(value = "/addOwner",method = RequestMethod.POST)
+    public BasicJson addOwner(OwnerEntity ownerEntity,HttpServletRequest request)
     {
-        BasicJson temp=new BasicJson();
-        temp.setStatus(true);
-        temp.setJsonString("jsonstring");
-        System.out.println(userID);
-//        LogUtil.E("Fgfdgf");
-        return temp;
+        BasicJson basicJson=new BasicJson(false);
+        ownerEntity.setAuthenticationTime(Convert.time2num(request.getParameter("authTime")));
+
+        try
+        {
+            baseService.save(ownerEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("1028330");
+            basicJson.getErrorMsg().setDescription("添加用户信息出错\n详细信息:"+e.getMessage());
+            return basicJson;
+        }
+
+//        basicJson.setJsonString(ownerEntity);
+        basicJson.setStatus(true);
+        return basicJson;
     }
 
 
@@ -52,8 +69,17 @@ public class UserController
             tableFilter.setSearchValue(request.getParameter("search[value]"));
         else
             tableFilter.setSearchValue("");
+        try
+        {
+            return userService.getOwnerList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            TableData tableData=new TableData(false);
+            tableData.getErrorMsg().setDescription(e.getMessage());
+            return tableData;
+        }
 
-        return userService.getOwnerList(tableFilter);
     }
 
     /**
@@ -129,6 +155,11 @@ public class UserController
         }
     }
 
+    /**
+     *根据业主的id查看业主的详细信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/ownerInfo/{id}")
     public BasicJson getOwnerInfoByID(@PathVariable Integer id)
     {
@@ -148,6 +179,11 @@ public class UserController
         return basicJson;
     }
 
+    /**
+     * 改变appuser的状态,是否禁用该用户.
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/appUserStatus" ,method = RequestMethod.POST)
     public BasicJson disableAppUser(HttpServletRequest request)
     {
