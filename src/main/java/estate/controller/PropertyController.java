@@ -35,6 +35,12 @@ public class PropertyController
     @Autowired
     private FeeItemOrderService feeItemOrderService;
 
+    /**
+     * 增加物业信息
+     * @param villageEntity
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/addVillage")
     public BasicJson addVillage(VillageEntity villageEntity,HttpServletRequest request)
     {
@@ -55,14 +61,38 @@ public class PropertyController
         return basicJson;
     }
 
+    /**
+     * 增加楼栋信息
+     * @param buildingEntity
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/addBuilding")
     public BasicJson addBuilding(BuildingEntity buildingEntity ,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
+        basicJson.setJsonString(buildingEntity);
+        try
+        {
+            baseService.save(buildingEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("2130900");
+            basicJson.getErrorMsg().setDescription("楼栋信息添加失败\n详细信息:"+e.getMessage());
+            return basicJson;
+        }
 
+        basicJson.setStatus(true);
         return basicJson;
     }
 
+    /**
+     * 增加物业信息
+     * @param propertyEntity
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/add")
     public BasicJson addProperty(PropertyEntity propertyEntity, HttpServletRequest request)
     {
@@ -88,6 +118,54 @@ public class PropertyController
         return basicJson;
     }
 
+    /**
+     * 直接获取所有园区
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/villageList")
+    public BasicJson villageList(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            basicJson.setJsonString(propertyService.getAllVillage());
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("1234230");
+            basicJson.getErrorMsg().setDescription("获取园区信息失败\n错误详情:"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+
+    /**
+     * 根据园区的id获取该园区下面所有的楼栋
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/buildingList")
+    public BasicJson buildingList(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            basicJson.setJsonString(propertyService.getAllVillage());
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("1234230");
+            basicJson.getErrorMsg().setDescription("获取园区信息失败\n错误详情:"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 
 
     /**

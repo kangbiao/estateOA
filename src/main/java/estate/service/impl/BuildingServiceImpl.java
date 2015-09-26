@@ -25,7 +25,7 @@ public class BuildingServiceImpl implements BuildingService
         BuildingEntity buildingEntity=buildingDao.getByCode(code);
         if (buildingEntity!=null)
         {
-            return buildingEntity.getBuildingId();
+            return buildingEntity.getId();
         }
         else
         {

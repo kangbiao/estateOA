@@ -4,15 +4,19 @@ import estate.common.util.Convert;
 import estate.dao.BaseDao;
 import estate.dao.PropertyDao;
 import estate.dao.PropertyOwnerInfoDao;
+import estate.dao.VillageDao;
 import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
+import estate.entity.database.VillageEntity;
 import estate.entity.display.Property;
+import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,24 +33,21 @@ public class PropertyServiceImpl implements PropertyService
     private BaseDao baseDao;
     @Autowired
     private PropertyOwnerInfoDao propertyOwnerInfoDao;
+    @Autowired
+    private VillageDao villageDao;
 
     public Integer save(PropertyOwnerInfoEntity object)
     {
-        PropertyEntity propertyEntity=object.getPropertyEntity();
-        Integer id=baseDao.save(propertyEntity);
+        PropertyEntity propertyEntity = object.getPropertyEntity();
+        Integer id = baseDao.save(propertyEntity);
         object.setPropertyId(id);
         return baseDao.save(object);
     }
 
-    public void delete(PropertyEntity propertyEntity)
-    {
-
-    }
-
     public Property get(Integer id)
     {
-        Property property=new Property();
-        PropertyEntity propertyEntity= propertyDao.get(id);
+        Property property = new Property();
+        PropertyEntity propertyEntity = propertyDao.get(id);
         property.setStatus(Convert.propertyStatus2string(propertyEntity.getStatus()));
         property.setCode(propertyEntity.getCode());
         property.setLocation(propertyEntity.getLocation());
@@ -58,9 +59,9 @@ public class PropertyServiceImpl implements PropertyService
     {
         //TODO 需要检查物业ID是否存在,不存在则不返回
 
-        List<Integer> ids=Convert.string2ints(string,";");
-        Set<Property> properties=new HashSet<Property>();
-        for (Integer id:ids)
+        List<Integer> ids = Convert.string2ints(string, ";");
+        Set<Property> properties = new HashSet<Property>();
+        for (Integer id : ids)
         {
             properties.add(this.get(id));
         }
@@ -79,5 +80,18 @@ public class PropertyServiceImpl implements PropertyService
     public Object getByProperID(Integer id)
     {
         return propertyOwnerInfoDao.getByPropertyID(id);
+    }
+
+    @Override
+    public Object getAllVillage()
+    {
+        ArrayList<Select2> entities = new ArrayList<>();
+        ArrayList<VillageEntity> list = villageDao.getAllVillage();
+        for (VillageEntity villageEntity : list)
+        {
+            Select2 select2 = new Select2(String.valueOf(villageEntity.getId()), villageEntity.getName());
+            entities.add(select2);
+        }
+        return entities;
     }
 }

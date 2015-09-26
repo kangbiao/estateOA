@@ -18,7 +18,7 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content">
-                <form id="addVillageForm" method="post" class="form-horizontal">
+                <form id="addBuildingForm" method="post" class="form-horizontal">
                     <fieldset>
                         <legend>增加园区</legend>
                         <div class="form-group">
@@ -60,12 +60,31 @@
 
     function submitForm()
     {
-        var fields=$("#addVillageForm").serializeArray();
-        console.log(fields);
+        var data=$("#addBuildingForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addBuilding,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
     }
 
-    function villageAddValidator() {
-        $('#addVillageForm').bootstrapValidator({
+    function buildingAddValidator() {
+        $('#addBuildingForm').bootstrapValidator({
             message: '存在非法输入',
             fields: {
                 buildingName: {
@@ -92,7 +111,40 @@
             submitForm();
         });
     }
+
+    /**
+     * 初始化园区选择
+     */
+    function initVillageSelect()
+    {
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.villageList,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    var options="";
+                    for(var i in result.jsonString)
+                    {
+                        console.log(result.jsonString[i]);
+                        options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                    }
+                    $("#villageList").append(options);
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
     $(document).ready(function () {
-        LoadBootstrapValidatorScript(villageAddValidator);
+        initVillageSelect();
+        LoadBootstrapValidatorScript(buildingAddValidator);
     });
 </script>

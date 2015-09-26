@@ -1,6 +1,5 @@
 package estate.service;
 
-import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.display.Property;
 import estate.entity.json.TableData;
@@ -16,8 +15,6 @@ public interface PropertyService
 {
     Integer save(PropertyOwnerInfoEntity object);
 
-    void delete(PropertyEntity propertyEntity);
-
     Property get(Integer id);
 
     Set<Property> getPropertiesByString(String string);
@@ -30,5 +27,11 @@ public interface PropertyService
      * @return
      */
     Object getByProperID(Integer id);
+
+    /**
+     * 获取所有的园区信息,以select2的数组返回
+     * @return
+     */
+    Object getAllVillage ();
 
 }
