@@ -107,6 +107,10 @@
                     validators: {
                         notEmpty: {
                             message: '物业编号不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9A-Za-z]+$/,
+                            message: '物业编号只能为数字和字母的组合'
                         }
                     }
                 },
