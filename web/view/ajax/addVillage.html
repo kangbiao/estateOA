@@ -54,8 +54,27 @@
 
     function submitForm()
     {
-        var fields=$("#addVillageForm").serializeArray();
-        console.log(fields);
+        var data=$("#addVillageForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addVillage,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
     }
 
     function villageAddValidator() {

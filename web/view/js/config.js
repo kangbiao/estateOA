@@ -48,6 +48,7 @@ urlConfig.propertyList=host+"property/propertyList";
 urlConfig.getOwnerInfoByPropertyID=host+"property/owner/";
 urlConfig.getFeeInfoByPropertyID=host+"property/fee/";
 urlConfig.addProperty=host+"property/add";
+urlConfig.addVillage=host+"property/addVillage";
 
 //搜索
 urlConfig.search=host+"search/";

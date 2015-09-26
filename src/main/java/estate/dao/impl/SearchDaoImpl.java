@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-25.
+ *
  */
 @Repository("searchDao")
 public class SearchDaoImpl implements SearchDao
@@ -37,7 +38,7 @@ public class SearchDaoImpl implements SearchDao
         {
             Object[] objects=(Object[])object;
             VillageEntity villageEntity=new VillageEntity();
-            villageEntity.setVillageId((Integer)objects[1]);
+            villageEntity.setId((Integer)objects[1]);
             villageEntity.setName((String)objects[0]);
             entities.add(villageEntity);
         }

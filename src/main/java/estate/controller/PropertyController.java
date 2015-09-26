@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by kangbiao on 15-9-23.
- * 商户管理,住宅管理
+ * 增加物业,增加园区,增加楼栋,查看物业
  */
 @RestController
 @RequestMapping("/property")
@@ -35,6 +35,33 @@ public class PropertyController
     @Autowired
     private FeeItemOrderService feeItemOrderService;
 
+    @RequestMapping(value = "/addVillage")
+    public BasicJson addVillage(VillageEntity villageEntity,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            baseService.save(villageEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("10294320");
+            basicJson.getErrorMsg().setDescription("添加出错,请重试.\n错误详情:"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        basicJson.setJsonString(villageEntity);
+        return basicJson;
+    }
+
+    @RequestMapping(value = "/addBuilding")
+    public BasicJson addBuilding(BuildingEntity buildingEntity ,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+
+        return basicJson;
+    }
 
     @RequestMapping(value = "/add")
     public BasicJson addProperty(PropertyEntity propertyEntity, HttpServletRequest request)
@@ -60,6 +87,8 @@ public class PropertyController
         basicJson.setStatus(true);
         return basicJson;
     }
+
+
 
     /**
      * 获取物业信息列表

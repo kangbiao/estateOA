@@ -209,6 +209,7 @@
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Zut5Yy6"/>
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS7oh6rkvY8g77yP5Ye656efCjIu5bey5YWl5L2P77yP5pyq5YWl5L2PCjMu5bey5pS25oi/77yP5pyq5pS25oi/"/>
       <primary-key name="PRIMARY" columns="property_id"/>
+      <exported-key name="FK_7oq20rni7t96houjm1d7flnox" table="property_owner_info" schema="" catalog="PropertySystem" columns="property_id"/>
     </table>
     <table name="property_owner_info" schema="" catalog="PropertySystem" type="TABLE">
       <column name="po_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -217,6 +218,8 @@
       <column name="owner_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <column name="open_door_allowed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="po_id"/>
+      <foreign-key name="FK_7oq20rni7t96houjm1d7flnox" columns="property_id" ref-table="property" ref-schema="" ref-catalog="PropertySystem" ref-columns="property_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_7oq20rni7t96houjm1d7flnox" unique="false" columns="property_id"/>
     </table>
     <table name="repair" schema="" catalog="PropertySystem" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -288,6 +291,7 @@
     <table name="village" schema="" catalog="PropertySystem" type="TABLE">
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="village_id"/>
     </table>
