@@ -12,4 +12,11 @@ public interface SearchService
      * @return
      */
     Object villageByName(String name);
+
+    /**
+     * 通过业主电话搜索业主姓名
+     * @param phone
+     * @return
+     */
+    Object ownerSearch(String phone);
 }

@@ -20,4 +20,10 @@ public class SearchServiceImpl implements SearchService
     {
         return searchDao.villageSearch(name);
     }
+
+    @Override
+    public Object ownerSearch(String phone)
+    {
+        return searchDao.ownerSearch(phone);
+    }
 }

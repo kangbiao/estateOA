@@ -10,6 +10,7 @@ public class PropertyOwnerInfoEntity
     private String ownerPhone;
     private Integer buildingId;
     private Byte openDoorAllowed;
+    private PropertyEntity propertyEntity;
 
     public Integer getId()
     {
@@ -59,5 +60,15 @@ public class PropertyOwnerInfoEntity
     public void setBuildingId(Integer buildingId)
     {
         this.buildingId = buildingId;
+    }
+
+    public PropertyEntity getPropertyEntity()
+    {
+        return propertyEntity;
+    }
+
+    public void setPropertyEntity(PropertyEntity propertyEntity)
+    {
+        this.propertyEntity = propertyEntity;
     }
 }

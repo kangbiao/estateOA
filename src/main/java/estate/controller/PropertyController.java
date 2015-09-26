@@ -35,64 +35,43 @@ public class PropertyController
     @Autowired
     private FeeItemOrderService feeItemOrderService;
 
-    /**
-     * 获取商户信息列表
-     * @param tableFilter
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/shopList")
-    public TableData getShopList(TableFilter tableFilter,HttpServletRequest request)
-    {
-        if(request.getParameter("search[value]")!=null)
-            tableFilter.setSearchValue(request.getParameter("search[value]"));
-        else
-            tableFilter.setSearchValue("");
-        try
-        {
-            return shopService.getList(tableFilter);
-        }
-        catch (Exception e)
-        {
-            LogUtil.E(e.getMessage());
-            return null;
-        }
-    }
 
-    /**
-     * 获取住宅信息的列表
-     * @param tableFilter
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/apartmentList")
-    public TableData getApartmentList(TableFilter tableFilter,HttpServletRequest request)
+    @RequestMapping(value = "/add")
+    public BasicJson addProperty(PropertyEntity propertyEntity, HttpServletRequest request)
     {
-        if(request.getParameter("search[value]")!=null)
-            tableFilter.setSearchValue(request.getParameter("search[value]"));
-        else
-            tableFilter.setSearchValue("");
+        BasicJson basicJson = new BasicJson(false);
+
+        PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
+        propertyOwnerInfoEntity.setPropertyEntity(propertyEntity);
+        propertyOwnerInfoEntity.setOwnerPhone(request.getParameter("ownerPhone"));
+        propertyOwnerInfoEntity.setBuildingId(Integer.valueOf(request.getParameter("buildingId")));
+        propertyOwnerInfoEntity.setOpenDoorAllowed(Byte.valueOf("0"));
+        basicJson.setJsonString(propertyEntity);
         try
         {
-            return apartmentService.getList(tableFilter);
+            propertyService.save(propertyOwnerInfoEntity);
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage());
-            return null;
+            basicJson.getErrorMsg().setCode("1023240");
+            basicJson.getErrorMsg().setDescription("添加信息失败:" + e.getMessage());
+            return basicJson;
         }
+        basicJson.setStatus(true);
+        return basicJson;
     }
 
     /**
      * 获取物业信息列表
+     *
      * @param tableFilter
      * @param request
      * @return
      */
     @RequestMapping(value = "/propertyList")
-    public TableData getPropertyList(TableFilter tableFilter,HttpServletRequest request)
+    public TableData getPropertyList(TableFilter tableFilter, HttpServletRequest request)
     {
-        if(request.getParameter("search[value]")!=null)
+        if (request.getParameter("search[value]") != null)
             tableFilter.setSearchValue(request.getParameter("search[value]"));
         else
             tableFilter.setSearchValue("");
@@ -109,31 +88,25 @@ public class PropertyController
 
     /**
      * 根据物业ID获取更多物业信息
-     * @param type 费用(fee),业主(owner)
+     *
+     * @param type       费用(fee),业主(owner)
      * @param propertyID 物业id
      * @return
      */
     @RequestMapping(value = "/{type}/{propertyID}")
-    public BasicJson getOwnerInfoByPropertyID(@PathVariable String type,@PathVariable Integer propertyID)
+    public BasicJson getOwnerInfoByPropertyID(@PathVariable String type, @PathVariable Integer propertyID)
     {
-        BasicJson basicJson=new BasicJson(false);
+        BasicJson basicJson = new BasicJson(false);
 
         switch (type)
         {
             case "fee":
-//                FeeItemOrderEntity feeItemOrderEntity=(FeeItemOrderEntity)baseService.get(propertyID,FeeItemOrderEntity
-//                        .class);
-//                if (feeItemOrderEntity==null)
-//                {
-//                    basicJson.getErrorMsg().setDescription("该物业未绑定费用信息");
-//                    return basicJson;
-//                }
                 basicJson.setJsonString(feeItemOrderService.getFeeItemsByPropertyID(propertyID));
                 break;
             case "owner":
-                PropertyOwnerInfoEntity propertyOwnerInfoEntity=(PropertyOwnerInfoEntity)baseService.get(propertyID,
-                        PropertyOwnerInfoEntity.class);
-                if (propertyOwnerInfoEntity==null)
+                PropertyOwnerInfoEntity propertyOwnerInfoEntity = (PropertyOwnerInfoEntity) propertyService
+                        .getByProperID(propertyID);
+                if (propertyOwnerInfoEntity == null)
                 {
                     basicJson.getErrorMsg().setDescription("该物业未绑定业主信息");
                     return basicJson;
@@ -150,20 +123,73 @@ public class PropertyController
         return basicJson;
     }
 
+
+    /**************************以下代码为待删除代码,不参与业务逻辑***************************/
+    /**
+     * 获取商户信息列表
+     *
+     * @param tableFilter
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/shopList")
+    public TableData getShopList(TableFilter tableFilter, HttpServletRequest request)
+    {
+        if (request.getParameter("search[value]") != null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+        try
+        {
+            return shopService.getList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取住宅信息的列表
+     *
+     * @param tableFilter
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/apartmentList")
+    public TableData getApartmentList(TableFilter tableFilter, HttpServletRequest request)
+    {
+        if (request.getParameter("search[value]") != null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+        try
+        {
+            return apartmentService.getList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * 增加商户信息
+     *
      * @param propertyEntity
      * @param shopEntity
      * @param request
      * @return
      */
     @RequestMapping(value = "/addShop")
-    public BasicJson addShop(PropertyEntity propertyEntity,ShopEntity shopEntity,HttpServletRequest request)
+    public BasicJson addShop(PropertyEntity propertyEntity, ShopEntity shopEntity, HttpServletRequest request)
     {
-        BasicJson basicJson=new BasicJson(false);
+        BasicJson basicJson = new BasicJson(false);
         try
         {
-            shopService.saveShop(propertyEntity,shopEntity);
+            shopService.saveShop(propertyEntity, shopEntity);
         }
         catch (Exception e)
         {
@@ -178,18 +204,20 @@ public class PropertyController
 
     /**
      * 增加住宅信息
+     *
      * @param propertyEntity
      * @param apartmentEntity
      * @param request
      * @return
      */
     @RequestMapping(value = "/addApartment")
-    public  BasicJson addApartment(PropertyEntity propertyEntity,ApartmentEntity apartmentEntity,HttpServletRequest request)
+    public BasicJson addApartment(PropertyEntity propertyEntity, ApartmentEntity apartmentEntity, HttpServletRequest
+            request)
     {
-        BasicJson basicJson=new BasicJson(false);
+        BasicJson basicJson = new BasicJson(false);
         try
         {
-            apartmentService.saveApartment(propertyEntity,apartmentEntity);
+            apartmentService.saveApartment(propertyEntity, apartmentEntity);
         }
         catch (Exception e)
         {

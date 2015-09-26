@@ -37,7 +37,21 @@ public class AuthorityHandler
         String phone="18144240528";
         if (ssid!=null&&!ssid.equals(""))
         {
-            ssidSecretEntity=ssidSecretService.getSelfBySsid(ssid);
+            try
+            {
+                ssidSecretEntity=ssidSecretService.getSelfBySsid(ssid);
+                if (ssidSecretEntity==null)
+                {
+                    basicJson.getErrorMsg().setDescription("该ssid不存在!");
+                    return basicJson;
+                }
+            }
+            catch (Exception e)
+            {
+                LogUtil.E((e.getMessage()));
+                basicJson.getErrorMsg().setDescription("该ssid不存在!");
+                return basicJson;
+            }
             LogUtil.E(ssidSecretEntity.getSecret());
         }
         else

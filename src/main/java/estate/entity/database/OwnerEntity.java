@@ -18,6 +18,14 @@ public class OwnerEntity
     private String propertyIdList;
     private Long authenticationTime;
 
+    public OwnerEntity(){}
+
+    public OwnerEntity(String phone, String name)
+    {
+        this.name=name;
+        this.phone=phone;
+    }
+
     public int getOwnerId()
     {
         return ownerId;

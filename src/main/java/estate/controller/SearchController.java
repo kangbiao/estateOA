@@ -23,7 +23,7 @@ public class SearchController
      * @param request
      * @return
      */
-    @RequestMapping("/village")
+    @RequestMapping(value = "/village")
     public BasicJson villageSearch(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -33,6 +33,28 @@ public class SearchController
             return basicJson;
         }
         basicJson.setJsonString(searchService.villageByName(q));
+        return basicJson;
+    }
+
+    /**
+     * 根据业主电话返回业主的姓名和电话
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/owner")
+    public BasicJson owerSearch(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        String q=request.getParameter("q");
+        if (q==null)
+        {
+            return basicJson;
+        }
+//        try
+//        {
+//        }
+        basicJson.setStatus(true);
+        basicJson.setJsonString(searchService.ownerSearch(q));
         return basicJson;
     }
 }

@@ -47,9 +47,11 @@ urlConfig.secretList=host+"secret/list";
 urlConfig.propertyList=host+"property/propertyList";
 urlConfig.getOwnerInfoByPropertyID=host+"property/owner/";
 urlConfig.getFeeInfoByPropertyID=host+"property/fee/";
+urlConfig.addProperty=host+"property/add";
 
 //搜索
 urlConfig.search=host+"search/";
+
 //配置kindeditor路径
 urlConfig.uploadJson=host+"upload/kindeditor";
 

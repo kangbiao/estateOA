@@ -8,6 +8,7 @@
            catalog="PropertySystem">
         <id name="id">
             <column name="po_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="propertyId">
             <column name="property_id" sql-type="int unsigned"/>
@@ -21,5 +22,8 @@
         <property name="openDoorAllowed">
             <column name="open_door_allowed" sql-type="tinyint"/>
         </property>
+        <many-to-one name="propertyEntity" insert="false" update="false" class="estate.entity.database.PropertyEntity">
+            <column name="property_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>
