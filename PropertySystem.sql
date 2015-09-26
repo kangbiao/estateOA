@@ -66,7 +66,7 @@ CREATE TABLE `app_user` (
 
 LOCK TABLES `app_user` WRITE;
 /*!40000 ALTER TABLE `app_user` DISABLE KEYS */;
-INSERT INTO `app_user` VALUES ('13955552236','123456',3,'xiaoming',15525520000,-1,NULL),('18144240528','123456',1,'kangbiao',152210000,1,1);
+INSERT INTO `app_user` VALUES ('13955552236','123456',3,'xiaoming',15525520000,1,NULL),('18144240528','123456',1,'kangbiao',152210000,1,1);
 /*!40000 ALTER TABLE `app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +175,7 @@ CREATE TABLE `building` (
   `building_code` varchar(45) DEFAULT NULL,
   `building_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`building_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `building` (
 
 LOCK TABLES `building` WRITE;
 /*!40000 ALTER TABLE `building` DISABLE KEYS */;
-INSERT INTO `building` VALUES (1,1,'sad','aaaa','dsa');
+INSERT INTO `building` VALUES (1,1,'sad','G1B1','园区1的楼栋1'),(2,2,'ds','G2B1','园区2的楼栋1'),(3,4,'fds','fdsf','dsf'),(4,6,'有1单元和2单元','z001','1栋');
 /*!40000 ALTER TABLE `building` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -415,7 +415,7 @@ CREATE TABLE `notice` (
   `expiretime` int(11) DEFAULT NULL COMMENT '填写有效时间，以天为单位',
   `cu_id` int(10) unsigned DEFAULT NULL COMMENT '发布者的id',
   PRIMARY KEY (`notice_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,7 +424,7 @@ CREATE TABLE `notice` (
 
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES (24,'ceshi','<p>\n	<img src=\"/oa/file/kindeditor/image/20150922/20150922223447_960.png\" alt=\"\" />\n</p>\n<p>\n	fdsfdsfsdfdsfdsfdsf<strong>fdsfdsfdsf</strong>\n</p>\n<p>\n	<strong>sdsadsadasdasd</strong>\n</p>',1442932501295,NULL,'fdsfsdfsdfdsfsd',NULL,NULL,2),(25,'测试','打分是对方但是<img src=\"/oa/file/kindeditor/image/20150922/20150922223733_353.png\" alt=\"\" />',1442932655520,NULL,'地方山东省',NULL,NULL,2);
+INSERT INTO `notice` VALUES (24,'ceshi','<p>\n	<img src=\"/oa/file/kindeditor/image/20150922/20150922223447_960.png\" alt=\"\" />\n</p>\n<p>\n	fdsfdsfsdfdsfdsfdsf<strong>fdsfdsfdsf</strong>\n</p>\n<p>\n	<strong>sdsadsadasdasd</strong>\n</p>',1442932501295,NULL,'fdsfsdfsdfdsfsd',NULL,NULL,2),(25,'测试','打分是对方但是<img src=\"/oa/file/kindeditor/image/20150922/20150922223733_353.png\" alt=\"\" />',1442932655520,NULL,'地方山东省',NULL,NULL,2),(26,'hgfhfgh','<p style=\"text-align:center;\">\r\n	<img id=\"currentImg\" src=\"http://img01.imgcdc.com/news/zh_cn/focus/xjpfm/11174229/20150925/20468725_2015092522024347968300.jpg\" alt=\"习近平白宫致辞谈中美关系：随时而动 顺势而为(全文)\" title=\"习近平白宫致辞谈中美关系：随时而动 顺势而为(全文)\" border=\"0\" height=\"309\" width=\"550\" />\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;习近平参加奥巴马欢迎仪式，在白宫欢迎仪式上致辞。\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;首先我要感谢奥巴马对我的盛情邀请和盛情接待，我代表13亿中国人转达最真挚感谢和问候，中国和美国都是伟大的国家，中国人民和美国人民都是伟大的人民，36年前建交以来，乘风破浪取得历史性进展.\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;2013年夏天，我和他在庄园构建了决策。2年来，中美两国人民取得重大进展。中美两国携手合作，可以产生1+1大于2的力量，要随时而动，顺势而为。\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;我们要坚持增进战略互信，以宽广的胸怀坚信2国友好和信心。我们要坚持互利共赢，拓宽合作领域，给两国人民带来福祉。我们要坚持增进人民友谊，鼓励两国各界相向而行。我们要坚持促进世界和平和发展，促进地区协调。\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;30年前，我第一次访问美国的时候，住在美国艾奥瓦州小城马斯卡廷的老百姓家里，他们热情美好，临走时，我们紧紧拥抱，30年后，我又回去\r\n了，他们说，友谊是一件大事，这让我对中美关系的未来抱有信心。尊敬的奥巴马总统和夫人，事在人为，中美关系在新的起点，合作共赢是新的道路。让我们一起\r\n携手。<span class=\"artiLogo\"><a href=\"http://news.china.com/\" target=\"_blank\"><img src=\"http://img02.imgcdc.com/smallpic/articleLogo.png\" alt=\"新闻频道\" height=\"16\" width=\"16\" /></a></span>\r\n</p>',1443190521468,NULL,'hgfhgfhdd',NULL,NULL,2);
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -474,7 +474,7 @@ CREATE TABLE `owner` (
   `property_id_list` varchar(50) DEFAULT NULL COMMENT '1-n个物业，用，号作为分隔符',
   `authentication_time` bigint(25) DEFAULT NULL COMMENT '放到审批记录表',
   PRIMARY KEY (`owner_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -483,7 +483,7 @@ CREATE TABLE `owner` (
 
 LOCK TABLES `owner` WRITE;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
-INSERT INTO `owner` VALUES (1,'18144240528','康彪',0,150515510000,'小明','131627828989',1,'510704199405281715','5426d;dsds5','1;2',1541214000),(2,'13981111434','何可送',1,15534454000,'小红','120819186555',0,'510819120196123185',NULL,'1',165874000);
+INSERT INTO `owner` VALUES (1,'18144240528','康彪',0,150515510000,'小明','131627828989',1,'510704199405281715','5426d;dsds5','1;2',1541214000),(2,'13981111434','何可送',1,15534454000,'小红','120819186555',0,'510819120196123185',NULL,'1',165874000),(3,'15114052120','test',1,NULL,NULL,NULL,1,'dasd',NULL,NULL,1442851200000);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,7 +557,7 @@ CREATE TABLE `property` (
   `village_id` int(10) unsigned DEFAULT NULL COMMENT '园区',
   `status` tinyint(4) DEFAULT NULL COMMENT '1.自住 ／出租\n2.已入住／未入住\n3.已收房／未收房',
   PRIMARY KEY (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -566,7 +566,7 @@ CREATE TABLE `property` (
 
 LOCK TABLES `property` WRITE;
 /*!40000 ALTER TABLE `property` DISABLE KEYS */;
-INSERT INTO `property` VALUES (1,'B638',NULL,'半山蓝湾-2栋-17号',1,188.00,NULL,1,0),(2,'D546',NULL,'半山蓝湾-2栋-27号',NULL,199.21,NULL,NULL,1),(3,'b222',NULL,'location1',1,182.02,1,1,NULL),(4,'b222',NULL,'location1',1,182.02,1,1,NULL),(5,'b222',NULL,'location1',1,182.02,1,1,NULL),(6,'b222',NULL,'location1',1,182.02,1,1,NULL);
+INSERT INTO `property` VALUES (1,'B638',NULL,'半山蓝湾-2栋-17号',1,188.00,NULL,1,-1),(2,'D546',NULL,'半山蓝湾-2栋-27号',2,199.21,NULL,2,1),(3,'b222',NULL,'location1',1,182.02,2,1,1),(4,'b222',NULL,'location1',1,182.02,1,1,1),(5,'b222',NULL,'location1',1,182.02,1,1,-1),(6,'b222',NULL,'location1',1,182.02,1,1,-1),(7,'B123432',NULL,'的撒旦',1,21321.00,NULL,1,-1),(8,'yc001',NULL,'抚琴西路199号1栋1单元10号',2,109.00,NULL,1,-1),(9,'yc002',NULL,'抚琴西路199号1栋1单元9号',2,108.00,NULL,2,-1),(10,'yc003',NULL,'抚琴西路199号1栋1单元8号',1,107.00,NULL,1,-1),(11,'yc004',NULL,'抚琴西路199号1栋1单元6好',1,105.00,NULL,2,-1);
 /*!40000 ALTER TABLE `property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -583,8 +583,10 @@ CREATE TABLE `property_owner_info` (
   `building_id` int(10) unsigned DEFAULT NULL,
   `owner_phone` varchar(15) DEFAULT NULL,
   `open_door_allowed` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`po_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`po_id`),
+  KEY `FK_7oq20rni7t96houjm1d7flnox` (`property_id`),
+  CONSTRAINT `FK_7oq20rni7t96houjm1d7flnox` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -593,7 +595,7 @@ CREATE TABLE `property_owner_info` (
 
 LOCK TABLES `property_owner_info` WRITE;
 /*!40000 ALTER TABLE `property_owner_info` DISABLE KEYS */;
-INSERT INTO `property_owner_info` VALUES (1,1,1,'18144240528',1);
+INSERT INTO `property_owner_info` VALUES (1,1,1,'18144240528',1),(2,7,1,'18144240528',0),(3,8,1,'18144240528',0),(4,9,1,'13981111434',0),(5,10,2,'18144240528',0),(6,11,1,'13981111434',0);
 /*!40000 ALTER TABLE `property_owner_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -617,9 +619,9 @@ CREATE TABLE `repair` (
   `remark_text` varchar(100) DEFAULT NULL,
   `admin_id` int(10) unsigned DEFAULT NULL,
   `result` varchar(200) DEFAULT NULL COMMENT '维修人员填写的处理说明',
-  `repirman_id` int(10) unsigned DEFAULT NULL,
+  `repirman_phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -628,8 +630,32 @@ CREATE TABLE `repair` (
 
 LOCK TABLES `repair` WRITE;
 /*!40000 ALTER TABLE `repair` DISABLE KEYS */;
-INSERT INTO `repair` VALUES (1,'dfsf','fdsfs',NULL,1,154221515000,'1',1,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `repair` VALUES (2,'下水道坏了','dsdadsad','dasdasda',1,121210000,NULL,0,NULL,'',NULL,'','');
 /*!40000 ALTER TABLE `repair` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `repair_man`
+--
+
+DROP TABLE IF EXISTS `repair_man`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `repair_man` (
+  `rp_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `phone` varchar(15) NOT NULL COMMENT '手机号码',
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`rp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `repair_man`
+--
+
+LOCK TABLES `repair_man` WRITE;
+/*!40000 ALTER TABLE `repair_man` DISABLE KEYS */;
+/*!40000 ALTER TABLE `repair_man` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -762,9 +788,10 @@ DROP TABLE IF EXISTS `village`;
 CREATE TABLE `village` (
   `village_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
+  `code` varchar(45) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`village_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -773,6 +800,7 @@ CREATE TABLE `village` (
 
 LOCK TABLES `village` WRITE;
 /*!40000 ALTER TABLE `village` DISABLE KEYS */;
+INSERT INTO `village` VALUES (4,'dfds','vb222',''),(5,'fdsdsf','dfdsds','fdsds'),(6,'蓝光米兰香洲','gp001','服务物业公司：蓝光物业');
 /*!40000 ALTER TABLE `village` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -785,4 +813,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-24 22:24:53
+-- Dump completed on 2015-09-26 22:22:19
