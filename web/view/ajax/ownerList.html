@@ -265,10 +265,21 @@
         $.ajax({
             type: "get",
             async: false,
-            url: urlConfig.getPropertiesByOwnerId+data.ownerId,
+            url: urlConfig.getPropertiesByOwnerPhone+data.phone,
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
+                    if(result.jsonString.length>0)
+                    {
+                        for (var i in result.jsonString)
+                        {
+                            console.log(result.jsonString[i]);
+                        }
+                    }
+                    else
+                    {
+                        $("#propertyInfo").html("该业主未绑定任何物业,请在物业管理界面绑定物业");
+                    }
                 }
                 else
                 {

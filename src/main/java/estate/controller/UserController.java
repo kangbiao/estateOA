@@ -87,7 +87,7 @@ public class UserController
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/getPropertiesByID/{phone}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
     public BasicJson getPropertiesByOwnerId(@PathVariable String phone)
     {
         BasicJson basicJson=new BasicJson(false);
