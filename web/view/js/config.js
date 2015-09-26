@@ -39,6 +39,7 @@ urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";
 urlConfig.changeAppUserStatus=host+"user/appUserStatus";
 urlConfig.getOwerInfoByID=host+"user/ownerInfo";
+urlConfig.getPropertiesByOwnerId=host+"user/getPropertiesByID/";
 
 //密钥相关的url
 urlConfig.addSecret=host+"secret/add";

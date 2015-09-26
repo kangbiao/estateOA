@@ -27,4 +27,11 @@ public interface UserService
     void changeAppUserStatus(AppUserEntity appUserEntity);
 
     Object getUserInfoBYPhone(String phone,int type);
+
+    /**
+     * 通过业主的电话获取该业主绑定的所有物业实体信息
+     * @param phone
+     * @return
+     */
+    Object getPropertiesByPhone(String phone);
 }

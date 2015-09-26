@@ -34,7 +34,7 @@
                         <th>电话</th>
                         <th>证件类型</th>
                         <th>证件号码</th>
-                        <th>出生日期</th>
+                        <th>认证时间</th>
                         <th>详细信息</th>
                         <th>详细信息</th>
                         <th>详细信息</th>
@@ -53,7 +53,7 @@
                         <th>电话</th>
                         <th>证件类型</th>
                         <th>证件号码</th>
-                        <th>出生日期</th>
+                        <th>认证时间</th>
                         <th>详细信息</th>
                         <th>详细信息</th>
                         <th>详细信息</th>
@@ -71,7 +71,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">业主详细信息</h4>
+                <h4 class="modal-title">业主详细信息</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
@@ -249,18 +249,36 @@
         $("#ownerInfo #authenticationTime").text(data.authenticationTime);
         $("#ownerInfo #identityType").text(data.identityType);
         $("#ownerInfo #urgent").text(data.urgentName+"("+data.urgentPhone+")");
-        $("#propertyInfo").empty();
-        for(var i in data.propertyEntities)
-        {
-            var temp='<ul class="list-group">' +
-                        '<li class="list-group-item">物业编号: <span id="code">'+data.propertyEntities[i].code+'</span></li>'+
-                        '<li class="list-group-item">物业地址: <span id="location">'+data.propertyEntities[i].location+'</span></li>'+
-                        '<li class="list-group-item">状态: <span id="status">'+data.propertyEntities[i].status+'</span></li>' +
-                        '<li class="list-group-item">物业面积: <span id="propertySquare">'+data.propertyEntities[i].propertySquare+'</span></li>'+
-                    '</ul>';
-            $("#propertyInfo").append(temp);
+//        $("#propertyInfo").empty();
+//        for(var i in data.propertyEntities)
+//        {
+//            var temp='<ul class="list-group">' +
+//                        '<li class="list-group-item">物业编号: <span id="code">'+data.propertyEntities[i].code+'</span></li>'+
+//                        '<li class="list-group-item">物业地址: <span id="location">'+data.propertyEntities[i].location+'</span></li>'+
+//                        '<li class="list-group-item">状态: <span id="status">'+data.propertyEntities[i].status+'</span></li>' +
+//                        '<li class="list-group-item">物业面积: <span id="propertySquare">'+data.propertyEntities[i].propertySquare+'</span></li>'+
+//                    '</ul>';
+//            $("#propertyInfo").append(temp);
+//
+//        }
 
-        }
+        $.ajax({
+            type: "get",
+            async: false,
+            url: urlConfig.getPropertiesByOwnerId+data.ownerId,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                }
+                else
+                {
+                    $("#propertyInfo").html(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
         $("#formModel").modal("show");//弹出框show
     });
 
@@ -358,7 +376,7 @@
 
             },{
                 "targets": 7,
-                "data": "birthday",
+                "data": "authenticationTime",
                 "visible": true,
                 "orderable": false,
                 "searchable": true

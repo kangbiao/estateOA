@@ -83,6 +83,30 @@ public class UserController
     }
 
     /**
+     * 通过业主的电话返回业主名下的所有物业信息
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/getPropertiesByID/{phone}",method = RequestMethod.GET)
+    public BasicJson getPropertiesByOwnerId(@PathVariable String phone)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            basicJson.setJsonString(userService.getPropertiesByPhone(phone));
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            basicJson.getErrorMsg().setCode("21233210");
+            basicJson.getErrorMsg().setDescription("获取物业信息失败\n错误详情:"+e.getMessage());
+            return basicJson;
+        }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
      * 获取认证用户的列表
      * @param request
      * @return

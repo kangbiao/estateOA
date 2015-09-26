@@ -1,12 +1,14 @@
 package estate.dao.impl;
 
 import estate.dao.PropertyOwnerInfoDao;
+import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,5 +37,14 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
             return (PropertyOwnerInfoEntity)list.get(0);
         else
             return null;
+    }
+
+    @Override
+    public ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone)
+    {
+        Session session=getSession();
+        String hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.ownerPhone=:phone";
+        List list=session.createQuery(hql).setString("phone",phone).list();
+        return (ArrayList<PropertyEntity>) list;
     }
 }

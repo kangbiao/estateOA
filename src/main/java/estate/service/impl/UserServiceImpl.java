@@ -2,6 +2,7 @@ package estate.service.impl;
 
 import estate.common.util.Convert;
 import estate.dao.BaseDao;
+import estate.dao.PropertyOwnerInfoDao;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
@@ -32,6 +33,8 @@ public class UserServiceImpl implements UserService
     private FamilyService familyService;
     @Autowired
     private BaseDao baseDao;
+    @Autowired
+    private PropertyOwnerInfoDao propertyOwnerInfoDao;
 
 
 
@@ -145,6 +148,12 @@ public class UserServiceImpl implements UserService
     public Object getUserInfoBYPhone(String phone,int type)
     {
         return userDao.getUserInfoBYPhone(phone, type);
+    }
+
+    @Override
+    public Object getPropertiesByPhone(String phone)
+    {
+        return propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
     }
 
     @Override
