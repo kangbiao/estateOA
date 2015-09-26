@@ -25,17 +25,12 @@
                             <label class="col-sm-2 control-label">选择园区</label>
                             <div class="col-sm-3">
                                 <select class="form-control" name="villageId" id="villageList">
-                                    <option value="0">--选择园区--</option>
-                                    <option value="1">园区1</option>
-                                    <option value="2">园区2</option>
+                                    <option value="">--选择园区--</option>
                                 </select>
                             </div>
                             <label class="col-sm-2 control-label">选择楼栋</label>
                             <div class="col-sm-3">
                                 <select class="form-control" name="buildingId" id="buildingList">
-                                    <option value="0">--选择楼栋--</option>
-                                    <option value="1">园区1楼栋1</option>
-                                    <option value="2">园区2楼栋1</option>
                                 </select>
                             </div>
                         </div>
@@ -97,6 +92,40 @@
 </div>
 <script type="text/javascript">
 
+    $("#villageList").change(function(){
+        var villageId=$("#villageList option:selected").val();
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.buildingList+"/"+villageId,
+            dataType: "json",
+            success: function (result) {
+                if (result.status) {
+                    if(result.jsonString.length>0)
+                    {
+                        var options="<option value=''>--请选择--</option>";
+                        for(var i in result.jsonString)
+                        {
+                            options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                        }
+                        $("#buildingList").html(options);
+                    }
+                    else
+                    {
+                        $("#buildingList").html("<option value=''>--没有相应的楼栋--</option>");
+                    }
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+
+    });
 
     //验证表单
     function propertyAddValidator() {
@@ -180,8 +209,40 @@
         });
     }
 
+    /**
+     * 初始化园区选择
+     */
+    function initVillageSelect()
+    {
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.villageList,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    var options="";
+                    for(var i in result.jsonString)
+                    {
+                        console.log(result.jsonString[i]);
+                        options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                    }
+                    $("#villageList").append(options);
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
 
     $(document).ready(function() {
+        initVillageSelect();
         LoadSelect2Script(selectOwner);
         LoadBootstrapValidatorScript(propertyAddValidator);
     });

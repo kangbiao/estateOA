@@ -1,10 +1,8 @@
 package estate.service.impl;
 
 import estate.common.util.Convert;
-import estate.dao.BaseDao;
-import estate.dao.PropertyDao;
-import estate.dao.PropertyOwnerInfoDao;
-import estate.dao.VillageDao;
+import estate.dao.*;
+import estate.entity.database.BuildingEntity;
 import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.database.VillageEntity;
@@ -35,6 +33,8 @@ public class PropertyServiceImpl implements PropertyService
     private PropertyOwnerInfoDao propertyOwnerInfoDao;
     @Autowired
     private VillageDao villageDao;
+    @Autowired
+    private BuildingDao buildingDao;
 
     public Integer save(PropertyOwnerInfoEntity object)
     {
@@ -90,6 +90,19 @@ public class PropertyServiceImpl implements PropertyService
         for (VillageEntity villageEntity : list)
         {
             Select2 select2 = new Select2(String.valueOf(villageEntity.getId()), villageEntity.getName());
+            entities.add(select2);
+        }
+        return entities;
+    }
+
+    @Override
+    public Object getBuildingsByValliageId(Integer id)
+    {
+        ArrayList<Select2> entities = new ArrayList<>();
+        ArrayList<BuildingEntity> list=buildingDao.getAllBuildingsByVillageId(id);
+        for (BuildingEntity buildingEntity:list)
+        {
+            Select2 select2=new Select2(String.valueOf(buildingEntity.getId()),buildingEntity.getBuildingName());
             entities.add(select2);
         }
         return entities;

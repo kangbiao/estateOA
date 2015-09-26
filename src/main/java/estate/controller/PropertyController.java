@@ -145,16 +145,16 @@ public class PropertyController
 
     /**
      * 根据园区的id获取该园区下面所有的楼栋
-     * @param request
+     * @param villageId
      * @return
      */
-    @RequestMapping(value = "/buildingList")
-    public BasicJson buildingList(HttpServletRequest request)
+    @RequestMapping(value = "/buildingList/{villageId}")
+    public BasicJson buildingList(@PathVariable Integer villageId)
     {
         BasicJson basicJson=new BasicJson(false);
         try
         {
-            basicJson.setJsonString(propertyService.getAllVillage());
+            basicJson.setJsonString(propertyService.getBuildingsByValliageId(villageId));
         }
         catch (Exception e)
         {

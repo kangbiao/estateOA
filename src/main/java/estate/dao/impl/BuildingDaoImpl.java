@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,9 +31,17 @@ public class BuildingDaoImpl implements BuildingDao
         Session session=getSession();
         String hql="from BuildingEntity b where b.buildingCode=:code";
         List list=session.createQuery(hql).setString("code",code).list();
-        if (list.size()==1)
+        if (list.size()>0)
             return (BuildingEntity)list.get(0);
         else
             return null;
+    }
+
+    @Override
+    public ArrayList<BuildingEntity> getAllBuildingsByVillageId(Integer id)
+    {
+        Session session=getSession();
+        String hql="from BuildingEntity t where t.villageId=:id";
+        return (ArrayList<BuildingEntity>) session.createQuery(hql).setInteger("id",id).list();
     }
 }
