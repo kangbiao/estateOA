@@ -19,6 +19,12 @@
     <mvc:annotation-driven/>
     <mvc:resources mapping="/view/**" location="/view/"/>
     <mvc:resources mapping="/file/**" location="/file/"/>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/api"/>-->
+            <!--<bean class="estate.app.LoginHandler"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->

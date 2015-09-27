@@ -1,6 +1,6 @@
 /**
  * Created by kangbiao on 15-9-14.
- * 该文件为全局配置文件
+ * 该文件为web端接口全局配置文件
  */
 
 /************--------------接口配置----------********************/
@@ -12,7 +12,6 @@ urlConfig.noticeDelete=host+"notice/delete";
 urlConfig.noticeList=host+"notice/list";
 urlConfig.addNotice=host+"notice/add";
 
-http://www.kangbiao.org/notice/getSome/3
 
 //费用相关的URL
 urlConfig.addFee=host+"fee/add/estate";

@@ -21,6 +21,7 @@ import java.util.Set;
 
 /**
  * Created by kangbiao on 15-9-16.
+ *
  */
 @Service("propertyService")
 public class PropertyServiceImpl implements PropertyService
@@ -60,7 +61,7 @@ public class PropertyServiceImpl implements PropertyService
         //TODO 需要检查物业ID是否存在,不存在则不返回
 
         List<Integer> ids = Convert.string2ints(string, ";");
-        Set<Property> properties = new HashSet<Property>();
+        Set<Property> properties = new HashSet<>();
         for (Integer id : ids)
         {
             properties.add(this.get(id));

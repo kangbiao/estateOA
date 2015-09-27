@@ -17,9 +17,9 @@ import org.springframework.stereotype.Service;
 public class SsidSecretServiceImpl implements SsidSecretService
 {
     @Autowired
-    SsidSecretDao ssidSecretDao;
+    private SsidSecretDao ssidSecretDao;
     @Autowired
-    BaseDao baseDao;
+    private BaseDao baseDao;
 
     @Override
     public SsidSecretEntity getSelfBySsid(String ssid)

@@ -14,7 +14,7 @@
 
     <!-- 导入hibernate表单验证bean -->
     <import resource="validator-bean.xml"/>
-
+    <!--<import resource="spring-security.xml"/>-->
     <context:component-scan base-package="estate"/>
 
     <!-- 导入外部的properties文件 -->

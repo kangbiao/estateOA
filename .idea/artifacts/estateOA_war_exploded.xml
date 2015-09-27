@@ -34,7 +34,6 @@
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.0.22" />
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-util-scan:8.0.22" />
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-util:8.0.22" />
-          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.6" />
           <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.5.Final" />
           <element id="library" level="project" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:4.3.11.Final" />
@@ -45,12 +44,10 @@
           <element id="library" level="project" name="Maven: org.jboss:jandex:1.1.0.Final" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aspects:4.1.7.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.7.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.1.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.1.7.RELEASE" />
@@ -71,6 +68,9 @@
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
           <element id="library" level="project" name="Maven: cglib:cglib:2.2" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
+          <element id="library" level="module" name="JUnit4" module-name="estateOA" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.1.6.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.6.RELEASE" />
         </element>
       </element>
       <element id="artifact" artifact-name="estateOA:ear exploded" />
