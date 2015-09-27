@@ -19,6 +19,7 @@ public class FamilyEntity
     private String vehicleIdList;
     private Byte authStatus;
     private Integer ownerId;
+    private Integer propertyId;
 
     public Long getAuthenticationTime()
     {
@@ -219,5 +220,15 @@ public class FamilyEntity
     public void setOwnerRelationship(String ownerRelationship)
     {
         this.ownerRelationship = ownerRelationship;
+    }
+
+    public Integer getPropertyId()
+    {
+        return propertyId;
+    }
+
+    public void setPropertyId(Integer propertyId)
+    {
+        this.propertyId = propertyId;
     }
 }

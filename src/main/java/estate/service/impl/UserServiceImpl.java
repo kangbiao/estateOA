@@ -156,6 +156,7 @@ public class UserServiceImpl implements UserService
         return propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
     }
 
+
     @Override
     public TableData getList(TableFilter tableFilter, Object object)
     {

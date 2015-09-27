@@ -12,4 +12,8 @@ public interface AppUserService
      * @return
      */
     Object getByPhone(String phone);
+
+    /**
+     * 通过app
+     */
 }

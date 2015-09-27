@@ -38,6 +38,9 @@
         <property name="ownerId">
             <column name="owner_id" sql-type="int unsigned"/>
         </property>
+        <property name="propertyId">
+            <column name="property_id" sql-type="int unsigned"/>
+        </property>
         <property name="authenticationTime">
             <column name="authentication_time" sql-type="bigint"/>
         </property>

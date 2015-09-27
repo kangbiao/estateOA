@@ -67,7 +67,7 @@
 </div>
 
 <div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document" style="width: 800px;">
+    <div class="modal-dialog" role="document" style="width: 900px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -271,10 +271,27 @@
                 if (result.status) {
                     if(result.jsonString.length>0)
                     {
+                        var html="";
                         for (var i in result.jsonString)
                         {
+                            if(result.jsonString[i].type==2)
+                                result.jsonString[i].type="住宅";
+                            else if(result.jsonString[i].type==1)
+                                result.jsonString[i].type="商户";
+                            if(result.jsonString[i].status==-1)
+                                result.jsonString[i].status="出租";
+                            if(result.jsonString[i].status==1)
+                                result.jsonString[i].status="自用";
+                            html+='<ul class="list-group">' +
+                                    '<li class="list-group-item">物业编号: <span id="code">'+result.jsonString[i].code+'</span></li>'+
+                                    '<li class="list-group-item">物业地址: <span id="location">'+result.jsonString[i].location+'</span></li>'+
+                                    '<li class="list-group-item">面积: <span id="status">'+result.jsonString[i].propertySquare+'</span></li>' +
+                                    '<li class="list-group-item">状态: <span id="status">'+result.jsonString[i].status+'</span></li>' +
+                                    '<li class="list-group-item">物业类型: <span id="status">'+result.jsonString[i].type+'</span></li>' +
+                                '</ul>';
                             console.log(result.jsonString[i]);
                         }
+                        $("#propertyInfo").html(html);
                     }
                     else
                     {

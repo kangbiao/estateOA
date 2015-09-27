@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -67,6 +68,16 @@ public class PropertyDaoImpl implements PropertyDao
         tableData.setRecordsFiltered(count);
         tableData.setJsonString(entities);
         return tableData;
+    }
+
+    @Override
+    public ArrayList<PropertyEntity> getAllProperty()
+    {
+        Session session=getSession();
+        String hql="from PropertyEntity";
+        List list=session.createQuery(hql).list();
+
+        return (ArrayList<PropertyEntity>) list;
     }
 
 

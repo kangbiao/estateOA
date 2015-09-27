@@ -115,7 +115,7 @@ function LoadDataTablesScripts(callback){
 			});
 		});
 	}
-	if (!$.fn.dataTables){
+	if (!$.fn.DataTable){
 		LoadDatatables();
 	}
 	else {

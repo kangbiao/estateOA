@@ -34,19 +34,24 @@ public class SecretController
     public BasicJson add(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
-        Integer buildingID=buildingService.getIDByCode(request.getParameter("building_code"));
-        if (buildingID==null)
+//        Integer buildingID=buildingService.getIDByCode(request.getParameter("building_code"));
+//        if (buildingID==null)
+//        {
+//            basicJson.getErrorMsg().setCode("102200");
+//            basicJson.getErrorMsg().setDescription("该楼栋不存在");
+//            return basicJson;
+//        }
+        String buildingId=request.getParameter("buildingId");
+        if (buildingId==null||buildingId.equals(""))
         {
-            basicJson.getErrorMsg().setCode("102200");
-            basicJson.getErrorMsg().setDescription("该楼栋不存在");
+            basicJson.getErrorMsg().setDescription("请选择楼栋");
             return basicJson;
         }
-
 
         SsidSecretEntity ssidSecretEntity=new SsidSecretEntity();
         ssidSecretEntity.setSecret(request.getParameter("secret"));
         ssidSecretEntity.setSsid(request.getParameter("ssid"));
-        ssidSecretEntity.setBuildingId(buildingID);
+        ssidSecretEntity.setBuildingId(Integer.valueOf(request.getParameter("buildingId")));
 
         if (ssidSecretService.getSelfBySsid(ssidSecretEntity.getSsid())!=null)
         {

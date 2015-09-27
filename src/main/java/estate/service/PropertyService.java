@@ -2,9 +2,11 @@ package estate.service;
 
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.display.Property;
+import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -40,5 +42,8 @@ public interface PropertyService
      * @return
      */
     Object getBuildingsByValliageId(Integer id);
+
+    //TODO 项目验收,待删除
+    ArrayList<Select2> getAllProperty();
 
 }

@@ -108,4 +108,21 @@ public class PropertyServiceImpl implements PropertyService
         }
         return entities;
     }
+
+    //TODO 项目验收,待删除
+    @Override
+    public ArrayList<Select2> getAllProperty()
+    {
+        ArrayList<PropertyEntity> properties=propertyDao.getAllProperty();
+        ArrayList<Select2> items=new ArrayList<>();
+        for (PropertyEntity propertyEntity:properties)
+        {
+            Select2 select2=new Select2();
+            select2.setId(String.valueOf(propertyEntity.getId()));
+            select2.setText(propertyEntity.getLocation());
+            items.add(select2);
+        }
+        return items;
+
+    }
 }

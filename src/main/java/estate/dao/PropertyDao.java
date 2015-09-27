@@ -4,6 +4,8 @@ import estate.entity.database.PropertyEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
+import java.util.ArrayList;
+
 /**
  * Created by kangbiao on 15-9-16.
  *
@@ -32,5 +34,8 @@ public interface PropertyDao
 
 
     TableData getList(TableFilter tableFilter);
+
+    // TODO 为了适应验收而写,待删除
+    ArrayList<PropertyEntity> getAllProperty();
 
 }

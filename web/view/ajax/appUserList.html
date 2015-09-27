@@ -87,39 +87,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" role="dialog" id="ownerInfoformModel">
-    <div class="modal-dialog" role="document" style="width: 800px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="">业主详细信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12" id="ownerInfo">
-                            <h3>个人信息</h3>
-                            <ul class="list-group">
-                                <li class="list-group-item">姓名: <span id="name"></span></li>
-                                <li class="list-group-item">证件类型: <span id="identityType"></span></li>
-                                <li class="list-group-item">证件号码: <span id="identityCode"></span></li>
-                                <li class="list-group-item">认证时间: <span id="authenticationTime"></span></li>
-                                <li class="list-group-item">紧急联系人: <span id="urgent"></span></li>
-                            </ul>
-                            <h3>物业信息</h3>
-                            <ul class="list-group" id="propertyInfo">
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
@@ -240,7 +207,7 @@
                 "targets": 1,
                 "data":"phone",
                 "visible": true,
-                "orderable": false,
+                "orderable": true,
                 "searchable": false
 
             },{
@@ -256,6 +223,8 @@
                         return "租户";
                     else if(data==3)
                         return "业主";
+                    else
+                        return "待审核";
                 }
 
             },{

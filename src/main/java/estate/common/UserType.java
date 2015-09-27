@@ -9,5 +9,6 @@ public class UserType
     public static final int OWNER=1;
     public static final int TENANT=2;
     public static final int FAMILY=3;
+    public static final int APPUSER=4;
 
 }
