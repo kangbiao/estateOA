@@ -7,6 +7,7 @@
     <class name="estate.entity.database.TenantEntity" table="tenant" schema="" catalog="PropertySystem">
         <id name="tenantId">
             <column name="tenant_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="phone">
             <column name="phone" sql-type="varchar" length="15"/>

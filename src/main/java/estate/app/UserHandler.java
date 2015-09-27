@@ -123,13 +123,13 @@ public class UserHandler
     @RequestMapping("/bind")
     public BasicJson bindOwner(HttpServletRequest request)
     {
-        LogUtil.E("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        LogUtil.E("---已进入请求---");
         BasicJson basicJson=new BasicJson(false);
         Integer propertyId=Integer.valueOf(request.getParameter("id"));
         int role=Integer.valueOf(request.getParameter("role"));
         String phone=request.getParameter("phone");
 
-        LogUtil.E(String.valueOf(role)+"phone:"+phone);
+        LogUtil.E("role:"+String.valueOf(role)+"phone:"+phone+"propertyId:"+propertyId);
 
         AppUserEntity appUserEntity= (AppUserEntity) userService.getUserInfoBYPhone(phone,UserType.APPUSER);
         appUserEntity.setUserRole(role);
@@ -151,7 +151,7 @@ public class UserHandler
                 }
                 catch (Exception e)
                 {
-                    basicJson.getErrorMsg().setDescription("保存到家庭是出错");
+                    basicJson.getErrorMsg().setDescription("保存到家庭时出错");
                     return basicJson;
                 }
                 break;

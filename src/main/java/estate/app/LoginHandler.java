@@ -1,7 +1,5 @@
 package estate.app;
 
-import estate.common.util.LogUtil;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +23,7 @@ public class LoginHandler implements Filter
         HttpServletRequest reqeust = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 //        HttpSession session = reqeust.getSession();
-        LogUtil.E(reqeust.getParameter("phone"));
+//        LogUtil.E(reqeust.getParameter("phone"));
         // TODO 为适应验收而加的验证方法,以后都要改
         String phone = reqeust.getParameter("phone");
         String path = ((HttpServletRequest) req).getServletPath();
@@ -37,7 +35,7 @@ public class LoginHandler implements Filter
                 {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
-                    LogUtil.E("没有登陆");
+//                    LogUtil.E("没有登陆");
                     response.getWriter().print("no hack!");
                 }
                 catch (IOException e)
