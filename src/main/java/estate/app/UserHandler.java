@@ -2,6 +2,7 @@ package estate.app;
 
 import estate.common.UserType;
 import estate.common.util.LogUtil;
+import estate.common.util.Message;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.FamilyEntity;
 import estate.entity.database.TenantEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * Created by kangbiao on 15-9-21.
@@ -70,6 +72,11 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("手机号码已注册");
             return basicJson;
         }
+        if (!Message.send(phone,"感谢您注册VerPass您的验证码是101010").equals("succ"))
+        {
+            basicJson.getErrorMsg().setDescription("验证码发送失败");
+            return basicJson;
+        }
         basicJson.setStatus(true);
         return basicJson;
     }
@@ -107,6 +114,28 @@ public class UserHandler
         {
             LogUtil.E("错误:"+e.getMessage());
             basicJson.getErrorMsg().setDescription("注册失败");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+
+    @RequestMapping("/checkVerifyCode")
+    public BasicJson checkVerifyCode(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+
+        String verifyCode=request.getParameter("verify");
+        if (verifyCode==null|| Objects.equals(verifyCode, ""))
+        {
+            basicJson.getErrorMsg().setDescription("请输入验证码");
+            return basicJson;
+        }
+        if (!verifyCode.equals("101010"))
+        {
+            basicJson.getErrorMsg().setDescription("验证码输入错误!");
             return basicJson;
         }
 

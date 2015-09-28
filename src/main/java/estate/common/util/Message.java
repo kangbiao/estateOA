@@ -15,7 +15,7 @@ public class Message
 {
     public static String send(String mobile, String content)
     {
-        String sign="物管云系统v0.9";
+        String sign="VerPass";
 
         StringBuffer sb = new StringBuffer("http://sms.1xinxi.cn/asmx/smsservice.aspx?");
         sb.append("name=VerPass@163.com");
@@ -92,7 +92,7 @@ public class Message
     @Test
     public void test()
     {
-        System.out.print(send("15114052120","woaini"));
+        System.out.print(send("15114052120","感谢您注册xxx您的验证码是123"));
     }
 
 }

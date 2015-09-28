@@ -1,5 +1,7 @@
 package estate.app;
 
+import estate.common.util.LogUtil;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +24,24 @@ public class LoginHandler implements Filter
     {
         HttpServletRequest reqeust = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
+
+//
 //        HttpSession session = reqeust.getSession();
-//        LogUtil.E(reqeust.getParameter("phone"));
+//        if (session==null)
+//        {
+//            LogUtil.E("nosession");
+//            return;
+//        }
+//        String name=(String) session.getAttribute("name");
+//        if (name==null||name.equals(""))
+//        {
+//            session.setAttribute("name","kangbiao");
+//            LogUtil.E("正在设置cookie");
+//        }
+//        LogUtil.E("name:"+name);
+
+
+        LogUtil.E(reqeust.getParameter("phone"));
         // TODO 为适应验收而加的验证方法,以后都要改
         String phone = reqeust.getParameter("phone");
         String path = ((HttpServletRequest) req).getServletPath();

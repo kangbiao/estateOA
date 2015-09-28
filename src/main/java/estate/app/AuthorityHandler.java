@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-21.
@@ -62,18 +61,18 @@ public class AuthorityHandler
         }
 
         //取出当前用户能进入的所有楼栋的ID
-        ArrayList<Integer> ids=authorityService.getAuthorityBuildingIDsByPhone(phone);
-        if(ids.contains(ssidSecretEntity.getBuildingId()))
-        {
-            basicJson.setStatus(true);
-            basicJson.setJsonString(ssidSecretEntity.getSecret());
-        }
-        else
-        {
-            basicJson.getErrorMsg().setCode("12050510");
-            basicJson.getErrorMsg().setDescription("您没有访问权限");
-            return basicJson;
-        }
+//        ArrayList<Integer> ids=authorityService.getAuthorityBuildingIDsByPhone(phone);
+//        if(ids.contains(ssidSecretEntity.getBuildingId()))
+//        {
+        basicJson.setStatus(true);
+        basicJson.setJsonString(ssidSecretEntity.getSecret());
+//        }
+//        else
+//        {
+//            basicJson.getErrorMsg().setCode("12050510");
+//            basicJson.getErrorMsg().setDescription("您没有访问权限");
+//            return basicJson;
+//        }
         return basicJson;
     }
 }
