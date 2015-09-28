@@ -133,9 +133,9 @@ public class UserHandler
 
         AppUserEntity appUserEntity= (AppUserEntity) userService.getUserInfoBYPhone(phone,UserType.APPUSER);
         appUserEntity.setUserRole(role);
-        Integer id=baseService.save(appUserEntity);
+        baseService.save(appUserEntity);
 
-        appUserEntity= (AppUserEntity) baseService.get(id,appUserEntity);
+//        appUserEntity= (AppUserEntity) baseService.get(id,appUserEntity);
 
         switch (role)
         {
@@ -176,6 +176,7 @@ public class UserHandler
                 return basicJson;
 
         }
+        basicJson.setStatus(true);
         return basicJson;
     }
 

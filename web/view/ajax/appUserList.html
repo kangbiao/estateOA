@@ -31,8 +31,10 @@
                         <th>手机</th>
                         <th>用户类型</th>
                         <th>注册时间</th>
+                        <th>审核</th>
                         <th>状态</th>
-                        <th>绑定业主</th>
+                        <th>绑定物业</th>
+                        <th>个人信息</th>
                         <th>门禁记录</th>
                         <th>操作</th>
                     </tr>
@@ -45,8 +47,10 @@
                         <th>手机</th>
                         <th>用户类型</th>
                         <th>注册时间</th>
+                        <th>审核</th>
                         <th>状态</th>
-                        <th>绑定业主</th>
+                        <th>绑定物业</th>
+                        <th>个人信息</th>
                         <th>门禁记录</th>
                         <th>操作</th>
                     </tr>
@@ -151,7 +155,11 @@
         $.ajax({
             type: "get",
             async: false,
-            url: urlConfig.getOwerInfoByID+"/"+data.ownerId,
+            url: urlConfig.getPropertyInfo,
+            data:{
+                phone:data.phone,
+                userRole:data.userRole
+            },
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
@@ -218,11 +226,11 @@
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if (data==1)
-                        return "家庭成员";
+                        return "<font color='#4b0082'>家庭成员</font>";
                     else if (data==2)
-                        return "租户";
+                        return "<font color='#8b0000'>租户</font>";
                     else if(data==3)
-                        return "业主";
+                        return "<font color='green'>业主</font>";
                     else
                         return "待审核";
                 }
@@ -241,6 +249,13 @@
 
             },{
                 "targets": 4,
+                "data":null,
+                "visible": true,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":"<font color='red'>待审核</font>"
+            },{
+                "targets": 5,
                 "data":"status",
                 "visible": true,
                 "orderable": false,
@@ -255,27 +270,32 @@
                 }
 
             },{
-                "targets": 5,
+                "targets": 6,
                 "data": "userRole",
                 "orderable": false,
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if (data==3)
-                        return "--";
-                    else if(row.ownerId!=null)
-                        return "<button id='ownerDetailRow' class='btn btn-primary' type='button'>业主信息</button>";
+                        return "<button id='ownerDetailRow' class='btn btn-success' type='button'>物业信息</button>";
                     else
-                        return "未绑定";
+                        return "<button id='ownerDetailRow' class='btn btn-primary' type='button'>物业信息</button>";
                 }
             },{
-                "targets": 6,
+                "targets": 7,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
+                        "<button id='' class='btn btn-primary' type='button'>个人信息</button>"
             },{
-                "targets": 7,
+                "targets": 8,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='detailRow' class='btn btn-primary' type='button'>门禁记录</button>"
+            },{
+                "targets": 9,
                 "data": "status",
                 "orderable": false,
                 "searchable": false,

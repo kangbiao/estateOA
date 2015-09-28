@@ -88,25 +88,31 @@
     {
         var fields=$("#addNoticeForm").serializeArray();
         console.log(fields);
-//        $.ajax({
-//            type: "post",
-//            async: false,
-//            url: urlConfig.addNotice,
-//            data:fields ,
-//            dataType: "json", //返回数据形式为json
-//            success: function (result) {
-//                if (result.status) {
-//                    alert("添加成功");
-//                }
-//                else
-//                {
-//                    alert(result.errorMsg.description);
-//                }
-//            },
-//            error: function () {
-//                alert("服务器连接失败,请重试!");
-//            }
-//        });
+        $.each(fields,function(k,v){
+            if(v.name=="content")
+            {
+                fields[k].value=editor.html();
+            }
+        });
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.addNotice,
+            data:fields ,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
     }
 
     function noticeAddValidator() {

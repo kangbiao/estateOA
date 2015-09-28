@@ -37,7 +37,7 @@ urlConfig.authenticatedUserList=host+"user/authenticatedUserList";
 urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";
 urlConfig.changeAppUserStatus=host+"user/appUserStatus";
-urlConfig.getOwerInfoByID=host+"user/ownerInfo";
+urlConfig.getPropertyInfo=host+"user/getPropertyInfo";
 urlConfig.getPropertiesByOwnerPhone=host+"user/getPropertiesByPhone/";
 
 //密钥相关的url

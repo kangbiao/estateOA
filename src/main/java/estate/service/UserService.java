@@ -18,6 +18,11 @@ public interface UserService
 
     TableData getAuthenticatedUserList(TableFilter tableFilter);
 
+    /**
+     * 获取app用户列表,同时返回每个用户绑定的房产id(1,2,3)
+     * @param tableFilter
+     * @return
+     */
     TableData getAppUserList(TableFilter tableFilter);
 
     TableData getList(TableFilter tableFilter,Object object);

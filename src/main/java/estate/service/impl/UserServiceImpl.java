@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService
     {
         TableData tableData=userDao.getOwnerList(tableFilter);
         ArrayList<OwnerEntity> entities= (ArrayList<OwnerEntity>) tableData.getJsonString();
-        ArrayList<Owner> owners=new ArrayList<Owner>();
+        ArrayList<Owner> owners= new ArrayList<>();
         for (OwnerEntity ownerEntity:entities)
         {
             Owner owner=new Owner();

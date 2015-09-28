@@ -14,6 +14,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
+                    <a href="javascript:void(0)" id="addRepairMan">添加维修人员</a>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -59,7 +60,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" id="formModel">
+<div class="modal fade" role="dialog" id="chooseRepairManModel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,6 +94,55 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="addRepairManModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="">选择维修人员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="addRepairManForm" method="post" action="" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">维修人员姓名</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="repairManName"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">维修人员电话</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="repairManPhone"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">维修人员类别</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="repairManType"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">更多信息</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="moreInfo"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="adSubmit">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script type="text/javascript">
 
 
@@ -102,8 +152,16 @@
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
         $("input[name=repairID]").val(data.id);
-        $("#formModel").modal("show");//弹出框show
+        $("#chooseRepairManModel").modal("show");//弹出框show
 
+    });
+
+    /**
+     * 添加一个维修人员
+     */
+    $("#addRepairMan").click(function (){
+//        $("#chooseRepairManModel").modal("hide");
+        $("#addRepairManModel").modal("show");
     });
 
     function selectRepairMan(){
