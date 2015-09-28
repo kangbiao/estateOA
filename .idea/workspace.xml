@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="967b6d5f-a3a9-48b0-8dfd-d1cfce7ee19c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/estate/controller/PropertyController.class" afterPath="$PROJECT_DIR$/target/classes/estate/controller/PropertyController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/estate/dao/impl/UserDaoImpl.class" afterPath="$PROJECT_DIR$/target/classes/estate/dao/impl/UserDaoImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/estate/app/UserHandler.class" afterPath="$PROJECT_DIR$/target/classes/estate/app/UserHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/estate/common/UserType.class" afterPath="$PROJECT_DIR$/target/classes/estate/common/UserType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/estate/app/UserHandler.java" afterPath="$PROJECT_DIR$/src/main/java/estate/app/UserHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/estate/service/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/estate/service/UserService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/estate/service/impl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/estate/service/impl/UserServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/estate/common/UserType.java" afterPath="$PROJECT_DIR$/src/main/java/estate/common/UserType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/appUserList.html" afterPath="$PROJECT_DIR$/web/view/ajax/appUserList.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/js/config.js" afterPath="$PROJECT_DIR$/web/view/js/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/dashboard.html" afterPath="$PROJECT_DIR$/web/view/ajax/dashboard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/noticeAdd.html" afterPath="$PROJECT_DIR$/web/view/ajax/noticeAdd.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/ownerList.html" afterPath="$PROJECT_DIR$/web/view/ajax/ownerList.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/complain.html" afterPath="$PROJECT_DIR$/web/view/ajax/complain.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/noticeList.html" afterPath="$PROJECT_DIR$/web/view/ajax/noticeList.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/repair.html" afterPath="$PROJECT_DIR$/web/view/ajax/repair.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="estateOA.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -217,18 +205,38 @@
       <file leaf-file-name="repair.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/view/ajax/repair.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.6">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            <state vertical-scroll-proportion="-1.4">
+              <caret line="281" column="5" selection-start-line="281" selection-start-column="5" selection-end-line="281" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="noticeAdd.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="noticeAdd.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/view/ajax/noticeAdd.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57069844">
-              <caret line="107" column="17" selection-start-line="107" selection-start-column="17" selection-end-line="107" selection-end-column="17" />
+            <state vertical-scroll-proportion="25.933332">
+              <caret line="97" column="25" selection-start-line="97" selection-start-column="25" selection-end-line="97" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="noticeList.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/view/ajax/noticeList.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.9">
+              <caret line="160" column="87" selection-start-line="160" selection-start-column="87" selection-end-line="160" selection-end-column="87" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="complain.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/view/ajax/complain.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35775128">
+              <caret line="208" column="87" selection-start-line="208" selection-start-column="87" selection-end-line="208" selection-end-column="87" />
               <folding />
             </state>
           </provider>
@@ -250,29 +258,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="172" column="39" selection-start-line="172" selection-start-column="39" selection-end-line="172" selection-end-column="39" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/estate/service/UserService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/estate/service/impl/UserServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="32" selection-start-line="109" selection-start-column="32" selection-end-line="109" selection-end-column="32" />
-              <folding>
-                <element signature="e#4089#4090#0" expanded="true" />
-                <element signature="e#4147#4148#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -339,8 +324,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/OwnerEntity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/OwnerEntity.hbm.xml" />
         <option value="$PROJECT_DIR$/web/view/ajax/addOwner.html" />
         <option value="$PROJECT_DIR$/src/main/java/estate/service/impl/FamilyServiceImpl.java" />
         <option value="$PROJECT_DIR$/web/view/index.html" />
@@ -388,8 +371,10 @@
         <option value="$PROJECT_DIR$/src/main/java/estate/service/UserService.java" />
         <option value="$PROJECT_DIR$/web/view/js/config.js" />
         <option value="$PROJECT_DIR$/web/view/ajax/appUserList.html" />
-        <option value="$PROJECT_DIR$/web/view/ajax/repair.html" />
         <option value="$PROJECT_DIR$/web/view/ajax/noticeAdd.html" />
+        <option value="$PROJECT_DIR$/web/view/ajax/noticeList.html" />
+        <option value="$PROJECT_DIR$/web/view/ajax/repair.html" />
+        <option value="$PROJECT_DIR$/web/view/ajax/complain.html" />
       </list>
     </option>
   </component>
@@ -1456,12 +1441,12 @@
       <workItem from="1443322400598" duration="1164000" />
       <workItem from="1443324038626" duration="541000" />
       <workItem from="1443324595629" duration="36028000" />
-      <workItem from="1443405969160" duration="8098000" />
+      <workItem from="1443405969160" duration="8474000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="717267000" />
+    <option name="totallyTimeSpent" value="717643000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1567,24 +1552,6 @@
     <option name="FILTER_TARGETS" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/estate/app/AuthorityHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/estate/dao/impl/BuildingDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31928688">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/estate/dao/impl/ApartmentDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13614263">
@@ -1998,18 +1965,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/view/ajax/repair.html">
+    <entry file="file://$PROJECT_DIR$/web/view/ajax/noticeAdd.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state vertical-scroll-proportion="25.933332">
+          <caret line="97" column="25" selection-start-line="97" selection-start-column="25" selection-end-line="97" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/view/ajax/noticeAdd.html">
+    <entry file="file://$PROJECT_DIR$/web/view/ajax/repair.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57069844">
-          <caret line="107" column="17" selection-start-line="107" selection-start-column="17" selection-end-line="107" selection-end-column="17" />
+        <state vertical-scroll-proportion="-1.4">
+          <caret line="281" column="5" selection-start-line="281" selection-start-column="5" selection-end-line="281" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/view/ajax/noticeList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.9">
+          <caret line="160" column="87" selection-start-line="160" selection-start-column="87" selection-end-line="160" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/view/ajax/complain.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35775128">
+          <caret line="208" column="87" selection-start-line="208" selection-start-column="87" selection-end-line="208" selection-end-column="87" />
           <folding />
         </state>
       </provider>
