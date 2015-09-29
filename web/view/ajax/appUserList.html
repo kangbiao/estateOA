@@ -166,9 +166,9 @@
         console.log(status);
         var comfirm;
         if(status=="enable")
-            comfirm=confirm("确定启用该用户门禁权限?");
+            comfirm=confirm("确定停用该用户?");
         else
-            comfirm=confirm("确定禁用该用户门禁权限?");
+            comfirm=confirm("确定恢复该用户?");
         if(comfirm)
         {
             var data = editTable.row($(this).parents('tr') ).data();
