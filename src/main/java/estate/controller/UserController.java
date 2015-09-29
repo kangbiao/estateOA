@@ -1,5 +1,6 @@
 package estate.controller;
 
+import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
@@ -39,6 +40,12 @@ public class UserController
     {
         BasicJson basicJson=new BasicJson(false);
         ownerEntity.setAuthenticationTime(Convert.time2num(request.getParameter("authTime")));
+
+        if(userService.getUserInfoBYPhone(ownerEntity.getPhone(), UserType.OWNER)!=null)
+        {
+            basicJson.getErrorMsg().setDescription("该电话已经存在!");
+            return basicJson;
+        }
 
         try
         {
