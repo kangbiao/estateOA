@@ -190,4 +190,22 @@ public class UserDaoImpl implements UserDao
         else
             return null;
     }
+
+    @Override
+    public void deleteUserByPhone(String phone, int type)
+    {
+        Session session=getSession();
+        String hql;
+        if (type==UserType.OWNER)
+            hql="delete from OwnerEntity t where t.phone=:phone";
+        else if (type==UserType.APPUSER)
+            hql="delete from AppUserEntity t where t.phone=:phone";
+        else if (type==UserType.TENANT)
+            hql="delete from TenantEntity t where t.phone=:phone";
+        else if (type==UserType.FAMILY)
+            hql="delete from FamilyEntity t where t.phone=:phone";
+        else
+        return;
+        session.createQuery(hql).setString("phone",phone).executeUpdate();
+    }
 }

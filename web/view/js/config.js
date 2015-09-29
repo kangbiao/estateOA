@@ -39,6 +39,7 @@ urlConfig.appUserList=host+"user/appUserList";
 urlConfig.changeAppUserStatus=host+"user/appUserStatus";
 urlConfig.getPropertyInfo=host+"user/getPropertyInfo";
 urlConfig.getPropertiesByOwnerPhone=host+"user/getPropertiesByPhone/";
+urlConfig.deleteUserByPhone=host+"/user/deleteOwner/";
 
 //密钥相关的url
 urlConfig.addSecret=host+"secret/add";

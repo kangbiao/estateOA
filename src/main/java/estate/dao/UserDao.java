@@ -35,4 +35,11 @@ public interface UserDao
      */
     Object getUserInfoBYPhone(String phone ,int type);
 
+    /**
+     * 通过用户的电话和类型删除用户
+     * @param phone
+     * @param type
+     */
+    void deleteUserByPhone(String phone,int type);
+
 }

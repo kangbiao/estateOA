@@ -14,6 +14,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
+                    <button id="addOwnerBtn" class="btn btn-info">添加业主</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -67,7 +68,7 @@
 </div>
 
 <div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document" style="width: 900px;">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -100,117 +101,73 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" role="dialog" id="anotherFormModel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" role="dialog" id="addOwnerModal">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">添加物业费</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">增加业主</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <form class="form-horizontal" role="form" id="estateFeeFrom">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">费用名称</label>
-                                <div class="col-sm-8">
-                                    <select id="s2_with_tag" multiple="multiple" class="populate placeholder">
-                                        <option>Linux</option>
-                                        <option>Windows</option>
-                                        <option>OpenSolaris</option>
-                                        <option>FirefoxOS</option>
-                                        <option>MeeGo</option>
-                                        <option>Android</option>
-                                        <option>Sailfish OS</option>
-                                        <option>Plan9</option>
-                                        <option>DOS</option>
-                                        <option>AIX</option>
-                                        <option>HP/UP</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">费用单价</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">收费方式</label>
-                                <div class="col-sm-8">
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" checked="" name="unit_type" value="squre">按平米
-                                            <i class="fa fa-circle-o"></i>
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" checked="" name="unit_type" value="family"> 按户
-                                            <i class="fa fa-circle-o"></i>
-                                        </label>
+                        <form id="ownerAddForm" method="post" action="" class="form-horizontal">
+                            <fieldset>
+                                <legend>基本信息</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">姓名</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="name" />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">缴费时间</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="pay_start_time"
-                                           placeholder="开始时间">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="pay_end_time"
-                                           placeholder="结束时间">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">生效时间</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="start_time" placeholder="">
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="end_time" placeholder="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">滞纳金</label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="overdue_unit_price" placeholder="">
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" checked="" name="overdue_unit_type" value="month">每月
-                                            <i class="fa fa-circle-o"></i>
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" checked="" name="overdue_unit_type" value="day"> 每日
-                                            <i class="fa fa-circle-o"></i>
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">性别</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="sex">
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">门禁权限</label>
-                                <div class="col-sm-2">
-                                    <div class="toggle-switch toggle-switch-success">
-                                        <label>
-                                            <input type="checkbox" name="door_authority" checked="">
-                                            <div class="toggle-switch-inner"></div>
-                                            <div class="toggle-switch-switch"><i class="fa fa-check"></i></div>
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">车牌号</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" placeholder="xxxxx;xxxxx"
+                                               name="vehicleIdList" />
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <input type="text" id="input_date" class="form-control"
-                                           placeholder="超过几个月禁止门禁权限">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">电话号码</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="phone" />
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">证件类型</label>
+                                    <div class="col-sm-6">
+                                        <select name="identityType" class="form-control" id="identityType">
+                                            <option value="1">身份证</option>
+                                            <option value="2">军人证</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">证件号码</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="identityCode" />
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label class="col-sm-3 control-label">入住时间</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="authTime" name="authTime"
+                                               class="form-control input_date" placeholder="">
+                                    </div>
+                                </div>
+                            </fieldset>
                             <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-2">
-                                    <button type="submit" class="btn btn-primary">确认添加</button>
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <button type="submit" class="btn btn-primary">提交</button>
                                 </div>
                             </div>
                         </form>
@@ -230,13 +187,36 @@
         var comfirm=confirm("确定删除?");
         if(comfirm)
         {
-            alert("删除成功");
+            var data = editTable.row($(this).parents('tr') ).data();
+            $.ajax({
+                type: "get",
+                async: false,
+                url: urlConfig.deleteUserByPhone+data.phone,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
         }
     });
 
     $("#ownerListTable tbody").on('click','button#editRow',function(){
         alert("暂时不能编辑业主信息!");
 //        $("#anotherFormModel").modal("show");
+    });
+
+    $("#addOwnerBtn").click(function(){
+        $("#ownerAddForm")[0].reset();
+        $("#addOwnerModal").modal("show");
     });
 
     //显示业主的个人信息和房产信息
@@ -493,8 +473,95 @@
         $('#s2_with_tag').select2({placeholder: "选择一个或多个物业信息"});
     }
 
+    //增加业主
+    function submitForm()
+    {
+        var data=$("#ownerAddForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addOwner,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
+    function ownerAddValidator(){
+        $('#ownerAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '用户名在2到10个字符之间'
+                        }
+                    }
+                },
+                address:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                identityCode:{
+                    validators: {
+                        notEmpty: {
+                            message: '证件号码不能为空'
+                        },
+                        regexp: {
+                            regexp:/^[A-Za-z0-9]+$/,
+                            message: '证件号码只能为数字或者字母的组合'
+                        }
+                    }
+                },
+                vehicleIdList:{
+                    validators: {
+                        regexp: {
+                            regexp: /^[0-9a-zA-Z]{5}(;[0-9a-zA-Z]{5})*$/,
+                            message: '车牌号不合法'
+                        }
+                    }
+                },
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+
     $(document).ready(function() {
-        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+        $('.input_date').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
             showButtonPanel:true,
             closeText:"关闭",
             yearSuffix: '年',
@@ -506,6 +573,7 @@
             dayNamesMin: ['日','一','二','三','四','五','六']
         });
         LoadDataTablesScripts(initDataTable);
-        LoadSelect2Script(initSelect2);
+//        LoadSelect2Script(initSelect2);
+        LoadBootstrapValidatorScript(ownerAddValidator);
     });
 </script>

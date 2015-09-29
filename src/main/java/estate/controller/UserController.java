@@ -5,6 +5,7 @@ import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
+import estate.entity.database.PropertyEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-3.
@@ -109,6 +111,40 @@ public class UserController
             basicJson.getErrorMsg().setDescription("获取物业信息失败\n错误详情:"+e.getMessage());
             return basicJson;
         }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 通过业主的电话号码删除业主
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/deleteOwner/{phone}")
+    public BasicJson deleteOwner(@PathVariable String phone)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            ArrayList<PropertyEntity> entities= (ArrayList<PropertyEntity>) userService.getPropertiesByPhone(phone);
+            if (entities.size()>0)
+            {
+                basicJson.getErrorMsg().setDescription("该业主已绑定物业,不能删除");
+                return basicJson;
+            }
+            else
+            {
+                userService.deleteUserByPhone(phone,UserType.OWNER);
+            }
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            basicJson.getErrorMsg().setCode("21233210");
+            basicJson.getErrorMsg().setDescription("查询失败\n错误详情:"+e.getMessage());
+            return basicJson;
+        }
+
         basicJson.setStatus(true);
         return basicJson;
     }

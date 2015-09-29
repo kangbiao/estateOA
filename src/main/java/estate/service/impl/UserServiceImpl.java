@@ -1,5 +1,6 @@
 package estate.service.impl;
 
+import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.dao.BaseDao;
 import estate.dao.PropertyOwnerInfoDao;
@@ -148,6 +149,24 @@ public class UserServiceImpl implements UserService
     public Object getUserInfoBYPhone(String phone,int type)
     {
         return userDao.getUserInfoBYPhone(phone, type);
+    }
+
+    @Override
+    public void deleteUserByPhone(String phone, int type)
+    {
+        switch (type)
+        {
+            case UserType.OWNER:
+                userDao.deleteUserByPhone(phone,type);
+                break;
+            case UserType.APPUSER:
+                userDao.deleteUserByPhone(phone,UserType.FAMILY);
+                userDao.deleteUserByPhone(phone,UserType.TENANT);
+                userDao.deleteUserByPhone(phone,UserType.APPUSER);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
