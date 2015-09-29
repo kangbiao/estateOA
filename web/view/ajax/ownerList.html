@@ -191,7 +191,7 @@
             $.ajax({
                 type: "get",
                 async: false,
-                url: urlConfig.deleteUserByPhone+data.phone,
+                url: urlConfig.deleteOwnerByPhone+data.phone,
                 dataType: "json", //返回数据形式为json
                 success: function (result) {
                     if (result.status) {

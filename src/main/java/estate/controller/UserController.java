@@ -92,17 +92,31 @@ public class UserController
     }
 
     /**
-     * 通过业主的电话返回业主名下的所有物业信息
+     * 通过用户的电话和类型返回该用户关联的所有物业信息
+     * @param userType
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
-    public BasicJson getPropertiesByOwnerId(@PathVariable String phone)
+    @RequestMapping(value = "/{userType}/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
+    public BasicJson getPropertiesByOwnerId(@PathVariable String userType,@PathVariable String phone)
     {
         BasicJson basicJson=new BasicJson(false);
+        int type;
+        switch (userType)
+        {
+            case "owner":
+                type=UserType.OWNER;
+                break;
+            case "appuser":
+                type=UserType.APPUSER;
+                break;
+            default:
+                basicJson.getErrorMsg().setDescription("请求参数错误!");
+                return basicJson;
+        }
         try
         {
-            basicJson.setJsonString(userService.getPropertiesByPhone(phone));
+            basicJson.setJsonString(userService.getPropertiesByPhone(phone,type));
         }
         catch (Exception e)
         {
@@ -116,26 +130,44 @@ public class UserController
     }
 
     /**
-     * 通过业主的电话号码删除业主
+     * 通过用户类型和电话删除用户
+     * 本来应该通过id删除的,但是物业业主信息表是通过业主的电话关联
+     * @param userType
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/deleteOwner/{phone}")
-    public BasicJson deleteOwner(@PathVariable String phone)
+    @RequestMapping(value = "/{userType}/delete/{phone}")
+    public BasicJson deleteOwner(@PathVariable String userType,@PathVariable String phone)
     {
         BasicJson basicJson=new BasicJson(false);
+        int type;
+        switch (userType)
+        {
+            case "owner":
+                type=UserType.OWNER;
+                break;
+            case "appuser":
+                type=UserType.APPUSER;
+                break;
+            default:
+                basicJson.getErrorMsg().setDescription("请求参数错误!");
+                return basicJson;
+        }
         try
         {
-            ArrayList<PropertyEntity> entities= (ArrayList<PropertyEntity>) userService.getPropertiesByPhone(phone);
-            if (entities.size()>0)
+            //如果用户类型是业主的话,需要判断该业主是否绑定物业,若绑定了则不允许删除
+            if (type==UserType.OWNER)
             {
-                basicJson.getErrorMsg().setDescription("该业主已绑定物业,不能删除");
-                return basicJson;
+                ArrayList<PropertyEntity> entities = (ArrayList<PropertyEntity>) userService.getPropertiesByPhone
+                        (phone,type);
+                if (entities.size() > 0)
+                {
+                    basicJson.getErrorMsg().setDescription("该业主已绑定物业,不能删除");
+                    return basicJson;
+                }
             }
-            else
-            {
-                userService.deleteUserByPhone(phone,UserType.OWNER);
-            }
+
+            userService.deleteUserByPhone(phone,type);
         }
         catch (Exception e)
         {

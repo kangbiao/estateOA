@@ -61,24 +61,77 @@
     </div>
 </div>
 
-<div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document" style="width: 800px;">
+<!-- 门禁信息 -->
+<div class="modal fade" role="dialog" id="doorRecordModal">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">门禁记录</h4>
+                <h4 class="modal-title" id="">门禁记录</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12" id="appUserDoorInfo">
+                        <div class="col-md-12" id="doorRecordList">
                             <ul class="list-group">
                                 <li class="list-group-item">开门时间: <span id="name">2015-5-8 22:00:19</span></li>
                                 <li class="list-group-item">门禁代码: <span id="identityType">CDSESH</span></li>
                             </ul>
                             <ul class="list-group">
-                                <li class="list-group-item">开门时间: <span id="name">2015-8-5 23:18:25</span></li>
-                                <li class="list-group-item">门禁代码: <span id="identityType">CDSESH</span></li>
+                                <li class="list-group-item">开门时间: <span id="name1">2015-8-5 23:18:25</span></li>
+                                <li class="list-group-item">门禁代码: <span id="identityType1">CDSESH</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 个人信息 -->
+<div class="modal fade" role="dialog" id="selfInfoModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">个人信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12" id="selfInfoList">
+                            <ul class="list-group">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- 物业信息 -->
+<div class="modal fade" role="dialog" id="propertyInfoModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">物业信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12" id="propertyInfoList">
+                            <ul class="list-group">
+
                             </ul>
                         </div>
                     </div>
@@ -95,8 +148,8 @@
     var editTable;//全局的datatable变量
 
 
-    $('#appUserListTable tbody').on( 'click', 'button#detailRow', function () {
-        $("#formModel").modal("show");//弹出框show
+    $('#appUserListTable tbody').on( 'click', 'button#doorRecordBtn', function () {
+        $("#doorRecordModal").modal("show");
 
     });
 
@@ -131,10 +184,6 @@
                 dataType: "json", //返回数据形式为json
                 success: function (result) {
                     if (result.status) {
-                        if(status=="enable")
-                            alert("启用成功");
-                        else
-                            alert("禁用成功");
                         editTable.ajax.reload( null, false );
                     }
                     else
@@ -149,50 +198,16 @@
         }
     });
 
-    $('#appUserListTable tbody').on( 'click', 'button#ownerDetailRow', function () {
+    $('#appUserListTable tbody').on( 'click', 'button#propertyInfoBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
-        $.ajax({
-            type: "get",
-            async: false,
-            url: urlConfig.getPropertyInfo,
-            data:{
-                phone:data.phone,
-                userRole:data.userRole
-            },
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.status) {
-                    var data=result.jsonString;
-                    $("#ownerInfo #name").text(data.name);
-                    $("#ownerInfo #identityType").text(data.identityType);
-                    $("#ownerInfo #identityCode").text(data.identityCode);
-                    $("#ownerInfo #authenticationTime").text(data.authenticationTime);
-                    $("#ownerInfo #identityType").text(data.identityType);
-                    $("#ownerInfo #urgent").text(data.urgentName+"("+data.urgentPhone+")");
-                    $("#propertyInfo").empty();
-                    for(var i in data.propertyEntities)
-                    {
-                        var temp='<ul class="list-group">' +
-                                '<li class="list-group-item">物业编号: <span id="code">'+data.propertyEntities[i].code+'</span></li>'+
-                                '<li class="list-group-item">物业地址: <span id="location">'+data.propertyEntities[i].location+'</span></li>'+
-                                '<li class="list-group-item">状态: <span id="status">'+data.propertyEntities[i].status+'</span></li>' +
-                                '<li class="list-group-item">物业面积: <span id="propertySquare">'+data.propertyEntities[i].propertySquare+'</span></li>'+
-                                '</ul>';
-                        $("#propertyInfo").append(temp);
-                    }
-                    $("#ownerInfoformModel").modal("show");//弹出框show
-                }
-                else
-                {
-                    alert(result.errorMsg.description);
-                }
-            },
-            error: function () {
-                alert("服务器连接失败,请重试!");
-            }
-        });
+        $("#propertyInfoModal").modal("show");
     });
+
+    $('#appUserListTable tbody').on( 'click', 'button#selfInfoBtn', function () {
+        $("#selfInfoModal").modal("show");
+    });
+
 
 
     //初始化表格数据
@@ -276,9 +291,9 @@
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if (data==3)
-                        return "<button id='ownerDetailRow' class='btn btn-success' type='button'>物业信息</button>";
+                        return "<button id='propertyInfoBtn' class='btn btn-success' type='button'>物业信息</button>";
                     else
-                        return "<button id='ownerDetailRow' class='btn btn-primary' type='button'>物业信息</button>";
+                        return "<button id='propertyInfoBtn' class='btn btn-primary' type='button'>物业信息</button>";
                 }
             },{
                 "targets": 7,
@@ -286,14 +301,14 @@
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                        "<button id='' class='btn btn-primary' type='button'>个人信息</button>"
+                        "<button id='selfInfoBtn' class='btn btn-primary' type='button'>个人信息</button>"
             },{
                 "targets": 8,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                        "<button id='detailRow' class='btn btn-primary' type='button'>门禁记录</button>"
+                        "<button id='doorRecordBtn' class='btn btn-primary' type='button'>门禁记录</button>"
             },{
                 "targets": 9,
                 "data": "status",

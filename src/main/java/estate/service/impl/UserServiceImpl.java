@@ -170,7 +170,7 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public Object getPropertiesByPhone(String phone)
+    public Object getPropertiesByPhone(String phone,int userType)
     {
         return propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
     }

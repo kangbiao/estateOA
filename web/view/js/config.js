@@ -38,8 +38,10 @@ urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";
 urlConfig.changeAppUserStatus=host+"user/appUserStatus";
 urlConfig.getPropertyInfo=host+"user/getPropertyInfo";
-urlConfig.getPropertiesByOwnerPhone=host+"user/getPropertiesByPhone/";
-urlConfig.deleteUserByPhone=host+"/user/deleteOwner/";
+urlConfig.getPropertiesByOwnerPhone=host+"user/owner/getPropertiesByPhone/";
+urlConfig.getPropertiesByAppUserPhone=host+"user/appuser/getPropertiesByPhone/";
+urlConfig.deleteOwnerByPhone=host+"/user/owner/delete/";
+urlConfig.deleteAppUserByPhone=host+"/user/appuser/delete/";
 
 //密钥相关的url
 urlConfig.addSecret=host+"secret/add";

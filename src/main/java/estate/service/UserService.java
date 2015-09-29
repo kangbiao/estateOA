@@ -43,16 +43,17 @@ public interface UserService
      * 根据用户的电话和类型删除用户,用户类型只能是app用户和业主
      * 删除app用户时会同时删除家庭成员和租客
      * @param phone
-     * @param type
+     * @param type 只能是app用户和业主
      */
     void deleteUserByPhone(String phone,int type);
 
     /**
-     * 通过业主的电话获取该业主绑定的所有物业实体信息
+     * 通过用户的电话和类型获取该用户绑定的所有物业实体信息
+     * @param userType 只能是app用户和业主
      * @param phone
      * @return
      */
-    Object getPropertiesByPhone(String phone);
+    Object getPropertiesByPhone(String phone,int userType);
 
 
 }
