@@ -1,15 +1,14 @@
 package estate.service.impl;
 
+import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.dao.*;
-import estate.entity.database.BuildingEntity;
-import estate.entity.database.PropertyEntity;
-import estate.entity.database.PropertyOwnerInfoEntity;
-import estate.entity.database.VillageEntity;
+import estate.entity.database.*;
 import estate.entity.display.Property;
 import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.AppUserNotExitException;
 import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,6 +106,30 @@ public class PropertyServiceImpl implements PropertyService
             entities.add(select2);
         }
         return entities;
+    }
+
+    @Override
+    public ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception
+    {
+        AppUserEntity appUserEntity=new AppUserEntity();
+        appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
+        if (appUserEntity==null)
+            throw new AppUserNotExitException("该app用户不存在!");
+        int userRole=appUserEntity.getUserRole();
+        switch (userRole)
+        {
+            case UserType.FAMILY:
+                //TODO 如果用户为家庭用户
+
+                break;
+            case UserType.TENANT:
+                break;
+            case UserType.OWNER:
+                break;
+            default:
+                break;
+        }
+        return null;
     }
 
     //TODO 项目验收,待删除

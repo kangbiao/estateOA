@@ -71,6 +71,13 @@ public class PropertyDaoImpl implements PropertyDao
     }
 
     @Override
+    public ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone, int role)
+    {
+
+        return null;
+    }
+
+    @Override
     public ArrayList<PropertyEntity> getAllProperty()
     {
         Session session=getSession();

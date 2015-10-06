@@ -29,6 +29,10 @@ public interface UserService
 
     Owner getOnerInfoByID(Integer id);
 
+    /**
+     * 改变app用户的状态
+     * @param appUserEntity
+     */
     void changeAppUserStatus(AppUserEntity appUserEntity);
 
     /**
@@ -54,6 +58,5 @@ public interface UserService
      * @return
      */
     Object getPropertiesByPhone(String phone,int userType);
-
 
 }

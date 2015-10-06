@@ -6,6 +6,7 @@ import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -16,8 +17,6 @@ import java.util.Set;
 public interface PropertyService
 {
     Integer save(PropertyOwnerInfoEntity object);
-
-    Property get(Integer id);
 
     Set<Property> getPropertiesByString(String string);
 
@@ -42,6 +41,14 @@ public interface PropertyService
      * @return
      */
     Object getBuildingsByValliageId(Integer id);
+
+    /**
+     * 根据APP用户的电话号码返回该app用户名下所有的物业
+     * @param phone
+     * @return
+     */
+    ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws IOException, Exception;
+
 
     //TODO 项目验收,待删除
     ArrayList<Select2> getAllProperty();

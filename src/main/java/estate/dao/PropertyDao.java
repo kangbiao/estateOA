@@ -12,12 +12,6 @@ import java.util.ArrayList;
  */
 public interface PropertyDao
 {
-    /**
-     * 包含基础的增加和更新操作,适用于单个对象
-     * @param object
-     * @return
-     */
-    Integer save(PropertyEntity object);
 
     /**
      * 根据ID获取某个对象
@@ -34,6 +28,16 @@ public interface PropertyDao
 
 
     TableData getList(TableFilter tableFilter);
+
+
+    /**
+     * 根据用户的电话和类型获取绑定的所有物业
+     * @param phone
+     * @param role
+     * @return
+     */
+    ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone,int role);
+
 
     // TODO 为了适应验收而写,待删除
     ArrayList<PropertyEntity> getAllProperty();

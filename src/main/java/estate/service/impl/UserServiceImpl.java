@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-16.
+ *
  */
 @Service("userService")
 public class UserServiceImpl implements UserService
@@ -92,7 +93,6 @@ public class UserServiceImpl implements UserService
             tenant.setPhone(tenantEntity.getPhone());
             tenant.setUrgentName(tenantEntity.getUrgentName());
             tenant.setUrgentPhone(tenantEntity.getUrgentPhone());
-            tenant.setProperty(propertyService.get(tenantEntity.getPropertyId()));
 
             tenans.add(tenant);
         }
@@ -176,6 +176,7 @@ public class UserServiceImpl implements UserService
     }
 
 
+
     @Override
     public TableData getList(TableFilter tableFilter, Object object)
     {
@@ -198,7 +199,6 @@ public class UserServiceImpl implements UserService
             tenant.setPhone(tenantEntity.getPhone());
             tenant.setUrgentName(tenantEntity.getUrgentName());
             tenant.setUrgentPhone(tenantEntity.getUrgentPhone());
-            tenant.setProperty(propertyService.get(tenantEntity.getPropertyId()));
 
             tenans.add(tenant);
         }

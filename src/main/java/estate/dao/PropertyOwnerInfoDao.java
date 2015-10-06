@@ -25,4 +25,5 @@ public interface PropertyOwnerInfoDao
      */
     ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone);
 
+
 }
