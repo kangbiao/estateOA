@@ -1,5 +1,6 @@
 package estate.filter.web;
 
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 
 import javax.servlet.*;
@@ -34,7 +35,7 @@ public class WebFilterMain implements Filter
         ArrayList<String> passUrl=new ArrayList<>();
         passUrl.add("/view/403.html");
         passUrl.add("/view/login.html");
-        LogUtil.E(path);
+        LogUtil.E(GsonUtil.getGson().toJson(session.getAttribute("user")));
         if (!(passUrl.contains(path)||path.contains(".css")||path.contains(".js")||path.contains(".png")))
         {
             if (session.getAttribute("user")==null)
