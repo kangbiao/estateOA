@@ -6,7 +6,6 @@ import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -47,7 +46,7 @@ public interface PropertyService
      * @param phone
      * @return
      */
-    ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws IOException, Exception;
+    ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception;
 
 
     //TODO 项目验收,待删除
