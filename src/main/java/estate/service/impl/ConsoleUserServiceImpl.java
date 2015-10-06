@@ -16,18 +16,4 @@ public class ConsoleUserServiceImpl implements ConsoleUserService
     private ConsoleUserDao consoleUserDao;
 
 
-    public ConsoleUserEntity get(Integer id)
-    {
-        return consoleUserDao.get(id);
-    }
-
-    public void delete(ConsoleUserEntity consoleUserEntity)
-    {
-
-    }
-
-    public Integer save(ConsoleUserEntity consoleUserEntity)
-    {
-        return null;
-    }
 }

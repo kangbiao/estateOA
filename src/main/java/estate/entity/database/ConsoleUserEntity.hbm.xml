@@ -5,7 +5,7 @@
 <hibernate-mapping>
 
     <class name="estate.entity.database.ConsoleUserEntity" table="console_user" schema="" catalog="PropertySystem">
-        <id name="cuId">
+        <id name="id">
             <column name="cu_id" sql-type="int unsigned" not-null="true"/>
         </id>
         <property name="password">

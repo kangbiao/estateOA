@@ -37,7 +37,7 @@ public class WebFilterMain implements Filter
         LogUtil.E(path);
         if (!(passUrl.contains(path)||path.contains(".css")||path.contains(".js")||path.contains(".png")))
         {
-            if (session.getAttribute("phone")==null)
+            if (session.getAttribute("user")==null)
             {
                 response.sendRedirect(request.getContextPath() + "/view/login.html");
                 return;

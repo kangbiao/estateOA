@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by kangbiao on 15-9-16.
  *
@@ -23,18 +25,15 @@ public class ConsoleUserDaoImpl implements ConsoleUserDao
     }
 
 
-    public ConsoleUserEntity get(Integer id)
+    @Override
+    public ConsoleUserEntity getConsoleUserByPhone(String phone)
     {
-        return (ConsoleUserEntity)getSession().get(ConsoleUserEntity.class,id);
-    }
-
-    public void delete(ConsoleUserEntity consoleUserEntity)
-    {
-
-    }
-
-    public Integer save(ConsoleUserEntity consoleUserEntity)
-    {
-        return null;
+        Session session=getSession();
+        String hql="from ConsoleUserEntity t where t.phone=:phone";
+        List list=session.createQuery(hql).setString("phone",phone).list();
+        if (list.size()>0)
+            return (ConsoleUserEntity) list.get(0);
+        else
+            return null;
     }
 }

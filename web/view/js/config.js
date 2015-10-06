@@ -7,8 +7,10 @@
 var host="/oa/";
 var urlConfig={};
 
+urlConfig.home=host+"view";
+
 //用户登陆
-urlConfig.login=host+"";
+urlConfig.login=host+"auth/login";
 
 
 //公告部分的url

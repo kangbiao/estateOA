@@ -46,7 +46,7 @@ public class ComplainServiceImpl implements ComplainService
             complain.setStatus(Convert.complainStatus2String(complainEntity.getStatus()));
 
 //            complain.setImageList(pictureService.getPathByID(complainEntity.getImageIdList()));
-            complain.setConsoleUserEntity(consoleUserService.get(complainEntity.getAdminId()));
+//            complain.setConsoleUserEntity(consoleUserService.get(complainEntity.getAdminId()));
 
 
             complains.add(complain);

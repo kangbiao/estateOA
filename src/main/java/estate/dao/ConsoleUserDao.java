@@ -7,9 +7,7 @@ import estate.entity.database.ConsoleUserEntity;
  */
 public interface ConsoleUserDao
 {
-    ConsoleUserEntity get(Integer id);
+    ConsoleUserEntity getConsoleUserByPhone(String phone);
 
-    void delete(ConsoleUserEntity consoleUserEntity);
 
-    Integer save(ConsoleUserEntity consoleUserEntity);
 }
