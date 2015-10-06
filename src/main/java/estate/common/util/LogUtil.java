@@ -39,6 +39,22 @@ public class LogUtil
         logger.error(message);
     }
 
+    public static void E(Integer message) {
+        logger.error(message);
+    }
+
+    public static void E(int message) {
+        logger.error(message);
+    }
+
+    public static void E(Object message) {
+        logger.error(message);
+    }
+
+    public static void E(Double message) {
+        logger.error(message);
+    }
+
     public static void I(String message) {
         logger.info(message);
     }

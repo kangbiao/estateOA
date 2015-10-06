@@ -3,6 +3,7 @@ package estate.app;
 import estate.common.UserType;
 import estate.common.util.LogUtil;
 import estate.common.util.Message;
+import estate.common.util.VerifyCodeGenerate;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.FamilyEntity;
 import estate.entity.database.TenantEntity;
@@ -12,6 +13,7 @@ import estate.service.BaseService;
 import estate.service.PropertyService;
 import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +22,10 @@ import java.util.Objects;
 
 /**
  * Created by kangbiao on 15-9-21.
- * 个人信息查看和修改,绑定业主
+ * 登陆,登出,注册(获取验证码,核对验证码,绑定业主)
  */
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/uc")
 public class UserHandler
 {
     @Autowired
@@ -56,13 +58,24 @@ public class UserHandler
 
         basicJson.setStatus(true);
         request.getSession().setAttribute("phone", phone);
+        request.getSession().setAttribute("username", appUserEntity.getUserName());
+        request.getSession().setAttribute("role",appUserEntity.getUserRole());
         basicJson.setJsonString(request.getSession().getId());
-//        LogUtil.E(request.getSession().getId());
+        return basicJson;
+    }
+
+    @RequestMapping("/loginOut")
+    public BasicJson loginOut(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(true);
+        request.getSession().removeAttribute("phone");
+        request.getSession().removeAttribute("username");
+        request.getSession().removeAttribute("role");
         return basicJson;
     }
 
     //TODO 全部要改
-    @RequestMapping("/getVerifyCode")
+    @RequestMapping("/register/getVerifyCode")
     public BasicJson getVerifyCode(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -72,21 +85,45 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("手机号码已注册");
             return basicJson;
         }
-        if (!Message.send(phone,"感谢您注册VerPass您的验证码是101010").equals("succ"))
+        String verifyCode=VerifyCodeGenerate.create();
+        if (!Message.send(phone,"感谢您注册VerPass您的验证码是"+verifyCode).equals("succ"))
         {
             basicJson.getErrorMsg().setDescription("验证码发送失败");
             return basicJson;
         }
+        request.getSession().setAttribute("verifyCode", verifyCode);
+        request.getSession().setAttribute("phone", phone);
+        basicJson.setStatus(true);
+        basicJson.setJsonString(request.getSession().getId());
+        return basicJson;
+    }
+
+    @RequestMapping("/register/checkVerifyCode/{verifyCode}")
+    public BasicJson checkVerifyCode(HttpServletRequest request,@PathVariable String verifyCode)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        if (verifyCode==null|| Objects.equals(verifyCode, ""))
+        {
+            basicJson.getErrorMsg().setDescription("请输入验证码");
+            return basicJson;
+        }
+        if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
+        {
+            basicJson.getErrorMsg().setDescription("验证码输入错误!");
+            return basicJson;
+        }
+
+        request.getSession().removeAttribute("verifyCode");
         basicJson.setStatus(true);
         return basicJson;
     }
 
-    @RequestMapping("/regist")
+    @RequestMapping("/register/doRegister")
     public BasicJson regist(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
         AppUserEntity appUserEntity=new AppUserEntity();
-        String phone=request.getParameter("phone");
+        String phone= (String) request.getSession().getAttribute("phone");
         String userName=request.getParameter("userName");
         String password=request.getParameter("password");
 
@@ -121,35 +158,12 @@ public class UserHandler
         return basicJson;
     }
 
-
-    @RequestMapping("/checkVerifyCode")
-    public BasicJson checkVerifyCode(HttpServletRequest request)
-    {
-        BasicJson basicJson=new BasicJson(false);
-
-        String verifyCode=request.getParameter("verify");
-        if (verifyCode==null|| Objects.equals(verifyCode, ""))
-        {
-            basicJson.getErrorMsg().setDescription("请输入验证码");
-            return basicJson;
-        }
-        if (!verifyCode.equals("101010"))
-        {
-            basicJson.getErrorMsg().setDescription("验证码输入错误!");
-            return basicJson;
-        }
-
-        basicJson.setStatus(true);
-        return basicJson;
-    }
-
-
     /**
      * 绑定业主
      * @param request
      * @return
      */
-    @RequestMapping("/bind")
+    @RequestMapping("/register/bind")
     public BasicJson bindOwner(HttpServletRequest request)
     {
         LogUtil.E("---已进入请求---");

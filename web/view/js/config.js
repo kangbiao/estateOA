@@ -7,6 +7,10 @@
 var host="/oa/";
 var urlConfig={};
 
+//用户登陆
+urlConfig.login=host+"";
+
+
 //公告部分的url
 urlConfig.noticeDelete=host+"notice/delete";
 urlConfig.noticeList=host+"notice/list";

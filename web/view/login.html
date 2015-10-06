@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>DevOOPS</title>
+		<title>登陆</title>
 		<meta name="description" content="description">
 		<meta name="author" content="Evgeniya">
 		<meta name="keyword" content="keywords">
@@ -27,19 +27,55 @@
 					</div>
 					<div class="form-group">
 						<label class="control-label">用户名</label>
-						<input type="text" class="form-control" name="username" />
+						<input type="text" class="form-control" id="username" />
 					</div>
 					<div class="form-group">
 						<label class="control-label">密码</label>
-						<input type="password" class="form-control" name="password" />
+						<input type="password" class="form-control" id="password" />
 					</div>
 					<div class="text-center">
-						<a href="./index.html" class="btn btn-primary">登陆</a>
+						<a href="javascript:void(0)" id="loginSubmit" class="btn btn-primary">登陆</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="./plugins/jquery/jquery-2.1.0.min.js"></script>
+<script src="./js/config.js"></script>
+<script type="text/javascript">
+$("#loginSubmit").click(function(){
+    var username=$("#username").val();
+    var password=$("#password").val();
+    if(username=="")
+        alert("请输入用户名");
+    else if(password=="")
+        alert("请输入密码");
+    else {
+        $.ajax({
+            type: "post",
+            async: true,
+            url:,
+            data: {
+                username:username,
+                password:password
+            },
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+});
+
+</script>
 </body>
 </html>

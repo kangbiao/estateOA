@@ -3,10 +3,22 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!--<filter>-->
+        <!--<filter-name>springSecurityFilterChain</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>springSecurityFilterChain</filter-name>-->
+        <!--<url-pattern>/view/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
     <!-- 加载spring上下文配置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:config/applicationContext*.xml</param-value>
+        <param-value>
+            classpath:config/applicationContext*.xml
+            <!--classpath:config/spring-security.xml-->
+        </param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
@@ -23,6 +35,8 @@
     <listener>
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
     </listener>
+
+
 
     <!-- 配置spring拦截器 -->
     <servlet>
@@ -55,22 +69,23 @@
 
 
     <filter>
-        <filter-name>validate</filter-name>
-        <filter-class>estate.app.LoginHandler</filter-class>
+        <filter-name>appValidate</filter-name>
+        <filter-class>estate.filter.app.AppFilterMain</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>validate</filter-name>
+        <filter-name>appValidate</filter-name>
         <url-pattern>/api/*</url-pattern>
     </filter-mapping>
 
-    <!-- spring-security过滤器 -->
-    <!--<filter>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
-    <!--</filter>-->
-    <!--<filter-mapping>-->
-        <!--<filter-name>springSecurityFilterChain</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter>
+        <filter-name>webValidate</filter-name>
+        <filter-class>estate.filter.web.WebFilterMain</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>webValidate</filter-name>
+        <url-pattern>/view/*</url-pattern>
+    </filter-mapping>
+
+
 
 </web-app>
