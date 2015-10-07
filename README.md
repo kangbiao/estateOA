@@ -45,14 +45,14 @@ user_role:1:家庭成员;2:租户;3:业主
 
 ## 用户中心 (00)
 ### 登陆
->**客户端请求**
->*请求URL*:api/user/login
->*请求方法*:POST
+**客户端请求**
+>*请求URL*:api/uc/login
+>*请求方法*:GET
 >*请求参数*:
 >phone: 18144240528
 >password: md5(123456)
->
->**服务器返回数据**
+
+**服务器返回数据**
 ```json
 {
 	"status":false,
@@ -65,10 +65,11 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 退出登陆
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/uc/loginOut
->
->**服务器返回数据**
+>*请求方式*:GET
+
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -81,10 +82,11 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 密码找回
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/uc/findPassword/{userPhone}
 >*请求方式*:GET
->**服务器返回数据**
+
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -95,10 +97,11 @@ user_role:1:家庭成员;2:租户;3:业主
    "jsonString": null
 }
 ```
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/uc/findPassword/checkVerifyCode/{code}
 >*请求方式*:GET
->**服务器返回数据**
+
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -109,12 +112,11 @@ user_role:1:家庭成员;2:租户;3:业主
    "jsonString": null
 }
 ```
->**客户端请求**
->*请求URL*:api/uc/findPassword/reset
->*请求方式*:POST
->*参数*:
->newPassword:md5(123568)
->**服务器返回数据**
+**客户端请求**
+>*请求URL*:api/uc/findPassword/reset/{newPassword}
+>*请求方式*:GET
+
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -127,13 +129,11 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 注册
->**客户端请求**
->*请求URL*:api/uc/register/getVerifyCode
->*请求方式*:POST
-> 参数:
-> phone:18144240528
+**客户端请求**
+>*请求URL*:api/uc/register/getVerifyCode/{phone}
+>*请求方式*:GET
 
->**服务器返回数据**
+**服务器返回数据**
 ```json
 {
    "status": false,
@@ -145,10 +145,11 @@ user_role:1:家庭成员;2:租户;3:业主
 }
 ```
 
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/uc/register/checkVerifyCode/{verifyCode}
+>*请求方式*:GET
 
->**服务器返回数据**
+**服务器返回数据**
 ```json
 {
    "status": false,
@@ -160,14 +161,14 @@ user_role:1:家庭成员;2:租户;3:业主
 }
 ```
 
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/uc/register/doRegister
->*请求方式*:POST
+>*请求方式*:GET
 > 参数:
 > nickname:kangbiao
 > password:md5(123456)
 
->**服务器返回数据**
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -178,7 +179,7 @@ user_role:1:家庭成员;2:租户;3:业主
    "jsonString": null
 }
 ```
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/uc/register/bind
 >*请求方式*:POST
 > 参数:
@@ -187,7 +188,7 @@ user_role:1:家庭成员;2:租户;3:业主
 > buildingID:2
 > propertyID:2
 
->**服务器返回数据**
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -200,14 +201,14 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ## 推送(02)
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/push
->*请求方式*:POST
+>*请求方式*:GET
 >*参数*:
 >type:
 >info:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -221,12 +222,12 @@ user_role:1:家庭成员;2:租户;3:业主
 
 ## 投诉(03)
 ### 增加投诉
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/complain/add
 >*请求方式*:POST
 >*参数*:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -239,13 +240,13 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 投诉评价
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/complain/remark
 >*请求方式*:POST
 >*参数*:
 >complainID:3
->.....
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -259,12 +260,12 @@ user_role:1:家庭成员;2:租户;3:业主
 
 ## 报修(04)
 ### 增加报修
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/repair/add
 >*请求方式*:POST
 >*参数*:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -277,13 +278,13 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 评价报修
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/repair/remark/
 >*请求方式*:POST
 >*参数*:
 >repairID:1
->....
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -297,12 +298,12 @@ user_role:1:家庭成员;2:租户;3:业主
 
 ## 费用相关(05)
 ### 物业费查询
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/fee
 >*请求方式*:POST
 >*参数*:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -315,12 +316,12 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 物业费缴纳
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/fee
 >*请求方式*:POST
 >*参数*:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -333,12 +334,12 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ## 门禁权限(06)
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/authority/query
 >*请求方式*:GET
 >*参数*:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -353,16 +354,68 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ## 物业查询(07)
+### 获取所有园区
+**客户端请求**
+>*请求URL*:api/query/getAllVillage
+>*请求方式*:GET
 
+**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": [{"id":1,"text":"园区一"},{"id":2,"text":"园区二"}]
+}
+```
+
+### 根据园区id获取所有的楼栋
+**客户端请求**
+>*请求URL*:api/query/getBuilding/{villageID}
+>*请求方式*:GET
+
+**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": [{"id":1,"text":"楼栋一"},{"id":2,"text":"楼栋二"}]
+}
+```
+
+### 根据园区id和楼栋id获取所有的物业
+**客户端请求**
+>*请求URL*:api/query/getProperty
+>*请求方式*:GET
+>*参数*:
+>villageID:2
+>buildingID:3
+
+**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": [{"id":1,"text":"物业一"},{"id":2,"text":"二"}]
+}
+```
 
 
 ## 信息补全(08)
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/complain/add
 >*请求方式*:POST
 >*参数*:
->
->**服务器返回数据**
+
+**服务器返回数据**
 ``` json
 {
    "status": true,
@@ -377,11 +430,11 @@ user_role:1:家庭成员;2:租户;3:业主
 
 ## 公告获取 (01)
 ### 首页公告
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/notice/getSome/{number}
 >*请求方式*:GET
->
->**服务器返回数据**
+
+**服务器返回数据**
 ```json
 {
    "status": true,
@@ -415,11 +468,11 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ### 查看公告详情
->**客户端请求**
+**客户端请求**
 >*请求URL*:api/notice/{noticeID}
 >*请求方式*:GET
->
->**服务器返回**
+
+**服务器返回**
 ```json
 {
    "status": true,

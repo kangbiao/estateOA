@@ -35,11 +35,18 @@ public interface PropertyService
     Object getAllVillage ();
 
     /**
-     * 通过园区的id获取该园区下所有的楼栋信息,已select2的数组返回
+     * 通过园区的id获取该园区下所有的楼栋信息,以select2的数组返回
      * @param id
      * @return
      */
     Object getBuildingsByValliageId(Integer id);
+
+    /**
+     * 通过楼栋id获取该楼栋下面的所有物业,以select2的数组返回
+     * @param buildingID
+     * @return
+     */
+    Object getPropertyByBuildingId(Integer buildingID);
 
     /**
      * 根据APP用户的电话号码返回该app用户名下所有的物业

@@ -208,6 +208,7 @@
       <column name="property_square" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3"/>
       <column name="owner_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="Me+8muS4quS6uuaJgOacie+8mzI654mp5Lia5omA5pyJ"/>
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Zut5Yy6"/>
+      <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS7oh6rkvY8g77yP5Ye656efCjIu5bey5YWl5L2P77yP5pyq5YWl5L2PCjMu5bey5pS25oi/77yP5pyq5pS25oi/"/>
       <primary-key name="PRIMARY" columns="property_id"/>
       <exported-key name="FK_7oq20rni7t96houjm1d7flnox" table="property_owner_info" schema="" catalog="PropertySystem" columns="property_id"/>

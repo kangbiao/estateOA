@@ -30,6 +30,9 @@
         <property name="villageId">
             <column name="village_id" sql-type="int unsigned"/>
         </property>
+        <property name="buildingId">
+            <column name="building_id" sql-type="int unsigned"/>
+        </property>
         <property name="status">
             <column name="status" sql-type="tinyint"/>
         </property>

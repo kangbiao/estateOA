@@ -109,6 +109,20 @@ public class PropertyServiceImpl implements PropertyService
     }
 
     @Override
+    public Object getPropertyByBuildingId(Integer buildingID)
+    {
+        ArrayList<Select2> entities=new ArrayList<>();
+        ArrayList<PropertyEntity> list=propertyDao.getPropertyByBuildingID(buildingID);
+        for (PropertyEntity propertyEntity:list)
+        {
+            Select2 select2=new Select2(String.valueOf(propertyEntity.getId()),propertyEntity.getLocation());
+            entities.add(select2);
+        }
+
+        return entities;
+    }
+
+    @Override
     public ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception
     {
         AppUserEntity appUserEntity=new AppUserEntity();

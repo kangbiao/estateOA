@@ -15,6 +15,7 @@ public class PropertyEntity
     private BigDecimal propertySquare;
     private Byte ownerType;
     private Integer villageId;
+    private Integer buildingId;
     private Byte status;
 
 
@@ -106,5 +107,15 @@ public class PropertyEntity
     public void setId(Integer id)
     {
         this.id = id;
+    }
+
+    public Integer getBuildingId()
+    {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId)
+    {
+        this.buildingId = buildingId;
     }
 }

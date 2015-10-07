@@ -71,6 +71,15 @@ public class PropertyDaoImpl implements PropertyDao
     }
 
     @Override
+    public ArrayList<PropertyEntity> getPropertyByBuildingID(Integer id)
+    {
+        Session session=getSession();
+        String hql="from PropertyEntity t where t.buildingId=:id";
+        List list=session.createQuery(hql).setInteger("id", id).list();
+        return (ArrayList<PropertyEntity>) list;
+    }
+
+    @Override
     public ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone, int role)
     {
 

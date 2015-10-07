@@ -15,6 +15,7 @@ import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ public class UserHandler
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public BasicJson login(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -64,7 +65,7 @@ public class UserHandler
         return basicJson;
     }
 
-    @RequestMapping("/loginOut")
+    @RequestMapping(value = "/loginOut",method = RequestMethod.GET)
     public BasicJson loginOut(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(true);
@@ -75,7 +76,7 @@ public class UserHandler
     }
 
     //TODO 全部要改
-    @RequestMapping("/register/getVerifyCode")
+    @RequestMapping(value = "/register/getVerifyCode",method = RequestMethod.GET)
     public BasicJson getVerifyCode(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -98,7 +99,7 @@ public class UserHandler
         return basicJson;
     }
 
-    @RequestMapping("/register/checkVerifyCode/{verifyCode}")
+    @RequestMapping(value = "/register/checkVerifyCode/{verifyCode}",method = RequestMethod.GET)
     public BasicJson checkVerifyCode(HttpServletRequest request,@PathVariable String verifyCode)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -118,7 +119,7 @@ public class UserHandler
         return basicJson;
     }
 
-    @RequestMapping("/register/doRegister")
+    @RequestMapping(value = "/register/doRegister",method = RequestMethod.GET)
     public BasicJson regist(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -130,12 +131,12 @@ public class UserHandler
         Object o=userService.getUserInfoBYPhone(phone, UserType.OWNER);
         if (o==null)
         {
-            basicJson.getErrorMsg().setCode("0000000");
+            basicJson.getErrorMsg().setCode("100001");
         }
         else
         {
 //            appUserEntity.setUserRole(UserType.OWNER);
-            basicJson.getErrorMsg().setCode("0000001");
+            basicJson.getErrorMsg().setCode("100000");
         }
 
         appUserEntity.setPhone(phone);
@@ -163,7 +164,7 @@ public class UserHandler
      * @param request
      * @return
      */
-    @RequestMapping("/register/bind")
+    @RequestMapping(value = "/register/bind",method = RequestMethod.POST)
     public BasicJson bindOwner(HttpServletRequest request)
     {
         LogUtil.E("---已进入请求---");

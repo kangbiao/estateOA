@@ -29,6 +29,12 @@ public interface PropertyDao
 
     TableData getList(TableFilter tableFilter);
 
+    /**
+     * 根据楼栋的id获取物业
+     * @param id
+     * @return
+     */
+    ArrayList<PropertyEntity> getPropertyByBuildingID(Integer id);
 
     /**
      * 根据用户的电话和类型获取绑定的所有物业
