@@ -13,7 +13,6 @@ public class VerifyCodeGenerate
     public static String create()
     {
         Random random=new Random();
-        LogUtil.E(random.nextInt(899999)+100000);
         return String.valueOf(random.nextInt(899999)+100000);
     }
 

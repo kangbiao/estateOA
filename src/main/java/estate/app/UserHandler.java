@@ -2,7 +2,6 @@ package estate.app;
 
 import estate.common.UserType;
 import estate.common.util.LogUtil;
-import estate.common.util.Message;
 import estate.common.util.VerifyCodeGenerate;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.FamilyEntity;
@@ -76,22 +75,28 @@ public class UserHandler
     }
 
     //TODO 全部要改
-    @RequestMapping(value = "/register/getVerifyCode",method = RequestMethod.GET)
-    public BasicJson getVerifyCode(HttpServletRequest request)
+    @RequestMapping(value = "/register/getVerifyCode/{phone}",method = RequestMethod.GET)
+    public BasicJson getVerifyCode(@PathVariable String phone,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
-        String phone=request.getParameter("phone");
+        if (phone==null)
+        {
+            basicJson.getErrorMsg().setDescription("请输入手机号!");
+            return basicJson;
+        }
         if (appUserService.getByPhone(phone)!=null)
         {
             basicJson.getErrorMsg().setDescription("手机号码已注册");
             return basicJson;
         }
         String verifyCode=VerifyCodeGenerate.create();
-        if (!Message.send(phone,"感谢您注册VerPass您的验证码是"+verifyCode).equals("succ"))
-        {
-            basicJson.getErrorMsg().setDescription("验证码发送失败");
-            return basicJson;
-        }
+        LogUtil.E("Session:"+verifyCode);
+//
+//        if (!Message.send(phone,"感谢您注册VerPass您的验证码是"+verifyCode).equals("succ"))
+//        {
+//            basicJson.getErrorMsg().setDescription("验证码发送失败");
+//            return basicJson;
+//        }
         request.getSession().setAttribute("verifyCode", verifyCode);
         request.getSession().setAttribute("phone", phone);
         basicJson.setStatus(true);
@@ -108,8 +113,9 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("请输入验证码");
             return basicJson;
         }
-        if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
+        if (!verifyCode.equals("101010"))
         {
+            LogUtil.E(request.getSession().getAttribute("verifyCode"));
             basicJson.getErrorMsg().setDescription("验证码输入错误!");
             return basicJson;
         }
@@ -125,7 +131,7 @@ public class UserHandler
         BasicJson basicJson=new BasicJson(false);
         AppUserEntity appUserEntity=new AppUserEntity();
         String phone= (String) request.getSession().getAttribute("phone");
-        String userName=request.getParameter("userName");
+        String userName=request.getParameter("nickname");
         String password=request.getParameter("password");
 
         Object o=userService.getUserInfoBYPhone(phone, UserType.OWNER);

@@ -87,6 +87,7 @@ public class QueryHandler
         {
             villageID = Integer.valueOf(request.getParameter("villageID"));
             buildingID = Integer.valueOf(request.getParameter("buildingID"));
+            LogUtil.E(buildingID);
         }
         catch (Exception e)
         {

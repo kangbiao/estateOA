@@ -30,11 +30,10 @@ public class AppFilterMain implements Filter
 
         HttpSession session = reqeust.getSession();
         String phone=(String) session.getAttribute("phone");
-        LogUtil.E("phone:" + phone);
-
 
         String path = ((HttpServletRequest) req).getServletPath();
-        if (!"/api/uc/login".equals(path))
+        LogUtil.E("phone:" + phone + "    path:" +path);
+        if (!("/api/uc/login".equals(path)||path.contains("/uc/register/")))
         {
             if (phone == null || phone.equals(""))
             {
