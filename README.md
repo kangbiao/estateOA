@@ -1,37 +1,30 @@
 # 接口设计文档
 ---------------------
+
+状态码对照表:
+app用户:
+status:-1:禁用;1:正常
+user_role:1:家庭成员;2:租户;3:业主
+
+
+
+
 > 该文档为描述物业管理系统服务器端与APP端的数据交互。
 > 文档里面的数据为举例数据。        —— [批注](mailto:kangbiao@kangbiao.org)
 
+重点:费用相关和门禁
+
 [toc]
 
-代码定义:
-不在下述标准代码内则以数据异常显示
-
-证件类型:1:身份证;2军人证;
-园区类型:1:商户;2:住宅;3:车位
-园区状态:-1:出租;1:自用;
-
-门禁状态:0:禁用;1可用
-app用户状态:1:正常;-1:禁用;
-
-app用户角色:1:家庭成员;2:租户;3:业主
-
-报修状态:0:需要设置维修人员;1:已设置维修人员;2:维修完成
-
->***编码规范***<br/>
-
-> 所有的保存操作默认都要返回保存后的主键
-> 所有的保存操作如果提供了主键则执行更新操作
-
-
+>***编码规范***
 >*错误代码*:
->web端错误代码规范:采用7位数字作为错误代码
->最高两位为10,四五位为模块代码,二三位为错误详情,最后一位作为扩展<br/>
->app端错误代码规范:采用7位数字作为错误代码
->最高两位为11,四五位为模块代码,二三位为错误详情,最后一位作为扩展
->例:1000010:web端00模块的01方法发生错误.
->
+>web端错误代码规范:采用6位数字作为错误代码
+>最高位为0,四五位为模块代码,二三位为错误详情,最后一位作为扩展
+
+>app端错误代码规范:采用6位数字作为错误代码
+>最高两位为1,四五位为模块代码,二三位为错误详情,最后一位作为扩展
+>例:000030:web端00模块的03方法发生错误.
+
 >*数据格式*:
 >数据格式基于json
 >基本格式如下:
@@ -50,13 +43,13 @@ app用户角色:1:家庭成员;2:租户;3:业主
 **app端接口**
 --------------
 
-##用户中心 (00)
-###登陆
->**客户端请求**<br/>
->*请求URL*:api/user/login<br/>
->*请求方法*:POST<br/>
->*请求参数*:<br/>
->phone: 18144240528<br/>
+## 用户中心 (00)
+### 登陆
+>**客户端请求**
+>*请求URL*:api/user/login
+>*请求方法*:POST
+>*请求参数*:
+>phone: 18144240528
 >password: md5(123456)
 >
 >**服务器返回数据**
@@ -70,61 +63,322 @@ app用户角色:1:家庭成员;2:租户;3:业主
 	}
 }
 ```
-错误代码和错误描述对照表
-<table>
-<tr><td>序号</td><td>代码</td><td>描述</td></tr>
-<tr><td>1</td><td>1000010</td><td>手机号码不合法 </td></tr>
-<tr><td>2</td><td>1000020</td><td>用户不存在</td></tr>
-<tr><td>3</td><td>1000030</td><td>密码错误</td></tr>
-</table>
-###密码找回
->**客户端请求**<br/>
->*请求URL*:api/uc/findPassword/{userPhone}<br/>
->*请求方式*:GET<br/>
->**服务器返回数据**
-```json
-{
-   "status": true,
-   "errorMsg": {
-       "code": null,
-       "description": null
-   },
-   "jsonString": null 
-}
-```
->**客户端请求**<br/>
->*请求URL*:api/uc/checkVerifyCode/{code}<br/>
->*请求方式*:GET<br/>
->**服务器返回数据**
-```json
-{
-   "status": true,
-   "errorMsg": {
-       "code": null,
-       "description": null
-   },
-   "jsonString": null 
-}
-```
->**客户端请求**<br/>
->*请求URL*:api/uc/resetPassword/{password}<br/>
->*请求方式*:GET<br/>
->**服务器返回数据**
-```json
-{
-   "status": true,
-   "errorMsg": {
-       "code": null,
-       "description": null
-   },
-   "jsonString": null 
-}
-```
-##公告获取 (01)
 
-###首页公告
->**客户端请求**<br/>
->*请求URL*:api/notice/getSome/{number}<br/>
+### 退出登陆
+>**客户端请求**
+>*请求URL*:api/uc/loginOut
+>
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+### 密码找回
+>**客户端请求**
+>*请求URL*:api/uc/findPassword/{userPhone}
+>*请求方式*:GET
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+>**客户端请求**
+>*请求URL*:api/uc/findPassword/checkVerifyCode/{code}
+>*请求方式*:GET
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+>**客户端请求**
+>*请求URL*:api/uc/findPassword/reset
+>*请求方式*:POST
+>*参数*:
+>newPassword:md5(123568)
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+### 注册
+>**客户端请求**
+>*请求URL*:api/uc/register/getVerifyCode
+>*请求方式*:POST
+> 参数:
+> phone:18144240528
+
+>**服务器返回数据**
+```json
+{
+   "status": false,
+   "errorMsg": {
+       "code": "100200/100210",
+       "description": "电话号码已经注册/请输入正确的手机号"
+   },
+   "jsonString": null
+}
+```
+
+>**客户端请求**
+>*请求URL*:api/uc/register/checkVerifyCode/{verifyCode}
+
+>**服务器返回数据**
+```json
+{
+   "status": false,
+   "errorMsg": {
+       "code": "100220",
+       "description": "验证码错误"
+   },
+   "jsonString": null
+}
+```
+
+>**客户端请求**
+>*请求URL*:api/uc/register/doRegister
+>*请求方式*:POST
+> 参数:
+> nickname:kangbiao
+> password:md5(123456)
+
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": "100000(已经是业主)/100001(没有任何绑定)",
+       "description": "如果已经是业主的话,后端会自动绑定所有物业,如果不是业主且没有任何绑定,则需要进入绑定物业界面,至于用户想要绑定其他物业,则可以在进入app后再绑定"
+   },
+   "jsonString": null
+}
+```
+>**客户端请求**
+>*请求URL*:api/uc/register/bind
+>*请求方式*:POST
+> 参数:
+> role:USER_ROLE
+> villageID:1
+> buildingID:2
+> propertyID:2
+
+>**服务器返回数据**
+```json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+## 推送(02)
+>**客户端请求**
+>*请求URL*:api/push
+>*请求方式*:POST
+>*参数*:
+>type:
+>info:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+## 投诉(03)
+### 增加投诉
+>**客户端请求**
+>*请求URL*:api/complain/add
+>*请求方式*:POST
+>*参数*:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+### 投诉评价
+>**客户端请求**
+>*请求URL*:api/complain/remark
+>*请求方式*:POST
+>*参数*:
+>complainID:3
+>.....
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+## 报修(04)
+### 增加报修
+>**客户端请求**
+>*请求URL*:api/repair/add
+>*请求方式*:POST
+>*参数*:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+### 评价报修
+>**客户端请求**
+>*请求URL*:api/repair/remark/
+>*请求方式*:POST
+>*参数*:
+>repairID:1
+>....
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+## 费用相关(05)
+### 物业费查询
+>**客户端请求**
+>*请求URL*:api/fee
+>*请求方式*:POST
+>*参数*:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+### 物业费缴纳
+>**客户端请求**
+>*请求URL*:api/fee
+>*请求方式*:POST
+>*参数*:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+## 门禁权限(06)
+>**客户端请求**
+>*请求URL*:api/authority/query
+>*请求方式*:GET
+>*参数*:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": {
+   	"verify":"jfhdsfiysfjdskfhaifkja"
+   }
+}
+```
+
+## 物业查询(07)
+
+
+
+## 信息补全(08)
+>**客户端请求**
+>*请求URL*:api/complain/add
+>*请求方式*:POST
+>*参数*:
+>
+>**服务器返回数据**
+``` json
+{
+   "status": true,
+   "errorMsg": {
+       "code": null,
+       "description": null
+   },
+   "jsonString": null
+}
+```
+
+
+## 公告获取 (01)
+### 首页公告
+>**客户端请求**
+>*请求URL*:api/notice/getSome/{number}
 >*请求方式*:GET
 >
 >**服务器返回数据**
@@ -160,9 +414,9 @@ app用户角色:1:家庭成员;2:租户;3:业主
 }
 ```
 
-###查看公告详情
->**客户端请求**<br/>
->*请求URL*:api/notice/{noticeID}<br/>
+### 查看公告详情
+>**客户端请求**
+>*请求URL*:api/notice/{noticeID}
 >*请求方式*:GET
 >
 >**服务器返回**
@@ -177,32 +431,20 @@ app用户角色:1:家庭成员;2:租户;3:业主
            "niticeId": 3,
            "title": "物业通知",
            "description": "描述",
-           "detail": "detaildetaildetaildetaildetaildetail",
+           "detail": "URL(api/notice/getContent/{noticeID}),后端渲染,用webview显示",
            "createTime": 2015-5-8,
            "expireTime": 8,
-           "picPath": "120.26.67.75/file/pic/14515121512-sdas.png",
            "creater": null
      }
-       
 }
 ```
 
+
+
 **web端接口**
 ------------------
-##一. 公告模块 (01)
-错误代码和错误描述对照表
-<table>
-<tr><td>序号</td><td>代码</td><td>描述</td></tr>
-<tr><td>1</td><td>100100</td><td>用户参数错误</td></tr>
-<tr><td>3</td><td>100101</td><td>文件大小超过限制</td></tr>
-<tr><td>4</td><td>100102</td><td>图片写入文件失败</td></tr>
-<tr><td>5</td><td>100103</td><td>图片写入数据库失败</td></tr>
-<tr><td>6</td><td>100104</td><td>返回数据失败</td></tr>
-<tr><td>7</td><td>100105</td><td>程序错误</td></tr>
-<tr><td>8</td><td>100106</td><td>删除公告失败</td></tr>
-<tr><td>9</td><td>100107</td><td></td></tr>
-</table>
-###1.增加公告
+## 公告模块 (01)
+### 增加公告
 路径:notice/add   方法:POST
 >客户端请求参数
 >title: "公告标题"
@@ -213,12 +455,12 @@ app用户角色:1:家庭成员;2:租户;3:业主
 >
 >服务器返回数据
 >```json
->{ 
+>{
 >"status": true,
 > "errorMsg": null,
 > "jsonString":"上传成功"
 > }
-> 
+>
 >{
 > "status": false,
 > "errorMsg": {"code": "100102", "description": "上传图片失败"},
@@ -232,12 +474,12 @@ app用户角色:1:家庭成员;2:租户;3:业主
 >
 >服务器返回数据
 >```json
->{ 
+>{
 >"status": true,
 > "errorMsg": null,
 > "jsonString":"删除成功"
 > }
-> 
+>
 >{
 > "status": false,
 > "errorMsg": {"code": "100102", "description": "删除失败"},
@@ -251,12 +493,12 @@ app用户角色:1:家庭成员;2:租户;3:业主
 >
 >服务器返回数据
 >```json
->{ 
+>{
 >"status": true,
 > "errorMsg": null,
 > "jsonString":"删除成功"
 > }
-> 
+>
 >{
 > "status": false,
 > "errorMsg": {"code": "100102", "description": "删除失败"},
