@@ -21,6 +21,7 @@
                 <form id="addPropertyForm" method="post"
                       class="form-horizontal">
                     <fieldset>
+                        <legend>物业信息</legend>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">选择园区</label>
                             <div class="col-sm-3">
@@ -60,7 +61,7 @@
                             <label class="col-sm-2 control-label">面积</label>
                             <div class="col-sm-8">
                                 <input type="text" id="propertySquare" name="propertySquare"
-                                       class="input_date form-control" placeholder="单位/平方米">
+                                       class="form-control" placeholder="单位/平方米">
                             </div>
                         </div>
                         <div class="form-group">
@@ -72,26 +73,109 @@
                                 </select>
                             </div>
                         </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button type="submit" class="btn btn-primary">保存物业</button>
+                            <button type="button" id="addOwnerBtn" class="btn btn-primary">添加业主</button>
+                        </div>
+                    </div>
+                </form>
+                <form id="ownerAddForm" method="post" action="" class="form-horizontal">
+                    <fieldset>
+                        <legend>添加业主</legend>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">所属业主</label>
-                            <div class="col-sm-8">
-                                <input type="hidden" id="ownerPhone" name="ownerPhone"/>
+                            <div class="col-sm-6">
+                                <input type="hidden" class="form-control" id="propertyID" name="propertyID" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" name="sex">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">电话号码</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">证件类型</label>
+                            <div class="col-sm-6">
+                                <select name="identityType" class="form-control" id="identityType">
+                                    <option value="1">身份证</option>
+                                    <option value="2">军人证</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">证件号码</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" name="identityCode" />
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-2 control-label">入住时间</label>
+                            <div class="col-sm-6">
+                                <input type="text" id="authTime" name="authTime"
+                                       class="form-control input_date" placeholder="">
                             </div>
                         </div>
                     </fieldset>
                     <div class="form-group">
                         <div class="col-sm-9 col-sm-offset-2">
-                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="submit" class="btn btn-primary">确定添加</button>
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
+    /**
+     * 初始化园区选择
+     */
+    function initVillageSelect()
+    {
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.villageList,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    var options="";
+                    for(var i in result.jsonString)
+                    {
+                        console.log(result.jsonString[i]);
+                        options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                    }
+                    $("#villageList").append(options);
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
 
+    //获取楼栋列表
     $("#villageList").change(function(){
         var villageId=$("#villageList option:selected").val();
         $.ajax({
@@ -127,7 +211,7 @@
 
     });
 
-    //验证表单
+    //验证物业信息的合法性
     function propertyAddValidator() {
         $('#addPropertyForm').bootstrapValidator({
             message: '存在非法输入',
@@ -140,6 +224,20 @@
                         regexp: {
                             regexp: /^[0-9A-Za-z]+$/,
                             message: '物业编号只能为数字和字母的组合'
+                        }
+                    }
+                },
+                location:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                buildingId:{
+                    validators: {
+                        notEmpty: {
+                            message: '请选择楼栋'
                         }
                     }
                 },
@@ -157,14 +255,69 @@
             }
         }).on("success.form.bv",function(e){
             e.preventDefault();
-            submitForm();
+            submitPropertyForm();
         });
     }
 
-    //验证通过后提交表单
-    function submitForm()
+    //验证业主信息的合法性
+    function ownerAddValidator(){
+        $('#ownerAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '用户名在2到10个字符之间'
+                        }
+                    }
+                },
+                address:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                identityCode:{
+                    validators: {
+                        notEmpty: {
+                            message: '证件号码不能为空'
+                        },
+                        regexp: {
+                            regexp:/^[A-Za-z0-9]+$/,
+                            message: '证件号码只能为数字或者字母的组合'
+                        }
+                    }
+                },
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitOwnerForm();
+        });
+    }
+
+    //验证通过后提交物业信息表单
+    function submitPropertyForm()
     {
         var data=$("#addPropertyForm").serializeArray();
+        console.log(data);
         $.ajax({
             type: "post",
             async: true,
@@ -174,6 +327,8 @@
             success: function (result) {
                 if (result.status) {
                     alert("添加成功");
+                    $("#addOwnerBtn").show();
+                    $("#propertyID").val(result.jsonString);
                 }
                 else
                 {
@@ -181,53 +336,39 @@
                 }
             },
             error: function () {
+                $("#addOwnerBtn").show();
+                $("#propertyID").val(result.jsonString);
                 alert("服务器连接失败,请重试!");
             }
         });
 //        console.log(data);
     }
 
-    //select2检索业主电话
-    function selectOwner(){
-        $('#ownerPhone').select2({
-            minimumInputLength:2,
-            placeholder: "输入业主电话检索",
-            ajax: {
-                url: urlConfig.search+"owner",
-                dataType: 'json',
-                quietMillis: 250,
-                data: function (term, page) {
-                    return {
-                        q: term
-                    };
-                },
-                results: function (data, page) {
-                    return { results: data.jsonString };
-                },
-                cache: true
-            }
-        });
-    }
-
-    /**
-     * 初始化园区选择
-     */
-    function initVillageSelect()
+    //验证通过后提高业主信息表单
+    function submitOwnerForm()
     {
+        var data=$("#ownerAddForm").serializeArray();
+        console.log(data);
         $.ajax({
             type: "post",
             async: true,
-            url: urlConfig.villageList,
+            url: urlConfig.addOwner,
+            data: data,
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    var options="";
-                    for(var i in result.jsonString)
+                    var con=confirm("添加成功,是否继续添加?");
+                    if(con)
                     {
-                        console.log(result.jsonString[i]);
-                        options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                        $("#ownerAddForm")[0].reset();
                     }
-                    $("#villageList").append(options);
+                    else
+                    {
+                        $("#addPropertyForm")[0].reset();
+                        $("#ownerAddForm")[0].reset();
+                        $("#addOwnerBtn").hide();
+                        $("#ownerAddForm").hide();
+                    }
                 }
                 else
                 {
@@ -240,10 +381,38 @@
         });
     }
 
+    $("#addOwnerBtn").click(function(){
+        if($("#ownerAddForm").css('display')=='none')
+        {
+            $("#ownerAddForm").slideDown("10000");
+            $("#addOwnerBtn").text("取消添加");
+        }
+        else
+        {
+            $("#ownerAddForm").slideUp("10000");
+            $("#addPropertyForm")[0].reset();
+            $("#ownerAddForm")[0].reset();
+            $("#addOwnerBtn").hide();
+        }
+//        $("#ownerAddForm").show();
+    });
 
     $(document).ready(function() {
+        $("#addOwnerBtn").hide();
+        $("#ownerAddForm").hide();
         initVillageSelect();
-        LoadSelect2Script(selectOwner);
         LoadBootstrapValidatorScript(propertyAddValidator);
+        LoadBootstrapValidatorScript(ownerAddValidator);
+        $('.input_date').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
     });
 </script>

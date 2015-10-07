@@ -4,6 +4,9 @@ import estate.entity.database.AppUserEntity;
 import estate.entity.display.Owner;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.UserTypeErrorException;
+
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-4.
@@ -58,5 +61,12 @@ public interface UserService
      * @return
      */
     Object getPropertiesByPhone(String phone,int userType);
+
+    /**
+     * 通过物业id和用户类型返回该物业对应的用户信息
+     * @param id
+     * @return
+     */
+    ArrayList<Object> getUserInfoByProperityID(Integer id,int userType) throws UserTypeErrorException;
 
 }

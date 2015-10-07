@@ -13,10 +13,7 @@ import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -144,6 +141,18 @@ public class PropertyServiceImpl implements PropertyService
                 break;
         }
         return null;
+    }
+
+    @Override
+    public boolean checkOwnerPropertyExit(String phone, Integer id)
+    {
+        ArrayList<PropertyEntity> propertyEntities=propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
+        for (PropertyEntity propertyEntity:propertyEntities)
+        {
+            if (Objects.equals(propertyEntity.getId(), id))
+                return false;
+        }
+        return true;
     }
 
     //TODO 项目验收,待删除

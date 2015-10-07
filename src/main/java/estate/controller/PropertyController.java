@@ -97,24 +97,23 @@ public class PropertyController
     public BasicJson addProperty(PropertyEntity propertyEntity, HttpServletRequest request)
     {
         BasicJson basicJson = new BasicJson(false);
-
-        PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
-        propertyOwnerInfoEntity.setPropertyEntity(propertyEntity);
-        propertyOwnerInfoEntity.setOwnerPhone(request.getParameter("ownerPhone"));
-        propertyOwnerInfoEntity.setBuildingId(Integer.valueOf(request.getParameter("buildingId")));
-        propertyOwnerInfoEntity.setOpenDoorAllowed(Byte.valueOf("0"));
-        basicJson.setJsonString(propertyEntity);
+//        PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
+//        propertyOwnerInfoEntity.setPropertyEntity(propertyEntity);
+//        propertyOwnerInfoEntity.setBuildingId(Integer.valueOf(request.getParameter("buildingId")));
+//        propertyOwnerInfoEntity.setOpenDoorAllowed(Byte.valueOf("0"));
+//        basicJson.setJsonString(propertyEntity);
         try
         {
-            propertyService.save(propertyOwnerInfoEntity);
+            baseService.save(propertyEntity);
         }
         catch (Exception e)
         {
             basicJson.getErrorMsg().setCode("1023240");
-            basicJson.getErrorMsg().setDescription("添加信息失败:" + e.getMessage());
+            basicJson.getErrorMsg().setDescription("添加物业信息失败:" + e.getMessage());
             return basicJson;
         }
         basicJson.setStatus(true);
+        basicJson.setJsonString(propertyEntity.getId());
         return basicJson;
     }
 

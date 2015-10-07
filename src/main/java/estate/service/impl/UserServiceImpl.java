@@ -12,6 +12,7 @@ import estate.entity.display.Owner;
 import estate.entity.display.Tenant;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.UserTypeErrorException;
 import estate.service.FamilyService;
 import estate.service.PropertyService;
 import estate.service.UserService;
@@ -175,6 +176,23 @@ public class UserServiceImpl implements UserService
         return propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
     }
 
+    @Override
+    public ArrayList<Object> getUserInfoByProperityID(Integer id,int userType) throws UserTypeErrorException
+    {
+        switch (userType)
+        {
+            case UserType.OWNER:
+
+                break;
+            case UserType.FAMILY:
+                break;
+            case UserType.TENANT:
+                break;
+            default:
+                throw new UserTypeErrorException("用户类型错误");
+        }
+        return null;
+    }
 
 
     @Override

@@ -56,7 +56,16 @@ public interface PropertyService
     ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception;
 
 
+    /**
+     * 保证业主电话和物业id的组合为唯一
+     * @param phone
+     * @param id
+     * @return
+     */
+    boolean checkOwnerPropertyExit(String phone,Integer id);
+
     //TODO 项目验收,待删除
     ArrayList<Select2> getAllProperty();
+
 
 }
