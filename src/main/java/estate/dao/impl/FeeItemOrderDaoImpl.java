@@ -34,6 +34,10 @@ public class FeeItemOrderDaoImpl implements FeeItemOrderDao
         ArrayList arrayList=new ArrayList();
         String hql="from FeeItemOrderEntity a left join a.feeItemEntity b left join b.ruleEntity c where a.propertyId=:id";
         List list=session.createQuery(hql).setInteger("id",id).list();
+        if (list.size()<=0)
+        {
+            return null;
+        }
         for (Object aList:list)
         {
             Object[] objects=(Object[])aList;

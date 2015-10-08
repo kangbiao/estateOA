@@ -31,7 +31,7 @@ public class BaseDaoImpl implements BaseDao
     @Override
     public Integer save(Object object)
     {
-        getSession().save(object);
+        getSession().saveOrUpdate(object);
         Class c=object.getClass();
         Method[] methods=c.getMethods();
         for (Method method:methods)

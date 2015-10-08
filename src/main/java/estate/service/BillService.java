@@ -1,6 +1,7 @@
 package estate.service;
 
 import estate.entity.database.BillEntity;
+import estate.exception.PropertyNotBindFeeItemException;
 
 import java.util.ArrayList;
 
@@ -28,5 +29,5 @@ public interface BillService
      * 根据物业id生成这个物业的账单
      * @param id
      */
-    void generateBillByPropertyID(Integer id);
+    void generateBillByPropertyID(Integer id) throws PropertyNotBindFeeItemException;
 }

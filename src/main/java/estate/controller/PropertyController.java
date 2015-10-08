@@ -7,6 +7,7 @@ import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.EntityTypeErrorException;
+import estate.exception.PropertyNotBindFeeItemException;
 import estate.exception.UserTypeErrorException;
 import estate.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -300,6 +301,11 @@ public class PropertyController
         try
         {
             billService.generateBillByPropertyID(propertyID);
+        }
+        catch (PropertyNotBindFeeItemException p)
+        {
+            basicJson.getErrorMsg().setDescription(p.getMessage());
+            return basicJson;
         }
         catch (Exception e)
         {
