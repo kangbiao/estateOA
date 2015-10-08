@@ -12,6 +12,7 @@ public class PropertyOwnerInfoEntity
     private Byte openDoorAllowed;
     private PropertyEntity propertyEntity;
 
+
     public Integer getId()
     {
         return id;

@@ -1,10 +1,12 @@
 package estate.service;
 
+import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.display.Property;
 import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.EntityTypeErrorException;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -55,6 +57,12 @@ public interface PropertyService
      */
     ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception;
 
+    /**
+     * 通过物业编号获取物业信息
+     * @param code
+     * @return
+     */
+    PropertyEntity getByCode(String code) throws EntityTypeErrorException;
 
     /**
      * 保证业主电话和物业id的组合为唯一

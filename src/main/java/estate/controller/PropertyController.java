@@ -6,6 +6,8 @@ import estate.entity.database.*;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.EntityTypeErrorException;
+import estate.exception.UserTypeErrorException;
 import estate.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,11 +99,21 @@ public class PropertyController
     public BasicJson addProperty(PropertyEntity propertyEntity, HttpServletRequest request)
     {
         BasicJson basicJson = new BasicJson(false);
-//        PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
-//        propertyOwnerInfoEntity.setPropertyEntity(propertyEntity);
-//        propertyOwnerInfoEntity.setBuildingId(Integer.valueOf(request.getParameter("buildingId")));
-//        propertyOwnerInfoEntity.setOpenDoorAllowed(Byte.valueOf("0"));
-//        basicJson.setJsonString(propertyEntity);
+        try
+        {
+            if (propertyService.getByCode(propertyEntity.getCode())!=null)
+            {
+                basicJson.getErrorMsg().setDescription("该编号已存在!");
+                return basicJson;
+            }
+        }
+        catch (EntityTypeErrorException e)
+        {
+            LogUtil.E("内部参数错误:"+e.getMessage());
+            basicJson.getErrorMsg().setDescription("内部参数错误,请查看日志文件");
+            return basicJson;
+        }
+        propertyService.getAllProperty();
         try
         {
             baseService.save(propertyEntity);
@@ -210,15 +222,25 @@ public class PropertyController
                 basicJson.setJsonString(feeItemOrderService.getFeeItemsByPropertyID(propertyID));
                 break;
             case "owner":
-                PropertyOwnerInfoEntity propertyOwnerInfoEntity = (PropertyOwnerInfoEntity) propertyService
-                        .getByProperID(propertyID);
-                if (propertyOwnerInfoEntity == null)
+//                PropertyOwnerInfoEntity propertyOwnerInfoEntity = (PropertyOwnerInfoEntity) propertyService
+//                        .getByProperID(propertyID);
+//                if (propertyOwnerInfoEntity == null)
+//                {
+//                    basicJson.getErrorMsg().setDescription("该物业未绑定业主信息");
+//                    return basicJson;
+//                }
+//                basicJson.setJsonString(userService.getUserInfoBYPhone(propertyOwnerInfoEntity.getOwnerPhone(),
+//                        UserType.OWNER));
+                try
                 {
-                    basicJson.getErrorMsg().setDescription("该物业未绑定业主信息");
+                    basicJson.setJsonString(userService.getUserInfoByProperityID(propertyID, UserType.OWNER));
+                }
+                catch (UserTypeErrorException e)
+                {
+                    LogUtil.E(e.getMessage());
+                    basicJson.setJsonString("获取业主信息失败");
                     return basicJson;
                 }
-                basicJson.setJsonString(userService.getUserInfoBYPhone(propertyOwnerInfoEntity.getOwnerPhone(),
-                        UserType.OWNER));
                 break;
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");

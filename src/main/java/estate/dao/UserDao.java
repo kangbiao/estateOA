@@ -4,6 +4,8 @@ import estate.entity.database.AppUserEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
+import java.util.ArrayList;
+
 /**
  * Created by kangbiao on 15-9-4.
  * 用户访问接口
@@ -41,5 +43,12 @@ public interface UserDao
      * @param type
      */
     void deleteUserByPhone(String phone,int type);
+
+    /**
+     * 通过物业id获取该物业的所有业主
+     * @param id
+     * @return
+     */
+    ArrayList<Object> getOwnersByPropertyID(Integer id);
 
 }

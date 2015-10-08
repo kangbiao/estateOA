@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -207,5 +208,14 @@ public class UserDaoImpl implements UserDao
         else
         return;
         session.createQuery(hql).setString("phone",phone).executeUpdate();
+    }
+
+    @Override
+    public ArrayList<Object> getOwnersByPropertyID(Integer id)
+    {
+        Session session=getSession();
+        String hql="select o from PropertyOwnerInfoEntity t ,OwnerEntity o where t.propertyId=:id and t.ownerPhone=o.phone";
+        List list=session.createQuery(hql).setInteger("id",id).list();
+        return (ArrayList<Object>) list;
     }
 }

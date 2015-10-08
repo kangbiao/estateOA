@@ -1,5 +1,8 @@
 package estate.dao;
 
+import estate.common.enums.Entity;
+import estate.exception.EntityTypeErrorException;
+
 import java.io.Serializable;
 
 /**
@@ -30,6 +33,14 @@ public interface BaseDao
      */
     void delete(Object object);
 
+
+    /**
+     * 通过代码和对象名获取对象
+     * @param code
+     * @param entity
+     * @return
+     */
+    Object getByCode(String code,Entity entity) throws EntityTypeErrorException;
 
     /**
      * 根据表名计算总数

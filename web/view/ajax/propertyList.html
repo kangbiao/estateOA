@@ -134,12 +134,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">所属园区</label>
-                                        <div class="col-sm-8">
-                                            <input type="hidden" name="village" id="village"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">状态</label>
                                         <div class="col-sm-8">
                                             <select name="status" id="" class="form-control">
@@ -152,6 +146,65 @@
                                 <div class="form-group">
                                     <div class="col-sm-9 col-sm-offset-2">
                                         <button type="submit" class="btn btn-primary">提交</button>
+                                        <button type="button" id="addOwnerBtn" class="btn btn-primary">添加业主</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="ownerAddForm" method="post" action="" style="display: none" class="form-horizontal">
+                                <fieldset>
+                                    <legend>添加业主</legend>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <input type="hidden" class="form-control" id="propertyID" name="propertyID" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">姓名</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="name" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">性别</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="sex">
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">电话号码</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="phone" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">证件类型</label>
+                                        <div class="col-sm-8">
+                                            <select name="identityType" class="form-control" id="identityType">
+                                                <option value="1">身份证</option>
+                                                <option value="2">军人证</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">证件号码</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="identityCode" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="col-sm-2 control-label">入住时间</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="authTime" name="authTime"
+                                                   class="form-control input_date" placeholder="">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <div class="col-sm-9 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">确定添加</button>
                                     </div>
                                 </div>
                             </form>
@@ -167,19 +220,200 @@
 </div><!-- /.modal -->
 
 <script type="text/javascript">
-    var editTable;//全局的datatable变量
+    var editTable;
+
+    /**
+     * 编辑物业信息
+     */
     $('#propertyListTable tbody').on( 'click', 'button#editRow', function () {
         $("#editInfoModel").modal("show");
         var data = editTable.row($(this).parents('tr') ).data();
+        $.ajax({
+            type: "get",
+            async: false,
+            url: urlConfig.getOwnerInfoByPropertyID+data.id,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    var html='<li class="list-group-item">姓名: <span id="name">'+result.jsonString.name+'</span></li>'+
+                            '<li class="list-group-item">手机号码: <span id="phone">'+result.jsonString.phone+'</span></li>'+
+                            '<li class="list-group-item">证件号码: <span id="identityCode">'+result.jsonString.identityCode+'</span></li>'+
+                            '<li class="list-group-item">认证时间: <span id="authenticationTime">'+result.jsonString.authenticationTime+'</span></li>'+
+                            '<li class="list-group-item">紧急联系人: <span id="urgent">'+result.jsonString.urgentName+'</span></li>';
+                    $("#ownerInfo").html(html);
+                }
+                else
+                {
+                    $("#ownerInfo").html(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+
+
         $("input[name=code]").val(data.code);
         $("input[name=id]").val(data.id);
         $("input[name=location]").val(data.location);
         $("input[name=propertySquare]").val(data.propertySquare);
-//        console.log(data.villageId);
-//        $("#village").val(data.villageId);
+        console.log(data.villageId);
+        $("#village").val(data.villageId);
         console.log(data);
-
     });
+    function propertyModifyValidator() {
+        $('#editPropertyForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                location: {
+                    validators: {
+                        notEmpty: {
+                            message: '费用名不能为空'
+                        }
+                    }
+                }
+            }
+        })
+                .on("success.form.bv",function(e){
+                    e.preventDefault();
+                    submitForm();
+                });
+    }
+    function submitForm()
+    {
+        var fields = $("#editPropertyForm").serializeArray();
+        console.log(fields);
+        alert("修改成功!");
+//
+//        $.ajax({
+//            type: "post",
+//            async: false,
+//            url: urlConfig.addFee,
+//            data: fields,
+//            dataType: "json", //返回数据形式为json
+//            success: function (result) {
+//                if (result.status) {
+//                    alert("添加成功");
+//                }
+//                else
+//                {
+//                    alert(result.errorMsg.description);
+//                }
+//            },
+//            error: function () {
+//                alert("服务器连接失败,请重试!");
+//            }
+//        });
+    }
+    $("#addOwnerBtn").click(function(){
+        if($("#ownerAddForm").css('display')=='none')
+        {
+            $("#ownerAddForm").slideDown("10000");
+            $("#addOwnerBtn").text("取消添加");
+        }
+        else
+        {
+            $("#ownerAddForm").slideUp("10000");
+            $("#ownerAddForm")[0].reset();
+            $("#addOwnerBtn").text("添加业主");
+        }
+//        $("#ownerAddForm").show();
+    });
+    //验证业主信息的合法性
+    function ownerAddValidator(){
+        $('#ownerAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '用户名在2到10个字符之间'
+                        }
+                    }
+                },
+                address:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                identityCode:{
+                    validators: {
+                        notEmpty: {
+                            message: '证件号码不能为空'
+                        },
+                        regexp: {
+                            regexp:/^[A-Za-z0-9]+$/,
+                            message: '证件号码只能为数字或者字母的组合'
+                        }
+                    }
+                },
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitOwnerForm();
+        });
+    }
+    //验证通过后提高业主信息表单
+    function submitOwnerForm()
+    {
+        var data=$("#ownerAddForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addOwner,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    var con=confirm("添加成功,是否继续添加?");
+                    if(con)
+                    {
+                        $("#ownerAddForm")[0].reset();
+                    }
+                    else
+                    {
+                        $("#addPropertyForm")[0].reset();
+                        $("#ownerAddForm")[0].reset();
+                        $("#addOwnerBtn").hide();
+                        $("#ownerAddForm").hide();
+                    }
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
+
+
+    /**
+     * 查看物业详细信息
+     */
     $('#propertyListTable tbody').on( 'click', 'button#detailRow', function () {
         $("#moreInfoModel").modal("show");
         var data = editTable.row($(this).parents('tr') ).data();
@@ -238,33 +472,6 @@
     });
 
 
-    function selectVillage(){
-        $('#village').select2({
-            ajax: {
-                url: urlConfig.search+"village",
-                dataType: 'json',
-                quietMillis: 250,
-                data: function (term, page) {
-                    return {
-                        q: term
-                    };
-                },
-                results: function (data, page) {
-                    items=[];
-                    $.each(data.jsonString,function(i,value){
-                        item={};
-                        console.log(value);
-                        item.id=value.id;
-                        item.text=value.name;
-                        items.push(item);
-                    });
-
-                    return { results: items };
-                },
-                cache: true
-            }
-        });
-    }
     //初始化表格数据
     function initDataTable(){
         editTable=$('#propertyListTable').DataTable({
@@ -381,56 +588,20 @@
 
     }
 
-    function submitForm()
-    {
-        var fields = $("#editPropertyForm").serializeArray();
-        console.log(fields);
-        alert("修改成功!");
-//
-//        $.ajax({
-//            type: "post",
-//            async: false,
-//            url: urlConfig.addFee,
-//            data: fields,
-//            dataType: "json", //返回数据形式为json
-//            success: function (result) {
-//                if (result.status) {
-//                    alert("添加成功");
-//                }
-//                else
-//                {
-//                    alert(result.errorMsg.description);
-//                }
-//            },
-//            error: function () {
-//                alert("服务器连接失败,请重试!");
-//            }
-//        });
-    }
-
-
-    function propertyModifyValidator() {
-        $('#editPropertyForm').bootstrapValidator({
-            message: '存在非法输入',
-            fields: {
-                location: {
-                    validators: {
-                        notEmpty: {
-                            message: '费用名不能为空'
-                        }
-                    }
-                }
-            }
-        })
-                .on("success.form.bv",function(e){
-                    e.preventDefault();
-                    submitForm();
-                });
-    }
-
     $(document).ready(function() {
-        LoadSelect2Script(selectVillage);
         LoadDataTablesScripts(initDataTable);
         LoadBootstrapValidatorScript(propertyModifyValidator);
+        LoadBootstrapValidatorScript(ownerAddValidator);
+        $('.input_date').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
     });
 </script>

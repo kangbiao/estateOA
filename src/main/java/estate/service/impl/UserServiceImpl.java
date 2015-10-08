@@ -182,8 +182,7 @@ public class UserServiceImpl implements UserService
         switch (userType)
         {
             case UserType.OWNER:
-
-                break;
+                return userDao.getOwnersByPropertyID(id);
             case UserType.FAMILY:
                 break;
             case UserType.TENANT:

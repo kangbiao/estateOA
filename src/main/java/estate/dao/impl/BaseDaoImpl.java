@@ -1,6 +1,8 @@
 package estate.dao.impl;
 
+import estate.common.enums.Entity;
 import estate.dao.BaseDao;
+import estate.exception.EntityTypeErrorException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-20.
@@ -67,6 +70,30 @@ public class BaseDaoImpl implements BaseDao
     public void delete(Object object)
     {
 
+    }
+
+    @Override
+    public Object getByCode(String code, Entity entity) throws EntityTypeErrorException
+    {
+        Session session=getSession();
+        String hql="";
+        switch (entity)
+        {
+            case PROPERTY:
+                hql="from PropertyEntity t where t.code=:code";
+                break;
+            case BUILDING:
+                hql="from BuildingEntity t where t.buildingCode=:code";
+                break;
+            default:
+                throw new EntityTypeErrorException("该对象不存在!");
+        }
+
+        List list=session.createQuery(hql).setString("code",code).list();
+        if (list.size()>0)
+            return list.get(0);
+        else
+            return null;
     }
 
     @Override

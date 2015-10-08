@@ -1,6 +1,7 @@
 package estate.service.impl;
 
 import estate.common.UserType;
+import estate.common.enums.Entity;
 import estate.common.util.Convert;
 import estate.dao.*;
 import estate.entity.database.*;
@@ -9,6 +10,7 @@ import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.AppUserNotExitException;
+import estate.exception.EntityTypeErrorException;
 import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,6 +143,12 @@ public class PropertyServiceImpl implements PropertyService
                 break;
         }
         return null;
+    }
+
+    @Override
+    public PropertyEntity getByCode(String code) throws EntityTypeErrorException
+    {
+        return (PropertyEntity) baseDao.getByCode(code, Entity.PROPERTY);
     }
 
     @Override
