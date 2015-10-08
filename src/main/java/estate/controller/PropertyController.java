@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * Created by kangbiao on 15-9-23.
@@ -130,6 +131,54 @@ public class PropertyController
     }
 
     /**
+     * 修改物业信息
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/modify")
+    public BasicJson modifyProperty(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        PropertyEntity propertyEntity;
+        try
+        {
+            Integer id= Integer.valueOf(request.getParameter("id"));
+            propertyEntity= (PropertyEntity) baseService.get(id,PropertyEntity.class);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("未获取到正确的参数信息!\n"+e.getMessage());
+            return basicJson;
+        }
+        try
+        {
+            propertyEntity.setLocation(request.getParameter("location"));
+            propertyEntity.setPropertySquare(new BigDecimal(request.getParameter("propertySquare")).setScale(2,
+                    BigDecimal.ROUND_HALF_UP));
+            propertyEntity.setStatus(Byte.valueOf(request.getParameter("status")));
+            propertyEntity.setType(Byte.valueOf(request.getParameter("type")));
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("参数解析错误\n"+e.getMessage());
+            return basicJson;
+        }
+        try
+        {
+            baseService.save(propertyEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("修改出错\n"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        basicJson.setJsonString(propertyEntity);
+        return basicJson;
+    }
+
+    /**
      * 直接获取所有园区
      * @param request
      * @return
@@ -222,15 +271,6 @@ public class PropertyController
                 basicJson.setJsonString(feeItemOrderService.getFeeItemsByPropertyID(propertyID));
                 break;
             case "owner":
-//                PropertyOwnerInfoEntity propertyOwnerInfoEntity = (PropertyOwnerInfoEntity) propertyService
-//                        .getByProperID(propertyID);
-//                if (propertyOwnerInfoEntity == null)
-//                {
-//                    basicJson.getErrorMsg().setDescription("该物业未绑定业主信息");
-//                    return basicJson;
-//                }
-//                basicJson.setJsonString(userService.getUserInfoBYPhone(propertyOwnerInfoEntity.getOwnerPhone(),
-//                        UserType.OWNER));
                 try
                 {
                     basicJson.setJsonString(userService.getUserInfoByProperityID(propertyID, UserType.OWNER));
@@ -238,7 +278,7 @@ public class PropertyController
                 catch (UserTypeErrorException e)
                 {
                     LogUtil.E(e.getMessage());
-                    basicJson.setJsonString("获取业主信息失败");
+                    basicJson.setJsonString("获取业主信息失败:"+e.getMessage());
                     return basicJson;
                 }
                 break;

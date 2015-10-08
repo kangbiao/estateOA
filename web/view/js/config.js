@@ -54,6 +54,7 @@ urlConfig.addSecret=host+"secret/add";
 urlConfig.secretList=host+"secret/list";
 
 //物业信息相关的url
+urlConfig.modifyProperty=host+"property/modify";
 urlConfig.propertyList=host+"property/propertyList";
 urlConfig.getOwnerInfoByPropertyID=host+"property/owner/";
 urlConfig.getFeeInfoByPropertyID=host+"property/fee/";
