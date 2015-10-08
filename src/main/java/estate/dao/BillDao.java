@@ -15,5 +15,5 @@ public interface BillDao
      * @param id
      * @return
      */
-    ArrayList<BillEntity> getByPropertyID(Integer id);
+    ArrayList<BillEntity> getByPropertyID(Integer id,Byte status);
 }

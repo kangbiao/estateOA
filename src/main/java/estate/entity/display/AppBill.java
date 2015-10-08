@@ -6,6 +6,7 @@ package estate.entity.display;
  */
 public class AppBill
 {
+    private Integer id;
     private String total;
     private Object items;
     private Byte status;
@@ -49,5 +50,15 @@ public class AppBill
     public void setBillTime(String billTime)
     {
         this.billTime = billTime;
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 }

@@ -3,9 +3,11 @@ package estate.service.impl;
 import estate.common.util.LogUtil;
 import estate.dao.AppUserDao;
 import estate.dao.BillDao;
+import estate.dao.FeeItemOrderDao;
 import estate.dao.PropertyDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.BillEntity;
+import estate.entity.database.FeeItemOrderEntity;
 import estate.entity.database.PropertyEntity;
 import estate.exception.UserTypeErrorException;
 import estate.service.BillService;
@@ -28,15 +30,17 @@ public class BillServiceImpl implements BillService
     private PropertyDao propertyDao;
     @Autowired
     private AppUserDao appUserDao;
+    @Autowired
+    private FeeItemOrderDao feeItemOrderDao;
 
     @Override
     public ArrayList<BillEntity> getBillByPropertyID(Integer id)
     {
-        return billDao.getByPropertyID(id);
+        return billDao.getByPropertyID(id,null);
     }
 
     @Override
-    public ArrayList<BillEntity> getBillByAppUserPhone(String phone)
+    public ArrayList<BillEntity> getBillByAppUserPhone(String phone,Byte status)
     {
         ArrayList<BillEntity> billEntities=new ArrayList<>();
 
@@ -62,10 +66,23 @@ public class BillServiceImpl implements BillService
         //遍历该用户绑定的物业,获取每个物业的账单
         for (PropertyEntity propertyEntity:propertyEntities)
         {
-            LogUtil.E(propertyEntity.getId());
-            ArrayList<BillEntity> billEntityArrayList=billDao.getByPropertyID(propertyEntity.getId());
+            ArrayList<BillEntity> billEntityArrayList=billDao.getByPropertyID(propertyEntity.getId(),status);
             billEntities.addAll(billEntityArrayList.stream().collect(Collectors.toList()));
         }
         return billEntities;
+    }
+
+    @Override
+    public void generateBillByPropertyID(Integer id)
+    {
+        ArrayList<FeeItemOrderEntity> feeItemOrderEntities =feeItemOrderDao.getFeeItemOrdersByPropertyID(id);
+        if (feeItemOrderEntities==null)
+        {
+            return;
+        }
+        for (FeeItemOrderEntity feeItemOrderEntity:feeItemOrderEntities)
+        {
+            LogUtil.E("feeitemid" + feeItemOrderEntity.getFeeItemId() + "   propertyid:" + id);
+        }
     }
 }

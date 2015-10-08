@@ -37,6 +37,8 @@ public class PropertyController
     protected UserService userService;
     @Autowired
     private FeeItemOrderService feeItemOrderService;
+    @Autowired
+    private BillService billService;
 
     /**
      * 增加物业信息
@@ -291,6 +293,23 @@ public class PropertyController
         return basicJson;
     }
 
+    @RequestMapping(value = "/generateBill/{propertyID}")
+    public BasicJson generateBill(@PathVariable Integer propertyID)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            billService.generateBillByPropertyID(propertyID);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            basicJson.getErrorMsg().setDescription("生成账单失败");
+            return basicJson;
+        }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 
     /**************************以下代码为待删除代码,不参与业务逻辑***************************/
     /**

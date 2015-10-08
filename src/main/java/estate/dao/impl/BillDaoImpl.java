@@ -28,11 +28,20 @@ public class BillDaoImpl implements BillDao
 
 
     @Override
-    public ArrayList<BillEntity> getByPropertyID(Integer id)
+    public ArrayList<BillEntity> getByPropertyID(Integer id,Byte status)
     {
         Session session=getSession();
-        String hql="from BillEntity t where t.propertyId=:id";
-        List list=session.createQuery(hql).setInteger("id", id).list();
+        List list;
+        if (status!=null)
+        {
+            String hql="from BillEntity t where t.propertyId=:id and t.payStatus=:status";
+            list=session.createQuery(hql).setInteger("id", id).setByte("status",status).list();
+        }
+        else
+        {
+            String hql="from BillEntity t where t.propertyId=:id";
+            list=session.createQuery(hql).setInteger("id", id).list();
+        }
         return (ArrayList<BillEntity>) list;
     }
 }

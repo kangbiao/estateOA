@@ -1,7 +1,6 @@
 package estate.dao.impl;
 
 import estate.common.UserType;
-import estate.common.util.LogUtil;
 import estate.dao.BaseDao;
 import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
@@ -100,7 +99,6 @@ public class PropertyDaoImpl implements PropertyDao
                 break;
             case UserType.OWNER:
                 hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.ownerPhone=:phone";
-                LogUtil.E(hql);
                 break;
             default:
                 throw new UserTypeErrorException("用户类型错误!");

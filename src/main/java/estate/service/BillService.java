@@ -22,5 +22,11 @@ public interface BillService
      * @param phone
      * @return
      */
-    ArrayList<BillEntity> getBillByAppUserPhone(String phone);
+    ArrayList<BillEntity> getBillByAppUserPhone(String phone,Byte status);
+
+    /**
+     * 根据物业id生成这个物业的账单
+     * @param id
+     */
+    void generateBillByPropertyID(Integer id);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -33,21 +34,36 @@ public class FeeHandler
     public BasicJson getBill(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
+        Byte billStatus=null;
+        try
+        {
+            String status=request.getParameter("status");
+            if (!(status.equals("0")||status.equals("1")))
+            {
+                basicJson.getErrorMsg().setDescription("账单状态参数错误");
+                return basicJson;
+            }
+            billStatus = Byte.valueOf(status);
+        }
+        catch (Exception ignore){}
 
+        HttpSession session=request.getSession();
+        String phone= (String) session.getAttribute("phone");
         try
         {
 
-            ArrayList<BillEntity> entities=billService.getBillByAppUserPhone("18144240528");
+            ArrayList<BillEntity> entities=billService.getBillByAppUserPhone(phone,billStatus);
             if (entities==null||entities.size()<1)
             {
                 basicJson.setStatus(true);
                 basicJson.getErrorMsg().setDescription("暂无账单");
                 return basicJson;
             }
-            ArrayList<Select2> select2s=new ArrayList<>();
+
             ArrayList<AppBill> bills=new ArrayList<>();
             for (BillEntity billEntity:entities)
             {
+                ArrayList<Select2> select2s=new ArrayList<>();
                 float total=0;
                 String feeInfo=billEntity.getFeeItemFee();
                 String[] feeCostStrings=feeInfo.split(";");
@@ -64,6 +80,7 @@ public class FeeHandler
                 AppBill appBill=new AppBill();
                 appBill.setStatus(billEntity.getPayStatus());
                 appBill.setItems(select2s);
+                appBill.setId(billEntity.getId());
                 appBill.setTotal(String.valueOf(total));
                 appBill.setBillTime(Convert.num2time(billEntity.getBillGenerationTime(),"yyyy-MM"));
                 bills.add(appBill);
