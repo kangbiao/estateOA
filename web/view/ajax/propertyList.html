@@ -253,7 +253,7 @@
                         {
                             html+='<li class="list-group-item">' +
                                     '姓名:'+result.jsonString[i].name+'&ensp;电话:' +result.jsonString[i].phone+
-                                    '&ensp;<a class="btn-warning btn-sm" href="javascript:void(0)">删除</a>' +
+                                    '&ensp;<a id="deleteOwner" class="btn-warning btn-sm" href="javascript:void(0)">删除</a>' +
                                     '</li>'
                         }
                         $("#ownerList").html(html);
@@ -459,6 +459,10 @@
         });
     }
 
+    //删除业主
+    $("#deleteOwner").click(function(){
+        alert("暂时不能删除");
+    });
 
 
     /**

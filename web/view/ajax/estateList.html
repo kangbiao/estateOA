@@ -221,12 +221,34 @@
                 buildingIDs=buildingIDs+","+$(this).val();
             temp++;
         });
-        console.log(buildingIDs);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.relateFeeToBuilding,
+            data:{
+                buildingIDs:buildingIDs,
+                feeItemID: $("#relateBuildingFormModal").attr("feeItemID")
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result.status) {
+                    console.log(result.jsonString);
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+//        console.log(buildingIDs);
     });
 
     $('#estateListTable tbody').on( 'click', 'button#relateBuildingBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
-        console.log(data);
+//        console.log(data);
         $.ajax({
             type: "post",
             async: true,
@@ -258,6 +280,7 @@
                 alert("服务器连接失败,请重试!");
             }
         });
+        $("#relateBuildingFormModal").attr("feeItemID",data.id);
         $("#relateBuildingFormModal").modal("show");//弹出框show
 
     });
