@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-14.
@@ -121,6 +122,41 @@ public class FeeController
             tableData.getErrorMsg().setDescription("获取费用列表失败,请重试");
             return tableData;
         }
+    }
+
+    /**
+     * 将物业和费用项目绑定
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/relateBuilding")
+    public BasicJson relateBuilding(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        Integer feeItemID;
+        ArrayList<Integer> buildingIDs;
+        try
+        {
+            feeItemID=Integer.valueOf(request.getParameter("feeItemID"));
+            buildingIDs=Convert.string2ints(request.getParameter("buildingIDs"),",");
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("参数错误\n"+e.getMessage());
+            return basicJson;
+        }
+        try
+        {
+            feeService.relateBuilding(buildingIDs,feeItemID);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+        }
+        LogUtil.E(buildingIDs);
+        LogUtil.E(feeItemID);
+        basicJson.setStatus(true);
+        return basicJson;
     }
 
     /**

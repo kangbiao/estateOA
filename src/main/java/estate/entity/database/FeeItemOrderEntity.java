@@ -7,7 +7,7 @@ public class FeeItemOrderEntity
 {
     private Integer id;
     private Integer propertyId;
-//    private Integer feeItemId;
+    private Integer feeItemId;
     private Byte isBilled;
     private FeeItemEntity feeItemEntity;
 
@@ -31,15 +31,15 @@ public class FeeItemOrderEntity
         this.propertyId = propertyId;
     }
 
-//    public Integer getFeeItemId()
-//    {
-//        return feeItemId;
-//    }
-//
-//    public void setFeeItemId(Integer feeItemId)
-//    {
-//        this.feeItemId = feeItemId;
-//    }
+    public Integer getFeeItemId()
+    {
+        return feeItemId;
+    }
+
+    public void setFeeItemId(Integer feeItemId)
+    {
+        this.feeItemId = feeItemId;
+    }
 
     public Byte getIsBilled()
     {

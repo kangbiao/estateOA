@@ -4,6 +4,8 @@ import estate.entity.database.FeeItemEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 
+import java.util.ArrayList;
+
 /**
  * Created by kangbiao on 15-9-15.
  * 费用接口,提供物业费,服务费和车位费的录入和查询功能
@@ -29,5 +31,13 @@ public interface FeeService
      * @param id
      */
     void deleteFee(Integer id);
+
+    //TODO 去除删除费用信息的隐患
+    /**
+     * 将费用和楼栋下的所有物业绑定在一起,执行操作钱会先删除数据库中所有该费用绑定的物业,有一定的隐患
+     * @param buildingIDs
+     * @param feeItemID
+     */
+    void relateBuilding(ArrayList<Integer> buildingIDs,Integer feeItemID);
 
 }

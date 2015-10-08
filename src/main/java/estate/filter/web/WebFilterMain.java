@@ -1,14 +1,9 @@
 package estate.filter.web;
 
-import estate.common.util.GsonUtil;
-import estate.common.util.LogUtil;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-10-6.
@@ -29,21 +24,21 @@ public class WebFilterMain implements Filter
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        HttpSession session=request.getSession();
-
-        String path=request.getServletPath();
-        ArrayList<String> passUrl=new ArrayList<>();
-        passUrl.add("/view/403.html");
-        passUrl.add("/view/login.html");
-        LogUtil.E(GsonUtil.getGson().toJson(session.getAttribute("user")));
-        if (!(passUrl.contains(path)||path.contains(".css")||path.contains(".js")||path.contains(".png")))
-        {
-            if (session.getAttribute("user")==null)
-            {
-                response.sendRedirect(request.getContextPath() + "/view/login.html");
-                return;
-            }
-        }
+//        HttpSession session=request.getSession();
+//
+//        String path=request.getServletPath();
+//        ArrayList<String> passUrl=new ArrayList<>();
+//        passUrl.add("/view/403.html");
+//        passUrl.add("/view/login.html");
+//        LogUtil.E(GsonUtil.getGson().toJson(session.getAttribute("user")));
+//        if (!(passUrl.contains(path)||path.contains(".css")||path.contains(".js")||path.contains(".png")))
+//        {
+//            if (session.getAttribute("user")==null)
+//            {
+//                response.sendRedirect(request.getContextPath() + "/view/login.html");
+//                return;
+//            }
+//        }
         chain.doFilter(req,res);
     }
 

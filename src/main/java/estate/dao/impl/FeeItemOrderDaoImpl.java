@@ -42,4 +42,12 @@ public class FeeItemOrderDaoImpl implements FeeItemOrderDao
         }
         return (ArrayList<FeeItemOrderEntity>) arrayList;
     }
+
+    @Override
+    public void deleteAllByFeeItemID(Integer id)
+    {
+        Session session=getSession();
+        String hql="delete from FeeItemOrderEntity t where t.feeItemId=:id ";
+        session.createQuery(hql).setInteger("id",id).executeUpdate();
+    }
 }

@@ -1,10 +1,11 @@
 package estate.common.util;
 
+import org.junit.Test;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-15.
@@ -167,14 +168,20 @@ public class Convert
     /**
      * 数字组成的字符串格式化为数字数组
      */
-    public static List<Integer> string2ints(String string,String split)
+    public static ArrayList<Integer> string2ints(String string,String split)
     {
         String[] temp=string.split(split);
-        List<Integer> ints=new ArrayList<Integer>();
+        ArrayList<Integer> ints=new ArrayList<>();
         for (String aTemp : temp)
         {
             ints.add(Integer.valueOf(aTemp));
         }
         return ints;
+    }
+
+    @Test
+    public void test()
+    {
+        LogUtil.E(string2ints("1,2",","));
     }
 }

@@ -16,4 +16,10 @@ public interface FeeItemOrderDao
      */
     ArrayList<FeeItemOrderEntity> getFeeItemOrdersByPropertyID(Integer id);
 
+    //TODO 需要将删除改为放入回收站
+    /**
+     * 通过费用id删除该费用的所有绑定关系
+     * @param id
+     */
+    void deleteAllByFeeItemID(Integer id);
 }
