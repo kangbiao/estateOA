@@ -16,4 +16,11 @@ public interface BillService
      * @return
      */
     ArrayList<BillEntity> getBillByPropertyID(Integer id);
+
+    /**
+     * 通过app用户的电话获取账单信息
+     * @param phone
+     * @return
+     */
+    ArrayList<BillEntity> getBillByAppUserPhone(String phone);
 }

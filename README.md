@@ -297,6 +297,43 @@ user_role:1:家庭成员;2:租户;3:业主
 ```
 
 ## 费用相关(05)
+### 获取账单
+>*请求URL*:api/fee/getBill
+>*请求方式*:GET
+
+**服务器返回数据**
+``` json
+{
+    "status": true,
+    "errorMsg": {
+        "code": null,
+        "description": null
+    },
+    "jsonString": [
+        {
+            "total": "400.0",
+            "items": [
+                {
+                    "id": "水电费",
+                    "text": "100"
+                },
+                {
+                    "id": "停车费",
+                    "text": "100"
+                },
+                {
+                    "id": "煤气费",
+                    "text": "200"
+                }
+            ],
+            "status": 0,
+            "billTime": "1976-03"
+        }
+    ]
+}
+```
+
+
 ### 物业费查询
 **客户端请求**
 >*请求URL*:api/fee

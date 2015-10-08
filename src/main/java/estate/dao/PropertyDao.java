@@ -3,6 +3,7 @@ package estate.dao;
 import estate.entity.database.PropertyEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.UserTypeErrorException;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public interface PropertyDao
      * @param role
      * @return
      */
-    ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone,int role);
+    ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone,int role) throws UserTypeErrorException;
 
 
     // TODO 为了适应验收而写,待删除
