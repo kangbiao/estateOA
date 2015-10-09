@@ -183,8 +183,10 @@ public class UserDaoImpl implements UserDao
             hql="from FamilyEntity t where t.phone=:phone";
         else if (type==UserType.APPUSER)
             hql="from AppUserEntity t where t.phone=:phone";
-        else
+        else if (type==UserType.OWNER)
             hql="from OwnerEntity t where t.phone=:phone";
+        else
+            return null;
         List list=session.createQuery(hql).setString("phone",phone).list();
         if (list.size()>0)
             return list.get(0);

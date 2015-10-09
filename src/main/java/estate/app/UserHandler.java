@@ -1,6 +1,9 @@
 package estate.app;
 
+import estate.common.CardType;
+import estate.common.SexType;
 import estate.common.UserType;
+import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.common.util.VerifyCodeGenerate;
 import estate.entity.database.AppUserEntity;
@@ -59,7 +62,7 @@ public class UserHandler
         basicJson.setStatus(true);
         request.getSession().setAttribute("phone", phone);
         request.getSession().setAttribute("username", appUserEntity.getUserName());
-        request.getSession().setAttribute("role",appUserEntity.getUserRole());
+        request.getSession().setAttribute("role", appUserEntity.getUserRole());
         basicJson.setJsonString(request.getSession().getId());
         return basicJson;
     }
@@ -179,7 +182,7 @@ public class UserHandler
         int role=Integer.valueOf(request.getParameter("role"));
         String phone=request.getParameter("phone");
 
-        LogUtil.E("role:"+String.valueOf(role)+"phone:"+phone+"propertyId:"+propertyId);
+        LogUtil.E("role:" + String.valueOf(role) + "phone:" + phone + "propertyId:" + propertyId);
 
         AppUserEntity appUserEntity= (AppUserEntity) userService.getUserInfoBYPhone(phone,UserType.APPUSER);
         appUserEntity.setUserRole(role);
@@ -230,20 +233,93 @@ public class UserHandler
         return basicJson;
     }
 
-    //TODO 项目验收,待删除
-    @RequestMapping("/getAllProperty")
-    public BasicJson getAll()
+    @RequestMapping(value = "/modify/{action}",method = RequestMethod.GET)
+    public BasicJson modify(@PathVariable String action,HttpServletRequest request)
     {
-        BasicJson basicJson=new BasicJson(false);
-        try
+        BasicJson basicJson=new BasicJson();
+        String phone= (String) request.getSession().getAttribute("phone");
+        int role= (int) request.getSession().getAttribute("role");
+        switch (action)
         {
-            basicJson.setJsonString(propertyService.getAllProperty());
+            case "password":
+                AppUserEntity appUserEntity= (AppUserEntity) userService.getUserInfoBYPhone(phone,UserType.APPUSER);
+                String oldPassword=request.getParameter("oldPassword");
+                String newPassword=request.getParameter("newPassword");
+                if (!oldPassword.equals(appUserEntity.getPasswd()))
+                {
+                    basicJson.getErrorMsg().setDescription("原密码错误");
+                    return basicJson;
+                }
+                appUserEntity.setPasswd(newPassword);
+                try
+                {
+                    baseService.save(appUserEntity);
+                }
+                catch (Exception e)
+                {
+                    LogUtil.E("保存用户信息失败"+e.getMessage());
+                    basicJson.getErrorMsg().setDescription("修改密码失败");
+                    return basicJson;
+                }
+                break;
+            case "getProfile":
+                try
+                {
+                    Object o=userService.getUserInfoBYPhone(phone,role);
+                    if (o==null)
+                    {
+                        basicJson.getErrorMsg().setDescription("获取用户信息失败");
+                        return basicJson;
+                    }
+                    basicJson.setJsonString(o);
+                }
+                catch (Exception e)
+                {
+                    basicJson.getErrorMsg().setDescription("获取用户信息出错");
+                    return basicJson;
+                }
+                break;
+            case "submitProfile":
+                try
+                {
+                    Byte identityType= Byte.valueOf(request.getParameter("identityType"));
+                    CardType.checkType(identityType);
+                    String name=request.getParameter("name");
+                    Long birthday= Convert.time2num(request.getParameter("birthday"));
+                    String urgentName=request.getParameter("urgentName");
+                    String urgentPhone=request.getParameter("urgentPhone");
+                    String identityCode=request.getParameter("identityCode");
+                    Byte sex= Byte.valueOf(request.getParameter("sex"));
+                    SexType.checkType(sex);
+
+                }
+                catch (Exception e)
+                {
+                    basicJson.getErrorMsg().setCode("100000");
+                    basicJson.getErrorMsg().setDescription("参数错误");
+                    return basicJson;
+                }
+
+                try
+                {
+                    if (role==UserType.FAMILY)
+                    {
+                         FamilyEntity familyEntity= (FamilyEntity) userService.getUserInfoBYPhone(phone, role);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    LogUtil.E("保存用户资料时出错"+e.getMessage());
+                    basicJson.getErrorMsg().setDescription("修改密码失败");
+                    return basicJson;
+                }
+                break;
+            default:
+                basicJson.getErrorMsg().setDescription("请求路径错误!");
+                return basicJson;
         }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setDescription(e.getMessage());
-            return basicJson;
-        }
+
         basicJson.setStatus(true);
         return basicJson;
     }
