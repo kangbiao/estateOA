@@ -1,14 +1,17 @@
 package estate.app;
 
+import estate.common.AppUserStatus;
 import estate.common.UserType;
 import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.PropertyEntity;
 import estate.entity.display.PropertyAppUser;
 import estate.entity.json.BasicJson;
+import estate.service.BaseService;
 import estate.service.PropertyService;
 import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,8 @@ public class PropertyHandler
     private PropertyService propertyService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private BaseService baseService;
 
     @RequestMapping(value = "/getMyPropery",method = RequestMethod.GET)
     public BasicJson getMyProperty(HttpServletRequest request)
@@ -92,6 +97,47 @@ public class PropertyHandler
         {
             LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setDescription("获取绑定信息出错");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 业主审核
+     * @param operate 只能为agree或者refuse
+     * @param phone
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/submitBind/{operate}/{phone}",method = RequestMethod.GET)
+    public BasicJson submitBind(@PathVariable String operate,@PathVariable String phone,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+
+        try
+        {
+            switch (operate)
+            {
+                case "agree":
+                    AppUserEntity appUserEntity = (AppUserEntity) baseService.get(phone, AppUserEntity.class);
+                    appUserEntity.setStatus(AppUserStatus.ENABLE);
+                    userService.changeAppUserStatus(appUserEntity);
+                    break;
+                case "refuse":
+                    userService.deleteUserByPhone(phone, UserType.APPUSER);
+                    break;
+                default:
+                    basicJson.getErrorMsg().setCode("100000");
+                    basicJson.getErrorMsg().setDescription("参数错误");
+                    return basicJson;
+            }
+        }
+        catch (Exception e)
+        {
+            LogUtil.E("业主审核出错;"+e.getMessage());
+            basicJson.getErrorMsg().setDescription("审核失败");
             return basicJson;
         }
 
