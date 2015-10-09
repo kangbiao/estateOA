@@ -70,10 +70,6 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>业主信息</h3>
-                            <ul class="list-group" id="ownerInfo">
-
-                            </ul>
                             <h3>费用信息</h3>
                             <ul class="list-group" id="feeInfo">
                             </ul>
@@ -152,9 +148,22 @@
                             </form>
                             <fieldset>
                                 <legend>业主列表</legend>
-                                <ul class="list-group" id="ownerList">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingThree">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
 
-                                </ul>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                            <div class="panel-body">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </fieldset>
                             <form id="ownerAddForm" method="post" action="" style="display: none" class="form-horizontal">
                                 <fieldset>
@@ -464,7 +473,6 @@
         alert("暂时不能删除");
     });
 
-
     /**
      * 查看物业详细信息
      */
@@ -525,7 +533,33 @@
         });
     });
 
-
+    $('#propertyListTable tbody').on( 'click', 'button#generateBillBtn', function (){
+        var data = editTable.row($(this).parents('tr') ).data();
+        var thisBtn=$(this);
+        thisBtn.html('生成中<i class="fa fa-spinner fa-spin">');
+        console.log(data);
+        $.ajax({
+            type: "get",
+            async: true,
+            url: urlConfig.generateBill+data.id,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("账单生成成功");
+                    thisBtn.html("生成账单");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                    thisBtn.html("生成账单");
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+                thisBtn.html("生成账单");
+            }
+        });
+    });
     //初始化表格数据
     function initDataTable(){
         editTable=$('#propertyListTable').DataTable({
@@ -640,7 +674,6 @@
                 }
             }
         });
-
     }
 
     $(document).ready(function() {

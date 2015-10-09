@@ -28,6 +28,7 @@ urlConfig.serviceFeeList=host+"fee/list/service";
 urlConfig.addParkingLotFee=host+"fee/add/parkingLot";
 urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
 urlConfig.relateFeeToBuilding=host+"fee/relateBuilding";
+urlConfig.getBillList=host+"fee/getBillList";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";
@@ -45,8 +46,7 @@ urlConfig.tenantList=host+"user/tenantList";
 urlConfig.appUserList=host+"user/appUserList";
 urlConfig.changeAppUserStatus=host+"user/appUserStatus";
 urlConfig.getPropertyInfo=host+"user/getPropertyInfo";
-urlConfig.getPropertiesByOwnerPhone=host+"user/owner/getPropertiesByPhone/";
-urlConfig.getPropertiesByAppUserPhone=host+"user/appuser/getPropertiesByPhone/";
+urlConfig.getPropertiesByPhone=host+"user/getPropertiesByPhone/";
 urlConfig.deleteOwnerByPhone=host+"/user/owner/delete/";
 urlConfig.deleteAppUserByPhone=host+"/user/appuser/delete/";
 
@@ -64,6 +64,7 @@ urlConfig.addVillage=host+"property/addVillage";
 urlConfig.addBuilding=host+"property/addBuilding";
 urlConfig.villageList=host+"property/villageList";
 urlConfig.buildingList=host+"property/buildingList";
+urlConfig.generateBill=host+"property/generateBill/";
 
 //搜索
 urlConfig.search=host+"search/";

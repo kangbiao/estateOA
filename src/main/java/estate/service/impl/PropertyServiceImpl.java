@@ -9,7 +9,6 @@ import estate.entity.display.Property;
 import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
-import estate.exception.AppUserNotExitException;
 import estate.exception.EntityTypeErrorException;
 import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,27 +121,14 @@ public class PropertyServiceImpl implements PropertyService
     }
 
     @Override
-    public ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception
+    public ArrayList<PropertyEntity> getProperitiesByAppUserPhone(String phone)
     {
-        AppUserEntity appUserEntity=new AppUserEntity();
+        AppUserEntity appUserEntity;
         appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
         if (appUserEntity==null)
-            throw new AppUserNotExitException("该app用户不存在!");
+            return null;
         int userRole=appUserEntity.getUserRole();
-        switch (userRole)
-        {
-            case UserType.FAMILY:
-                //TODO 如果用户为家庭用户
-
-                break;
-            case UserType.TENANT:
-                break;
-            case UserType.OWNER:
-                break;
-            default:
-                break;
-        }
-        return null;
+        return propertyDao.getPropertiesByPhoneRole(phone,userRole);
     }
 
     @Override
@@ -161,6 +147,12 @@ public class PropertyServiceImpl implements PropertyService
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public ArrayList<PropertyEntity> getPropertyByOwnerPhone(String phone)
+    {
+        return propertyDao.getPropertiesByPhoneRole(phone, UserType.OWNER);
     }
 
     //TODO 项目验收,待删除

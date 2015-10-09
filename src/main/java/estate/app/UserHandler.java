@@ -4,10 +4,12 @@ import estate.common.CardType;
 import estate.common.SexType;
 import estate.common.UserType;
 import estate.common.util.Convert;
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.common.util.VerifyCodeGenerate;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.FamilyEntity;
+import estate.entity.database.OwnerEntity;
 import estate.entity.database.TenantEntity;
 import estate.entity.json.BasicJson;
 import estate.service.AppUserService;
@@ -151,7 +153,7 @@ public class UserHandler
         appUserEntity.setPhone(phone);
         appUserEntity.setUserName(userName);
         appUserEntity.setPasswd(password);
-        appUserEntity.setStatus(1);
+        appUserEntity.setStatus((byte) 1);
 
         try
         {
@@ -233,7 +235,7 @@ public class UserHandler
         return basicJson;
     }
 
-    @RequestMapping(value = "/modify/{action}",method = RequestMethod.GET)
+    @RequestMapping(value = "/modify/{action}")
     public BasicJson modify(@PathVariable String action,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
@@ -289,7 +291,8 @@ public class UserHandler
                     CardType.checkType(identityType);
                     name=request.getParameter("name");
                     birthday= Convert.time2num(request.getParameter("birthday"));
-                    urgentName=request.getParameter("urgentName");
+                    LogUtil.E("birthday"+request.getParameter("birthday"));
+                    urgentName = request.getParameter("urgentName");
                     urgentPhone=request.getParameter("urgentPhone");
                     identityCode=request.getParameter("identityCode");
                     sex= Byte.valueOf(request.getParameter("sex"));
@@ -315,6 +318,31 @@ public class UserHandler
                         familyEntity.setIdentityType(identityType);
                         familyEntity.setIdentityCode(identityCode);
                         baseService.save(familyEntity);
+                    }
+                    else if (role==UserType.TENANT)
+                    {
+                        TenantEntity tenantEntity= (TenantEntity) userService.getUserInfoBYPhone(phone, role);
+                        tenantEntity.setName(name);
+                        tenantEntity.setSex(sex);
+                        tenantEntity.setBirthday(birthday);
+                        tenantEntity.setUrgentName(urgentName);
+                        tenantEntity.setUrgentPhone(urgentPhone);
+                        tenantEntity.setIdentityType(identityType);
+                        tenantEntity.setIdentityCode(identityCode);
+                        baseService.save(tenantEntity);
+                    }
+                    else if (role==UserType.OWNER)
+                    {
+                        OwnerEntity ownerEntity= (OwnerEntity) userService.getUserInfoBYPhone(phone, role);
+                        ownerEntity.setName(name);
+                        ownerEntity.setSex(sex);
+                        ownerEntity.setBirthday(birthday);
+                        ownerEntity.setUrgentName(urgentName);
+                        ownerEntity.setUrgentPhone(urgentPhone);
+                        ownerEntity.setIdentityType(identityType);
+                        ownerEntity.setIdentityCode(identityCode);
+                        LogUtil.E(GsonUtil.getGson().toJson(ownerEntity));
+                        baseService.save(ownerEntity);
                     }
 
                 }

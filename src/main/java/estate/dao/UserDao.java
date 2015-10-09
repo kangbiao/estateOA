@@ -19,7 +19,13 @@ public interface UserDao
      */
     AppUserEntity getUserByPhone(String phone);
 
-
+    /**
+     * 通过用户的电话和状态返回用户信息
+     * @param phone
+     * @param status
+     * @return
+     */
+    AppUserEntity getByPhoneStatus(String phone , Byte status);
 
     TableData getOwnerList(TableFilter tableFilter);
 
@@ -50,5 +56,12 @@ public interface UserDao
      * @return
      */
     ArrayList<Object> getOwnersByPropertyID(Integer id);
+
+    /**
+     * 通过物业id获取该物业绑定的所有app用户
+     * @param id
+     * @return
+     */
+    ArrayList<Object> getAppUserByPropertyID(Integer id);
 
 }

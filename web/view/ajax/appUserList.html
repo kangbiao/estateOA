@@ -166,9 +166,9 @@
         console.log(status);
         var comfirm;
         if(status=="enable")
-            comfirm=confirm("确定停用该用户?");
-        else
             comfirm=confirm("确定恢复该用户?");
+        else
+            comfirm=confirm("确定停用该用户?");
         if(comfirm)
         {
             var data = editTable.row($(this).parents('tr') ).data();
@@ -201,6 +201,51 @@
     $('#appUserListTable tbody').on( 'click', 'button#propertyInfoBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
+        $.ajax({
+            type: "get",
+            async: false,
+            url: urlConfig.getPropertiesByPhone+data.phone,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    $("#propertyInfoList").html("");
+                    if(result.jsonString!=null)
+                    {
+                        var html="";
+                        for (var i in result.jsonString)
+                        {
+                            if(result.jsonString[i].type==2)
+                                result.jsonString[i].type="住宅";
+                            else if(result.jsonString[i].type==1)
+                                result.jsonString[i].type="商户";
+                            if(result.jsonString[i].status==-1)
+                                result.jsonString[i].status="出租";
+                            if(result.jsonString[i].status==1)
+                                result.jsonString[i].status="自用";
+                            html+='<ul class="list-group">' +
+                                    '<li class="list-group-item">物业编号: <span id="code">'+result.jsonString[i].code+'</span></li>'+
+                                    '<li class="list-group-item">物业地址: <span id="location">'+result.jsonString[i].location+'</span></li>'+
+                                    '<li class="list-group-item">面积: <span id="status">'+result.jsonString[i].propertySquare+'</span></li>' +
+                                    '<li class="list-group-item">状态: <span id="status">'+result.jsonString[i].status+'</span></li>' +
+                                    '<li class="list-group-item">物业类型: <span id="status">'+result.jsonString[i].type+'</span></li>' +
+                                    '</ul>';
+                        }
+                        $("#propertyInfoList").html(html);
+                    }
+                    else
+                    {
+                        $("#propertyInfoList").html("该用户未绑定任何物业");
+                    }
+                }
+                else
+                {
+                    $("#propertyInfoList").html(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
         $("#propertyInfoModal").modal("show");
     });
 

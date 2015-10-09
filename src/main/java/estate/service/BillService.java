@@ -1,6 +1,8 @@
 package estate.service;
 
 import estate.entity.database.BillEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 import estate.exception.PropertyNotBindFeeItemException;
 
 import java.util.ArrayList;
@@ -11,6 +13,14 @@ import java.util.ArrayList;
  */
 public interface BillService
 {
+
+    /**
+     * 获取datatable显示的数据
+     * @param tableFilter
+     * @return
+     */
+    TableData getList(TableFilter tableFilter);
+
     /**
      * 通过物业的id获取该物业对应的账单
      * @param id

@@ -69,4 +69,13 @@ public interface UserService
      */
     ArrayList<Object> getUserInfoByProperityID(Integer id,int userType) throws UserTypeErrorException;
 
+    /**
+     * 根据物业id绑定到该物业的家庭成员和租客信息,status为是
+     * @param id
+     * @param status
+     * @return
+     */
+    ArrayList<AppUserEntity> getBindUserByPropertyID(Integer id, Byte status);
+
+
 }

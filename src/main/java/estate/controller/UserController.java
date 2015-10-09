@@ -139,30 +139,16 @@ public class UserController
 
     /**
      * 通过用户的电话和类型返回该用户关联的所有物业信息
-     * @param userType
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/{userType}/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
-    public BasicJson getPropertiesByOwnerId(@PathVariable String userType,@PathVariable String phone)
+    @RequestMapping(value = "/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
+    public BasicJson getPropertiesByOwnerId(@PathVariable String phone)
     {
         BasicJson basicJson=new BasicJson(false);
-        int type;
-        switch (userType)
-        {
-            case "owner":
-                type=UserType.OWNER;
-                break;
-            case "appuser":
-                type=UserType.APPUSER;
-                break;
-            default:
-                basicJson.getErrorMsg().setDescription("请求参数错误!");
-                return basicJson;
-        }
         try
         {
-            basicJson.setJsonString(userService.getPropertiesByPhone(phone,type));
+            basicJson.setJsonString(propertyService.getProperitiesByAppUserPhone(phone));
         }
         catch (Exception e)
         {
@@ -335,7 +321,7 @@ public class UserController
         BasicJson basicJson=new BasicJson(false);
         String phone=request.getParameter("phone");
         String statusStr=request.getParameter("status");
-        int status;
+        Byte status;
         switch (statusStr)
         {
             case "enable":

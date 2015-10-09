@@ -11,7 +11,7 @@ public class AppUserEntity
     private String userName;
     private Long registerTime;
     private Integer ownerId;
-    private int status;
+    private Byte status;
 
     public String getPasswd()
     {
@@ -73,12 +73,12 @@ public class AppUserEntity
         this.ownerId = ownerId;
     }
 
-    public int getStatus()
+    public Byte getStatus()
     {
         return status;
     }
 
-    public void setStatus(int status)
+    public void setStatus(Byte status)
     {
         this.status = status;
     }

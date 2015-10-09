@@ -30,25 +30,21 @@ public class UserDaoImpl implements UserDao
     }
 
 
-    public Integer save(Object object)
-    {
-        return null;
-    }
-
-    public Object get(Integer id)
-    {
-        return null;
-    }
-
-    public void delete(Object object)
-    {
-
-    }
-
 
     public AppUserEntity getUserByPhone(String phone)
     {
         System.out.print("dsfds");
+        return null;
+    }
+
+    @Override
+    public AppUserEntity getByPhoneStatus(String phone, Byte status)
+    {
+        Session session=getSession();
+        String hql="from AppUserEntity t where t.phone=:phone and t.status=:status";
+        List list=session.createQuery(hql).setString("phone", phone).setByte("status", status).list();
+        if (list.size()>0)
+            return (AppUserEntity) list.get(0);
         return null;
     }
 
@@ -219,5 +215,14 @@ public class UserDaoImpl implements UserDao
         String hql="select o from PropertyOwnerInfoEntity t ,OwnerEntity o where t.propertyId=:id and t.ownerPhone=o.phone";
         List list=session.createQuery(hql).setInteger("id",id).list();
         return (ArrayList<Object>) list;
+    }
+
+    @Override
+    public ArrayList<Object> getAppUserByPropertyID(Integer id)
+    {
+        Session session=getSession();
+        String hql="from ";
+        session.createQuery(hql).list();
+        return null;
     }
 }

@@ -246,11 +246,12 @@
         $.ajax({
             type: "get",
             async: false,
-            url: urlConfig.getPropertiesByOwnerPhone+data.phone,
+            url: urlConfig.getPropertiesByPhone+data.phone,
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    if(result.jsonString.length>0)
+                    $("#propertyInfo").html("");
+                    if(result.jsonString!=null)
                     {
                         var html="";
                         for (var i in result.jsonString)
@@ -270,7 +271,6 @@
                                     '<li class="list-group-item">状态: <span id="status">'+result.jsonString[i].status+'</span></li>' +
                                     '<li class="list-group-item">物业类型: <span id="status">'+result.jsonString[i].type+'</span></li>' +
                                 '</ul>';
-                            console.log(result.jsonString[i]);
                         }
                         $("#propertyInfo").html(html);
                     }

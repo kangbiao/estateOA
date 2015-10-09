@@ -2,6 +2,9 @@ package estate.dao.impl;
 
 import estate.dao.BillDao;
 import estate.entity.database.BillEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,32 @@ public class BillDaoImpl implements BillDao
         return sessionFactory.getCurrentSession();
     }
 
+
+    @Override
+    public TableData getList(TableFilter tableFilter)
+    {
+        Session session=getSession();
+        TableData tableData=new TableData();
+        ArrayList<BillEntity> entities;
+        Query query;
+
+        if (!tableFilter.getSearchValue().equals(""))
+        {
+            String hql="from BillEntity t where t.payStatus =:status";
+            query=session.createQuery(hql).setByte("status", Byte.parseByte(tableFilter.getSearchValue()));
+        }
+        else
+        {
+            String hql = "from BillEntity n";
+            query = session.createQuery(hql);
+        }
+        Integer count=query.list().size();
+        entities=(ArrayList<BillEntity>)query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter
+                .getLength()).list();
+        tableData.setRecordsFiltered(count);
+        tableData.setJsonString(entities);
+        return tableData;
+    }
 
     @Override
     public ArrayList<BillEntity> getByPropertyID(Integer id,Byte status)

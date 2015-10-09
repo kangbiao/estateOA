@@ -2,10 +2,9 @@ package estate.service.impl;
 
 import estate.common.UserType;
 import estate.common.util.Convert;
-import estate.dao.BaseDao;
-import estate.dao.PropertyOwnerInfoDao;
-import estate.dao.UserDao;
+import estate.dao.*;
 import estate.entity.database.AppUserEntity;
+import estate.entity.database.FamilyEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.TenantEntity;
 import estate.entity.display.Owner;
@@ -38,6 +37,10 @@ public class UserServiceImpl implements UserService
     private BaseDao baseDao;
     @Autowired
     private PropertyOwnerInfoDao propertyOwnerInfoDao;
+    @Autowired
+    private TenantDao tenantDao;
+    @Autowired
+    private FamilyDao familyDao;
 
 
 
@@ -190,6 +193,36 @@ public class UserServiceImpl implements UserService
             default:
                 throw new UserTypeErrorException("用户类型错误");
         }
+        return null;
+    }
+
+    @Override
+    public ArrayList<AppUserEntity> getBindUserByPropertyID(Integer id, Byte status)
+    {
+        ArrayList<AppUserEntity> appUserEntities=new ArrayList<>();
+        ArrayList<TenantEntity> tenantEntities=tenantDao.getTenantByPropertyID(id);
+        ArrayList<FamilyEntity> familyEntities=familyDao.getFamilByPropertyID(id);
+
+        if (tenantEntities!=null)
+        {
+            for (TenantEntity tenantEntity:tenantEntities)
+            {
+                AppUserEntity appUserEntity=userDao.getByPhoneStatus(tenantEntity.getPhone(), status);
+                if (appUserEntity!=null)
+                    appUserEntities.add(appUserEntity);
+            }
+        }
+        if (familyEntities!=null)
+        {
+            for (FamilyEntity familyEntity:familyEntities)
+            {
+                AppUserEntity appUserEntity=userDao.getByPhoneStatus(familyEntity.getPhone(), status);
+                if (appUserEntity!=null)
+                    appUserEntities.add(appUserEntity);
+            }
+        }
+        if (appUserEntities.size()>0)
+            return appUserEntities;
         return null;
     }
 

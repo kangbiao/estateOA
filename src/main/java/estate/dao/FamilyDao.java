@@ -11,4 +11,7 @@ import java.util.ArrayList;
 public interface FamilyDao
 {
     ArrayList<FamilyEntity> getFamilyEntitiesByOwnerId(Integer id);
+
+
+    ArrayList<FamilyEntity> getFamilByPropertyID(Integer id);
 }

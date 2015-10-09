@@ -6,7 +6,6 @@ import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
-import estate.exception.UserTypeErrorException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -85,7 +84,7 @@ public class PropertyDaoImpl implements PropertyDao
     }
 
     @Override
-    public ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone, int role) throws UserTypeErrorException
+    public ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone, int role)
     {
         Session session=getSession();
         String hql;
@@ -101,10 +100,12 @@ public class PropertyDaoImpl implements PropertyDao
                 hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.ownerPhone=:phone";
                 break;
             default:
-                throw new UserTypeErrorException("用户类型错误!");
+                return null;
         }
         List list=session.createQuery(hql).setString("phone",phone).list();
-        return (ArrayList<PropertyEntity>) list;
+        if (list.size()>0)
+            return (ArrayList<PropertyEntity>) list;
+        else return null;
     }
 
     @Override

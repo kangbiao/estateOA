@@ -8,6 +8,7 @@ import estate.entity.database.RuleEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.service.BillService;
 import estate.service.FeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,9 @@ import java.util.ArrayList;
 public class FeeController
 {
     @Autowired
-    FeeService feeService;
+    private FeeService feeService;
+    @Autowired
+    private BillService billService;
 
 
     @RequestMapping(value = "/add/{feeType}")
@@ -180,6 +183,23 @@ public class FeeController
         }
         basicJson.setStatus(true);
         return basicJson;
+    }
+
+    @RequestMapping(value = "/getBillList")
+    public TableData getBillList(TableFilter tableFilter,HttpServletRequest request)
+    {
+        if (request.getParameter("search[value]") != null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+        try
+        {
+            return billService.getList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
 }

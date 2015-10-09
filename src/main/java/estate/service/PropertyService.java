@@ -55,7 +55,7 @@ public interface PropertyService
      * @param phone
      * @return
      */
-    ArrayList<Object> getProperitiesByAppUserPhone(String phone) throws Exception;
+    ArrayList<PropertyEntity> getProperitiesByAppUserPhone(String phone);
 
     /**
      * 通过物业编号获取物业信息
@@ -71,6 +71,13 @@ public interface PropertyService
      * @return
      */
     boolean checkOwnerPropertyExit(String phone,Integer id);
+
+    /**
+     * 通过业主电话获取该业主名下所有的物业
+     * @param phone
+     * @return
+     */
+    ArrayList<PropertyEntity> getPropertyByOwnerPhone(String phone);
 
     //TODO 项目验收,待删除
     ArrayList<Select2> getAllProperty();
