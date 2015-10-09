@@ -14,8 +14,7 @@ public class CardType
     public static boolean checkType(Byte type) throws TypeErrorException
     {
         if (!(type.equals(IDCARD)||type.equals(SOLDIERCARD)))
-            throw new TypeErrorException("参数错误");
+            throw new TypeErrorException("证件类型参数错误");
         return true;
     }
-
 }

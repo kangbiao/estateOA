@@ -280,18 +280,20 @@ public class UserHandler
                 }
                 break;
             case "submitProfile":
+                Byte identityType,sex;
+                String name,urgentName,urgentPhone,identityCode;
+                Long birthday;
                 try
                 {
-                    Byte identityType= Byte.valueOf(request.getParameter("identityType"));
+                    identityType= Byte.valueOf(request.getParameter("identityType"));
                     CardType.checkType(identityType);
-                    String name=request.getParameter("name");
-                    Long birthday= Convert.time2num(request.getParameter("birthday"));
-                    String urgentName=request.getParameter("urgentName");
-                    String urgentPhone=request.getParameter("urgentPhone");
-                    String identityCode=request.getParameter("identityCode");
-                    Byte sex= Byte.valueOf(request.getParameter("sex"));
+                    name=request.getParameter("name");
+                    birthday= Convert.time2num(request.getParameter("birthday"));
+                    urgentName=request.getParameter("urgentName");
+                    urgentPhone=request.getParameter("urgentPhone");
+                    identityCode=request.getParameter("identityCode");
+                    sex= Byte.valueOf(request.getParameter("sex"));
                     SexType.checkType(sex);
-
                 }
                 catch (Exception e)
                 {
@@ -304,7 +306,15 @@ public class UserHandler
                 {
                     if (role==UserType.FAMILY)
                     {
-                         FamilyEntity familyEntity= (FamilyEntity) userService.getUserInfoBYPhone(phone, role);
+                        FamilyEntity familyEntity= (FamilyEntity) userService.getUserInfoBYPhone(phone, role);
+                        familyEntity.setName(name);
+                        familyEntity.setSex(sex);
+                        familyEntity.setBirthday(birthday);
+                        familyEntity.setUrgentName(urgentName);
+                        familyEntity.setUrgentPhone(urgentPhone);
+                        familyEntity.setIdentityType(identityType);
+                        familyEntity.setIdentityCode(identityCode);
+                        baseService.save(familyEntity);
                     }
 
                 }
