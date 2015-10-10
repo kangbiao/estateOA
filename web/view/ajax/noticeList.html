@@ -128,6 +128,7 @@
                 success: function (result) {
                     if (result.status) {
                         thisObject.html('发送短信');
+                        alert("发送成功");
                     } else {
                         alert(result.errorMsg.description);
                     }

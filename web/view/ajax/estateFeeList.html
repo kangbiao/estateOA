@@ -232,7 +232,8 @@
             dataType: "json",
             success: function (result) {
                 if (result.status) {
-                    console.log(result.jsonString);
+                    alert("关联成功");
+                    $("#relateBuildingFormModal").modal("hide");
                 }
                 else
                 {
@@ -248,6 +249,8 @@
 
     $('#estateListTable tbody').on( 'click', 'button#relateBuildingBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
+        $("#relateBuildingFormModal").modal("show");//弹出框show
+        $("#relateBuildingFormModal").attr("feeItemID",data.id);
 //        console.log(data);
         $.ajax({
             type: "post",
@@ -280,9 +283,6 @@
                 alert("服务器连接失败,请重试!");
             }
         });
-        $("#relateBuildingFormModal").attr("feeItemID",data.id);
-        $("#relateBuildingFormModal").modal("show");//弹出框show
-
     });
 
     //编辑数据

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -65,5 +66,26 @@ public class RepairDaoImpl implements RepairDao
     public void setRepairMan(RepairEntity repairEntity)
     {
 
+    }
+
+    @Override
+    public ArrayList<RepairEntity> getByPhone(String phone, Byte status)
+    {
+        Session session=getSession();
+        String hql;
+        List list;
+        if (status==null)
+        {
+            hql = "from RepairEntity t where t.phone=:phone";
+            list = session.createQuery(hql).setString("phone", phone).list();
+        }
+        else
+        {
+            hql = "from RepairEntity t where t.phone=:phone and t.status=:status";
+            list= session.createQuery(hql).setString("phone", phone).setByte("status",status).list();
+        }
+        if (list.size()>0)
+            return (ArrayList<RepairEntity>) list;
+        return null;
     }
 }

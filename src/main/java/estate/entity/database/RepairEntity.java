@@ -5,38 +5,28 @@ package estate.entity.database;
  */
 public class RepairEntity
 {
-    private int id;
+    private Integer id;
     private String title;
     private String content;
     private String description;
-    private Integer userId;
+    private String phone;
     private Long time;
     private String imageIdList;
-    private int status;
+    private Byte status;
     private Integer remark;
     private String remarkText;
     private Integer adminId;
     private String result;
     private String repirmanPhone;
 
-    public int getId()
+    public Integer getAdminId()
     {
-        return id;
+        return adminId;
     }
 
-    public void setId(int id)
+    public void setAdminId(Integer adminId)
     {
-        this.id = id;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
+        this.adminId = adminId;
     }
 
     public String getContent()
@@ -59,24 +49,14 @@ public class RepairEntity
         this.description = description;
     }
 
-    public Integer getUserId()
+    public Integer getId()
     {
-        return userId;
+        return id;
     }
 
-    public void setUserId(Integer userId)
+    public void setId(Integer id)
     {
-        this.userId = userId;
-    }
-
-    public Long getTime()
-    {
-        return time;
-    }
-
-    public void setTime(Long time)
-    {
-        this.time = time;
+        this.id = id;
     }
 
     public String getImageIdList()
@@ -89,14 +69,14 @@ public class RepairEntity
         this.imageIdList = imageIdList;
     }
 
-    public int getStatus()
+    public String getPhone()
     {
-        return status;
+        return phone;
     }
 
-    public void setStatus(int status)
+    public void setPhone(String phone)
     {
-        this.status = status;
+        this.phone = phone;
     }
 
     public Integer getRemark()
@@ -119,14 +99,14 @@ public class RepairEntity
         this.remarkText = remarkText;
     }
 
-    public Integer getAdminId()
+    public String getRepirmanPhone()
     {
-        return adminId;
+        return repirmanPhone;
     }
 
-    public void setAdminId(Integer adminId)
+    public void setRepirmanPhone(String repirmanPhone)
     {
-        this.adminId = adminId;
+        this.repirmanPhone = repirmanPhone;
     }
 
     public String getResult()
@@ -139,15 +119,33 @@ public class RepairEntity
         this.result = result;
     }
 
-
-
-    public String getRepirmanPhone()
+    public Byte getStatus()
     {
-        return repirmanPhone;
+        return status;
     }
 
-    public void setRepirmanPhone(String repirmanPhone)
+    public void setStatus(Byte status)
     {
-        this.repirmanPhone = repirmanPhone;
+        this.status = status;
+    }
+
+    public Long getTime()
+    {
+        return time;
+    }
+
+    public void setTime(Long time)
+    {
+        this.time = time;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
     }
 }
