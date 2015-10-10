@@ -148,21 +148,7 @@
                             </form>
                             <fieldset>
                                 <legend>业主列表</legend>
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingThree">
-                                            <h4 class="panel-title">
-                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                            <div class="panel-body">
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="panel-group" id="ownerList" role="tablist" aria-multiselectable="true">
                                 </div>
                             </fieldset>
                             <form id="ownerAddForm" method="post" action="" style="display: none" class="form-horizontal">
@@ -250,7 +236,7 @@
         $("#propertyID").val(data.id);
         $.ajax({
             type: "get",
-            async: false,
+            async: true,
             url: urlConfig.getOwnerInfoByPropertyID+data.id,
             dataType: "json", //返回数据形式为json
             success: function (result) {
@@ -258,12 +244,47 @@
                     if(result.jsonString.length>0)
                     {
                         var html="";
+                        var date=new Date();
                         for(var i in result.jsonString)
                         {
-                            html+='<li class="list-group-item">' +
-                                    '姓名:'+result.jsonString[i].name+'&ensp;电话:' +result.jsonString[i].phone+
-                                    '&ensp;<a id="deleteOwner" class="btn-warning btn-sm" href="javascript:void(0)">删除</a>' +
-                                    '</li>'
+                            if(result.jsonString[i].identityType==0)
+                                result.jsonString[i].identityType="身份证";
+                            else if(result.jsonString[i].identityType==1)
+                                result.jsonString[i].identityType="军官证";
+                            else result.jsonString[i].identityType="未设置"
+                            if(result.jsonString[i].sex==0)
+                                result.jsonString[i].sex="男";
+                            else if(result.jsonString[i].sex==1)
+                                result.jsonString[i].sex="女";
+                            else result.jsonString[i].sex="未设置";
+
+                            date.setTime(result.jsonString[i].birthday);
+                            result.jsonString[i].birthday=date.toLocaleDateString().replace(/\//g, "-");
+
+                            date.setTime(result.jsonString[i].authenticationTime);
+                            result.jsonString[i].authenticationTime=date.toLocaleDateString().replace(/\//g, "-");
+
+                            html+='<div class="panel panel-default">'+
+                                    '<div class="panel-heading" role="tab" id="">'+
+                                        '<h4 class="panel-title">'+
+                                            '<a class="collapsed" role="button" data-toggle="collapse"'+
+                                            'data-parent="#ownerList" href="#'+result.jsonString[i].id+'" aria-expanded="false" >'+
+                                                result.jsonString[i].name+'－'+result.jsonString[i].phone+
+                                            '</a>'+
+                                        '</h4>'+
+                                    '</div>'+
+                                    '<div id="'+result.jsonString[i].id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">'+
+                                      '<div class="panel-body">'+
+                                        '证件类型:'+result.jsonString[i].identityType+'<br/>'+
+                                        '证件号码:'+result.jsonString[i].identityCode+'<br/>'+
+                                        '紧急联系人姓名:'+result.jsonString[i].urgentName+'<br/>'+
+                                            '紧急联系人电话:'+result.jsonString[i].urgentPhone+'<br/>'+
+                                            '性别:'+result.jsonString[i].sex+'<br/>'+
+                                            '出生日期:'+result.jsonString[i].birthday+'<br/>'+
+                                            '认证时间:'+result.jsonString[i].authenticationTime+
+                                      '</div>'+
+                                    '</div>'+
+                                  '</div>';
                         }
                         $("#ownerList").html(html);
                     }

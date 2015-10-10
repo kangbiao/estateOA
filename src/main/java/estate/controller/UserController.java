@@ -330,6 +330,9 @@ public class UserController
             case "disable":
                 status = -1;
                 break;
+            case "agree":
+                status = 1;
+                break;
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");
                 return basicJson;

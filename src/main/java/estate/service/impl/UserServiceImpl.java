@@ -161,7 +161,8 @@ public class UserServiceImpl implements UserService
         switch (type)
         {
             case UserType.OWNER:
-                userDao.deleteUserByPhone(phone,type);
+                userDao.deleteUserByPhone(phone, UserType.OWNER);
+                userDao.deleteUserByPhone(phone, UserType.APPUSER);
                 break;
             case UserType.APPUSER:
                 userDao.deleteUserByPhone(phone,UserType.FAMILY);

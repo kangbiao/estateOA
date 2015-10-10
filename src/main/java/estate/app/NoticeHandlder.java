@@ -1,6 +1,7 @@
 package estate.app;
 
 import estate.common.HtmlSplit;
+import estate.common.util.LogUtil;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.service.NoticeService;
@@ -28,7 +29,7 @@ public class NoticeHandlder
      * @param number 数量
      * @return
      */
-    @RequestMapping(value = "/getSome/{number}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getSome/{number}",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
     public BasicJson getSome(@PathVariable Integer number)
     {
         BasicJson basicJson=new BasicJson(false);
@@ -53,6 +54,7 @@ public class NoticeHandlder
     @RequestMapping(value = "/get/{noticeID}")
     public BasicJson get(@PathVariable String noticeID)
     {
+        LogUtil.E("get--------------");
         BasicJson basicJson=new BasicJson(false);
         NoticeEntity noticeEntity=noticeService.getOne(noticeID);
         if (noticeEntity==null)

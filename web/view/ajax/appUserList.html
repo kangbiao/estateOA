@@ -31,10 +31,8 @@
                         <th>手机</th>
                         <th>用户类型</th>
                         <th>注册时间</th>
-                        <th>审核</th>
                         <th>状态</th>
-                        <th>绑定物业</th>
-                        <th>个人信息</th>
+                        <th>物业信息</th>
                         <th>门禁记录</th>
                         <th>操作</th>
                     </tr>
@@ -47,10 +45,8 @@
                         <th>手机</th>
                         <th>用户类型</th>
                         <th>注册时间</th>
-                        <th>审核</th>
                         <th>状态</th>
-                        <th>绑定物业</th>
-                        <th>个人信息</th>
+                        <th>物业信息</th>
                         <th>门禁记录</th>
                         <th>操作</th>
                     </tr>
@@ -154,21 +150,40 @@
     });
 
     $('#appUserListTable tbody').on( 'click', 'button#delRow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
         var comfirm=confirm("确定删除该用户?");
         if(comfirm)
         {
-            alert("删除成功");
+            $.ajax({
+                type: "post",
+                async: false,
+                url: urlConfig.deleteAppUserByPhone+data.phone,
+                dataType: "json",
+                success: function (result) {
+                    if (result.status) {
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
         }
     });
 
     $('#appUserListTable tbody').on( 'click', 'button#changeStatus', function () {
         var status=$(this).attr("status");
-        console.log(status);
         var comfirm;
         if(status=="enable")
             comfirm=confirm("确定恢复该用户?");
-        else
+        else if(status=="disable")
             comfirm=confirm("确定停用该用户?");
+        else
+            comfirm=confirm("确定同意该用户的绑定请求?");
         if(comfirm)
         {
             var data = editTable.row($(this).parents('tr') ).data();
@@ -200,7 +215,6 @@
 
     $('#appUserListTable tbody').on( 'click', 'button#propertyInfoBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
-        console.log(data);
         $.ajax({
             type: "get",
             async: false,
@@ -292,7 +306,7 @@
                     else if(data==3)
                         return "<font color='green'>业主</font>";
                     else
-                        return "待审核";
+                        return "--";
                 }
 
             },{
@@ -309,13 +323,6 @@
 
             },{
                 "targets": 4,
-                "data":null,
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":"<font color='red'>待审核</font>"
-            },{
-                "targets": 5,
                 "data":"status",
                 "visible": true,
                 "orderable": false,
@@ -325,46 +332,44 @@
                         return "正常";
                     else if(data==-1)
                         return "<font color='red'>禁用</font>";
+                    else if(data==0)
+                        return "<font color='yellow'>待审核</font>";
                     else
-                        return "<font color='yellow'>异常</font>";
+                        return "--";
                 }
 
             },{
-                "targets": 6,
+                "targets": 5,
                 "data": "userRole",
                 "orderable": false,
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if (data==3)
-                        return "<button id='propertyInfoBtn' class='btn btn-success' type='button'>物业信息</button>";
+                        return "<button id='propertyInfoBtn' class='btn btn-success' type='button'>名下物业</button>";
                     else
-                        return "<button id='propertyInfoBtn' class='btn btn-primary' type='button'>物业信息</button>";
+                        return "<button id='propertyInfoBtn' class='btn btn-primary' type='button'>绑定物业</button>";
                 }
             },{
-                "targets": 7,
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                        "<button id='selfInfoBtn' class='btn btn-primary' type='button'>个人信息</button>"
-            },{
-                "targets": 8,
+                "targets": 6,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
                         "<button id='doorRecordBtn' class='btn btn-primary' type='button'>门禁记录</button>"
             },{
-                "targets": 9,
+                "targets": 7,
                 "data": "status",
                 "orderable": false,
                 "searchable": false,
                 "render": function ( data, type, row ) {
-                    if(data==-1)
-                        return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用" +
+                    if(data==0)
+                        return "<button id='changeStatus' status='agree' class='btn btn-primary' type='button'>通过审核" +
+                                "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
+                    else if(data==1)
+                        return "<button id='changeStatus' status='disable' class='btn btn-primary' type='button'>禁用" +
                                 "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
                     else
-                        return "<button id='changeStatus' status='disable' class='btn btn-primary' type='button'>禁用" +
+                        return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用" +
                                 "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
                 }
             }],

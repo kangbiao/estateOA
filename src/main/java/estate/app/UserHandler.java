@@ -1,5 +1,6 @@
 package estate.app;
 
+import estate.common.AppUserStatus;
 import estate.common.CardType;
 import estate.common.SexType;
 import estate.common.UserType;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -146,14 +148,13 @@ public class UserHandler
         }
         else
         {
-//            appUserEntity.setUserRole(UserType.OWNER);
             basicJson.getErrorMsg().setCode("100000");
         }
 
         appUserEntity.setPhone(phone);
         appUserEntity.setUserName(userName);
         appUserEntity.setPasswd(password);
-        appUserEntity.setStatus((byte) 1);
+        appUserEntity.setStatus(AppUserStatus.FORCHECK);
 
         try
         {
@@ -179,10 +180,11 @@ public class UserHandler
     public BasicJson bindOwner(HttpServletRequest request)
     {
         LogUtil.E("---已进入请求---");
+        HttpSession httpSession=request.getSession();
         BasicJson basicJson=new BasicJson(false);
-        Integer propertyId=Integer.valueOf(request.getParameter("id"));
+        Integer propertyId=Integer.valueOf(request.getParameter("propertyID"));
         int role=Integer.valueOf(request.getParameter("role"));
-        String phone=request.getParameter("phone");
+        String phone= (String) httpSession.getAttribute("phone");
 
         LogUtil.E("role:" + String.valueOf(role) + "phone:" + phone + "propertyId:" + propertyId);
 
@@ -199,7 +201,7 @@ public class UserHandler
                 familyEntity.setPropertyId(propertyId);
                 familyEntity.setPhone(appUserEntity.getPhone());
                 familyEntity.setName(appUserEntity.getUserName());
-                familyEntity.setAuthStatus(Byte.valueOf("0"));
+                familyEntity.setAuthStatus(AppUserStatus.FORCHECK);
                 try
                 {
                     baseService.save(familyEntity);
@@ -213,7 +215,7 @@ public class UserHandler
             case UserType.TENANT:
                 TenantEntity tenantEntity=new TenantEntity();
                 tenantEntity.setPropertyId(propertyId);
-                tenantEntity.setAuthStatus(Byte.valueOf("0"));
+                tenantEntity.setAuthStatus(AppUserStatus.FORCHECK);
                 tenantEntity.setPhone(appUserEntity.getPhone());
                 tenantEntity.setName(appUserEntity.getUserName());
                 try
@@ -356,6 +358,29 @@ public class UserHandler
             default:
                 basicJson.getErrorMsg().setDescription("请求路径错误!");
                 return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * app用户获取角色
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getRole",method = RequestMethod.GET)
+    public BasicJson getUserRole(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            basicJson.setJsonString(request.getSession().getAttribute("role"));
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("获取用户角色失败");
+            return basicJson;
         }
 
         basicJson.setStatus(true);
