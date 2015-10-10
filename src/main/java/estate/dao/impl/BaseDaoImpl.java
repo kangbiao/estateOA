@@ -72,7 +72,8 @@ public class BaseDaoImpl implements BaseDao
     @Override
     public void delete(Object object)
     {
-
+        Session session=getSession();
+        session.delete(object);
     }
 
     @Override

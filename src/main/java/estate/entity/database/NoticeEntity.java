@@ -6,7 +6,7 @@ package estate.entity.database;
  */
 public class NoticeEntity
 {
-    private int noticeId;
+    private Integer id;
     private String title;
     private String content;
     private String time;
@@ -16,15 +16,6 @@ public class NoticeEntity
     private Integer expiretime;
     private Integer cuId;
 
-    public int getNoticeId()
-    {
-        return noticeId;
-    }
-
-    public void setNoticeId(int noticeId)
-    {
-        this.noticeId = noticeId;
-    }
 
     public String getTitle()
     {
@@ -106,50 +97,13 @@ public class NoticeEntity
         this.cuId = cuId;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public Integer getId()
     {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        NoticeEntity that = (NoticeEntity) o;
-
-        if (noticeId != that.noticeId)
-            return false;
-        if (title != null ? !title.equals(that.title) : that.title != null)
-            return false;
-        if (content != null ? !content.equals(that.content) : that.content != null)
-            return false;
-        if (time != null ? !time.equals(that.time) : that.time != null)
-            return false;
-        if (pictureIdList != null ? !pictureIdList.equals(that.pictureIdList) : that.pictureIdList != null)
-            return false;
-        if (description != null ? !description.equals(that.description) : that.description != null)
-            return false;
-        if (type != null ? !type.equals(that.type) : that.type != null)
-            return false;
-        if (expiretime != null ? !expiretime.equals(that.expiretime) : that.expiretime != null)
-            return false;
-        if (cuId != null ? !cuId.equals(that.cuId) : that.cuId != null)
-            return false;
-
-        return true;
+        return id;
     }
 
-    @Override
-    public int hashCode()
+    public void setId(Integer id)
     {
-        int result = noticeId;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
-        result = 31 * result + (pictureIdList != null ? pictureIdList.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (expiretime != null ? expiretime.hashCode() : 0);
-        result = 31 * result + (cuId != null ? cuId.hashCode() : 0);
-        return result;
+        this.id = id;
     }
 }

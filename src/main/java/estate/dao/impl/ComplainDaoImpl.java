@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,21 +25,6 @@ public class ComplainDaoImpl implements ComplainDao
     private Session getSession()
     {
         return sessionFactory.getCurrentSession();
-    }
-
-    public ComplainEntity get(Integer id)
-    {
-        return null;
-    }
-
-    public Integer save(ComplainEntity complainEntity)
-    {
-        return null;
-    }
-
-    public void delete(ComplainEntity complainEntity)
-    {
-
     }
 
     public TableData getList(TableFilter tableFilter)
@@ -64,6 +50,27 @@ public class ComplainDaoImpl implements ComplainDao
         tableData.setRecordsTotal(this.count("ComplainEntity"));
 
         return tableData;
+    }
+
+    @Override
+    public ArrayList<ComplainEntity> getByPhone(String phone,Byte status)
+    {
+        Session session=getSession();
+        String hql="";
+        List list;
+        if (status==null)
+        {
+            hql = "from ComplainEntity t where t.phone=:phone";
+            list = session.createQuery(hql).setString("phone", phone).list();
+        }
+        else
+        {
+            hql = "from ComplainEntity t where t.phone=:phone and t.status=:status";
+            list= session.createQuery(hql).setString("phone", phone).setByte("status",status).list();
+        }
+        if (list.size()>0)
+            return (ArrayList<ComplainEntity>) list;
+        return null;
     }
 
 

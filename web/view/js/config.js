@@ -14,9 +14,10 @@ urlConfig.login=host+"auth/login";
 
 
 //公告部分的url
-urlConfig.noticeDelete=host+"notice/delete";
+urlConfig.noticeDelete=host+"notice/delete/";
 urlConfig.noticeList=host+"notice/list";
 urlConfig.addNotice=host+"notice/add";
+urlConfig.pushNotice=host+"notice/pushNotice/";
 
 
 //费用相关的URL

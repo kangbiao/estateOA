@@ -4,6 +4,7 @@ import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.service.BaseService;
 import estate.service.NoticeService;
 import estate.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class NoticeController
     private NoticeService noticeService;
     @Autowired
     private PictureService pictureService;
+    @Autowired
+    private BaseService baseService;
 
 
     /**
@@ -122,19 +125,23 @@ public class NoticeController
      * @return
      */
     @RequestMapping(value = "/delete/{noticeID}")
-    public BasicJson delete(@PathVariable String noticeID)
+    public BasicJson delete(@PathVariable Integer noticeID)
     {
         BasicJson basicJson=new BasicJson(false);
-        if (!noticeService.delete(noticeID))
+        NoticeEntity noticeEntity=new NoticeEntity();
+        noticeEntity.setId(noticeID);
+
+        try
         {
-            basicJson.getErrorMsg().setCode("1001020");
-            basicJson.getErrorMsg().setDescription("删除失败");
+            baseService.delete(noticeEntity);
         }
-        else
+        catch (Exception e)
         {
-            basicJson.setStatus(true);
-            basicJson.setJsonString("删除成功");
+            basicJson.getErrorMsg().setDescription("删除失败\n"+e.getMessage());
+            return basicJson;
         }
+
+        basicJson.setStatus(true);
         return basicJson;
     }
 
@@ -150,6 +157,45 @@ public class NoticeController
         return noticeService.getList(tableFilter);
     }
 
+    /**
+     * 将公告通过短信推送给app用户
+     * @param noticeID
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "pushNotice/{noticeID}")
+    public BasicJson sendMessage(@PathVariable Integer noticeID, HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        NoticeEntity noticeEntity;
+        try
+        {
+            noticeEntity= (NoticeEntity) baseService.get(noticeID, NoticeEntity.class);
+            if (noticeEntity==null)
+            {
+                basicJson.getErrorMsg().setDescription("获取公告失败");
+                return basicJson;
+            }
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("获取公告失败");
+            return basicJson;
+        }
+
+        try
+        {
+            Thread.sleep(10000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+
+    }
 }
 
 

@@ -27,7 +27,7 @@
                 <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
                     <thead>
                     <tr>
-                        <th>id</th>
+                        <th>序号</th>
                         <th>费用名</th>
                         <th>单价</th>
                         <th>收费规则</th>
@@ -46,7 +46,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>id</th>
+                        <th>序号</th>
                         <th>费用名</th>
                         <th>单价</th>
                         <th>收费规则</th>
@@ -387,11 +387,13 @@
             },
             "columnDefs": [{
                 "targets": 0,
-                "data": "id",
-                "visible": false,
+                "data":null,
                 "orderable": false,
-                "searchable": false
-
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
             },{
                 "targets": 1,
                 "data": "name",

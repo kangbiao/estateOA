@@ -17,8 +17,8 @@
         <property name="description">
             <column name="description" sql-type="varchar" length="100"/>
         </property>
-        <property name="userId">
-            <column name="user_id" sql-type="int unsigned"/>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15"/>
         </property>
         <property name="time">
             <column name="time" sql-type="bigint"/>

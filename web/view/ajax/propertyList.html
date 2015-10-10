@@ -27,7 +27,7 @@
                        id="propertyListTable">
                     <thead>
                     <tr>
-                        <th>id</th>
+                        <th>序号</th>
                         <th>物业编号</th>
                         <th>物业类型</th>
                         <th>地址信息</th>
@@ -42,7 +42,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>id</th>
+                        <th>序号</th>
                         <th>物业编号</th>
                         <th>物业类型</th>
                         <th>地址信息</th>
@@ -592,10 +592,13 @@
             },
             "columnDefs": [{
                 "targets": 0,
-                "data":"id",
-                "visible": false,
+                "data":null,
                 "orderable": false,
-                "searchable": false
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
             },{
                 "targets": 1,
                 "data":"code",

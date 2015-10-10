@@ -173,10 +173,13 @@
 			},
 			"columnDefs": [{
 				"targets": 0,
-				"data":"id",
-				"visible": false,
+				"data":null,
 				"orderable": false,
-				"searchable": false
+				"searchable": false,
+				"createdCell": function (nTd, sData, oData, iRow, iCol) {
+					var startnum=this.api().page()*(this.api().page.info().length);
+					$(nTd).html(iRow+1+startnum);
+				}
 			},{
 				"targets": 1,
 				"data":"propertyId",
@@ -206,7 +209,10 @@
 				"targets": 5,
 				"data": "billGenerationTime",
 				"orderable": false,
-				"searchable": false
+				"searchable": false,
+				"render": function ( data, type, row ) {
+					return formatDate(data,"yyyy-MM-dd");
+				}
 			},{
 				"targets": 6,
 				"data": "payStatus",

@@ -60,4 +60,10 @@ public class ComplainServiceImpl implements ComplainService
     {
 
     }
+
+    @Override
+    public ArrayList<ComplainEntity> getComplainByPhone(String phone,Byte status)
+    {
+        return complainDao.getByPhone(phone,status);
+    }
 }

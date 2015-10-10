@@ -27,10 +27,10 @@
                 <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
                     <thead>
                     <tr>
-                        <th>id</th>
+                        <th>序号</th>
                         <th>主题</th>
                         <th>用户信息</th>
-                        <th>投诉时间</th>
+                        <th>报修时间</th>
                         <th>状态</th>
                         <th>评分</th>
                         <th>维修人员</th>
@@ -44,10 +44,10 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>id</th>
+                        <th>序号</th>
                         <th>主题</th>
                         <th>用户信息</th>
-                        <th>投诉时间</th>
+                        <th>报修时间</th>
                         <th>状态</th>
                         <th>评分</th>
                         <th>维修人员</th>
@@ -202,19 +202,14 @@
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
-                "targets": -1,//删除
-                "data": null,
+                "targets": 0,
+                "data":null,
                 "orderable": false,
                 "searchable": false,
-                "defaultContent":
-                        "<button id='delrow' class='btn btn-primary' type='button'>删除</button>"
-            },{
-                "targets": 0,
-                "data": "id",
-                "visible": false,
-                "orderable": false,
-                "searchable": false
-
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
             },{
                 "targets": 1,
                 "data": "title",
@@ -285,6 +280,14 @@
                 "searchable": true,
                 "defaultContent":"--"
 
+            },{
+                "targets": 8,
+                "data": null,
+                "visible": true,
+                "orderable": true,
+                "searchable": true,
+                "defaultContent":
+                        "<button id='chooseRepirman' class='btn btn-primary' type='button'>删除</button>"
             }
             ],
             "aaSorting": [[ 1, "asc" ]],

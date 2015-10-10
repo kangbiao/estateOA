@@ -27,6 +27,7 @@
                        id="appUserListTable">
                     <thead>
                     <tr>
+                        <th>序号</th>
                         <th>姓名</th>
                         <th>手机</th>
                         <th>用户类型</th>
@@ -41,6 +42,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                        <th>序号</th>
                         <th>姓名</th>
                         <th>手机</th>
                         <th>用户类型</th>
@@ -280,20 +282,29 @@
             },
             "columnDefs": [{
                 "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
                 "data":"userName",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
 
             },{
-                "targets": 1,
+                "targets": 2,
                 "data":"phone",
                 "visible": true,
                 "orderable": true,
                 "searchable": false
 
             },{
-                "targets": 2,
+                "targets": 3,
                 "data":"userRole",
                 "visible": true,
                 "orderable": false,
@@ -310,7 +321,7 @@
                 }
 
             },{
-                "targets": 3,
+                "targets": 4,
                 "data":"registerTime",
                 "visible": true,
                 "orderable": false,
@@ -322,7 +333,7 @@
                 }
 
             },{
-                "targets": 4,
+                "targets": 5,
                 "data":"status",
                 "visible": true,
                 "orderable": false,
@@ -339,7 +350,7 @@
                 }
 
             },{
-                "targets": 5,
+                "targets": 6,
                 "data": "userRole",
                 "orderable": false,
                 "searchable": false,
@@ -350,14 +361,14 @@
                         return "<button id='propertyInfoBtn' class='btn btn-primary' type='button'>绑定物业</button>";
                 }
             },{
-                "targets": 6,
+                "targets": 7,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
                         "<button id='doorRecordBtn' class='btn btn-primary' type='button'>门禁记录</button>"
             },{
-                "targets": 7,
+                "targets": 8,
                 "data": "status",
                 "orderable": false,
                 "searchable": false,
