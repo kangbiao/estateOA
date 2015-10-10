@@ -79,6 +79,13 @@ public interface PropertyService
      */
     ArrayList<PropertyEntity> getPropertyByOwnerPhone(String phone);
 
+    /**
+     * 通过园区id获取该园区下的所有物业
+     * @param id
+     * @return
+     */
+    ArrayList<PropertyEntity> getAllPropertyByVillageID(Integer id);
+
     //TODO 项目验收,待删除
     ArrayList<Select2> getAllProperty();
 

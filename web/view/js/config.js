@@ -29,6 +29,7 @@ urlConfig.addParkingLotFee=host+"fee/add/parkingLot";
 urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
 urlConfig.relateFeeToBuilding=host+"fee/relateBuilding";
 urlConfig.getBillList=host+"fee/getBillList";
+urlConfig.generateAllBill=host+"fee/getnerateAllBill";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";

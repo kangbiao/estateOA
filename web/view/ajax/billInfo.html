@@ -10,6 +10,9 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
+				<div class="box-name">
+					<button id="generateBillBtn" class="btn btn-info">一键生成账单</button>
+				</div>
 				<div class="box-icons">
 					<a class="expand-link">
 						<i class="fa fa-expand"></i>
@@ -117,6 +120,37 @@
 </div>
 <script type="text/javascript">
 	var editTable;
+
+	$("#generateBillBtn").click(function(){
+		var con=confirm("确定您的操作?\n手动生成的账单为临时账单,不影响最后结算");
+		var thisObject=$(this);
+		if(con)
+		{
+			thisObject.html('正在生成中<i class="fa fa-spinner fa-spin">');
+			$.ajax({
+				type: "post",
+				async: true,
+				url: urlConfig.generateAllBill,
+				dataType: "json",
+				success: function (result) {
+					if (result.status) {
+						editTable.ajax.reload( null, false );
+						alert("生成成功");
+						thisObject.html('一键生成账单');
+					}
+					else
+					{
+						alert(result.errorMsg.description);
+						thisObject.html('一键生成账单');
+					}
+				},
+				error: function () {
+					alert("服务器连接失败,请重试!");
+					thisObject.html('一键生成账单');
+				}
+			});
+		}
+	});
 
 	$("#button1").on('click',function(){
 		$("#feeInfoModel1").modal("show");

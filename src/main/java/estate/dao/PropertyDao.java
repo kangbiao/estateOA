@@ -45,7 +45,10 @@ public interface PropertyDao
     ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone,int role);
 
 
-    // TODO 为了适应验收而写,待删除
+    /**
+     * 获取所有的物业
+     * @return
+     */
     ArrayList<PropertyEntity> getAllProperty();
 
 }

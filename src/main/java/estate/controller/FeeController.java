@@ -4,12 +4,15 @@ import estate.common.Config;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.entity.database.FeeItemEntity;
+import estate.entity.database.PropertyEntity;
 import estate.entity.database.RuleEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.PropertyNotBindFeeItemException;
 import estate.service.BillService;
 import estate.service.FeeService;
+import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,8 @@ public class FeeController
     private FeeService feeService;
     @Autowired
     private BillService billService;
+    @Autowired
+    private PropertyService propertyService;
 
 
     @RequestMapping(value = "/add/{feeType}")
@@ -202,4 +207,34 @@ public class FeeController
         }
     }
 
+    /**
+     * 一键生成所有的账单,若有生成失败的账单则只返回失败的账单
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getnerateAllBill")
+    public BasicJson generateAllBill(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+
+        ArrayList<PropertyEntity> failProperties=new ArrayList<>();
+        ArrayList<PropertyEntity> propertyEntities = propertyService.getAllPropertyByVillageID(1);
+        if (propertyEntities != null)
+        {
+            for (PropertyEntity propertyEntity : propertyEntities)
+            {
+                try
+                {
+                    billService.generateBillByPropertyID(propertyEntity.getId());
+                }
+                catch (PropertyNotBindFeeItemException e)
+                {
+                    failProperties.add(propertyEntity);
+                }
+            }
+            basicJson.setJsonString(failProperties);
+        }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 }

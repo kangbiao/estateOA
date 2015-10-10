@@ -155,11 +155,19 @@ public class PropertyServiceImpl implements PropertyService
         return propertyDao.getPropertiesByPhoneRole(phone, UserType.OWNER);
     }
 
+    @Override
+    public ArrayList<PropertyEntity> getAllPropertyByVillageID(Integer id)
+    {
+        return propertyDao.getAllProperty();
+    }
+
     //TODO 项目验收,待删除
     @Override
     public ArrayList<Select2> getAllProperty()
     {
         ArrayList<PropertyEntity> properties=propertyDao.getAllProperty();
+        if (properties==null)
+            return null;
         ArrayList<Select2> items=new ArrayList<>();
         for (PropertyEntity propertyEntity:properties)
         {
