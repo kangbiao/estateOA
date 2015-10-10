@@ -36,8 +36,8 @@
         <property name="remarkText">
             <column name="remark_text" sql-type="varchar" length="100"/>
         </property>
-        <property name="adminId">
-            <column name="admin_id" sql-type="int unsigned"/>
+        <property name="cuId">
+            <column name="cu_id" sql-type="int unsigned"/>
         </property>
         <property name="result">
             <column name="result" sql-type="varchar" length="200"/>
@@ -45,5 +45,9 @@
         <property name="repirmanPhone">
             <column name="repirman_phone" sql-type="varchar" length="15"/>
         </property>
+        <many-to-one name="consoleUserEntity" lazy="false" update="false" insert="false"
+                     class="estate.entity.database.ConsoleUserEntity">
+            <column name="cu_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

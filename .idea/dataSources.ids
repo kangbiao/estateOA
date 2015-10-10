@@ -54,11 +54,11 @@
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="fee_item_fee" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5a2Y5pS+55SxZmVlX2l0ZW1faWTjgIrvvJ3jgItmZWVfYW1vdW5057uE5oiQ55qE6ZSu5YC85a+577yM5Lul6YCX5Y+36Ze06ZqU44CC"/>
-      <column name="pay_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="pay_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
       <column name="pay_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="pay_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="bill_generation_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="overdue_fee" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3"/>
+      <column name="overdue_fee" sqlType="DECIMAL" precision="11" scale="2" nullable="true" jdbcType="3" def="MC4wMA=="/>
       <column name="payer" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5LuY5qy+5Lq6"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
@@ -81,10 +81,12 @@
       <column name="image_id_list" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
-      <column name="admin_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="remark" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="5aSE55CG5oqV6K+J5Lq65ZGY5aGr5YaZ5aSE55CG6K+05piO"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_axsavu84vcq195a7mqw9x2xj4" columns="cu_id" ref-table="console_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="cu_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_axsavu84vcq195a7mqw9x2xj4" unique="false" columns="cu_id"/>
     </table>
     <table name="console_group" schema="" catalog="PropertySystem" type="TABLE">
       <column name="cg_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -103,6 +105,8 @@
       <column name="identity_id" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="remark" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="54mp5Lia5Lq65ZGY5pS25Yiw55qE6K+E5Lu3"/>
       <primary-key name="PRIMARY" columns="cu_id"/>
+      <exported-key name="FK_axsavu84vcq195a7mqw9x2xj4" table="complain" schema="" catalog="PropertySystem" columns="cu_id"/>
+      <exported-key name="FK_1nyd0erg10vfu0etf8fc8h0va" table="notice" schema="" catalog="PropertySystem" columns="cu_id"/>
     </table>
     <table name="family" schema="" catalog="PropertySystem" type="TABLE">
       <column name="family_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -161,6 +165,8 @@
       <column name="expiretime" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5aGr5YaZ5pyJ5pWI5pe26Ze077yM5Lul5aSp5Li65Y2V5L2N"/>
       <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Y+R5biD6ICF55qEaWQ="/>
       <primary-key name="PRIMARY" columns="notice_id"/>
+      <foreign-key name="FK_1nyd0erg10vfu0etf8fc8h0va" columns="cu_id" ref-table="console_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="cu_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_1nyd0erg10vfu0etf8fc8h0va" unique="false" columns="cu_id"/>
     </table>
     <table name="open_door_record" schema="" catalog="PropertySystem" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -234,7 +240,7 @@
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA==" remarks="MS7mnKrmj5DkuqQyLuW3suaPkOS6pOacquWkhOeQhjMu5aSE55CG5LitNOWkhOeQhuWujA=="/>
       <column name="remark" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="remark_text" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <column name="admin_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="57u05L+u5Lq65ZGY5aGr5YaZ55qE5aSE55CG6K+05piO"/>
       <column name="repirman_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>

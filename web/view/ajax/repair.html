@@ -213,30 +213,29 @@
             },{
                 "targets": 1,
                 "data": "title",
-                "visible": true,
                 "orderable": true,
-                "searchable": true
+                "searchable": false
 
             },{
                 "targets": 2,
-                "data": "userId",
-                "visible": true,
-                "orderable": true,
-                "searchable": true
+                "data": "phone",
+                "orderable": false,
+                "searchable": false
 
             },{
                 "targets": 3,
                 "data": "time",
-                "visible": true,
-                "orderable": true,
-                "searchable": true
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
 
             },{
                 "targets": 4,
                 "data": "status",
-                "visible": true,
-                "orderable": true,
-                "searchable": true,
+                "orderable": false,
+                "searchable": false,
                 "render": function ( data, type, row ) {
                     if(data==0)
                     {
@@ -253,17 +252,15 @@
             },{
                 "targets": 5,
                 "data": "remark",
-                "visible": true,
-                "orderable": true,
-                "searchable": true,
+                "orderable": false,
+                "searchable": false,
                 "defaultContent":"--"
 
             },{
                 "targets": 6,
                 "data": "repirmanPhone",
-                "visible": true,
-                "orderable": true,
-                "searchable": true,
+                "orderable": false,
+                "searchable": false,
                 "render": function ( data, type, row ) {
                     if(data==null||data=="")
                     {
@@ -274,18 +271,16 @@
                 }
             },{
                 "targets": 7,
-                "data": "adminId",
-                "visible": true,
-                "orderable": true,
-                "searchable": true,
+                "data": "consoleUserEntity.name",
+                "orderable": false,
+                "searchable": false,
                 "defaultContent":"--"
 
             },{
                 "targets": 8,
                 "data": null,
-                "visible": true,
-                "orderable": true,
-                "searchable": true,
+                "orderable": false,
+                "searchable": false,
                 "defaultContent":
                         "<button id='chooseRepirman' class='btn btn-primary' type='button'>删除</button>"
             }
@@ -316,7 +311,7 @@
                     "sortAscending":  ":正序",
                     "sortDescending": ":倒序"
                 }
-            },
+            }
         });
 
     }

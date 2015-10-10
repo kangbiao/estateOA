@@ -15,19 +15,11 @@ public class RepairEntity
     private Byte status;
     private Integer remark;
     private String remarkText;
-    private Integer adminId;
+    private Integer cuId;
     private String result;
     private String repirmanPhone;
+    private ConsoleUserEntity consoleUserEntity;
 
-    public Integer getAdminId()
-    {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId)
-    {
-        this.adminId = adminId;
-    }
 
     public String getContent()
     {
@@ -147,5 +139,25 @@ public class RepairEntity
     public void setTitle(String title)
     {
         this.title = title;
+    }
+
+    public ConsoleUserEntity getConsoleUserEntity()
+    {
+        return consoleUserEntity;
+    }
+
+    public void setConsoleUserEntity(ConsoleUserEntity consoleUserEntity)
+    {
+        this.consoleUserEntity = consoleUserEntity;
+    }
+
+    public Integer getCuId()
+    {
+        return cuId;
+    }
+
+    public void setCuId(Integer cuId)
+    {
+        this.cuId = cuId;
     }
 }

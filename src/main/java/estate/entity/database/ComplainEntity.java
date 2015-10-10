@@ -14,9 +14,10 @@ public class ComplainEntity
     private String imageIdList;
     private Byte type;
     private Byte status;
-    private Integer adminId;
+    private Integer cuId;
     private Byte remark;
     private String result;
+    private ConsoleUserEntity consoleUserEntity;
 
     public int getId()
     {
@@ -99,16 +100,6 @@ public class ComplainEntity
         this.status = status;
     }
 
-    public Integer getAdminId()
-    {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId)
-    {
-        this.adminId = adminId;
-    }
-
     public Byte getRemark()
     {
         return remark;
@@ -137,5 +128,25 @@ public class ComplainEntity
     public void setPhone(String phone)
     {
         this.phone = phone;
+    }
+
+    public Integer getCuId()
+    {
+        return cuId;
+    }
+
+    public void setCuId(Integer cuId)
+    {
+        this.cuId = cuId;
+    }
+
+    public ConsoleUserEntity getConsoleUserEntity()
+    {
+        return consoleUserEntity;
+    }
+
+    public void setConsoleUserEntity(ConsoleUserEntity consoleUserEntity)
+    {
+        this.consoleUserEntity = consoleUserEntity;
     }
 }

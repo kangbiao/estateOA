@@ -15,6 +15,7 @@ public class NoticeEntity
     private Byte type;
     private Integer expiretime;
     private Integer cuId;
+    private ConsoleUserEntity consoleUserEntity;
 
 
     public String getTitle()
@@ -105,5 +106,15 @@ public class NoticeEntity
     public void setId(Integer id)
     {
         this.id = id;
+    }
+
+    public ConsoleUserEntity getConsoleUserEntity()
+    {
+        return consoleUserEntity;
+    }
+
+    public void setConsoleUserEntity(ConsoleUserEntity consoleUserEntity)
+    {
+        this.consoleUserEntity = consoleUserEntity;
     }
 }

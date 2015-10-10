@@ -30,7 +30,7 @@
                         <th>序号</th>
                         <th>类型</th>
                         <th>主题</th>
-                        <th>用户姓名</th>
+                        <th>用户电话</th>
                         <th>投诉时间</th>
                         <th>状态</th>
                         <th>评分</th>
@@ -47,7 +47,7 @@
                         <th>序号</th>
                         <th>类型</th>
                         <th>主题</th>
-                        <th>用户姓名</th>
+                        <th>用户电话</th>
                         <th>投诉时间</th>
                         <th>状态</th>
                         <th>评分</th>
@@ -146,38 +146,53 @@
             },{
                 "targets": 1,
                 "data": "type",
-                "visible": true,
-                "orderable": true,
-                "searchable": false
-
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    if(data==1)
+                        return "类型一";
+                    if(data==2)
+                        return "类型二";
+                    if(data==3)
+                        return "类型三";
+                    else
+                        return "--";
+                }
             },{
                 "targets": 2,
                 "data": "title",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
-
             },{
                 "targets": 3,
-                "data": "appUserEntity",
-                "visible": true,
+                "data": "phone",
                 "orderable": false,
                 "searchable": false
 
             },{
                 "targets": 4,
                 "data": "time",
-                "visible": true,
                 "orderable": false,
-                "searchable": false
-
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
             },{
                 "targets": 5,
                 "data": "status",
                 "orderable": false,
                 "searchable": false,
-                "defaultContent":"--"
-
+                "render": function ( data, type, row ) {
+                    if(data==0)
+                        return "<font color='red'>待处理</font>";
+                    else if(data==1)
+                        return "<font color='#4b0082'>待用户评价</font>";
+                    else if(data==2)
+                        return "<font color='green'>处理完成</font>";
+                    else
+                        return "--";
+                }
             },{
                 "targets": 6,
                 "data": "remark",
@@ -185,7 +200,7 @@
                 "searchable": false
             },{
                 "targets": 7,//删除
-                "data": 'consoleUserEntity',
+                "data": 'consoleUserEntity.name',
                 "orderable": false,
                 "searchable": false
             },{

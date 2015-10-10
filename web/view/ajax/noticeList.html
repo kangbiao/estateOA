@@ -105,7 +105,6 @@
     //查看详情
     $('#estateListTable').on( 'click', 'button#detailBtn', function () {
         var data = editTable.row($(this).parents('tr')).data();
-        console.log(data);
         $("#title").html(data.title);
         $("#description").html(data.description);
         $("#detail").html(data.content);
@@ -160,7 +159,6 @@
                     var startnum=this.api().page()*(this.api().page.info().length);
                     $(nTd).html(iRow+1+startnum);
                 }
-
             },{
                 "targets": 1,
                 "data": "title",
@@ -177,7 +175,6 @@
                 "render": function ( data, type, row ) {
                     return formatDate(data,"yyyy-MM-dd");
                 }
-
             },{
                 "targets": 3,
                 "data": "expiretime",
@@ -187,15 +184,14 @@
                 "render": function ( data, type, row ) {
                     return formatDate(data,"yyyy-MM-dd");
                 }
-
             },{
                 "targets": 4,
-                "data": "cuId",
+                "data": "consoleUserEntity.name",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
             },{
-                "targets": 5,//删除
+                "targets": 5,
                 "data": null,
                 "orderable": false,
                 "searchable": false,

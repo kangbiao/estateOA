@@ -1,15 +1,19 @@
 package estate.app;
 
 import estate.common.ComplainStatus;
+import estate.common.util.LogUtil;
 import estate.entity.json.BasicJson;
 import estate.service.ComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * Created by kangbiao on 15-10-10.
@@ -59,6 +63,27 @@ public class ComplainHandler
             basicJson.getErrorMsg().setDescription("获取投诉失败");
             return basicJson;
         }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    @RequestMapping(value = "/add")
+    public BasicJson addComplain(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+//        LogUtil.E("json:"+ GsonUtil.getGson().toJson(request));
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        Map<String,MultipartFile> map= multipartRequest.getFileMap();
+
+
+        for (String key: map.keySet())
+        {
+            MultipartFile fileItem= map.get(key);
+            String fileName = fileItem.getOriginalFilename();
+            LogUtil.E("FILENAME:" + fileName);
+        }
+
 
         basicJson.setStatus(true);
         return basicJson;
