@@ -62,4 +62,18 @@ public class RepairHandler
         basicJson.setStatus(true);
         return basicJson;
     }
+
+    /**
+     * 增加报修
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/add")
+    public BasicJson addRepair(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 }
