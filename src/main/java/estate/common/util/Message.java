@@ -15,7 +15,7 @@ public class Message
 {
     public static String send(String mobile, String content)
     {
-        String sign="VerPass";
+        String sign="阳辰";
 
         StringBuffer sb = new StringBuffer("http://sms.1xinxi.cn/asmx/smsservice.aspx?");
         sb.append("name=VerPass@163.com");

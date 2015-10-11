@@ -2,7 +2,9 @@ package estate.app;
 
 import estate.common.ComplainStatus;
 import estate.common.util.LogUtil;
+import estate.entity.database.ComplainEntity;
 import estate.entity.json.BasicJson;
+import estate.service.BaseService;
 import estate.service.ComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ public class ComplainHandler
 
     @Autowired
     private ComplainService complainService;
+    @Autowired
+    private BaseService baseService;
 
     /**
      * 获取我的投诉
@@ -69,13 +73,25 @@ public class ComplainHandler
     }
 
     @RequestMapping(value = "/add")
-    public BasicJson addComplain(HttpServletRequest request)
+    public BasicJson addComplain(ComplainEntity complainEntity,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
-//        LogUtil.E("json:"+ GsonUtil.getGson().toJson(request));
+        HttpSession httpSession=request.getSession();
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String,MultipartFile> map= multipartRequest.getFileMap();
-
+        complainEntity.setStatus(ComplainStatus.FORPROCESS);
+        complainEntity.setPhone((String) httpSession.getAttribute("phone"));
+        complainEntity.setTime(System.currentTimeMillis());
+        complainEntity.setDescription(complainEntity.getContent());
+        try
+        {
+            baseService.save(complainEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("投诉信息保存失败");
+            return basicJson;
+        }
 
         for (String key: map.keySet())
         {
@@ -83,7 +99,6 @@ public class ComplainHandler
             String fileName = fileItem.getOriginalFilename();
             LogUtil.E("FILENAME:" + fileName);
         }
-
 
         basicJson.setStatus(true);
         return basicJson;

@@ -31,6 +31,7 @@ urlConfig.parkingLotFeeList=host+"fee/list/parkingLot";
 urlConfig.relateFeeToBuilding=host+"fee/relateBuilding";
 urlConfig.getBillList=host+"fee/getBillList";
 urlConfig.generateAllBill=host+"fee/getnerateAllBill";
+urlConfig.pushBill=host+"fee/pushBill/";
 
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";
@@ -67,6 +68,7 @@ urlConfig.addBuilding=host+"property/addBuilding";
 urlConfig.villageList=host+"property/villageList";
 urlConfig.buildingList=host+"property/buildingList";
 urlConfig.generateBill=host+"property/generateBill/";
+urlConfig.getOwnerPropertyInfoByID=host+"property/getMoreInfo/";
 
 //搜索
 urlConfig.search=host+"search/";

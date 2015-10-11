@@ -7,6 +7,7 @@
     <class name="estate.entity.database.ComplainEntity" table="complain" schema="" catalog="PropertySystem">
         <id name="id">
             <column name="id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
         <property name="title">
             <column name="title" sql-type="varchar" length="100"/>

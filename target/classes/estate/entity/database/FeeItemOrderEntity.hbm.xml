@@ -16,7 +16,7 @@
             <column name="fee_item_id" sql-type="int unsigned"/>
         </property>
         <property name="isBilled">
-            <column name="is_billed" sql-type="tinyint"/>
+            <column name="is_billed" sql-type="tinyint" default="0"/>
         </property>
         <many-to-one name="feeItemEntity" update="false" insert="false" class="estate.entity.database.FeeItemEntity">
             <column name="fee_item_id"/>

@@ -227,6 +227,12 @@ public class UserServiceImpl implements UserService
         return null;
     }
 
+    @Override
+    public ArrayList<AppUserEntity> getAllAppUser()
+    {
+        return userDao.getAllAppUser();
+    }
+
 
     @Override
     public TableData getList(TableFilter tableFilter, Object object)

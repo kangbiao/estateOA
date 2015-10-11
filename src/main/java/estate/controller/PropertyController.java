@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-23.
@@ -288,6 +289,29 @@ public class PropertyController
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");
                 return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+
+    @RequestMapping(value = "/getMoreInfo/{propertyID}")
+    public BasicJson getMoreInfoByPropertyID(@PathVariable Integer propertyID)
+    {
+        BasicJson basicJson =new BasicJson();
+        ArrayList<Object> objects=new ArrayList<>();
+        try
+        {
+            PropertyEntity propertyEntity= (PropertyEntity) baseService.get(propertyID,PropertyEntity.class);
+            objects.add(propertyEntity);
+            objects.add(userService.getUserInfoByProperityID(propertyID, UserType.OWNER));
+            basicJson.setJsonString(objects);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("获取物业信息失败");
+            return basicJson;
         }
 
         basicJson.setStatus(true);

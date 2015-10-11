@@ -15,7 +15,7 @@
             <column name="fee_item_fee" sql-type="varchar"/>
         </property>
         <property name="payStatus">
-            <column name="pay_status" sql-type="tinyint"/>
+            <column name="pay_status" sql-type="tinyint" default="0"/>
         </property>
         <property name="payType">
             <column name="pay_type" sql-type="tinyint"/>
@@ -27,10 +27,10 @@
             <column name="bill_generation_time" sql-type="bigint"/>
         </property>
         <property name="overdueFee">
-            <column name="overdue_fee" sql-type="decimal" precision="11" scale="2"/>
+            <column name="overdue_fee" sql-type="decimal" precision="11" scale="2" default="0.00"/>
         </property>
         <property name="payer">
-            <column name="payer" sql-type="varchar" length="45"/>
+            <column name="payer" sql-type="varchar" length="45" default=""/>
         </property>
     </class>
 </hibernate-mapping>

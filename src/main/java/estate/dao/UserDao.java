@@ -64,4 +64,10 @@ public interface UserDao
      */
     ArrayList<Object> getAppUserByPropertyID(Integer id);
 
+    /**
+     * 获取所有的app用户
+     * @return
+     */
+    ArrayList<AppUserEntity> getAllAppUser();
+
 }

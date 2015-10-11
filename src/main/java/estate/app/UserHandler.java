@@ -4,10 +4,7 @@ import estate.common.AppUserStatus;
 import estate.common.CardType;
 import estate.common.SexType;
 import estate.common.UserType;
-import estate.common.util.Convert;
-import estate.common.util.GsonUtil;
-import estate.common.util.LogUtil;
-import estate.common.util.VerifyCodeGenerate;
+import estate.common.util.*;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.FamilyEntity;
 import estate.entity.database.OwnerEntity;
@@ -62,6 +59,17 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("密码错误");
             return basicJson;
         }
+        if (appUserEntity.getStatus().equals(AppUserStatus.DISABLE))
+        {
+            basicJson.getErrorMsg().setDescription("登录失败,该用户已被禁用");
+            return basicJson;
+        }
+        if (appUserEntity.getStatus().equals(AppUserStatus.FORCHECK))
+        {
+            basicJson.getErrorMsg().setDescription("登录失败,待审核用户不能登陆");
+            return basicJson;
+        }
+
 
         basicJson.setStatus(true);
         request.getSession().setAttribute("phone", phone);
@@ -97,13 +105,12 @@ public class UserHandler
             return basicJson;
         }
         String verifyCode=VerifyCodeGenerate.create();
-        LogUtil.E("Session:"+verifyCode);
 //
-//        if (!Message.send(phone,"感谢您注册VerPass您的验证码是"+verifyCode).equals("succ"))
-//        {
-//            basicJson.getErrorMsg().setDescription("验证码发送失败");
-//            return basicJson;
-//        }
+        if (!Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心").equals("succ"))
+        {
+            basicJson.getErrorMsg().setDescription("验证码发送失败");
+            return basicJson;
+        }
         request.getSession().setAttribute("verifyCode", verifyCode);
         request.getSession().setAttribute("phone", phone);
         basicJson.setStatus(true);
@@ -120,7 +127,7 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("请输入验证码");
             return basicJson;
         }
-        if (!verifyCode.equals("101010"))
+        if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
         {
             LogUtil.E(request.getSession().getAttribute("verifyCode"));
             basicJson.getErrorMsg().setDescription("验证码输入错误!");
@@ -141,30 +148,33 @@ public class UserHandler
         String userName=request.getParameter("nickname");
         String password=request.getParameter("password");
 
-        Object o=userService.getUserInfoBYPhone(phone, UserType.OWNER);
-        if (o==null)
-        {
-            basicJson.getErrorMsg().setCode("100001");
-        }
-        else
-        {
-            basicJson.getErrorMsg().setCode("100000");
-        }
-
         appUserEntity.setPhone(phone);
         appUserEntity.setUserName(userName);
         appUserEntity.setPasswd(password);
-        appUserEntity.setStatus(AppUserStatus.FORCHECK);
 
-        try
+
+        Object o=userService.getUserInfoBYPhone(phone, UserType.OWNER);
+        if (o==null)
         {
-            baseService.save(appUserEntity);
+            appUserEntity.setStatus(AppUserStatus.FORCHECK);
+            basicJson.getErrorMsg().setCode("100001");
+            request.getSession().setAttribute("appUser", appUserEntity);
         }
-        catch (Exception e)
+        else
         {
-            LogUtil.E("错误:"+e.getMessage());
-            basicJson.getErrorMsg().setDescription("注册失败");
-            return basicJson;
+            appUserEntity.setStatus(AppUserStatus.ENABLE);
+            appUserEntity.setUserRole(UserType.OWNER);
+            basicJson.getErrorMsg().setCode("100000");
+            try
+            {
+                baseService.save(appUserEntity);
+            }
+            catch (Exception e)
+            {
+                LogUtil.E("错误:"+e.getMessage());
+                basicJson.getErrorMsg().setDescription("注册失败");
+                return basicJson;
+            }
         }
 
         basicJson.setStatus(true);
@@ -188,11 +198,12 @@ public class UserHandler
 
         LogUtil.E("role:" + String.valueOf(role) + "phone:" + phone + "propertyId:" + propertyId);
 
-        AppUserEntity appUserEntity= (AppUserEntity) userService.getUserInfoBYPhone(phone,UserType.APPUSER);
+        //TODO 需要将注册写到事务管理里面
+        AppUserEntity appUserEntity= (AppUserEntity)request.getSession().getAttribute("appUser");
+        LogUtil.E(GsonUtil.getGson().toJson(appUserEntity));
+        appUserEntity.setPhone(phone);
         appUserEntity.setUserRole(role);
         baseService.save(appUserEntity);
-
-//        appUserEntity= (AppUserEntity) baseService.get(id,appUserEntity);
 
         switch (role)
         {

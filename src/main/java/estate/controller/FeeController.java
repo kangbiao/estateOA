@@ -1,18 +1,16 @@
 package estate.controller;
 
 import estate.common.Config;
+import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
-import estate.entity.database.FeeItemEntity;
-import estate.entity.database.PropertyEntity;
-import estate.entity.database.RuleEntity;
+import estate.common.util.Message;
+import estate.entity.database.*;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.PropertyNotBindFeeItemException;
-import estate.service.BillService;
-import estate.service.FeeService;
-import estate.service.PropertyService;
+import estate.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +34,10 @@ public class FeeController
     private BillService billService;
     @Autowired
     private PropertyService propertyService;
+    @Autowired
+    private BaseService baseService;
+    @Autowired
+    private UserService userService;
 
 
     @RequestMapping(value = "/add/{feeType}")
@@ -233,6 +235,30 @@ public class FeeController
                 }
             }
             basicJson.setJsonString(failProperties);
+        }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    @RequestMapping(value = "/pushBill/{propertyID}")
+    public BasicJson pushBillToUser(@PathVariable Integer propertyID, HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+
+        try
+        {
+            ArrayList<Object> ownerEntities=userService.getUserInfoByProperityID(propertyID, UserType.OWNER);
+            LogUtil.E(ownerEntities.size());
+            for (Object object:ownerEntities)
+            {
+                OwnerEntity ownerEntity= (OwnerEntity) object;
+                LogUtil.E(Message.send(ownerEntity.getPhone(), "您有一笔待缴账单，账单生成日期"));
+            }
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("短信发送失败");
+            return basicJson;
         }
         basicJson.setStatus(true);
         return basicJson;

@@ -1,5 +1,6 @@
 package estate.dao.impl;
 
+import estate.common.AppUserStatus;
 import estate.common.UserType;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
@@ -11,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +43,18 @@ public class UserDaoImpl implements UserDao
     public AppUserEntity getByPhoneStatus(String phone, Byte status)
     {
         Session session=getSession();
-        String hql="from AppUserEntity t where t.phone=:phone and t.status=:status";
-        List list=session.createQuery(hql).setString("phone", phone).setByte("status", status).list();
+        String hql;
+        List list;
+        if (status!=null)
+        {
+            hql = "from AppUserEntity t where t.phone=:phone and t.status=:status";
+            list = session.createQuery(hql).setString("phone", phone).setByte("status", status).list();
+        }
+        else
+        {
+            hql = "from AppUserEntity t where t.phone=:phone";
+            list= session.createQuery(hql).setString("phone", phone).list();
+        }
         if (list.size()>0)
             return (AppUserEntity) list.get(0);
         return null;
@@ -223,6 +235,17 @@ public class UserDaoImpl implements UserDao
         Session session=getSession();
         String hql="from ";
         session.createQuery(hql).list();
+        return null;
+    }
+
+    @Override
+    public ArrayList<AppUserEntity> getAllAppUser()
+    {
+        Session session =getSession();
+        String hql="from AppUserEntity ";
+        List list=session.createQuery(hql).list();
+        if (list.size()>0)
+            return (ArrayList<AppUserEntity>) list;
         return null;
     }
 }

@@ -1,5 +1,7 @@
 package estate.controller;
 
+import estate.common.util.Message;
+import estate.entity.database.AppUserEntity;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
@@ -7,6 +9,7 @@ import estate.entity.json.TableFilter;
 import estate.service.BaseService;
 import estate.service.NoticeService;
 import estate.service.PictureService;
+import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-3.
@@ -31,6 +35,8 @@ public class NoticeController
     private PictureService pictureService;
     @Autowired
     private BaseService baseService;
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -176,20 +182,22 @@ public class NoticeController
                 basicJson.getErrorMsg().setDescription("获取公告失败");
                 return basicJson;
             }
+
+            ArrayList<AppUserEntity> appUserEntities= userService.getAllAppUser();
+            if (appUserEntities==null)
+            {
+                basicJson.getErrorMsg().setDescription("暂无用户");
+                return basicJson;
+            }
+            for (AppUserEntity appUserEntity:appUserEntities)
+            {
+                Message.send(appUserEntity.getPhone(),"公告推送，系统向您推送了一条新的公告["+noticeEntity.getTitle()+"]，请您登陆app查看");
+            }
         }
         catch (Exception e)
         {
             basicJson.getErrorMsg().setDescription("获取公告失败");
             return basicJson;
-        }
-
-        try
-        {
-            Thread.sleep(10000);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
         }
 
         basicJson.setStatus(true);

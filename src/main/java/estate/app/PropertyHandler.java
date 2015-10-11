@@ -43,6 +43,12 @@ public class PropertyHandler
         String phone= (String) request.getSession().getAttribute("phone");
         try
         {
+            AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone, AppUserEntity.class);
+            if (appUserEntity.getStatus().equals(AppUserStatus.FORCHECK))
+            {
+                basicJson.getErrorMsg().setDescription("物业待审核");
+                return basicJson;
+            }
             ArrayList<PropertyEntity> propertyEntities=propertyService.getProperitiesByAppUserPhone(phone);
             if (propertyEntities==null)
             {
@@ -62,7 +68,7 @@ public class PropertyHandler
         return basicJson;
     }
 
-    @RequestMapping(value = "/checkBind")
+    @RequestMapping(value = "/getBind")
     public BasicJson checkBind(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
@@ -73,6 +79,23 @@ public class PropertyHandler
             basicJson.getErrorMsg().setDescription("非业主用户不能审核绑定");
             return basicJson;
         }
+
+        Byte status=null;
+        if (request.getParameter("status")!=null)
+        {
+            try
+            {
+                status=Byte.valueOf(request.getParameter("status"));
+                AppUserStatus.checkType(status);
+            }
+            catch (Exception e)
+            {
+                basicJson.getErrorMsg().setCode("100000");
+                basicJson.getErrorMsg().setDescription("客户端参数错误");
+                return basicJson;
+            }
+        }
+
         try
         {
             String phone= (String) httpSession.getAttribute("phone");
@@ -82,7 +105,7 @@ public class PropertyHandler
             {
                 PropertyAppUser propertyAppUser=new PropertyAppUser();
                 ArrayList<AppUserEntity> appUserEntities=userService.getBindUserByPropertyID(propertyEntity.getId(),
-                        Byte.valueOf("0"));
+                        status);
                 if (appUserEntities!=null)
                 {
                     propertyAppUser.setPropertyEntity(propertyEntity);

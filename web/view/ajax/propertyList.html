@@ -14,6 +14,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
+                    <button id="addPropertyBtn" class="btn btn-info">添加物业</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -59,6 +60,149 @@
     </div>
 </div>
 
+<div class="modal fade" role="dialog" id="addPropertyModal">
+    <div class="modal-dialog" role="dialog" style="width: 85%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="">物业详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="addPropertyForm" method="post"
+                                  class="form-horizontal">
+                                <fieldset>
+                                    <legend>物业信息</legend>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">选择园区</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" name="villageId" id="villageList">
+                                                <option value="">--选择园区--</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 control-label">选择楼栋</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control" name="buildingId" id="buildingList">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">物业编号</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="code"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">物业类型</label>
+                                        <div class="col-sm-8">
+                                            <select class="form-control" name="type" id="ssss">
+                                                <option value="1">商户</option>
+                                                <option value="2">住宅</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">地址</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="location"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="col-sm-2 control-label">面积</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" id="propertySquare" name="propertySquare"
+                                                   class="form-control" placeholder="单位/平方米">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">状态</label>
+                                        <div class="col-sm-8">
+                                            <select name="status" id="" class="form-control">
+                                                <option value="-1">出租</option>
+                                                <option value="1">自用</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">保存物业</button>
+                                        <button type="button" id="addOwnerBtn" class="btn btn-primary">添加业主</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form id="ownerAddForm" method="post" action="" class="form-horizontal">
+                                <fieldset>
+                                    <legend>添加业主</legend>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <input type="hidden" class="form-control" id="propertyID" name="propertyID" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">姓名</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" name="name" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">性别</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" name="sex">
+                                                <option value="1">男</option>
+                                                <option value="2">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">电话号码</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" name="phone" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">证件类型</label>
+                                        <div class="col-sm-6">
+                                            <select name="identityType" class="form-control" id="identityType">
+                                                <option value="1">身份证</option>
+                                                <option value="2">军人证</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">证件号码</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" name="identityCode" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label class="col-sm-2 control-label">入住时间</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" id="authTime" name="authTime"
+                                                   class="form-control input_date" placeholder="">
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <div class="col-sm-9 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">确定添加</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade" role="dialog" id="moreInfoModel">
     <div class="modal-dialog modal-lg" role="dialog">
         <div class="modal-content">
@@ -83,6 +227,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 
 <div class="modal fade" role="dialog" id="editInfoModel">
     <div class="modal-dialog" style="width: 80%;" role="dialog">
@@ -222,6 +367,12 @@
 
 <script type="text/javascript">
     var editTable;
+
+
+
+    $("#addPropertyBtn").click(function(){
+        $("#addPropertyModal").modal("show");
+    });
 
     /**
      * 编辑物业信息

@@ -77,5 +77,11 @@ public interface UserService
      */
     ArrayList<AppUserEntity> getBindUserByPropertyID(Integer id, Byte status);
 
+    /**
+     * 一次性获取所有的app用户
+     * @return
+     */
+    ArrayList<AppUserEntity> getAllAppUser();
+
 
 }
