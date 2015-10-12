@@ -148,11 +148,41 @@
 
     var editTable;//全局的datatable变量
 
+    //选择维修人员
     $('#estateListTable tbody').on( 'click', 'button#chooseRepirman', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
         $("input[name=repairID]").val(data.id);
         $("#chooseRepairManModel").modal("show");//弹出框show
+
+    });
+
+    //删除该条投诉
+    $('#estateListTable tbody').on( 'click', 'button#deleteRowBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var con=confirm("确定删除该条投诉?");
+        if(con)
+        {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.deleteRepair+data.id,
+                dataType: "json",
+                success: function (result) {
+                    if (result.status) {
+                        alert("删除成功!");
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
 
     });
 
@@ -282,7 +312,7 @@
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                        "<button id='chooseRepirman' class='btn btn-primary' type='button'>删除</button>"
+                        "<button id='deleteRowBtn' class='btn btn-primary' type='button'>删除</button>"
             }
             ],
             "aaSorting": [[ 1, "asc" ]],

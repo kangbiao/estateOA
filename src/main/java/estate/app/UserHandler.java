@@ -129,7 +129,7 @@ public class UserHandler
         }
         if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
         {
-            LogUtil.E(request.getSession().getAttribute("verifyCode"));
+            LogUtil.E("session:"+request.getSession().getAttribute("verifyCode")+"  post:"+verifyCode);
             basicJson.getErrorMsg().setDescription("验证码输入错误!");
             return basicJson;
         }
@@ -369,6 +369,38 @@ public class UserHandler
             default:
                 basicJson.getErrorMsg().setDescription("请求路径错误!");
                 return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+
+    @RequestMapping(value = "/findPassword/{phone}",method = RequestMethod.GET)
+    public BasicJson findPassword(@PathVariable String phone,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        String verifyCode=VerifyCodeGenerate.create();
+        request.getSession().setAttribute("phone", phone);
+        request.getSession().setAttribute("verifyCode",verifyCode);
+        if (!Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心").equals("succ"))
+        {
+            basicJson.getErrorMsg().setDescription("验证码发送失败,请输入合法的手机号");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    @RequestMapping(value = "/findPassword/checkVerifyCode/{verifyCode}",method = RequestMethod.GET)
+    public BasicJson checkVerifyCode(@PathVariable String verifyCode,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
+        {
+            basicJson.getErrorMsg().setDescription("验证码错误");
+            return basicJson;
         }
 
         basicJson.setStatus(true);

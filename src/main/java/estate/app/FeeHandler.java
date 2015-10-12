@@ -1,6 +1,7 @@
 package estate.app;
 
 import estate.common.util.Convert;
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.entity.database.BillEntity;
 import estate.entity.display.AppBill;
@@ -59,7 +60,7 @@ public class FeeHandler
                 basicJson.getErrorMsg().setDescription("暂无账单");
                 return basicJson;
             }
-
+            LogUtil.E(GsonUtil.getGson().toJson(entities));
             ArrayList<AppBill> bills=new ArrayList<>();
             for (BillEntity billEntity:entities)
             {
@@ -85,12 +86,13 @@ public class FeeHandler
                 appBill.setBillTime(Convert.num2time(billEntity.getBillGenerationTime(),"yyyy-MM"));
                 bills.add(appBill);
             }
+            LogUtil.E(GsonUtil.getGson().toJson(bills));
             basicJson.setJsonString(bills);
         }
         catch (Exception e)
         {
             basicJson.getErrorMsg().setDescription("获取账单失败!");
-            LogUtil.E(e.getMessage());
+            LogUtil.E("dsdsdd"+e.getMessage());
             return basicJson;
         }
         basicJson.setStatus(true);

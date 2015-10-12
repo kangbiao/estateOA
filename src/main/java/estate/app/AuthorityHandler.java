@@ -33,7 +33,7 @@ public class AuthorityHandler
         BasicJson basicJson=new BasicJson(false);
         SsidSecretEntity ssidSecretEntity;
         //TODO 从登陆的用户session中取出用户的电话号码
-        String phone="18144240528";
+        String phone= (String) request.getSession().getAttribute("phone");
         if (ssid!=null&&!ssid.equals(""))
         {
             try
@@ -51,12 +51,11 @@ public class AuthorityHandler
                 basicJson.getErrorMsg().setDescription("该ssid不存在!");
                 return basicJson;
             }
-            LogUtil.E(ssidSecretEntity.getSecret());
         }
         else
         {
-            basicJson.getErrorMsg().setCode("102133");
-            basicJson.getErrorMsg().setDescription("非法的SSID值");
+            basicJson.getErrorMsg().setCode("100000");
+            basicJson.getErrorMsg().setDescription("SSID不能为空");
             return basicJson;
         }
 

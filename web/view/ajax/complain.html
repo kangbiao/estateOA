@@ -100,11 +100,30 @@
     var editTable;//全局的datatable变量
 
     //删除数据
-    $('#complainListTable tbody').on( 'click', 'button#delRow', function () {
+    $('#complainListTable tbody').on( 'click', 'button#delRowBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
         var comfirm=confirm("确定删除?")
         if(comfirm)
         {
-            alert("删除成功");
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.deleteComplain+data.id,
+                dataType: "json",
+                success: function (result) {
+                    if (result.status) {
+                        alert("删除成功!");
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
         }
     });
 

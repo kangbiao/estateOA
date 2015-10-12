@@ -3,6 +3,37 @@
 //
 "use strict";
 
+/**
+ * 初始化园区选择
+ */
+function initVillageSelect()
+{
+	$.ajax({
+		type: "post",
+		async: true,
+		url: urlConfig.villageList,
+		dataType: "json", //返回数据形式为json
+		success: function (result) {
+			if (result.status) {
+				var options="";
+				for(var i in result.jsonString)
+				{
+					console.log(result.jsonString[i]);
+					options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+				}
+				$("#villageList").append(options);
+			}
+			else
+			{
+				alert(result.errorMsg.description);
+			}
+		},
+		error: function () {
+			alert("服务器连接失败,请重试!");
+		}
+	});
+}
+
 
 function formatDate(timestamp,format)
 {

@@ -123,8 +123,8 @@ public class BillServiceImpl implements BillService
                 Double aDouble=unitPrice*propertyEntity.getPropertySquare().doubleValue();
                 BigDecimal sum=new BigDecimal(aDouble);
                 sum=sum.setScale(2,BigDecimal.ROUND_HALF_UP);
-                kv=feeItemOrderEntity.getFeeItemEntity().getName()+":"+sum;
-                LogUtil.E("费用名:按面积收费"+feeItemOrderEntity.getFeeItemEntity().getName()+"   费用总价:"+sum);
+                kv=feeItemOrderEntity.getFeeItemEntity().getName().split(";")[0]+":"+sum;
+                LogUtil.E("费用名:按面积收费"+feeItemOrderEntity.getFeeItemEntity().getName().split(";")[0]+"   费用总价:"+sum);
             }
             else
             {

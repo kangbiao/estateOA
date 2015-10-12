@@ -36,10 +36,11 @@ urlConfig.pushBill=host+"fee/pushBill/";
 //维修相关的URL
 urlConfig.repairList=host+"repair/list";
 urlConfig.setRepairMan=host+"repair/setRepairMan";
+urlConfig.deleteRepair=host+"repair/delete/";
 
 //投诉相关的URL
 urlConfig.complainList=host+"complain/list";
-
+urlConfig.deleteComplain=host+"complain/delete/";
 
 //用户相关的URL
 urlConfig.ownerList=host+"user/ownerList";

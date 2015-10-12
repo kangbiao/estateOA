@@ -3,6 +3,7 @@ package estate.filter.web;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -24,8 +25,8 @@ public class WebFilterMain implements Filter
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-//        HttpSession session=request.getSession();
-//
+        HttpSession session=request.getSession();
+
 //        String path=request.getServletPath();
 //        ArrayList<String> passUrl=new ArrayList<>();
 //        passUrl.add("/view/403.html");
