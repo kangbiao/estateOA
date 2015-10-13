@@ -70,7 +70,8 @@ urlConfig.villageList=host+"property/villageList";
 urlConfig.buildingList=host+"property/buildingList";
 urlConfig.generateBill=host+"property/generateBill/";
 urlConfig.getOwnerPropertyInfoByID=host+"property/getMoreInfo/";
-
+urlConfig.deleteOwner=host+"property/deleteOwner";
+urlConfig.deleteProperty=host+"property/deleteProperty/";
 //搜索
 urlConfig.search=host+"search/";
 

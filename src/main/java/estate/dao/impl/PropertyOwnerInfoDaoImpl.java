@@ -45,6 +45,16 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
         Session session=getSession();
         String hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.ownerPhone=:phone";
         List list=session.createQuery(hql).setString("phone",phone).list();
-        return (ArrayList<PropertyEntity>) list;
+        if (list.size()>0)
+            return (ArrayList<PropertyEntity>) list;
+        return null;
+    }
+
+    @Override
+    public void deleteByPhonePropertyID(String phone, Integer id)
+    {
+        Session session=getSession();
+        String hql="delete from PropertyOwnerInfoEntity t where t.propertyId=:id and t.ownerPhone=:phone";
+        session.createQuery(hql).setInteger("id",id).setString("phone",phone).executeUpdate();
     }
 }

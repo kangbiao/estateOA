@@ -141,6 +141,8 @@ public class PropertyServiceImpl implements PropertyService
     public boolean checkOwnerPropertyExit(String phone, Integer id)
     {
         ArrayList<PropertyEntity> propertyEntities=propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
+        if (propertyEntities==null)
+            return true;
         for (PropertyEntity propertyEntity:propertyEntities)
         {
             if (Objects.equals(propertyEntity.getId(), id))

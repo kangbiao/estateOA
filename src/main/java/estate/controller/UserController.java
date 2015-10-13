@@ -148,7 +148,7 @@ public class UserController
         BasicJson basicJson=new BasicJson(false);
         try
         {
-            basicJson.setJsonString(propertyService.getProperitiesByAppUserPhone(phone));
+            basicJson.setJsonString(propertyService.getPropertyByOwnerPhone(phone));
         }
         catch (Exception e)
         {
@@ -192,7 +192,7 @@ public class UserController
             {
                 ArrayList<PropertyEntity> entities = (ArrayList<PropertyEntity>) userService.getPropertiesByPhone
                         (phone,type);
-                if (entities.size() > 0)
+                if (entities!=null)
                 {
                     basicJson.getErrorMsg().setDescription("该业主已绑定物业,不能删除");
                     return basicJson;

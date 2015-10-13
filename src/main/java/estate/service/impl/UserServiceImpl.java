@@ -1,5 +1,6 @@
 package estate.service.impl;
 
+import estate.common.AppUserStatus;
 import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.dao.*;
@@ -43,6 +44,32 @@ public class UserServiceImpl implements UserService
     private FamilyDao familyDao;
 
 
+    @Override
+    public void register(AppUserEntity appUserEntity, Integer propertyID)
+    {
+        baseDao.save(appUserEntity);
+        switch (appUserEntity.getUserRole())
+        {
+            case UserType.TENANT:
+                TenantEntity tenantEntity=new TenantEntity();
+                tenantEntity.setPhone(appUserEntity.getPhone());
+                tenantEntity.setAuthStatus(AppUserStatus.FORCHECK);
+                tenantEntity.setName(appUserEntity.getUserName());
+                tenantEntity.setPropertyId(propertyID);
+                baseDao.save(tenantEntity);
+                break;
+            case UserType.FAMILY:
+                FamilyEntity familyEntity=new FamilyEntity();
+                familyEntity.setName(appUserEntity.getUserName());
+                familyEntity.setPhone(appUserEntity.getPhone());
+                familyEntity.setAuthStatus(AppUserStatus.FORCHECK);
+                familyEntity.setPropertyId(propertyID);
+                baseDao.save(familyEntity);
+                break;
+            default:
+                break;
+        }
+    }
 
     public TableData getOwnerList(TableFilter tableFilter)
     {

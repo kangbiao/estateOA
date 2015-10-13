@@ -26,4 +26,6 @@ public interface PropertyOwnerInfoDao
     ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone);
 
 
+    void deleteByPhonePropertyID(String phone,Integer id);
+
 }

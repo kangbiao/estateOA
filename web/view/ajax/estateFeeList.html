@@ -324,6 +324,7 @@
             success: function (result) {
                 if (result.status) {
                     alert("添加成功");
+                    editTable.ajax.reload( null, false );
                 }
                 else
                 {

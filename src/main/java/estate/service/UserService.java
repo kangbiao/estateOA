@@ -15,6 +15,13 @@ import java.util.ArrayList;
 public interface UserService
 {
 
+    /**
+     * app用户注册
+     * @param appUserEntity
+     * @param propertyID
+     */
+    void register(AppUserEntity appUserEntity,Integer propertyID);
+
     TableData getOwnerList(TableFilter tableFilter);
 
     TableData getTenantList(TableFilter tableFilter);

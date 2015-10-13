@@ -10,6 +10,7 @@ import estate.entity.database.FamilyEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.TenantEntity;
 import estate.entity.json.BasicJson;
+import estate.exception.TypeErrorException;
 import estate.service.AppUserService;
 import estate.service.BaseService;
 import estate.service.PropertyService;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
+
+import static estate.common.UserType.FAMILY;
 
 /**
  * Created by kangbiao on 15-9-21.
@@ -189,61 +192,33 @@ public class UserHandler
     @RequestMapping(value = "/register/bind",method = RequestMethod.POST)
     public BasicJson bindOwner(HttpServletRequest request)
     {
-        LogUtil.E("---已进入请求---");
-        HttpSession httpSession=request.getSession();
         BasicJson basicJson=new BasicJson(false);
+
+        HttpSession httpSession=request.getSession();
         Integer propertyId=Integer.valueOf(request.getParameter("propertyID"));
         int role=Integer.valueOf(request.getParameter("role"));
         String phone= (String) httpSession.getAttribute("phone");
 
-        LogUtil.E("role:" + String.valueOf(role) + "phone:" + phone + "propertyId:" + propertyId);
-
-        //TODO 需要将注册写到事务管理里面
         AppUserEntity appUserEntity= (AppUserEntity)request.getSession().getAttribute("appUser");
-        LogUtil.E(GsonUtil.getGson().toJson(appUserEntity));
         appUserEntity.setPhone(phone);
         appUserEntity.setUserRole(role);
-        baseService.save(appUserEntity);
 
-        switch (role)
+        try
         {
-            case UserType.FAMILY:
-                FamilyEntity familyEntity=new FamilyEntity();
-                familyEntity.setPropertyId(propertyId);
-                familyEntity.setPhone(appUserEntity.getPhone());
-                familyEntity.setName(appUserEntity.getUserName());
-                familyEntity.setAuthStatus(AppUserStatus.FORCHECK);
-                try
-                {
-                    baseService.save(familyEntity);
-                }
-                catch (Exception e)
-                {
-                    basicJson.getErrorMsg().setDescription("保存到家庭时出错");
-                    return basicJson;
-                }
-                break;
-            case UserType.TENANT:
-                TenantEntity tenantEntity=new TenantEntity();
-                tenantEntity.setPropertyId(propertyId);
-                tenantEntity.setAuthStatus(AppUserStatus.FORCHECK);
-                tenantEntity.setPhone(appUserEntity.getPhone());
-                tenantEntity.setName(appUserEntity.getUserName());
-                try
-                {
-                    baseService.save(tenantEntity);
-                }
-                catch (Exception e)
-                {
-                    basicJson.getErrorMsg().setDescription("保存到租户时出错");
-                    return basicJson;
-                }
-                break;
-            default:
-                basicJson.getErrorMsg().setDescription("用户类型参数错误");
-                return basicJson;
-
+            UserType.checkType(role);
+            userService.register(appUserEntity,propertyId);
         }
+        catch (TypeErrorException e)
+        {
+            basicJson.getErrorMsg().setDescription("用户角色参数错误!");
+            return basicJson;
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("注册失败");
+            return basicJson;
+        }
+
         basicJson.setStatus(true);
         return basicJson;
     }
@@ -320,7 +295,7 @@ public class UserHandler
 
                 try
                 {
-                    if (role==UserType.FAMILY)
+                    if (role== FAMILY)
                     {
                         FamilyEntity familyEntity= (FamilyEntity) userService.getUserInfoBYPhone(phone, role);
                         familyEntity.setName(name);

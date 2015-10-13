@@ -103,7 +103,6 @@ public class BillServiceImpl implements BillService
                 String now=Convert.num2time(System.currentTimeMillis(),"yyyy-MM");
                 if (now.equals(lastGenerateTime))
                 {
-                    LogUtil.E("已经生成账单");
                     billEntity=billEntityTemp;
                 }
             }
@@ -112,8 +111,6 @@ public class BillServiceImpl implements BillService
         int temp=0;
         for (FeeItemOrderEntity feeItemOrderEntity:feeItemOrderEntities)
         {
-//            Gson gson=new Gson();
-//            LogUtil.E(gson.toJson(feeItemOrderEntity));
             //TODO 如果是服务费的话,生成账单后需要删除该订购
             String kv;
             if (feeItemOrderEntity.getFeeItemEntity().getRuleEntity().getUnit().equals(FeeRuleUnit.SQURE))
@@ -124,12 +121,9 @@ public class BillServiceImpl implements BillService
                 BigDecimal sum=new BigDecimal(aDouble);
                 sum=sum.setScale(2,BigDecimal.ROUND_HALF_UP);
                 kv=feeItemOrderEntity.getFeeItemEntity().getName().split(";")[0]+":"+sum;
-                LogUtil.E("费用名:按面积收费"+feeItemOrderEntity.getFeeItemEntity().getName().split(";")[0]+"   费用总价:"+sum);
             }
             else
             {
-                LogUtil.E("费用名:"+feeItemOrderEntity.getFeeItemEntity().getName()+"   费用总价:"+feeItemOrderEntity
-                        .getFeeItemEntity().getRuleEntity().getUnitPrice());
                 kv=feeItemOrderEntity.getFeeItemEntity().getName()+":"+feeItemOrderEntity
                         .getFeeItemEntity().getRuleEntity().getUnitPrice();
             }

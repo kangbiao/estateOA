@@ -2,7 +2,9 @@ package estate.controller;
 
 import estate.common.UserType;
 import estate.common.util.LogUtil;
-import estate.entity.database.*;
+import estate.entity.database.BuildingEntity;
+import estate.entity.database.PropertyEntity;
+import estate.entity.database.VillageEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -28,13 +29,11 @@ import java.util.ArrayList;
 public class PropertyController
 {
     @Autowired
-    private ShopService shopService;
-    @Autowired
     private BaseService baseService;
     @Autowired
     private PropertyService propertyService;
     @Autowired
-    private ApartmentService apartmentService;
+    private PropertyOwnerService propertyOwnerService;
     @Autowired
     protected UserService userService;
     @Autowired
@@ -134,6 +133,7 @@ public class PropertyController
         return basicJson;
     }
 
+
     /**
      * 修改物业信息
      * @param request
@@ -156,11 +156,11 @@ public class PropertyController
         }
         try
         {
-            propertyEntity.setLocation(request.getParameter("location"));
-            propertyEntity.setPropertySquare(new BigDecimal(request.getParameter("propertySquare")).setScale(2,
-                    BigDecimal.ROUND_HALF_UP));
+//            propertyEntity.setLocation(request.getParameter("location"));
+//            propertyEntity.setPropertySquare(new BigDecimal(request.getParameter("propertySquare")).setScale(2,
+//                    BigDecimal.ROUND_HALF_UP));
             propertyEntity.setStatus(Byte.valueOf(request.getParameter("status")));
-            propertyEntity.setType(Byte.valueOf(request.getParameter("type")));
+//            propertyEntity.setType(Byte.valueOf(request.getParameter("type")));
         }
         catch (Exception e)
         {
@@ -206,6 +206,63 @@ public class PropertyController
         return basicJson;
     }
 
+
+    @RequestMapping(value = "/deleteOwner")
+    public BasicJson deleteOwnerByPhone(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        String phone;
+        Integer propertyID;
+        try
+        {
+            phone=request.getParameter("phone");
+            propertyID= Integer.valueOf(request.getParameter("propertyID"));
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("参数错误!\n"+e.getMessage());
+            return basicJson;
+        }
+
+        try
+        {
+            propertyOwnerService.deleteOwnerPropertyBind(phone, propertyID);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("删除失败\n"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 通过物业id删除物业,如绑定业主,则不能删除
+     * @param propertyID
+     * @param request
+     * @return
+     * @throws UserTypeErrorException
+     */
+    @RequestMapping(value = "/deleteProperty/{propertyID}")
+    public BasicJson deleteProperty(@PathVariable Integer propertyID,HttpServletRequest request) throws UserTypeErrorException
+
+    {
+        BasicJson basicJson=new BasicJson();
+        if (userService.getUserInfoByProperityID(propertyID,UserType.OWNER).size()>0)
+        {
+            basicJson.getErrorMsg().setDescription("请先删除该物业绑定的业主");
+            return basicJson;
+        }
+
+        PropertyEntity propertyEntity=new PropertyEntity();
+        propertyEntity.setId(propertyID);
+        baseService.delete(propertyEntity);
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 
     /**
      * 根据园区的id获取该园区下面所有的楼栋
@@ -335,110 +392,6 @@ public class PropertyController
         {
             LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setDescription("生成账单失败");
-            return basicJson;
-        }
-        basicJson.setStatus(true);
-        return basicJson;
-    }
-
-    /**************************以下代码为待删除代码,不参与业务逻辑***************************/
-    /**
-     * 获取商户信息列表
-     *
-     * @param tableFilter
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/shopList")
-    public TableData getShopList(TableFilter tableFilter, HttpServletRequest request)
-    {
-        if (request.getParameter("search[value]") != null)
-            tableFilter.setSearchValue(request.getParameter("search[value]"));
-        else
-            tableFilter.setSearchValue("");
-        try
-        {
-            return shopService.getList(tableFilter);
-        }
-        catch (Exception e)
-        {
-            LogUtil.E(e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * 获取住宅信息的列表
-     *
-     * @param tableFilter
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/apartmentList")
-    public TableData getApartmentList(TableFilter tableFilter, HttpServletRequest request)
-    {
-        if (request.getParameter("search[value]") != null)
-            tableFilter.setSearchValue(request.getParameter("search[value]"));
-        else
-            tableFilter.setSearchValue("");
-        try
-        {
-            return apartmentService.getList(tableFilter);
-        }
-        catch (Exception e)
-        {
-            LogUtil.E(e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * 增加商户信息
-     *
-     * @param propertyEntity
-     * @param shopEntity
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/addShop")
-    public BasicJson addShop(PropertyEntity propertyEntity, ShopEntity shopEntity, HttpServletRequest request)
-    {
-        BasicJson basicJson = new BasicJson(false);
-        try
-        {
-            shopService.saveShop(propertyEntity, shopEntity);
-        }
-        catch (Exception e)
-        {
-            LogUtil.E(e.getMessage());
-            basicJson.getErrorMsg().setDescription("添加失败,请重试!");
-            return basicJson;
-        }
-
-        basicJson.setStatus(true);
-        return basicJson;
-    }
-
-    /**
-     * 增加住宅信息
-     *
-     * @param propertyEntity
-     * @param apartmentEntity
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/addApartment")
-    public BasicJson addApartment(PropertyEntity propertyEntity, ApartmentEntity apartmentEntity, HttpServletRequest
-            request)
-    {
-        BasicJson basicJson = new BasicJson(false);
-        try
-        {
-            apartmentService.saveApartment(propertyEntity, apartmentEntity);
-        }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setDescription("添加住宅信息失败,请重试");
             return basicJson;
         }
         basicJson.setStatus(true);
