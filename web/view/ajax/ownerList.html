@@ -28,8 +28,7 @@
                        id="ownerListTable">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th></th>
+                        <th>序号</th>
                         <th>姓名</th>
                         <th>性别</th>
                         <th>电话</th>
@@ -47,8 +46,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th></th>
+                        <th>序号</th>
                         <th>姓名</th>
                         <th>性别</th>
                         <th>电话</th>
@@ -291,23 +289,6 @@
         $("#formModel").modal("show");//弹出框show
     });
 
-    //显示业主的家庭成员信息
-    function format ( d ) {
-        console.log(d);
-        html="";
-        for (var i in d.families)
-        {
-            html+='<ul class="list-group">' +
-                    '<li class="list-group-item">姓名: <span id="code">'+d.families[i].name+'</span></li>'+
-                    '<li class="list-group-item">业主关系: <span id="propertySquare">'+d.families[i].ownerRelationship+'</span></li>'+
-                    '<li class="list-group-item">电话: <span id="location">'+d.families[i].phone+'</span></li>'+
-                    '<li class="list-group-item">证件类型: <span id="status">'+d.families[i].identityType+'</span></li>' +
-                    '<li class="list-group-item">证件号码: <span id="propertySquare">'+d.families[i].identityCode+'</span></li>'+
-                   '</ul></br>';
-        }
-        return html;
-    }
-
     //初始化表格数据
     function initDataTable(){
         editTable=$('#ownerListTable').DataTable({
@@ -318,92 +299,85 @@
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
-                "targets": -1,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-//                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>&ensp;" +
-                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
-            },{
-                "targets": -2,
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
-            },{
                 "targets": 0,
-                "data": "ownerId",
-                "visible": false,
+                "data":null,
                 "orderable": false,
-                "searchable": false
-
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
             },{
                 "targets": 1,
-                "visible": true,
-                "searchable": false,
-                "class":          "details-control",
-                "orderable":      false,
-                "data":           null,
-                "defaultContent": "<i class='fa fa-plus-circle'></i>"
-
-            },{
-                "targets": 2,
                 "data": "name",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 3,
+                "targets": 2,
                 "data": "sex",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 4,
+                "targets": 3,
                 "data": "phone",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 5,
+                "targets": 4,
                 "data": "identityType",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 6,
+                "targets": 5,
                 "data": "identityCode",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 7,
+                "targets": 6,
                 "data": "authenticationTime",
                 "visible": true,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 8,
+                "targets": 7,
                 "data": "propertyIdList",
                 "visible": false,
                 "orderable": false,
                 "searchable": true
 
             },{
-                "targets": 9,
+                "targets": 8,
                 "data": "vehicleIdIst",
                 "visible": false,
                 "orderable": false,
                 "searchable": true
 
+            },{
+                "targets": 9,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
+            },{
+                "targets": 10,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+//                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>&ensp;" +
+                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
             }
             ],
             "aaSorting": [[ 2, "asc" ]],
@@ -435,36 +409,6 @@
             }
         });
 
-        var detailRows = [];
-
-        $('#ownerListTable tbody').on( 'click', 'tr td.details-control', function () {
-            var tr = $(this).closest('tr');
-            var row = editTable.row( tr );
-            var idx = $.inArray( tr.attr('id'), detailRows );
-
-            if ( row.child.isShown() ) {
-                tr.removeClass( 'details' );
-                row.child.hide();
-                $(this).html("<i class='fa fa-plus-circle'></i>");
-                // Remove from the 'open' array
-                detailRows.splice( idx, 1 );
-            }
-            else {
-                tr.addClass( 'details' );
-                row.child( format( row.data() ) ).show();
-                $(this).html("<i class='fa fa-minus-circle'></i>");
-                // Add to the 'open' array
-                if ( idx === -1 ) {
-                    detailRows.push( tr.attr('id') );
-                }
-            }
-        } );
-        // On each draw, loop over the `detailRows` array and show any child rows
-        editTable.on( 'draw', function () {
-            $.each( detailRows, function ( i, id ) {
-                $('#'+id+' td.details-control').trigger( 'click' );
-            } );
-        } );
 
     }
 

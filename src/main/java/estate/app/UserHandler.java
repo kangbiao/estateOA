@@ -114,6 +114,7 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("验证码发送失败");
             return basicJson;
         }
+        LogUtil.E("code:"+verifyCode);
         request.getSession().setAttribute("verifyCode", verifyCode);
         request.getSession().setAttribute("phone", phone);
         basicJson.setStatus(true);
@@ -156,7 +157,7 @@ public class UserHandler
         appUserEntity.setPasswd(password);
 
 
-        Object o=userService.getUserInfoBYPhone(phone, UserType.OWNER);
+        Object o=userService.getAppUserInfoByPhoneRole(phone, UserType.OWNER);
         if (o==null)
         {
             appUserEntity.setStatus(AppUserStatus.FORCHECK);
@@ -232,7 +233,8 @@ public class UserHandler
         switch (action)
         {
             case "password":
-                AppUserEntity appUserEntity= (AppUserEntity) userService.getUserInfoBYPhone(phone,UserType.APPUSER);
+                AppUserEntity appUserEntity= (AppUserEntity) userService.getAppUserInfoByPhoneRole(phone, UserType
+                        .APPUSER);
                 String oldPassword=request.getParameter("oldPassword");
                 String newPassword=request.getParameter("newPassword");
                 if (!oldPassword.equals(appUserEntity.getPasswd()))
@@ -255,7 +257,7 @@ public class UserHandler
             case "getProfile":
                 try
                 {
-                    Object o=userService.getUserInfoBYPhone(phone,role);
+                    Object o=userService.getAppUserInfoByPhoneRole(phone, role);
                     if (o==null)
                     {
                         basicJson.getErrorMsg().setDescription("获取用户信息失败");
@@ -297,7 +299,7 @@ public class UserHandler
                 {
                     if (role== FAMILY)
                     {
-                        FamilyEntity familyEntity= (FamilyEntity) userService.getUserInfoBYPhone(phone, role);
+                        FamilyEntity familyEntity= (FamilyEntity) userService.getAppUserInfoByPhoneRole(phone, role);
                         familyEntity.setName(name);
                         familyEntity.setSex(sex);
                         familyEntity.setBirthday(birthday);
@@ -309,7 +311,7 @@ public class UserHandler
                     }
                     else if (role==UserType.TENANT)
                     {
-                        TenantEntity tenantEntity= (TenantEntity) userService.getUserInfoBYPhone(phone, role);
+                        TenantEntity tenantEntity= (TenantEntity) userService.getAppUserInfoByPhoneRole(phone, role);
                         tenantEntity.setName(name);
                         tenantEntity.setSex(sex);
                         tenantEntity.setBirthday(birthday);
@@ -321,7 +323,7 @@ public class UserHandler
                     }
                     else if (role==UserType.OWNER)
                     {
-                        OwnerEntity ownerEntity= (OwnerEntity) userService.getUserInfoBYPhone(phone, role);
+                        OwnerEntity ownerEntity= (OwnerEntity) userService.getAppUserInfoByPhoneRole(phone, role);
                         ownerEntity.setName(name);
                         ownerEntity.setSex(sex);
                         ownerEntity.setBirthday(birthday);

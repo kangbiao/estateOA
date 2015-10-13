@@ -12,6 +12,7 @@ import estate.entity.display.Owner;
 import estate.entity.display.Tenant;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.AppUserNotExitException;
 import estate.exception.UserTypeErrorException;
 import estate.service.FamilyService;
 import estate.service.PropertyService;
@@ -177,9 +178,18 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public Object getUserInfoBYPhone(String phone,int type)
+    public Object getAppUserInfoByPhoneRole(String phone, int type)
     {
-        return userDao.getUserInfoBYPhone(phone, type);
+        return userDao.getUserInfoByPhone(phone, type);
+    }
+
+    @Override
+    public Object getUserDetailByPhone(String phone) throws AppUserNotExitException
+    {
+        AppUserEntity appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
+        if (appUserEntity==null)
+            throw new AppUserNotExitException("该用户不存在");
+        return userDao.getUserInfoByPhone(phone,appUserEntity.getUserRole());
     }
 
     @Override
@@ -215,7 +225,7 @@ public class UserServiceImpl implements UserService
             case UserType.OWNER:
                 return userDao.getOwnersByPropertyID(id);
             case UserType.FAMILY:
-                break;
+                return userDao.getAppUserByPropertyID(id);
             case UserType.TENANT:
                 break;
             default:

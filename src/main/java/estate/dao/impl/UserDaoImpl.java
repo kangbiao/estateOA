@@ -181,7 +181,7 @@ public class UserDaoImpl implements UserDao
     }
 
     @Override
-    public Object getUserInfoBYPhone(String phone, int type)
+    public Object getUserInfoByPhone(String phone, int type)
     {
         Session session=getSession();
         String hql;

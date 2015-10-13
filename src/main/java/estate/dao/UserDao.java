@@ -41,7 +41,7 @@ public interface UserDao
      * @param type
      * @return 返回对应的用户实体
      */
-    Object getUserInfoBYPhone(String phone ,int type);
+    Object getUserInfoByPhone(String phone, int type);
 
     /**
      * 通过用户的电话和类型删除用户

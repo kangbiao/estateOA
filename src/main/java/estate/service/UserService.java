@@ -4,6 +4,7 @@ import estate.entity.database.AppUserEntity;
 import estate.entity.display.Owner;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.AppUserNotExitException;
 import estate.exception.UserTypeErrorException;
 
 import java.util.ArrayList;
@@ -51,7 +52,14 @@ public interface UserService
      * @param type
      * @return
      */
-    Object getUserInfoBYPhone(String phone,int type);
+    Object getAppUserInfoByPhoneRole(String phone, int type);
+
+    /**
+     * 通过App用户的电话返回该用户的详细信息
+     * @param phone
+     * @return
+     */
+    Object getUserDetailByPhone(String phone) throws AppUserNotExitException;
 
     /**
      * 根据用户的电话和类型删除用户,用户类型只能是app用户和业主

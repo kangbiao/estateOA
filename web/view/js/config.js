@@ -53,6 +53,7 @@ urlConfig.getPropertyInfo=host+"user/getPropertyInfo";
 urlConfig.getPropertiesByPhone=host+"user/getPropertiesByPhone/";
 urlConfig.deleteOwnerByPhone=host+"/user/owner/delete/";
 urlConfig.deleteAppUserByPhone=host+"/user/appuser/delete/";
+urlConfig.getUserInfoByPhone=host+"/user/getUserInfoByPhone/";
 
 //密钥相关的url
 urlConfig.addSecret=host+"secret/add";

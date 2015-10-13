@@ -10,6 +10,7 @@ import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.exception.AppUserNotExitException;
 import estate.service.BaseService;
 import estate.service.PropertyService;
 import estate.service.UserService;
@@ -77,7 +78,7 @@ public class UserController
             return basicJson;
         }
 
-        if(userService.getUserInfoBYPhone(ownerEntity.getPhone(), UserType.OWNER)!=null)
+        if(userService.getAppUserInfoByPhoneRole(ownerEntity.getPhone(), UserType.OWNER)!=null)
         {
             try
             {
@@ -199,7 +200,7 @@ public class UserController
                 }
             }
 
-            userService.deleteUserByPhone(phone,type);
+            userService.deleteUserByPhone(phone, type);
         }
         catch (Exception e)
         {
@@ -284,6 +285,30 @@ public class UserController
             LogUtil.E(e.getMessage());
             return null;
         }
+    }
+
+    @RequestMapping(value = "/getUserInfoByPhone/{phone}")
+    public BasicJson getUserDetailByPhone(@PathVariable String phone,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+
+        try
+        {
+            basicJson.setJsonString(userService.getUserDetailByPhone(phone));
+        }
+        catch (AppUserNotExitException e)
+        {
+            basicJson.getErrorMsg().setDescription(e.getMessage());
+            return basicJson;
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("获取详细信息出错");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
     }
 
     /**
