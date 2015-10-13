@@ -27,6 +27,8 @@ public class WebFilterMain implements Filter
 
         HttpSession session=request.getSession();
 
+        request.getCookies();
+//        LogUtil.E("cookie:"+ GetVillage.get(request,response));
 //        String path=request.getServletPath();
 //        ArrayList<String> passUrl=new ArrayList<>();
 //        passUrl.add("/view/403.html");

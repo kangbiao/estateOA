@@ -162,7 +162,7 @@ public class UserDaoImpl implements UserDao
         Query query;
         if (!tableFilter.getSearchValue().equals(""))
         {
-            String hql = "from AppUserEntity t where t.userName like (?)";
+            String hql = "from AppUserEntity t where t.phone like (?)";
             query = session.createQuery(hql).setString(0, "%" + tableFilter.getSearchValue() + "%");
         }
         else

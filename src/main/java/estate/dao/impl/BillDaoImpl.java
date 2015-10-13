@@ -38,15 +38,79 @@ public class BillDaoImpl implements BillDao
         ArrayList<BillEntity> entities;
         Query query;
 
-        if (!tableFilter.getSearchValue().equals(""))
+        StringBuffer hql=new StringBuffer("from BillEntity t ");
+        if (tableFilter.getSearchValue()!=null)
         {
-            String hql="from BillEntity t where t.payStatus =:status";
-            query=session.createQuery(hql).setByte("status", Byte.parseByte(tableFilter.getSearchValue()));
+            hql.append("where t.feeItemFee like (:searchValue) ");
+            if (tableFilter.getStatus()!=null)
+            {
+                hql.append("and t.payStatus=:status ");
+                if (tableFilter.getStartTime()!=null&&tableFilter.getEndTime()!=null)
+                {
+                    hql.append("and t.billGenerationTime>=:startTime and t.billGenerationTime<=:endTime ");
+                    query=session.createQuery(hql.toString())
+                            .setString("searchValue", "%" + tableFilter.getSearchValue() + "%")
+                            .setByte("status",tableFilter.getStatus())
+                            .setLong("startTime", tableFilter.getStartTime())
+                            .setLong("endTime", tableFilter.getEndTime());
+                }
+                else
+                {
+                    query=session.createQuery(hql.toString())
+                            .setString("searchValue", "%" + tableFilter.getSearchValue() + "%")
+                            .setByte("status", tableFilter.getStatus());
+                }
+            }
+            else
+            {
+                if (tableFilter.getStartTime()!=null&&tableFilter.getEndTime()!=null)
+                {
+                    hql.append("and t.billGenerationTime>=:startTime and t.billGenerationTime<=:endTime ");
+                    query=session.createQuery(hql.toString())
+                            .setString("searchValue", "%" + tableFilter.getSearchValue() + "%")
+                            .setLong("startTime", tableFilter.getStartTime())
+                            .setLong("endTime", tableFilter.getEndTime());
+                }
+                else
+                {
+                    query=session.createQuery(hql.toString())
+                            .setString("searchValue", "%" + tableFilter.getSearchValue() + "%");
+                }
+            }
         }
         else
         {
-            String hql = "from BillEntity n";
-            query = session.createQuery(hql);
+            if (tableFilter.getStatus()!=null)
+            {
+                hql.append("where t.payStatus=:status ");
+                if (tableFilter.getStartTime()!=null&&tableFilter.getEndTime()!=null)
+                {
+                    hql.append("and t.billGenerationTime>=:startTime and t.billGenerationTime<=:endTime ");
+                    query=session.createQuery(hql.toString())
+                            .setByte("status",tableFilter.getStatus())
+                            .setLong("startTime", tableFilter.getStartTime())
+                            .setLong("endTime", tableFilter.getEndTime());
+                }
+                else
+                {
+                    query=session.createQuery(hql.toString())
+                            .setByte("status", tableFilter.getStatus());
+                }
+            }
+            else
+            {
+                if (tableFilter.getStartTime()!=null&&tableFilter.getEndTime()!=null)
+                {
+                    hql.append("where t.billGenerationTime>=:startTime and t.billGenerationTime<=:endTime ");
+                    query=session.createQuery(hql.toString())
+                            .setLong("startTime", tableFilter.getStartTime())
+                            .setLong("endTime", tableFilter.getEndTime());
+                }
+                else
+                {
+                    query=session.createQuery(hql.toString());
+                }
+            }
         }
         Integer count=query.list().size();
         entities=(ArrayList<BillEntity>)query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter

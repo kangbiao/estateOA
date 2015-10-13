@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +39,34 @@ public class UserController
     private PropertyService propertyService;
     @Autowired
     private BaseService baseService;
+
+
+    /**
+     * 获取业主列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/ownerList")
+    public TableData getOwnerList(TableFilter tableFilter,HttpServletRequest request,HttpServletResponse response) throws IOException
+    {
+        if(request.getParameter("search[value]")!=null)
+            tableFilter.setSearchValue(request.getParameter("search[value]"));
+        else
+            tableFilter.setSearchValue("");
+
+        try
+        {
+            return userService.getOwnerList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            TableData tableData=new TableData(false);
+            tableData.getErrorMsg().setDescription(e.getMessage());
+            return tableData;
+        }
+
+    }
+
 
     /**
      * 增加业主信息
@@ -112,31 +142,6 @@ public class UserController
         return basicJson;
     }
 
-
-    /**
-     * 获取业主列表
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/ownerList")
-    public TableData getOwnerList(TableFilter tableFilter,HttpServletRequest request)
-    {
-        if(request.getParameter("search[value]")!=null)
-            tableFilter.setSearchValue(request.getParameter("search[value]"));
-        else
-            tableFilter.setSearchValue("");
-        try
-        {
-            return userService.getOwnerList(tableFilter);
-        }
-        catch (Exception e)
-        {
-            TableData tableData=new TableData(false);
-            tableData.getErrorMsg().setDescription(e.getMessage());
-            return tableData;
-        }
-
-    }
 
     /**
      * 通过用户的电话和类型返回该用户关联的所有物业信息

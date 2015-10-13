@@ -299,10 +299,16 @@ public class PropertyController
     @RequestMapping(value = "/propertyList")
     public TableData getPropertyList(TableFilter tableFilter, HttpServletRequest request)
     {
-        if (request.getParameter("search[value]") != null)
-            tableFilter.setSearchValue(request.getParameter("search[value]"));
-        else
-            tableFilter.setSearchValue("");
+        tableFilter.setSearchValue(request.getParameter("search[value]"));
+        if (tableFilter.getSearchValue().equals(""))
+            tableFilter.setSearchValue(null);
+        tableFilter.setType(Byte.valueOf(request.getParameter("propertyType")));
+        if (tableFilter.getType()==0)
+            tableFilter.setType(null);
+        tableFilter.setStatus(Byte.valueOf(request.getParameter("propertyStatus")));
+        if (tableFilter.getStatus()==0)
+            tableFilter.setStatus(null);
+
         try
         {
             return propertyService.getList(tableFilter);

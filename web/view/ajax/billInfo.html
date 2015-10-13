@@ -21,6 +21,26 @@
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content no-padding">
+                    <div class="box-content">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="billStatus">&ensp;&ensp;状态</label>
+                                <select name="billStatus" id="billStatus">
+                                    <option value="-1">所有状态</option>
+                                    <option value="0">未缴费</option>
+                                    <option value="1">已缴费</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <label for="billStartTime">开始日期</label>
+                                <input type="text" id="billStartTime" class="input_date"/>
+                                <label for="billEndTime">截止日期</label>
+                                <input type="text" id="billEndTime" class="input_date"/>
+                                <button id="doFilterBtn">确定</button>
+                            </div>
+                        </div>
+                    </div>
+
 				<table class="table table-bordered table-striped table-hover table-heading table-datatable"
 					   id="billListTable">
 					<thead>
@@ -92,6 +112,19 @@
 </div>
 <script type="text/javascript">
 	var editTable;
+
+	$("#doFilterBtn").click(function(){
+        var startTime=$("#billStartTime").val();
+        var endTime=$("#billEndTime").val();
+        if(startTime!=""&&endTime=="")
+            alert("请选择截止日期");
+        else if(startTime==""&&endTime!="")
+            alert("请选择开始日期");
+        else if(startTime!=""&&endTime!=""&&startTime>=endTime)
+            alert("截止日期必须大于开始日期");
+        else
+		    editTable.draw();
+	});
 
 	$("#generateBillBtn").click(function(){
 		var con=confirm("确定您的操作?\n手动生成的账单为临时账单,不影响最后结算");
@@ -206,6 +239,11 @@
 			"serverSide": true,
 			"ajax":{
 				"url": urlConfig.getBillList,
+                "data":function ( d ) {
+                    d.billStatus = $("#billStatus option:selected").val();
+                    d.billStartTime=$("#billStartTime").val();
+                    d.billEndTime=$("#billEndTime").val();
+                },
 				"dataSrc": "jsonString"
 			},
 			"columnDefs": [{
@@ -335,6 +373,18 @@
 		});
 	}
 $(document).ready(function() {
+    $('.input_date').datepicker({
+        setDate: new Date(), dateFormat: "yy-mm-dd",
+        showButtonPanel: true,
+        closeText: "关闭",
+        yearSuffix: '年',
+        currentText: '今天',
+        showMonthAfterYear: true,
+        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+        dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
+    });
 	LoadDataTablesScripts(initDataTable);
 });
 </script>

@@ -13,6 +13,8 @@ urlConfig.home=host+"view";
 urlConfig.login=host+"auth/login";
 
 
+urlConfig.setVillageIDCookie=host+"public/setcookie/";
+
 //公告部分的url
 urlConfig.noticeDelete=host+"notice/delete/";
 urlConfig.noticeList=host+"notice/list";

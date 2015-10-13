@@ -23,6 +23,27 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content no-padding">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="propertyType">&ensp;&ensp;物业类型</label>
+                            <select name="propertyType" id="propertyType">
+                                <option value="0">所有类型</option>
+                                <option value="1">商户</option>
+                                <option value="2">住宅</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="propertyStatus">物业状态</label>
+                            <select name="propertyStatus" id="propertyStatus">
+                                <option value="0">所有状态</option>
+                                <option value="-1">出租</option>
+                                <option value="1">自用</option>
+                            </select>
+                            <button id="doFilterBtn">确定</button>
+                        </div>
+                    </div>
+                </div>
                 <table class="table table-bordered table-striped table-hover table-heading table-datatable"
                        id="propertyListTable">
                     <thead>
@@ -223,6 +244,9 @@
 
 <script type="text/javascript">
     var editTable;
+    $("#doFilterBtn").click(function(){
+        editTable.draw();
+    });
 
     $('#propertyListTable tbody').on( 'click', 'button#delRowBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
@@ -395,7 +419,7 @@
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    editTable.ajax.reload(null, false);
+
                     alert("修改成功");
                 }
                 else
@@ -571,29 +595,6 @@
     $('#propertyListTable tbody').on( 'click', 'button#detailRow', function () {
         $("#moreInfoModel").modal("show");
         var data = editTable.row($(this).parents('tr') ).data();
-//        $.ajax({
-//            type: "get",
-//            async: false,
-//            url: urlConfig.getOwnerInfoByPropertyID+data.id,
-//            dataType: "json", //返回数据形式为json
-//            success: function (result) {
-//                if (result.status) {
-//                    var html='<li class="list-group-item">姓名: <span id="name">'+result.jsonString.name+'</span></li>'+
-//                            '<li class="list-group-item">手机号码: <span id="phone">'+result.jsonString.phone+'</span></li>'+
-//                            '<li class="list-group-item">证件号码: <span id="identityCode">'+result.jsonString.identityCode+'</span></li>'+
-//                            '<li class="list-group-item">认证时间: <span id="authenticationTime">'+result.jsonString.authenticationTime+'</span></li>'+
-//                            '<li class="list-group-item">紧急联系人: <span id="urgent">'+result.jsonString.urgentName+'</span></li>';
-//                    $("#ownerInfo").html(html);
-//                }
-//                else
-//                {
-//                    $("#ownerInfo").html(result.errorMsg.description);
-//                }
-//            },
-//            error: function () {
-//                alert("服务器连接失败,请重试!");
-//            }
-//        });
         $.ajax({
             type: "get",
             async: false,
@@ -601,14 +602,13 @@
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    if(result.jsonString!=null)
+                    if(result.jsonString.length>0)
                         html="";
                     else
                         html="该物业未绑定费用";
                     for(var i in result.jsonString) {
                         html += '<li class="list-group-item">' +
-                                '费用名称: <span id="name">' + result.jsonString[i].feeItemEntity.name.split(";")[0] +
-                                '</span>' +
+                                '费用名称: <span id="name">' + result.jsonString[i].feeItemEntity.name + '</span>' +
                                 '&ensp;费用单价:<span id="name">' + result.jsonString[i].feeItemEntity.ruleEntity.unitPrice +
                                 '</span>'+
                                 '</li>';
@@ -630,7 +630,6 @@
         var data = editTable.row($(this).parents('tr') ).data();
         var thisBtn=$(this);
         thisBtn.html('生成中<i class="fa fa-spinner fa-spin">');
-        console.log(data);
         $.ajax({
             type: "get",
             async: true,
@@ -660,6 +659,10 @@
             "serverSide": true,
             "ajax":{
                 "url": urlConfig.propertyList,
+                "data":function ( d ) {
+                    d.propertyType = $("#propertyType option:selected").val();
+                    d.propertyStatus = $("#propertyStatus option:selected").val();
+                },
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
