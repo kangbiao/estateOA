@@ -62,6 +62,14 @@
       <column name="payer" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5LuY5qy+5Lq6"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="brake" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="brake_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="brake_id"/>
+    </table>
     <table name="building" schema="" catalog="PropertySystem" type="TABLE">
       <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Zut5Yy65ZKM5qW85qCL5p6E5oiQ5Li76ZSu"/>
@@ -107,6 +115,7 @@
       <primary-key name="PRIMARY" columns="cu_id"/>
       <exported-key name="FK_axsavu84vcq195a7mqw9x2xj4" table="complain" schema="" catalog="PropertySystem" columns="cu_id"/>
       <exported-key name="FK_1nyd0erg10vfu0etf8fc8h0va" table="notice" schema="" catalog="PropertySystem" columns="cu_id"/>
+      <exported-key name="FK_oc5vf2v77386b82n98ejj4qcd" table="repair" schema="" catalog="PropertySystem" columns="cu_id"/>
     </table>
     <table name="family" schema="" catalog="PropertySystem" type="TABLE">
       <column name="family_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -191,12 +200,24 @@
       <primary-key name="PRIMARY" columns="owner_id"/>
     </table>
     <table name="parking_lot" schema="" catalog="PropertySystem" type="TABLE">
-      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="pl_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="6L2m5L2N57yW5Y+3"/>
-      <column name="floor" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5qW85bGC5Lmm"/>
-      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MTrmoIflh4bovabkvY3vvIwy77ya5aSn6L2m5L2N77yMM++8muWtkOavjei9puS9je+8jDTvvIzlsI/ovabkvY3vvIw177yM5Zyw5LiK5Li05pe25L2N"/>
+      <column name="floor" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12" remarks="5qW85bGC"/>
+      <column name="location" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="brake_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="pl_id"/>
+    </table>
+    <table name="parklot_owner_info" schema="" catalog="PropertySystem" type="TABLE">
+      <column name="poi_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="pl_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="owner_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="brake_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="enter_brake_allowed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="poi_id"/>
     </table>
     <table name="picture" schema="" catalog="PropertySystem" type="TABLE">
       <column name="picture_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -244,6 +265,8 @@
       <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="57u05L+u5Lq65ZGY5aGr5YaZ55qE5aSE55CG6K+05piO"/>
       <column name="repirman_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_oc5vf2v77386b82n98ejj4qcd" columns="cu_id" ref-table="console_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="cu_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_oc5vf2v77386b82n98ejj4qcd" unique="false" columns="cu_id"/>
     </table>
     <table name="repair_man" schema="" catalog="PropertySystem" type="TABLE">
       <column name="rp_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -275,6 +298,7 @@
       <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="ssid" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="secret" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="sc_id"/>
       <foreign-key name="FK_9xomlrhqs9xd7b1aycq618olq" columns="building_id" ref-table="building" ref-schema="" ref-catalog="PropertySystem" ref-columns="building_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="FK_9xomlrhqs9xd7b1aycq618olq" unique="false" columns="building_id"/>

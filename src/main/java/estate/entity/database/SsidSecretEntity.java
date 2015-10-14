@@ -9,6 +9,7 @@ public class SsidSecretEntity
     private Integer buildingId;
     private String ssid;
     private String secret;
+    private Byte type;
     private BuildingEntity buildingEntity;
 
     public SsidSecretEntity()
@@ -65,4 +66,13 @@ public class SsidSecretEntity
         this.buildingEntity = buildingEntity;
     }
 
+    public Byte getType()
+    {
+        return type;
+    }
+
+    public void setType(Byte type)
+    {
+        this.type = type;
+    }
 }
