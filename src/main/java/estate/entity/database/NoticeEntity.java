@@ -9,11 +9,11 @@ public class NoticeEntity
     private Integer id;
     private String title;
     private String content;
-    private String time;
+    private Long time;
     private String pictureIdList;
     private String description;
     private Byte type;
-    private Integer expiretime;
+    private Long expiretime;
     private Integer cuId;
     private ConsoleUserEntity consoleUserEntity;
 
@@ -38,12 +38,12 @@ public class NoticeEntity
         this.content = content;
     }
 
-    public String getTime()
+    public Long getTime()
     {
         return time;
     }
 
-    public void setTime(String time)
+    public void setTime(Long time)
     {
         this.time = time;
     }
@@ -78,12 +78,12 @@ public class NoticeEntity
         this.type = type;
     }
 
-    public Integer getExpiretime()
+    public Long getExpiretime()
     {
         return expiretime;
     }
 
-    public void setExpiretime(Integer expiretime)
+    public void setExpiretime(Long expiretime)
     {
         this.expiretime = expiretime;
     }

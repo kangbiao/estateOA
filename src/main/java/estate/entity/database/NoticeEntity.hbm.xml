@@ -28,7 +28,7 @@
             <column name="type" sql-type="tinyint"/>
         </property>
         <property name="expiretime">
-            <column name="expiretime" sql-type="int"/>
+            <column name="expiretime" sql-type="bigint"/>
         </property>
         <property name="cuId">
             <column name="cu_id" sql-type="int unsigned"/>

@@ -92,7 +92,8 @@
         <filter-name>webValidate</filter-name>
         <url-pattern>/view/*</url-pattern>
     </filter-mapping>
-
-
-
+    <filter-mapping>
+        <filter-name>webValidate</filter-name>
+        <url-pattern>/web/*</url-pattern>
+    </filter-mapping>
 </web-app>

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@RequestMapping("/repair")
+@RequestMapping("/web/repair")
 public class RepairController
 {
     @Autowired

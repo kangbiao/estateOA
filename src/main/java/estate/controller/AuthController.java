@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/web/auth")
 public class AuthController
 {
     @Autowired

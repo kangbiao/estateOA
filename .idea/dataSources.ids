@@ -162,7 +162,7 @@
       <column name="picture_id_list" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12" remarks="MS4="/>
       <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
-      <column name="expiretime" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5aGr5YaZ5pyJ5pWI5pe26Ze077yM5Lul5aSp5Li65Y2V5L2N"/>
+      <column name="expiretime" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4" remarks="5Y+R5biD6ICF55qEaWQ="/>
       <primary-key name="PRIMARY" columns="notice_id"/>
       <foreign-key name="FK_1nyd0erg10vfu0etf8fc8h0va" columns="cu_id" ref-table="console_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="cu_id" update-rule="3" delete-rule="3" deferrability="2"/>

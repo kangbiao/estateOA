@@ -4,10 +4,10 @@
  */
 
 /************--------------接口配置----------********************/
-var host="/oa/";
+var host="/oa/web/";
 var urlConfig={};
 
-urlConfig.home=host+"view";
+urlConfig.home="/oa/view";
 
 //用户登陆
 urlConfig.login=host+"auth/login";

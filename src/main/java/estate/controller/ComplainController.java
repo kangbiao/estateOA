@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@RequestMapping("/complain")
+@RequestMapping("/web/complain")
 public class ComplainController
 {
     @Autowired

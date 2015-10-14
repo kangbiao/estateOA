@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 
 @RestController
-@RequestMapping("/fee")
+@RequestMapping("/web/fee")
 public class FeeController
 {
     @Autowired

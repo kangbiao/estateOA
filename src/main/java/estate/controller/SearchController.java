@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * 全局的搜索控制器
  */
 @RestController
-@RequestMapping("search")
+@RequestMapping("/web/search")
 public class SearchController
 {
     @Autowired

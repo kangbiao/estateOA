@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@RequestMapping("secret")
+@RequestMapping("/web/secret")
 public class SecretController
 {
     @Autowired

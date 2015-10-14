@@ -20,7 +20,7 @@ import java.util.*;
  *
  */
 @RestController
-@RequestMapping("upload")
+@RequestMapping("/web/upload")
 public class UploadController
 {
 

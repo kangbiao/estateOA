@@ -1,7 +1,9 @@
 package estate.controller;
 
+import estate.common.util.Convert;
 import estate.common.util.Message;
 import estate.entity.database.AppUserEntity;
+import estate.entity.database.ConsoleUserEntity;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
@@ -11,14 +13,13 @@ import estate.service.NoticeService;
 import estate.service.PictureService;
 import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  *
  */
 @RestController
-@RequestMapping("/notice")
+@RequestMapping("/web/notice")
 public class NoticeController
 {
     @Autowired
@@ -41,62 +42,32 @@ public class NoticeController
 
     /**
      * 增加一条公告信息
-     * @param noticeEntity
-     * @param bindingResult
      * @param request
      * @return
      */
     @RequestMapping(value = "/add" ,method = RequestMethod.POST)
-    public BasicJson add(@Valid NoticeEntity noticeEntity,BindingResult bindingResult,HttpServletRequest request)
+    public BasicJson add(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
+        NoticeEntity noticeEntity=new NoticeEntity();
 
-        //验证失败
-//        if (bindingResult.hasErrors())
-//        {
-//            List<FieldError> errors=bindingResult.getFieldErrors();
-//            for (FieldError fieldError:errors)
-//            {
-//                LogUtil.E(fieldError.getField() + fieldError.getDefaultMessage());
-//            }
-//            basicJson.setJsonString(errors);
-//            return basicJson;
-//        }
+        HttpSession httpSession=request.getSession();
+        ConsoleUserEntity consoleUserEntity= (ConsoleUserEntity) httpSession.getAttribute("user");
 
-        String time=String.valueOf(System.currentTimeMillis());
-        noticeEntity.setTime(time);
-        noticeEntity.setCuId(2);
-//        try
-//        {
-//            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-//            MultipartFile file = multipartRequest.getFile("picture");
-//
-//            if (!file.isEmpty())
-//            {
-//                // TODO 捕捉图片上传异常
-//                String id=pictureService.saveAndReturnID(file);
-//                if(id!=null)
-//                {
-//                    noticeEntity.setPictureIdList(id);
-//                }
-//                else
-//                {
-//                    basicJson.getErrorMsg().setCode("");
-//                    basicJson.getErrorMsg().setDescription("上传图片失败,请重试");
-//                    return basicJson;
-//                }
-//            }
-//        }
-//        catch (Exception ignored) {}
+        noticeEntity.setTime(System.currentTimeMillis());
+        noticeEntity.setContent(request.getParameter("content"));
+        noticeEntity.setDescription(request.getParameter("description"));
+        noticeEntity.setTitle(request.getParameter("title"));
+        noticeEntity.setExpiretime(Convert.time2num(request.getParameter("expiretime")));
+        noticeEntity.setCuId(consoleUserEntity.getId());
         try
         {
-            noticeService.add(noticeEntity);
+            baseService.save(noticeEntity);
         }
         catch (Exception e)
         {
-//            LogUtil.E("公告写入数据库失败-"+e.getMessage());
             basicJson.getErrorMsg().setCode("100103");
-            basicJson.getErrorMsg().setDescription("公告增加失败,请检查您的输入");
+            basicJson.getErrorMsg().setDescription("公告增加失败,请检查您的输入\n"+e.getMessage());
             return basicJson;
         }
         basicJson.setStatus(true);

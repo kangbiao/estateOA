@@ -1,10 +1,9 @@
 package estate.common.util;
 
-import org.junit.Test;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 
 /**
@@ -16,13 +15,26 @@ public class Message
     public static String send(String mobile, String content)
     {
         String sign="阳辰";
-
         StringBuffer sb = new StringBuffer("http://sms.1xinxi.cn/asmx/smsservice.aspx?");
         sb.append("name=VerPass@163.com");
         sb.append("&pwd=0C9E4B9FCDD8A770110444E6A7B8");
-        sb.append("&mobile="+mobile);
-        sb.append("&content="+ URLEncoder.encode(content));
-        sb.append("&sign="+URLEncoder.encode(sign));
+        sb.append("&mobile=").append(mobile);
+        try
+        {
+            sb.append("&content=").append(URLEncoder.encode(content, "UTF-8"));
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            sb.append("&sign=").append(URLEncoder.encode(sign, "UTF-8"));
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
         sb.append("&type=pt&extno=");
         URL url = null;
         try
@@ -89,10 +101,5 @@ public class Message
         }
     }
 
-    @Test
-    public void test()
-    {
-        System.out.print(send("15114052120","感谢您注册xxx您的验证码是123"));
-    }
 
 }

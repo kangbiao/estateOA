@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * 增加物业,增加园区,增加楼栋,查看物业
  */
 @RestController
-@RequestMapping("/property")
+@RequestMapping("/web/property")
 public class PropertyController
 {
     @Autowired

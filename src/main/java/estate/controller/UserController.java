@@ -30,7 +30,7 @@ import java.util.ArrayList;
  *
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/web/user")
 public class UserController
 {
     @Autowired
