@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="967b6d5f-a3a9-48b0-8dfd-d1cfce7ee19c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.hbm.xml" afterPath="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.hbm.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/ajax/addBuilding.html" afterPath="$PROJECT_DIR$/web/view/ajax/addBuilding.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/js/config.js" afterPath="$PROJECT_DIR$/web/view/js/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/view/index.html" afterPath="$PROJECT_DIR$/web/view/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.java" afterPath="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="estateOA.iws" />
@@ -178,16 +175,6 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="propertyList.html" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/web/view/ajax/propertyList.html">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-31.166666">
-                  <caret line="628" column="44" selection-start-line="628" selection-start-column="44" selection-end-line="628" selection-end-column="44" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="secretList.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/web/view/ajax/secretList.html">
               <provider selected="true" editor-type-id="text-editor">
@@ -198,34 +185,14 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="BrakeController.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="BrakeController.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/estate/controller/BrakeController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="48" column="32" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
+                <state vertical-scroll-proportion="0.23149607">
+                  <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BrakeEntity.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BrakeEntity.hbm.xml" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.hbm.xml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.2976378">
-                  <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -288,7 +255,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/estate/service/PropertyService.java" />
         <option value="$PROJECT_DIR$/src/main/java/estate/dao/UserDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/estate/service/impl/UserServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/estate/service/UserService.java" />
@@ -327,7 +293,6 @@
         <option value="dbtable:/6945d752/0fc5e3eb-785a-4e21-bae3-fbda9a11ca58/PropertySystem..parking_lot" />
         <option value="dbtable:/6945d752/0fc5e3eb-785a-4e21-bae3-fbda9a11ca58/PropertySystem..property_owner_info" />
         <option value="dbtable:/6945d752/0fc5e3eb-785a-4e21-bae3-fbda9a11ca58/PropertySystem..ssid_secret" />
-        <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/ParklotOwnerInfoEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/ParklotOwnerInfoEntity.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/SsidSecretEntity.java" />
@@ -339,6 +304,8 @@
         <option value="$PROJECT_DIR$/web/view/ajax/brakeList.html" />
         <option value="$PROJECT_DIR$/src/main/java/estate/controller/BrakeController.java" />
         <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.hbm.xml" />
+        <option value="dbtable:/6945d752/0fc5e3eb-785a-4e21-bae3-fbda9a11ca58/PropertySystem..brake" />
+        <option value="$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.java" />
       </list>
     </option>
   </component>
@@ -1378,12 +1345,12 @@
       <workItem from="1444715634425" duration="627000" />
       <workItem from="1444717511493" duration="36954000" />
       <workItem from="1444789359525" duration="12114000" />
-      <workItem from="1444825658403" duration="7174000" />
+      <workItem from="1444825658403" duration="7318000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1033334000" />
+    <option name="totallyTimeSpent" value="1033478000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1489,14 +1456,6 @@
     <option name="FILTER_TARGETS" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/estate/controller/AuthController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18622175">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/estate/entity/database/BillEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20344457">
@@ -1910,6 +1869,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="dbDummy://dbtable:/6945d752/0fc5e3eb-785a-4e21-bae3-fbda9a11ca58/PropertySystem..brake">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/view/ajax/propertyList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5454545">
+          <caret line="628" column="44" selection-start-line="628" selection-start-column="44" selection-end-line="628" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/estate/controller/ParkLotController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1928,28 +1908,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/view/ajax/propertyList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-31.166666">
-          <caret line="628" column="44" selection-start-line="628" selection-start-column="44" selection-end-line="628" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/estate/controller/BrakeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="32" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/estate/entity/database/BrakeEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.13228346">
+          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -1959,6 +1921,16 @@
         <state vertical-scroll-proportion="0.2976378">
           <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/estate/controller/BrakeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23149607">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

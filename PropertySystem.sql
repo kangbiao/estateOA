@@ -66,7 +66,7 @@ CREATE TABLE `app_user` (
 
 LOCK TABLES `app_user` WRITE;
 /*!40000 ALTER TABLE `app_user` DISABLE KEYS */;
-INSERT INTO `app_user` VALUES ('10969123451','123',1,'1234',NULL,-1,NULL),('11112222333','111',0,'111',NULL,1,NULL),('11122233344','111',0,'444',NULL,1,NULL),('11223344556','1',0,'1234',NULL,1,NULL),('11445588123','12345',0,'12345',NULL,1,NULL),('12222222222','1',0,'11',NULL,1,NULL),('12341234123','111',0,'1234',NULL,1,NULL),('12344444444','1',0,'123',NULL,1,NULL),('12344555566','123',0,'123',NULL,1,NULL),('12345412345','111111',0,'111111',NULL,1,NULL),('12345612345','123',0,'123',NULL,1,NULL),('12345678890','12',0,'1234',NULL,1,NULL),('12345678909','123',0,'123',NULL,1,NULL),('12345678910','123',0,'12345',NULL,1,NULL),('12345678991','111',0,'111',NULL,1,NULL),('12378945612','123444',1,'123456',NULL,1,NULL),('13000000000','1234',0,'1234',NULL,1,NULL),('13011111111','123',0,'123',NULL,1,NULL),('13222222222','111',0,'123',NULL,1,NULL),('13333333333','1111',0,'1111',NULL,1,NULL),('13444444444','11111',0,'11111',NULL,1,NULL),('13444445555','1',0,'12345',NULL,1,NULL),('13666666666','11',0,'1234',NULL,1,NULL),('13688888888','12',0,'1234',NULL,1,NULL),('13955552236','123456',3,'xiaoming',15525520000,1,NULL),('14714714712','1111',1,'111',NULL,1,NULL),('14725836910','1',2,'æ',NULL,1,NULL),('14785296312','111',0,'1423',NULL,1,NULL),('147852963123','111111',0,'12345',NULL,1,NULL),('15114052120','1234',0,'1234',NULL,1,NULL),('15114052121','123456',0,'kangbiao',NULL,0,NULL),('18144240528','123456',2,'kangbiao',152210000,1,1),('18224455555','111111',0,'111111',NULL,1,NULL),('18224478963','1111',0,'111111',NULL,1,NULL),('18224488888','11111',0,'11111',NULL,1,NULL),('18224489333','1111',0,'1111',NULL,1,NULL),('18224489342','1111',1,'8888',NULL,1,NULL),('18224489343','1111',2,'hehehe',NULL,1,NULL),('18224489345','1111',0,'hekesong',NULL,1,NULL),('18224489346','1111',0,'gggggg',NULL,1,NULL),('18224489347','1111',0,'aaaaa',NULL,1,NULL),('18224489354','1111',0,'heee',NULL,1,NULL),('18224489369','1111',0,'ffff',NULL,1,NULL),('18544488881','1',0,'1234',NULL,1,NULL),('19216813211','22',0,'2222',NULL,1,NULL),('22244466687','111',1,'123456',NULL,1,NULL),('45678512345','123444',0,'123444',NULL,1,NULL),('4684654665','123',0,'64465',NULL,1,NULL),('55555555555','1111',0,'11211',NULL,1,NULL),('55557777777','111111',0,'222222',NULL,1,NULL),('686549865','123',0,'5456465',NULL,1,NULL);
+INSERT INTO `app_user` VALUES ('15114052120','123456',3,'小明',NULL,1,NULL),('18144240528','123456',3,'康彪',NULL,1,NULL),('18980485651','qqqqqq',3,'江大人',NULL,1,NULL);
 /*!40000 ALTER TABLE `app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,14 +142,14 @@ CREATE TABLE `bill` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `property_id` int(10) unsigned DEFAULT NULL,
   `fee_item_fee` varchar(255) DEFAULT NULL COMMENT '存放由fee_item_id《＝》fee_amount组成的键值对，以逗号间隔。',
-  `pay_status` tinyint(2) DEFAULT NULL,
+  `pay_status` tinyint(2) DEFAULT '0',
   `pay_type` tinyint(2) DEFAULT NULL,
   `pay_time` bigint(25) DEFAULT NULL,
   `bill_generation_time` bigint(25) DEFAULT NULL,
-  `overdue_fee` decimal(11,2) DEFAULT NULL,
+  `overdue_fee` decimal(11,2) DEFAULT '0.00',
   `payer` varchar(45) DEFAULT NULL COMMENT '付款人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,8 +158,35 @@ CREATE TABLE `bill` (
 
 LOCK TABLES `bill` WRITE;
 /*!40000 ALTER TABLE `bill` DISABLE KEYS */;
-INSERT INTO `bill` VALUES (1,1,'水电费:100;停车费:100;煤气费:200',0,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `bill` VALUES (185,1,'绿化费:55.00;清洁费:1.00',0,NULL,NULL,1444805328652,NULL,NULL),(186,2,'绿化费:55.00;清洁费:1.00',0,NULL,NULL,1444805328800,NULL,NULL),(187,7,'楼道维修费:322.00;管理费:6752.00;维护费:55.00',0,NULL,NULL,1444805328867,NULL,NULL),(188,8,'楼道维修费:322.00;管理费:3488.00;维护费:55.00',0,NULL,NULL,1444805328926,NULL,NULL),(189,9,'楼道维修费:322.00;管理费:3456.00;维护费:55.00',0,NULL,NULL,1444805328982,NULL,NULL),(190,10,'楼道维修费:322.00;管理费:3424.00;维护费:55.00',0,NULL,NULL,1444805329046,NULL,NULL),(191,11,'楼道维修费:322.00;管理费:3360.00;管理费:3360.00;维护费:55.00',0,NULL,NULL,1444805329114,NULL,NULL),(192,24,'快递寄存费:2320677.00;费用一:65934.00',0,NULL,NULL,1444805329170,NULL,NULL),(193,28,'费用一:57552.00',0,NULL,NULL,1444805329227,NULL,NULL);
 /*!40000 ALTER TABLE `bill` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `brake`
+--
+
+DROP TABLE IF EXISTS `brake`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `brake` (
+  `brake_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `village_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`brake_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `brake`
+--
+
+LOCK TABLES `brake` WRITE;
+/*!40000 ALTER TABLE `brake` DISABLE KEYS */;
+INSERT INTO `brake` VALUES (1,'DZ001','道闸一','',6);
+/*!40000 ALTER TABLE `brake` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -176,7 +203,7 @@ CREATE TABLE `building` (
   `building_code` varchar(45) DEFAULT NULL,
   `building_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`building_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,7 +212,7 @@ CREATE TABLE `building` (
 
 LOCK TABLES `building` WRITE;
 /*!40000 ALTER TABLE `building` DISABLE KEYS */;
-INSERT INTO `building` VALUES (1,5,'sad','G1B1','园区1的楼栋1'),(2,4,'ds','G2B1','园区2的楼栋1'),(3,4,'fds','fdsf','dsf'),(4,6,'有1单元和2单元','z001','1栋');
+INSERT INTO `building` VALUES (1,5,'sad','G1B1','园区1的楼栋1'),(2,4,'ds','G2B1','园区2的楼栋1'),(3,4,'fds','fdsf','dsf'),(4,6,'有1单元和2单元','z001','1栋'),(5,7,'独栋','52001','52栋');
 /*!40000 ALTER TABLE `building` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,16 +228,18 @@ CREATE TABLE `complain` (
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `description` varchar(100) DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
   `time` bigint(25) DEFAULT NULL,
-  `image_id_list` varchar(50) DEFAULT NULL,
+  `image_id_list` varchar(20) DEFAULT NULL,
   `type` tinyint(4) DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
-  `admin_id` int(11) DEFAULT NULL,
+  `cu_id` int(10) unsigned DEFAULT NULL,
   `remark` tinyint(4) DEFAULT NULL,
   `result` varchar(200) DEFAULT NULL COMMENT '处理投诉人员填写处理说明',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FK_axsavu84vcq195a7mqw9x2xj4` (`cu_id`),
+  CONSTRAINT `FK_axsavu84vcq195a7mqw9x2xj4` FOREIGN KEY (`cu_id`) REFERENCES `console_user` (`cu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +248,7 @@ CREATE TABLE `complain` (
 
 LOCK TABLES `complain` WRITE;
 /*!40000 ALTER TABLE `complain` DISABLE KEYS */;
-INSERT INTO `complain` VALUES (2,'下水道老坏','balabababbabababbababsdfsadasdsa','dsadasd',1,19540055400,'',NULL,0,1,NULL,'');
+INSERT INTO `complain` VALUES (5,'楼下太吵','dfssad','打算倒萨','18144240528',23663323056,NULL,1,0,1,NULL,NULL),(9,'eeeeee','eeeee','eeeee','18980485651',1444561809750,NULL,0,0,NULL,NULL,NULL),(10,'车辆乱停','楼下车辆乱停乱放，每次回家车都要堵很久','楼下车辆乱停乱放，每次回家车都要堵很久','15114052120',1444829922188,NULL,NULL,0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `complain` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +303,7 @@ CREATE TABLE `console_user` (
 
 LOCK TABLES `console_user` WRITE;
 /*!40000 ALTER TABLE `console_user` DISABLE KEYS */;
-INSERT INTO `console_user` VALUES (1,'123456','15182372278',NULL,NULL,'kangbiao',NULL,NULL,NULL);
+INSERT INTO `console_user` VALUES (1,'123456','kangbiao',NULL,NULL,'kangbiao',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `console_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -302,7 +331,7 @@ CREATE TABLE `family` (
   `owner_id` int(10) unsigned DEFAULT NULL,
   `property_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`family_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +340,6 @@ CREATE TABLE `family` (
 
 LOCK TABLES `family` WRITE;
 /*!40000 ALTER TABLE `family` DISABLE KEYS */;
-INSERT INTO `family` VALUES (1,'12378945612','123456',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,8),(2,'12378945612','123456',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,8),(3,'10969123451','1234',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,8);
 /*!40000 ALTER TABLE `family` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +361,7 @@ CREATE TABLE `fee_item` (
   PRIMARY KEY (`fi_id`),
   KEY `FK_mqd7psd6dy1apcdpf38h51m9v` (`rule_id`),
   CONSTRAINT `FK_mqd7psd6dy1apcdpf38h51m9v` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`rule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,7 +370,7 @@ CREATE TABLE `fee_item` (
 
 LOCK TABLES `fee_item` WRITE;
 /*!40000 ALTER TABLE `fee_item` DISABLE KEYS */;
-INSERT INTO `fee_item` VALUES (1,'gbbcv','543653',0,3,1,4),(2,'fdgfdg','653653',0,2,1,4),(4,'bvcbcv',NULL,0,4,1,5),(5,'bvcbcvb',NULL,0,5,1,5),(6,'dfdsfd','gfdgdfgssss',1,6,0,5),(7,'dfdsfd','gfdgdfgssssm',1,7,0,5),(8,'规范的广泛的','546',1,8,0,6),(9,'干活你发个','回滚',1,9,0,6),(10,'dsadfsad',NULL,0,10,NULL,4),(11,'efds;545;545',NULL,0,11,NULL,6),(12,'df',NULL,0,12,NULL,5),(13,'dds','21',1,13,0,5),(14,'rtrt','121',1,14,0,6),(15,'fdg','323',1,15,0,6),(16,'fdg','323v',1,16,0,4),(17,'feiyong;1441123200000;1442332800000',NULL,0,17,NULL,6),(18,'wdsa','dsdfd',1,18,0,5);
+INSERT INTO `fee_item` VALUES (1,'维护费','',0,3,1,4),(2,'楼道维修费','653653',0,2,1,4),(4,'绿化费',NULL,0,4,1,5),(5,'清洁费',NULL,0,5,1,5),(10,'管理费',NULL,0,10,NULL,4),(17,'快递寄存费;1441123200000;14211111111000',NULL,0,17,NULL,6),(19,'服务费','提供物业服务',1,19,0,NULL),(20,'物管费;1444492800000;1444752000000',NULL,0,20,NULL,7),(21,'费用一;1445270400000;1446134400000',NULL,0,21,NULL,6);
 /*!40000 ALTER TABLE `fee_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +389,7 @@ CREATE TABLE `fee_item_order` (
   PRIMARY KEY (`id`),
   KEY `FK_2eom30ry9yaakqhlrplfvs9u9` (`fee_item_id`),
   CONSTRAINT `FK_2eom30ry9yaakqhlrplfvs9u9` FOREIGN KEY (`fee_item_id`) REFERENCES `fee_item` (`fi_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,7 +398,7 @@ CREATE TABLE `fee_item_order` (
 
 LOCK TABLES `fee_item_order` WRITE;
 /*!40000 ALTER TABLE `fee_item_order` DISABLE KEYS */;
-INSERT INTO `fee_item_order` VALUES (1,1,1,NULL),(2,1,2,NULL);
+INSERT INTO `fee_item_order` VALUES (168,4,2,0),(169,5,2,0),(170,6,2,0),(171,7,2,0),(172,8,2,0),(173,9,2,0),(174,10,2,0),(175,11,2,0),(176,1,4,0),(177,2,4,0),(178,3,4,0),(179,1,5,0),(180,2,5,0),(181,3,5,0),(189,11,10,0),(190,4,10,0),(191,5,10,0),(192,6,10,0),(193,7,10,0),(194,8,10,0),(195,9,10,0),(196,10,10,0),(197,11,10,0),(198,24,17,0),(215,4,1,0),(216,5,1,0),(217,6,1,0),(218,7,1,0),(219,8,1,0),(220,9,1,0),(221,10,1,0),(222,11,1,0),(223,24,21,0),(224,28,21,0);
 /*!40000 ALTER TABLE `fee_item_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,10 +442,12 @@ CREATE TABLE `notice` (
   `picture_id_list` varchar(100) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL COMMENT '1.',
   `type` tinyint(2) DEFAULT NULL,
-  `expiretime` int(11) DEFAULT NULL COMMENT '填写有效时间，以天为单位',
+  `expiretime` bigint(25) DEFAULT NULL,
   `cu_id` int(10) unsigned DEFAULT NULL COMMENT '发布者的id',
-  PRIMARY KEY (`notice_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`notice_id`),
+  KEY `FK_1nyd0erg10vfu0etf8fc8h0va` (`cu_id`),
+  CONSTRAINT `FK_1nyd0erg10vfu0etf8fc8h0va` FOREIGN KEY (`cu_id`) REFERENCES `console_user` (`cu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,7 +456,7 @@ CREATE TABLE `notice` (
 
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES (24,'ceshi','<p>\n	<img src=\"/oa/file/kindeditor/image/20150922/20150922223447_960.png\" alt=\"\" />\n</p>\n<p>\n	fdsfdsfsdfdsfdsfdsf<strong>fdsfdsfdsf</strong>\n</p>\n<p>\n	<strong>sdsadsadasdasd</strong>\n</p>',1442932501295,NULL,'fdsfsdfsdfdsfsd',NULL,NULL,2),(25,'测试','打分是对方但是<img src=\"/oa/file/kindeditor/image/20150922/20150922223733_353.png\" alt=\"\" />',1442932655520,NULL,'地方山东省',NULL,NULL,2),(26,'hgfhfgh','<p style=\"text-align:center;\">\r\n	<img id=\"currentImg\" src=\"http://img01.imgcdc.com/news/zh_cn/focus/xjpfm/11174229/20150925/20468725_2015092522024347968300.jpg\" alt=\"习近平白宫致辞谈中美关系：随时而动 顺势而为(全文)\" title=\"习近平白宫致辞谈中美关系：随时而动 顺势而为(全文)\" border=\"0\" height=\"309\" width=\"550\" />\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;习近平参加奥巴马欢迎仪式，在白宫欢迎仪式上致辞。\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;首先我要感谢奥巴马对我的盛情邀请和盛情接待，我代表13亿中国人转达最真挚感谢和问候，中国和美国都是伟大的国家，中国人民和美国人民都是伟大的人民，36年前建交以来，乘风破浪取得历史性进展.\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;2013年夏天，我和他在庄园构建了决策。2年来，中美两国人民取得重大进展。中美两国携手合作，可以产生1+1大于2的力量，要随时而动，顺势而为。\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;我们要坚持增进战略互信，以宽广的胸怀坚信2国友好和信心。我们要坚持互利共赢，拓宽合作领域，给两国人民带来福祉。我们要坚持增进人民友谊，鼓励两国各界相向而行。我们要坚持促进世界和平和发展，促进地区协调。\r\n</p>\r\n<p>\r\n	&nbsp;&nbsp;&nbsp;&nbsp;30年前，我第一次访问美国的时候，住在美国艾奥瓦州小城马斯卡廷的老百姓家里，他们热情美好，临走时，我们紧紧拥抱，30年后，我又回去\r\n了，他们说，友谊是一件大事，这让我对中美关系的未来抱有信心。尊敬的奥巴马总统和夫人，事在人为，中美关系在新的起点，合作共赢是新的道路。让我们一起\r\n携手。<span class=\"artiLogo\"><a href=\"http://news.china.com/\" target=\"_blank\"><img src=\"http://img02.imgcdc.com/smallpic/articleLogo.png\" alt=\"新闻频道\" height=\"16\" width=\"16\" /></a></span>\r\n</p>',1443190521468,NULL,'hgfhgfhdd',NULL,NULL,2),(27,'test','this is test<br />',1443415043878,NULL,'testtest',NULL,NULL,2);
+INSERT INTO `notice` VALUES (3,'的范德萨范德萨','规范的广泛的',1444804892795,NULL,'股份的风格',NULL,1445356800000,1);
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -476,7 +506,7 @@ CREATE TABLE `owner` (
   `property_id_list` varchar(50) DEFAULT NULL COMMENT '1-n个物业，用，号作为分隔符',
   `authentication_time` bigint(25) DEFAULT NULL COMMENT '放到审批记录表',
   PRIMARY KEY (`owner_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -485,7 +515,7 @@ CREATE TABLE `owner` (
 
 LOCK TABLES `owner` WRITE;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
-INSERT INTO `owner` VALUES (1,'18144240528','康彪',0,150515510000,'小明','131627828989',1,'510704199405281715','5426d;dsds5','1;2',1541214000),(2,'13981111434','何可送',1,15534454000,'小红','120819186555',0,'510819120196123185',NULL,'1',165874000),(3,'15182372278','owner001',1,NULL,NULL,NULL,1,'1255',NULL,NULL,-360057600000);
+INSERT INTO `owner` VALUES (1,'18144240528','康彪',0,1441641600000,'何科松','18224489342',0,'511321199305205856','','',1541214000),(2,'18224489342','何科松',0,737827200000,'小红','120819186555',0,'510819120196123185',NULL,'1',165874000),(3,'18980485651','江谊',0,NULL,NULL,NULL,1,'511811000000000000',NULL,NULL,1445184000000),(4,'18565656262','test',1,NULL,NULL,NULL,1,'5555',NULL,NULL,1444233600000),(9,'15114052120','小明',0,NULL,NULL,NULL,1,'565256426462616',NULL,NULL,1444752000000);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,12 +527,18 @@ DROP TABLE IF EXISTS `parking_lot`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `parking_lot` (
-  `property_id` int(10) unsigned DEFAULT NULL,
+  `pl_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(45) DEFAULT NULL COMMENT '车位编号',
-  `floor` varchar(45) DEFAULT NULL COMMENT '楼层书',
-  `type` tinyint(2) DEFAULT NULL COMMENT '1:标准车位，2：大车位，3：子母车位，4，小车位，5，地上临时位',
+  `floor` varchar(45) DEFAULT NULL COMMENT '楼层',
+  `location` varchar(100) DEFAULT NULL,
+  `type` tinyint(2) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `id` int(11) NOT NULL
+  `brake_id` int(10) unsigned DEFAULT NULL,
+  `village_id` int(10) unsigned DEFAULT NULL,
+  `status` tinyint(2) DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `property_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`pl_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -513,6 +549,32 @@ CREATE TABLE `parking_lot` (
 LOCK TABLES `parking_lot` WRITE;
 /*!40000 ALTER TABLE `parking_lot` DISABLE KEYS */;
 /*!40000 ALTER TABLE `parking_lot` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parklot_owner_info`
+--
+
+DROP TABLE IF EXISTS `parklot_owner_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parklot_owner_info` (
+  `poi_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pl_id` int(10) unsigned DEFAULT NULL,
+  `owner_phone` varchar(15) DEFAULT NULL,
+  `brake_id` int(10) unsigned DEFAULT NULL,
+  `enter_brake_allowed` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`poi_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parklot_owner_info`
+--
+
+LOCK TABLES `parklot_owner_info` WRITE;
+/*!40000 ALTER TABLE `parklot_owner_info` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parklot_owner_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -560,7 +622,7 @@ CREATE TABLE `property` (
   `building_id` int(10) unsigned NOT NULL,
   `status` tinyint(4) DEFAULT NULL COMMENT '1.自住 ／出租\n2.已入住／未入住\n3.已收房／未收房',
   PRIMARY KEY (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +631,7 @@ CREATE TABLE `property` (
 
 LOCK TABLES `property` WRITE;
 /*!40000 ALTER TABLE `property` DISABLE KEYS */;
-INSERT INTO `property` VALUES (1,'B638',NULL,'半山蓝湾-2栋-17号',1,188.00,NULL,1,1,-1),(2,'D546',NULL,'半山蓝湾-2栋-27号',2,199.21,NULL,2,1,1),(3,'b222',NULL,'location1',1,182.02,2,1,1,1),(4,'b222',NULL,'location1',1,182.02,1,1,2,1),(5,'b222',NULL,'location1',1,182.02,1,1,2,-1),(6,'b222',NULL,'location1',1,182.02,1,1,2,-1),(7,'B123432',NULL,'的撒旦',1,21321.00,NULL,1,2,-1),(8,'yc001',NULL,'抚琴西路199号1栋1单元10号',2,109.00,NULL,1,2,-1),(9,'yc002',NULL,'抚琴西路199号1栋1单元9号',2,108.00,NULL,2,2,-1),(10,'yc003',NULL,'抚琴西路199号1栋1单元8号',1,107.00,NULL,1,3,-1),(11,'yc004',NULL,'抚琴西路199号1栋1单元6好',1,105.00,NULL,2,3,-1),(24,'test001',NULL,'testadress',1,999.00,NULL,6,4,-1);
+INSERT INTO `property` VALUES (1,'B638',NULL,'半山蓝湾-2栋-18号',1,445.00,NULL,1,1,-1),(2,'D546',NULL,'半山蓝湾-2栋-27号',2,199.21,NULL,2,1,1),(7,'B123432',NULL,'抚琴西路199号1栋1单元11号',1,211.00,NULL,1,2,1),(8,'yc001',NULL,'抚琴西路199号1栋1单元10号',2,109.00,NULL,1,2,-1),(9,'yc002',NULL,'抚琴西路199号1栋1单元9号',2,108.00,NULL,2,2,-1),(10,'yc003',NULL,'抚琴西路199号1栋1单元8号',1,107.00,NULL,1,3,-1),(11,'yc004',NULL,'抚琴西路199号1栋1单元6好',1,105.00,NULL,2,3,-1),(24,'test001',NULL,'testadress',1,999.00,NULL,6,4,-1),(27,'wy002',NULL,'万科城市花园52栋',2,200.00,NULL,7,5,1),(28,'1h1d',NULL,'1hsd5s3',1,872.00,NULL,6,4,-1);
 /*!40000 ALTER TABLE `property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -589,7 +651,7 @@ CREATE TABLE `property_owner_info` (
   PRIMARY KEY (`po_id`),
   KEY `FK_7oq20rni7t96houjm1d7flnox` (`property_id`),
   CONSTRAINT `FK_7oq20rni7t96houjm1d7flnox` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -598,7 +660,7 @@ CREATE TABLE `property_owner_info` (
 
 LOCK TABLES `property_owner_info` WRITE;
 /*!40000 ALTER TABLE `property_owner_info` DISABLE KEYS */;
-INSERT INTO `property_owner_info` VALUES (1,1,1,'18144240528',1),(2,7,1,'18144240528',0),(3,8,1,'18144240528',0),(4,9,1,'13981111434',0),(5,10,2,'18144240528',0),(6,11,1,'13981111434',0),(15,24,NULL,'18144240528',NULL),(16,24,NULL,'15182372278',NULL);
+INSERT INTO `property_owner_info` VALUES (1,1,1,'18144240528',1),(2,7,1,'18144240528',0),(3,8,1,'18144240528',0),(4,9,1,'18224489342',0),(5,10,2,'18224489342',0),(6,11,1,'18565656262',0),(15,24,NULL,'18144240528',NULL),(17,9,NULL,'18980485651',NULL),(18,27,NULL,'18980485651',NULL),(26,2,NULL,'18144240528',NULL),(27,1,NULL,'15114052120',NULL);
 /*!40000 ALTER TABLE `property_owner_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -614,17 +676,19 @@ CREATE TABLE `repair` (
   `title` varchar(100) DEFAULT NULL,
   `content` text,
   `description` varchar(100) DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
   `time` bigint(25) DEFAULT NULL,
   `image_id_list` varchar(50) DEFAULT NULL,
-  `status` tinyint(2) DEFAULT NULL COMMENT '1.未提交2.已提交未处理3.处理中4处理完',
+  `status` tinyint(2) DEFAULT '0' COMMENT '1.未提交2.已提交未处理3.处理中4处理完',
   `remark` int(11) DEFAULT NULL,
   `remark_text` varchar(100) DEFAULT NULL,
-  `admin_id` int(10) unsigned DEFAULT NULL,
+  `cu_id` int(10) unsigned DEFAULT NULL,
   `result` varchar(200) DEFAULT NULL COMMENT '维修人员填写的处理说明',
   `repirman_phone` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `FK_oc5vf2v77386b82n98ejj4qcd` (`cu_id`),
+  CONSTRAINT `FK_oc5vf2v77386b82n98ejj4qcd` FOREIGN KEY (`cu_id`) REFERENCES `console_user` (`cu_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -633,7 +697,7 @@ CREATE TABLE `repair` (
 
 LOCK TABLES `repair` WRITE;
 /*!40000 ALTER TABLE `repair` DISABLE KEYS */;
-INSERT INTO `repair` VALUES (2,'下水道坏了','dsdadsad','dasdasda',1,121210000,NULL,1,NULL,'',NULL,'','15114052120');
+INSERT INTO `repair` VALUES (4,'下水道坏了','内容','描述','18144240528',41342137386,'1,2,3',1,NULL,NULL,NULL,NULL,'15114052120'),(5,'下水道','下水道堵住了',NULL,'18144240528',1444547123840,NULL,1,NULL,NULL,NULL,NULL,'15114052120'),(7,'wwww','wwwww','wwwww','18980485651',1444561760755,NULL,0,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `repair` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,7 +742,7 @@ CREATE TABLE `rule` (
   `start_time` bigint(25) DEFAULT NULL,
   `end_time` bigint(25) DEFAULT NULL,
   PRIMARY KEY (`rule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -687,7 +751,7 @@ CREATE TABLE `rule` (
 
 LOCK TABLES `rule` WRITE;
 /*!40000 ALTER TABLE `rule` DISABLE KEYS */;
-INSERT INTO `rule` VALUES (2,322.00,'family',NULL,5.00,'day',1441555200000,1443542400000),(3,55.00,'family',NULL,55.00,'day',NULL,NULL),(4,55.00,'family',NULL,454.00,'day',NULL,NULL),(5,1.00,'family',NULL,2.00,'day',NULL,NULL),(6,32.00,'squre',NULL,NULL,NULL,1441814400000,1442419200000),(7,32.00,'per',NULL,NULL,NULL,1441814400000,1442419200000),(8,56.00,'per',NULL,NULL,NULL,1441814400000,1441641600000),(9,43.00,'squre',NULL,NULL,NULL,1441641600000,1444233600000),(10,32.00,'squre',NULL,3.00,'month',1422720000000,1454601600000),(11,32.00,'squre',NULL,4.00,'day',1441036800000,1441382400000),(12,3.00,'squre',NULL,3.00,'day',NULL,NULL),(13,2.00,'per',NULL,NULL,NULL,NULL,NULL),(14,21.00,'per',NULL,NULL,NULL,NULL,NULL),(15,3.00,'per',NULL,NULL,NULL,1441641600000,1442160000000),(16,3.00,'per',NULL,NULL,NULL,1441641600000,1442160000000),(17,2323.00,'squre',NULL,12.00,'day',1441036800000,1442937600000),(18,21.00,'squre',NULL,NULL,NULL,1441036800000,1442246400000);
+INSERT INTO `rule` VALUES (2,322.00,'family',NULL,5.00,'day',1441555200000,1443542400000),(3,55.00,'family',NULL,55.00,'day',NULL,NULL),(4,55.00,'family',NULL,454.00,'day',NULL,NULL),(5,1.00,'family',NULL,2.00,'day',NULL,NULL),(6,32.00,'squre',NULL,NULL,NULL,1441814400000,1442419200000),(7,32.00,'per',NULL,NULL,NULL,1441814400000,1442419200000),(8,56.00,'per',NULL,NULL,NULL,1441814400000,1441641600000),(9,43.00,'squre',NULL,NULL,NULL,1441641600000,1444233600000),(10,32.00,'squre',NULL,3.00,'month',1422720000000,1454601600000),(11,32.00,'squre',NULL,4.00,'day',1441036800000,1441382400000),(12,3.00,'squre',NULL,3.00,'day',NULL,NULL),(13,2.00,'per',NULL,NULL,NULL,NULL,NULL),(14,21.00,'per',NULL,NULL,NULL,NULL,NULL),(15,3.00,'per',NULL,NULL,NULL,1441641600000,1442160000000),(16,3.00,'per',NULL,NULL,NULL,1441641600000,1442160000000),(17,2323.00,'squre',NULL,12.00,'day',1441036800000,1442937600000),(18,21.00,'squre',NULL,NULL,NULL,1441036800000,1442246400000),(19,55.00,'squre',NULL,NULL,NULL,1444060800000,1469030400000),(20,1.50,'squre',NULL,3.00,'day',1444492800000,1444752000000),(21,66.00,'squre',NULL,99.00,'month',1443628800000,1446220800000);
 /*!40000 ALTER TABLE `rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -729,10 +793,11 @@ CREATE TABLE `ssid_secret` (
   `building_id` int(10) unsigned DEFAULT NULL,
   `ssid` varchar(45) DEFAULT NULL,
   `secret` varchar(45) DEFAULT NULL,
+  `type` tinyint(4) NOT NULL,
   PRIMARY KEY (`sc_id`),
   KEY `FK_9xomlrhqs9xd7b1aycq618olq` (`building_id`),
   CONSTRAINT `FK_9xomlrhqs9xd7b1aycq618olq` FOREIGN KEY (`building_id`) REFERENCES `building` (`building_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -741,7 +806,7 @@ CREATE TABLE `ssid_secret` (
 
 LOCK TABLES `ssid_secret` WRITE;
 /*!40000 ALTER TABLE `ssid_secret` DISABLE KEYS */;
-INSERT INTO `ssid_secret` VALUES (1,1,'ssid1','dsfdsfdsfsd'),(2,1,'ssid1','ddssfdsfsd'),(3,1,'ssid1','ddssfdsfsd'),(4,1,'ssid12','ddssfdsfsd'),(5,1,'gfd','gfdd'),(6,4,'2334','范德萨范德萨是'),(7,4,'ssid0001','10000001'),(8,4,'ssid002','00000000');
+INSERT INTO `ssid_secret` VALUES (1,1,'ssid1','dsfdsfdsfsd',0),(2,1,'ssid1','ddssfdsfsd',0),(3,1,'ssid1','ddssfdsfsd',0),(4,1,'ssid12','ddssfdsfsd',0),(5,1,'gfd','gfdd',0),(6,4,'2334','范德萨范德萨是',0),(7,4,'ssid0001','10000001',0),(8,4,'ssid002','00000000',0),(9,2,'YCWY_001','12345678',0),(10,5,'sssiiiii111','123',0);
 /*!40000 ALTER TABLE `ssid_secret` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -768,7 +833,7 @@ CREATE TABLE `tenant` (
   `auth_status` tinyint(2) DEFAULT NULL,
   `property_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`tenant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -777,7 +842,6 @@ CREATE TABLE `tenant` (
 
 LOCK TABLES `tenant` WRITE;
 /*!40000 ALTER TABLE `tenant` DISABLE KEYS */;
-INSERT INTO `tenant` VALUES (1,'1998985629','租客',1,19284955000,'小明','19845947574',1,'8510890521425421',18153512100,12124541120,122451210,1,1),(2,'18144240528','kangbiao',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1),(3,'18224489343','hehehe',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,8),(4,'14725836910','æ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,9);
 /*!40000 ALTER TABLE `tenant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -794,7 +858,7 @@ CREATE TABLE `village` (
   `code` varchar(45) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`village_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -803,7 +867,7 @@ CREATE TABLE `village` (
 
 LOCK TABLES `village` WRITE;
 /*!40000 ALTER TABLE `village` DISABLE KEYS */;
-INSERT INTO `village` VALUES (4,'dfds','vb222',''),(5,'fdsdsf','dfdsds','fdsds'),(6,'蓝光米兰香洲','gp001','服务物业公司：蓝光物业');
+INSERT INTO `village` VALUES (4,'dfds','vb222',''),(5,'fdsdsf','dfdsds','fdsds'),(6,'蓝光米兰香洲','gp001','服务物业公司：蓝光物业'),(7,'万科城市花园','wk001','川师附近');
 /*!40000 ALTER TABLE `village` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -816,4 +880,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-07 22:31:49
+-- Dump completed on 2015-10-14 22:47:42

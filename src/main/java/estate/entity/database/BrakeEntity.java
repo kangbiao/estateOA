@@ -2,6 +2,7 @@ package estate.entity.database;
 
 /**
  * Created by kangbiao on 15-10-14.
+ *
  */
 public class BrakeEntity
 {
