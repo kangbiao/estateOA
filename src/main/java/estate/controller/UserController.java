@@ -148,13 +148,21 @@ public class UserController
      * @param phone
      * @return
      */
-    @RequestMapping(value = "/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
-    public BasicJson getPropertiesByOwnerId(@PathVariable String phone)
+    @RequestMapping(value = "/{userRole}/getPropertiesByPhone/{phone}",method = RequestMethod.GET)
+    public BasicJson getPropertiesByOwnerId(@PathVariable String userRole,@PathVariable String phone)
     {
         BasicJson basicJson=new BasicJson(false);
         try
         {
-            basicJson.setJsonString(propertyService.getPropertyByOwnerPhone(phone));
+            if (userRole.equals("owner"))
+                basicJson.setJsonString(propertyService.getPropertyByOwnerPhone(phone));
+            else if (userRole.equals("appuser"))
+                basicJson.setJsonString(propertyService.getProperitiesByAppUserPhone(phone));
+            else
+            {
+                basicJson.getErrorMsg().setDescription("用户类型参数错误");
+                return basicJson;
+            }
         }
         catch (Exception e)
         {

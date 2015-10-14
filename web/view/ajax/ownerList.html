@@ -244,7 +244,7 @@
         $.ajax({
             type: "get",
             async: false,
-            url: urlConfig.getPropertiesByPhone+data.phone,
+            url: urlConfig.getPropertiesByOwnerPhone+data.phone,
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
