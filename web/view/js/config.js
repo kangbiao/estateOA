@@ -76,6 +76,13 @@ urlConfig.generateBill=host+"property/generateBill/";
 urlConfig.getOwnerPropertyInfoByID=host+"property/getMoreInfo/";
 urlConfig.deleteOwner=host+"property/deleteOwner";
 urlConfig.deleteProperty=host+"property/deleteProperty/";
+
+//道闸相关的url
+urlConfig.brakeList=host+"brake/getList";
+urlConfig.brakeDelete=host+"brake/delete/";
+urlConfig.brakeAdd=host+"brake/add";
+
+
 //搜索
 urlConfig.search=host+"search/";
 
