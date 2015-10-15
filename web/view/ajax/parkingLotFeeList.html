@@ -1,6 +1,3 @@
-<link href="css/buttons.dataTables.min.css" rel="stylesheet">
-<link href="css/select.dataTables.min.css" rel="stylesheet">
-
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
@@ -14,7 +11,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
-                    <button id="addEstateFee" class="btn btn-info">添加费用项目</button>
+                    <button id="addParkLotFeeBtn" class="btn btn-info">添加车位费</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -24,17 +21,16 @@
                 <div class="no-move"></div>
             </div>
             <div class="box-content no-padding">
-                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="parkLotFeeListTable">
                     <thead>
                     <tr>
-                        <th>id</th>
                         <th>车位类别</th>
                         <th>单价</th>
                         <th>收费时间</th>
                         <th>生效时间</th>
                         <th>迟滞金单价</th>
                         <th>迟滞金规则</th>
-                        <th>编辑</th>
                         <th>删除</th>
                     </tr>
                     </thead>
@@ -44,14 +40,12 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>id</th>
                         <th>车位类别</th>
                         <th>单价</th>
                         <th>收费时间</th>
                         <th>生效时间</th>
                         <th>迟滞金单价</th>
                         <th>迟滞金规则</th>
-                        <th>编辑</th>
                         <th>删除</th>
                     </tr>
                     </tfoot>
@@ -60,25 +54,33 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" role="dialog" id="addParkLotFeeModal">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">添加物业费</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">配置车位费</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <form class="form-horizontal" role="form" id="estateFeeFrom">
+                        <form class="form-horizontal" role="form" id="parkLotFeeFrom">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择园区</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="villageId" id="villageList">
+                                        <option value="">--选择园区--</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">车位类型</label>
                                 <div class="col-sm-8">
-                                    <select name="" id="" class="form-control">
+                                    <select name="parkLotType" id="" class="form-control">
                                         <option value="">--请选择---</option>
-                                        <option value="">小型车位</option>
-                                        <option value="">中型车位</option>
-                                        <option value="">大型车位</option>
+                                        <option value="1">小型车位</option>
+                                        <option value="2">中型车位</option>
+                                        <option value="3">大型车位</option>
                                     </select>
                                     <!--<input type="text" name="fee_name" class="form-control" placeholder="">-->
                                 </div>
@@ -86,44 +88,44 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">单价</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="fee_unit_price"  class="form-control" placeholder="">
+                                    <input type="text" name="unitPrice"  class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">收费时间</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="pay_start_time"
+                                    <input type="text" class="form-control input_date" name="payStartTime"
                                            placeholder="开始时间">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="pay_end_time"
+                                    <input type="text" class="form-control input_date" name="payEndTime"
                                            placeholder="结束时间">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">生效时间</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="start_time" placeholder="">
+                                    <input type="text" class="form-control input_date" name="startTime" placeholder="">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control input_date" name="end_time" placeholder="">
+                                    <input type="text" class="form-control input_date" name="endTime" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">滞纳金</label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="overdue_unit_price" placeholder="">
+                                    <input type="text" class="form-control" name="overdueUnitPrice" placeholder="">
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="radio-inline">
                                         <label>
-                                            <input type="radio" checked="" name="overdue_unit_type" value="month">每月
+                                            <input type="radio" checked="" name="overdueUnit" value="month">每月
                                             <i class="fa fa-circle-o"></i>
                                         </label>
                                     </div>
                                     <div class="radio-inline">
                                         <label>
-                                            <input type="radio" checked="" name="overdue_unit_type" value="day"> 每日
+                                            <input type="radio" checked="" name="overdueUnit" value="day"> 每日
                                             <i class="fa fa-circle-o"></i>
                                         </label>
                                     </div>
@@ -147,13 +149,13 @@
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
-    $("#addEstateFee").click(function(){
-        $("#formModel").modal("show");//弹出框show
+    $("#addParkLotFeeBtn").click(function(){
+        $("#addParkLotFeeModal").modal("show");//弹出框show
     });
 
 
     //编辑数据
-    $('#estateListTable tbody').on( 'click', 'button#editRow', function () {
+    $('#parkLotFeeListTable tbody').on( 'click', 'button#editRow', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         var fields = $("#estateFeeFrom").serializeArray();
         console.log(data);
@@ -171,18 +173,19 @@
     //ajax添加物业费项目
     function submitForm()
     {
-        var fields = $("#estateFeeFrom").serializeArray();
+        var fields = $("#parkLotFeeFrom").serializeArray();
         console.log(fields);
 
         $.ajax({
             type: "post",
             async: false,
-            url: urlConfig.addFee,
+            url: urlConfig.addParkLotFee,
             data: fields,
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
                     alert("添加成功");
+                    editTable.ajax.reload( null, false );
                 }
                 else
                 {
@@ -196,22 +199,25 @@
     }
 
     //增加物业费时进行表单验证
-    function estateFeeAddValidator() {
-        $('#estateFeeFrom').bootstrapValidator({
+    function partLotFeeAddValidator() {
+        $('#parkLotFeeFrom').bootstrapValidator({
             message: '存在非法输入',
             fields: {
-                fee_name: {
+                villageId:{
                     validators: {
                         notEmpty: {
-                            message: '费用名不能为空'
-                        },
-                        regexp: {
-                            regexp: /^([A-Za-z]|[\u4E00-\u9FA5])+$/,
-                            message: '费用名只能是汉字或者字母'
+                            message: '请选择园区'
                         }
                     }
                 },
-                fee_unit_price: {
+                parkLotType: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择车位类型'
+                        }
+                    }
+                },
+                unitPrice: {
                     validators: {
                         notEmpty: {
                             message: '单价不能为空'
@@ -222,7 +228,7 @@
                         }
                     }
                 },
-                overdue_unit_price: {
+                overdueUnitPrice: {
                     validators: {
                         notEmpty: {
                             message: '滞纳金不能为空'
@@ -245,128 +251,84 @@
 
     //初始化表格数据
     function initDataTable(){
-        editTable=$('#estateListTable').DataTable({
+        editTable=$('#parkLotFeeListTable').DataTable({
             "processing":true,
             "serverSide": true,
             "ajax":{
-                "url": urlConfig.feeList,
+                "url": urlConfig.parkLotFeeList,
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
-                "targets": -1,//删除
+                "targets": 0,
+                "data": "name",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    if(data=="1")
+                        return "小型车位";
+                    else if(data=="2")
+                        return "中型车位";
+                    else if(data=="3")
+                        return "大型车位";
+                    else
+                        return "--";
+                }
+            },{
+                "targets": 1,
+                "data": "ruleEntity.unitPrice",
+                "orderable": false,
+                "searchable": false
+
+            },{
+                "targets": 2,
+                "data": "decription",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    var startend=data.split(";");
+                    return formatDate(startend[0],"yyyy-MM-dd")+"&nbsp;至&nbsp;"+formatDate(startend[1],"yyyy-MM-dd");
+                }
+
+            },{
+                "targets": 3,
+                "data": "ruleEntity.startTime",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    var start=formatDate(row.ruleEntity.startTime,"yyyy-MM-dd");
+                    var end=formatDate(row.ruleEntity.endTime,"yyyy-MM-dd");
+                    return start+"&nbsp;至&nbsp;"+end;
+                }
+            },{
+                "targets": 4,
+                "data": "ruleEntity.overdueUnitPrice",
+                "orderable": false,
+                "searchable": false
+            },{
+                "targets": 5,
+                "data": "ruleEntity.overdueUnit",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    if(data=="day")
+                        return "每天";
+                    else if(data=="month")
+                        return "每月";
+                    else
+                        return "--";
+                }
+            },{
+                "targets": 6,//删除
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
                         "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
-            },{
-                "targets": -2,//删除
-                "data": null,
-                "orderable": false,
-                "searchable": false,
-                "defaultContent":
-                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>"
-            },{
-                "targets": 0,
-                "data": "id",
-                "visible": false,
-                "orderable": false,
-                "searchable": false
-
-            },{
-                "targets": 1,
-                "data": "name",
-                "visible": true,
-                "orderable": true,
-                "searchable": true
-
-            },{
-                "targets": 2,
-                "data": "ruleEntity.unitPrice",
-                "visible": true,
-                "orderable": false,
-                "searchable": true
-
-            },{
-                "targets": 3,
-                "data": "ruleEntity.unit",
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "render": function ( data, type, row ) {
-                    return langConvert[data];
-                }
-
-            },{
-                "targets": 4,
-                "data": "ruleEntity.startTime",
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "render": function ( data, type, row ) {
-//                    console.log(row);
-                    var start_date=new Date();
-                    var end_date=new Date();
-                    start_date.setTime(data);
-                    end_date.setTime(row.ruleEntity.endTime);
-                    var str=start_date.toLocaleDateString().replace(/\//g, "-")+"&nbsp;&nbsp;至&nbsp;&nbsp;"+end_date.toLocaleDateString().replace(/\//g, "-");
-                    return str;
-                }
-
-            },{
-                "targets": 5,
-                "data": "payStartTime",
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "render": function ( data, type, row ) {
-                    var start_time;
-                    var end_time;
-                    if (data!=null)
-                    {
-                        start_time=new Date();
-                        start_time.setTime(data);
-                        start_time=start_time.toLocaleDateString().replace(/\//g, "-");
-                    }
-                    else
-                    {
-                        start_time="未设置";
-                    }
-                    if(row.payEndTime!=null)
-                    {
-                        end_time=new Date();
-                        end_time.setTime(row.payEndTime);
-                        end_time=end_time.toLocaleDateString().replace(/\//g, "-")
-                    }
-                    else{
-                        end_time="未设置";
-                    }
-                    return start_time+"&nbsp;&nbsp;至&nbsp;&nbsp;"+end_time;
-                }
-
-            },{
-                "targets": 6,
-                "data": "ruleEntity.overdueUnitPrice",
-                "visible": true,
-                "orderable": false,
-                "searchable": false
-
-            },{
-                "targets": 7,
-                "data": "ruleEntity.overdueUnit",
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "render": function ( data, type, row ) {
-                    return langConvert[data];
-                }
-
             }
             ],
-            "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,
             "sDom":
-                    "T<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
             "language": {
                 "emptyTable":     "没有相关数据",
                 "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
@@ -389,16 +351,6 @@
                     "sortAscending":  ":正序",
                     "sortDescending": ":倒序"
                 }
-            },
-            "oTableTools": {
-                "sSwfPath": "plugins/datatables/copy_csv_xls_pdf.swf",
-                "aButtons": [
-                    {
-                        "sExtends":    "collection",
-                        "sButtonText": '保存 <span class="caret" />',
-                        "aButtons":    [ "csv", "xls" ]
-                    }
-                ]
             }
         });
 
@@ -418,6 +370,7 @@
             dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
         });
         LoadDataTablesScripts(initDataTable);
-        LoadBootstrapValidatorScript(estateFeeAddValidator);
+        LoadBootstrapValidatorScript(partLotFeeAddValidator);
+        initVillageSelect();
     });
 </script>

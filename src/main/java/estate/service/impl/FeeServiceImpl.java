@@ -75,4 +75,11 @@ public class FeeServiceImpl implements FeeService
             }
         }
     }
+
+    @Override
+    public Object getParkLotFeeByVillageIdType(Integer villageID, String type)
+    {
+        return feeItemDao.getParkLotByVillageIdType(villageID,type);
+
+    }
 }

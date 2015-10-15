@@ -20,4 +20,12 @@ public interface FeeItemDao
 
     Integer count(int feeType);
 
+    /**
+     * 通过园区id和车位费类型返回车位费信息
+     * @param villageID
+     * @param type
+     * @return
+     */
+    Object getParkLotByVillageIdType(Integer villageID,String type);
+
 }

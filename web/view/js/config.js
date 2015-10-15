@@ -23,8 +23,10 @@ urlConfig.pushNotice=host+"notice/pushNotice/";
 
 
 //费用相关的URL
+urlConfig.addParkLotFee=host+"fee/add/parkLot";
 urlConfig.addFee=host+"fee/add/estate";
 urlConfig.feeList=host+"fee/list/estate";
+urlConfig.parkLotFeeList=host+"fee/list/parkLot";
 urlConfig.deleteFee=host+"fee/delete/";
 urlConfig.addServiceFee=host+"fee/add/service";
 urlConfig.serviceFeeList=host+"fee/list/service";

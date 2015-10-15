@@ -1,5 +1,6 @@
 package estate.dao.impl;
 
+import estate.common.Config;
 import estate.dao.FeeItemDao;
 import estate.entity.database.FeeItemEntity;
 import estate.entity.json.TableData;
@@ -98,5 +99,21 @@ public class FeeItemDaoImpl implements FeeItemDao
         Session session=getSession();
         String hql="select count(*) from FeeItemEntity f where f.feeTypeId=:id";
         return ((Long)session.createQuery(hql).setInteger("id",feeType).uniqueResult()).intValue();
+    }
+
+    @Override
+    public Object getParkLotByVillageIdType(Integer villageID, String type)
+    {
+        Session session=getSession();
+
+        String hql="from FeeItemEntity t where t.name=:parkLotType and t.villageId=:villageID and t.feeTypeId=:feeType";
+        List list=session.createQuery(hql)
+                .setString("parkLotType", type)
+                .setInteger("villageID", villageID)
+                .setInteger("feeType", Config.PARKING_LOT)
+                .list();
+        if (list.size()>0)
+            return list;
+        return null;
     }
 }

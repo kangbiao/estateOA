@@ -93,13 +93,61 @@ public class FeeController
         }
         catch (Exception e)
         {
-            basicJson.getErrorMsg().setCode("");
             basicJson.getErrorMsg().setDescription("费用信息增加失败,请重试");
             return basicJson;
         }
 
         basicJson.setStatus(true);
         basicJson.setJsonString(feeItemEntity);
+        return basicJson;
+    }
+
+
+    @RequestMapping(value = "/add/parkLot")
+    public BasicJson addParkLotFee(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        FeeItemEntity feeItemEntity=new FeeItemEntity();
+        RuleEntity ruleEntity=new RuleEntity();
+
+        try
+        {
+            ruleEntity.setStartTime(Convert.time2num(request.getParameter("startTime")));
+            ruleEntity.setEndTime(Convert.time2num(request.getParameter("endTime")));
+            ruleEntity.setOverdueUnitPrice(request.getParameter("overdueUnitPrice"));
+            ruleEntity.setOverdueUnit(request.getParameter("overdueUnit"));
+            ruleEntity.setUnitPrice(request.getParameter("unitPrice"));
+            feeItemEntity.setRuleEntity(ruleEntity);
+            feeItemEntity.setName(request.getParameter("parkLotType"));
+            String payStartTime=String.valueOf(Convert.time2num(request.getParameter("payStartTime")));
+            String payEndTime=String.valueOf(Convert.time2num(request.getParameter("payEndTime")));
+            feeItemEntity.setDecription(payStartTime+";"+payEndTime);
+            feeItemEntity.setVillageId(Integer.valueOf(request.getParameter("villageId")));
+            feeItemEntity.setFeeTypeId(Config.PARKING_LOT);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("参数错误\n"+e.getMessage());
+            return basicJson;
+        }
+
+        if (feeService.getParkLotFeeByVillageIdType(feeItemEntity.getVillageId(),feeItemEntity.getName())!=null)
+        {
+            basicJson.getErrorMsg().setDescription("该园区已经配置该类别车位的费用信息");
+            return basicJson;
+        }
+        try
+        {
+            feeService.estateFeeAdd(feeItemEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("添加车位费出错\n"+e.getMessage());
+            return basicJson;
+        }
+
+//        basicJson.setJsonString(feeItemEntity);
+        basicJson.setStatus(true);
         return basicJson;
     }
 
@@ -120,6 +168,8 @@ public class FeeController
                     return feeService.feeList(tableFilter,Config.ESTATE);
                 case "service":
                     return feeService.feeList(tableFilter,Config.SERVICE);
+                case "parkLot":
+                    return feeService.feeList(tableFilter,Config.PARKING_LOT);
                 default:
                     tableData.getErrorMsg().setCode("1000525");
                     tableData.getErrorMsg().setDescription("请求路径错误");

@@ -40,4 +40,12 @@ public interface FeeService
      */
     void relateBuilding(ArrayList<Integer> buildingIDs,Integer feeItemID);
 
+    /**
+     * 通过园区id和车位类型获取费用信息,用来防止对一个园区添加多个相同类型的车位费用信息
+     * @param villageID
+     * @param type
+     * @return
+     */
+    Object getParkLotFeeByVillageIdType(Integer villageID,String type);
+
 }
