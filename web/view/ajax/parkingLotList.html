@@ -31,7 +31,6 @@
                         <th>车位类型</th>
                         <th>所属道闸</th>
                         <th>操作</th>
-                        <th>删除</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,7 +43,6 @@
                         <th>车位类型</th>
                         <th>所属道闸</th>
                         <th>操作</th>
-                        <th>删除</th>
                     </tr>
                     </tfoot>
                 </table>
@@ -95,6 +93,13 @@
                                 <label class="col-sm-2 control-label">车位地址</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="location"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">描述</label>
+                                <div class="col-sm-8">
+                                        <textarea name="description" placeholder="可选填" id="" class="form-control"
+                                                  rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -208,6 +213,7 @@
             success: function (result) {
                 if (result.status) {
                     alert("添加成功");
+                    editTable.ajax.reload( null, false );
                 }
                 else
                 {
@@ -225,10 +231,63 @@
             "processing":true,
             "serverSide": true,
             "ajax":{
-                "url": urlConfig.brakeList,
+                "url": urlConfig.parkLotList,
                 "dataSrc": "jsonString"
             },
-            "aaSorting": [[ 1, "asc" ]],
+            "columnDefs":[
+                {
+                    "targets": 0,
+                    "data":null,
+                    "orderable": false,
+                    "searchable": false,
+                    "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                        var startnum=this.api().page()*(this.api().page.info().length);
+                        $(nTd).html(iRow+1+startnum);
+                    }
+                },{
+                    "targets": 1,
+                    "data": "code",
+                    "orderable": false,
+                    "searchable": false
+
+                },{
+                    "targets": 2,
+                    "data": "location",
+                    "orderable": false,
+                    "searchable": false
+
+                },{
+                    "targets": 3,
+                    "data": "type",
+                    "orderable": false,
+                    "searchable": false,
+                    "render": function ( data, type, row ) {
+                        if (data==1)
+                            return "<font color='#0000cd'>小型车位</font>";
+                        else if (data==2)
+                            return "<font color='#b8860b'>中型车位</font>";
+                        else if(data==3)
+                            return "<font color='#d2691e'>大型车位</font>";
+                        else
+                            return "<font color='red'>数据异常("+data+")</font>"
+                    }
+
+                },{
+                    "targets": 4,
+                    "data": "brakeId",
+                    "orderable": false,
+                    "searchable": false
+
+                },{
+                    "targets": 5,
+                    "data": null,
+                    "orderable": false,
+                    "searchable": false,
+                    "defaultContent":
+                            "<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>"
+                }
+
+            ],
             "autoWidth":false,
             "sDom":
                     "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",

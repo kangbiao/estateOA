@@ -1,11 +1,13 @@
 package estate.controller;
 
 import estate.common.ParkLot;
+import estate.common.util.LogUtil;
 import estate.entity.database.ParkingLotEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.BaseService;
+import estate.service.ParkLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ public class ParkLotController
 {
     @Autowired
     private BaseService baseService;
+    @Autowired
+    private ParkLotService parkLotService;
 
     /**
      * 获取datatable数据
@@ -33,10 +37,19 @@ public class ParkLotController
     @RequestMapping(value = "/getList")
     public TableData getList(TableFilter tableFilter,HttpServletRequest request)
     {
-        TableData tableData=new TableData();
+        tableFilter.setSearchValue(request.getParameter("search[value]"));
+        if (tableFilter.getSearchValue().equals(""))
+            tableFilter.setSearchValue(null);
 
-        tableData.setStatus(true);
-        return tableData;
+        try
+        {
+            return parkLotService.getList(tableFilter);
+        }
+        catch (Exception e)
+        {
+            LogUtil.E(e.getMessage());
+            return null;
+        }
     }
 
 

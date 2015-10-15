@@ -18,7 +18,6 @@ function initVillageSelect()
 				var options="";
 				for(var i in result.jsonString)
 				{
-					console.log(result.jsonString[i]);
 					options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
 				}
 				$("#villageList").append(options);
