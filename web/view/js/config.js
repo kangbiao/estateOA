@@ -77,6 +77,9 @@ urlConfig.getOwnerPropertyInfoByID=host+"property/getMoreInfo/";
 urlConfig.deleteOwner=host+"property/deleteOwner";
 urlConfig.deleteProperty=host+"property/deleteProperty/";
 
+//园区相关的url
+urlConfig.villageList=host+"village/getList";
+
 //道闸相关的url
 urlConfig.brakeList=host+"brake/getList";
 urlConfig.brakeDelete=host+"brake/delete/";

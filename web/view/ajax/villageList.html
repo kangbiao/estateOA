@@ -12,6 +12,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
+                    <button id="addVillageBtn" class="btn btn-info">添加园区</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -48,39 +49,39 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document" style="width: 900px;">
+<div class="modal fade" role="dialog" id="addVillageModel">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">修改密钥</h4>
+                <h4 class="modal-title" id="gridSystemModalLabel">增加园区</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12" id="editSecret">
-                            <form class="form-horizontal" id="secretConfigForm">
+                        <div class="col-md-12">
+                            <form id="addVillageForm" method="post" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">楼栋编号</label>
+                                    <label class="col-sm-2 control-label">园区名称</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="building_code" class="form-control" placeholder="">
+                                        <input type="text" class="form-control" name="name"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">SSID</label>
+                                    <label class="col-sm-2 control-label">园区编号</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="ssid"  class="form-control" placeholder="">
+                                        <input type="text" class="form-control" name="code"/>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label class="col-sm-2 control-label">输入描述(可选)</label>
+                                    <div class="col-sm-8">
+                                        <textarea name="description" class="form-control" id="description" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">密钥</label>
-                                    <div class="col-sm-8">
-                                        <textarea name="secret" id="" class="form-control" rows="10"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-2">
-                                        <button type="submit" class="btn btn-primary">确认</button>
+                                    <div class="col-sm-9 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">提交</button>
                                     </div>
                                 </div>
                             </form>
@@ -97,22 +98,62 @@
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
-    //删除数据
-    $('#villageListTable tbody').on( 'click', 'button#delRowBtn', function () {
-        var comfirm=confirm("确定删除?");
-        if(comfirm)
-        {
-            alert("删除成功");
-        }
+    //增加园区
+    $("#addVillageBtn").click(function(){
+        $("#addVillageModel").modal("show");
     });
-
-    $('#villageListTable tbody').on( 'click', 'button#editRowBtn', function () {
-        alert("暂时不能修改!");
-//        $("#formModel").modal("show");
-    });
-
-
-
+    function villageAddValidator() {
+        $('#addVillageForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '园区名称不能为空'
+                        }
+                    }
+                },
+                code:{
+                    validators: {
+                        notEmpty: {
+                            message: '园区编号不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9A-Za-z]+$/,
+                            message: '园区编号只能为数字和字母的组合'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+    function submitForm()
+    {
+        var data=$("#addVillageForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addVillage,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
 
     //初始化表格数据
     function initDataTable(){
@@ -150,7 +191,6 @@
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                "<button id='editRowBtn' class='btn btn-primary' type='button'>修改</button>&ensp;"+
                 "<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>"
             }
             ],
@@ -185,17 +225,7 @@
 
     }
     $(document).ready(function() {
-        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
-            showButtonPanel:true,
-            closeText:"关闭",
-            yearSuffix: '年',
-            currentText:'今天',
-            showMonthAfterYear:true,
-            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-            dayNamesMin: ['日','一','二','三','四','五','六']
-        });
         LoadDataTablesScripts(initDataTable);
+        LoadBootstrapValidatorScript(villageAddValidator);
     });
 </script>

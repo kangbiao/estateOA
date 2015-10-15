@@ -52,59 +52,7 @@
 </div>
 <script type="text/javascript">
 
-    function submitForm()
-    {
-        var data=$("#addVillageForm").serializeArray();
-        console.log(data);
-        $.ajax({
-            type: "post",
-            async: true,
-            url: urlConfig.addVillage,
-            data: data,
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.status) {
-                    alert("添加成功");
-                }
-                else
-                {
-                    alert(result.errorMsg.description);
-                }
-            },
-            error: function () {
-                alert("服务器连接失败,请重试!");
-            }
-        });
-    }
 
-    function villageAddValidator() {
-        $('#addVillageForm').bootstrapValidator({
-            message: '存在非法输入',
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: '园区名称不能为空'
-                        }
-                    }
-                },
-                code:{
-                    validators: {
-                        notEmpty: {
-                            message: '园区编号不能为空'
-                        },
-                        regexp: {
-                            regexp: /^[0-9A-Za-z]+$/,
-                            message: '园区编号只能为数字和字母的组合'
-                        }
-                    }
-                }
-            }
-        }).on("success.form.bv",function(e){
-            e.preventDefault();
-            submitForm();
-        });
-    }
     $(document).ready(function () {
         LoadBootstrapValidatorScript(villageAddValidator);
     });
