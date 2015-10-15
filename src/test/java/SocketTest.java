@@ -1,3 +1,7 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import estate.common.util.LogUtil;
+import estate.entity.json.TableData;
 import org.junit.Test;
 
 import java.io.DataInputStream;
@@ -51,8 +55,12 @@ public class SocketTest {
 
     }
 
+
     @Test
     public void test2()
     {
+        TableData tableData=new TableData();
+        Gson gson=new GsonBuilder().serializeNulls().create();
+        LogUtil.E(gson.toJson(tableData));
     }
 }

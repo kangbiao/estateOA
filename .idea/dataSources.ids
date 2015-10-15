@@ -209,14 +209,13 @@
       <column name="brake_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="village_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="pl_id"/>
     </table>
     <table name="parklot_owner_info" schema="" catalog="PropertySystem" type="TABLE">
       <column name="poi_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="pl_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="owner_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="owner_type" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="brake_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="enter_brake_allowed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="poi_id"/>

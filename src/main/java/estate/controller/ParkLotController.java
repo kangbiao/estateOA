@@ -1,8 +1,10 @@
 package estate.controller;
 
+import estate.common.Config;
 import estate.common.ParkLot;
 import estate.common.util.LogUtil;
 import estate.entity.database.ParkingLotEntity;
+import estate.entity.database.ParklotOwnerInfoEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -88,6 +90,44 @@ public class ParkLotController
     public BasicJson delete(@PathVariable Integer parkLotID,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+
+    @RequestMapping(value = "/addOwner")
+    public BasicJson addOwner(ParklotOwnerInfoEntity parklotOwnerInfoEntity,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            parklotOwnerInfoEntity.setEnterBrakeAllowed(Config.TRUE);
+            baseService.save(parklotOwnerInfoEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("添加绑定失败\n"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    @RequestMapping(value = "/getOwnerList/{parkLotID}")
+    public BasicJson getOwnerList(@PathVariable Integer parkLotID,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            basicJson.setJsonString(parkLotService.getByParkLotID(parkLotID));
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("获取绑定用户出错\n"+e.getMessage());
+            return basicJson;
+        }
 
         basicJson.setStatus(true);
         return basicJson;

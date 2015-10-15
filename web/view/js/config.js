@@ -95,6 +95,8 @@ urlConfig.getBrakeListByVillageID=host+"brake/getByVillageID/";
 urlConfig.parkLotAdd=host+"parkLot/add";
 urlConfig.parkLotList=host+"parkLot/getList";
 urlConfig.parkLotDelete=host+"parkLot/delete/";
+urlConfig.parkLotOwner=host+"parkLot/getOwnerList/";
+urlConfig.addParkLotOwner=host+"parkLot/addOwner";
 
 
 //搜索

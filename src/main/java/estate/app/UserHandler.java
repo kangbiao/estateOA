@@ -67,17 +67,16 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("登录失败,该用户已被禁用");
             return basicJson;
         }
-        if (appUserEntity.getStatus().equals(AppUserStatus.FORCHECK))
-        {
-            basicJson.getErrorMsg().setDescription("登录失败,待审核用户不能登陆");
-            return basicJson;
-        }
+//        if (appUserEntity.getStatus().equals(AppUserStatus.FORCHECK))
+//        {
+//            basicJson.getErrorMsg().setDescription("登录失败,待审核用户不能登陆");
+//            return basicJson;
+//        }
 
 
         basicJson.setStatus(true);
         request.getSession().setAttribute("phone", phone);
         request.getSession().setAttribute("username", appUserEntity.getUserName());
-        request.getSession().setAttribute("role", appUserEntity.getUserRole());
         basicJson.setJsonString(request.getSession().getId());
         return basicJson;
     }
@@ -88,7 +87,6 @@ public class UserHandler
         BasicJson basicJson=new BasicJson(true);
         request.getSession().removeAttribute("phone");
         request.getSession().removeAttribute("username");
-        request.getSession().removeAttribute("role");
         return basicJson;
     }
 
@@ -109,12 +107,13 @@ public class UserHandler
         }
         String verifyCode=VerifyCodeGenerate.create();
 
-        String msg=Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心");
-        if (!msg.equals("succ"))
-        {
-            basicJson.getErrorMsg().setDescription(msg);
-            return basicJson;
-        }
+//        String msg=Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心");
+//        if (!msg.equals("succ"))
+//        {
+//            basicJson.getErrorMsg().setDescription(msg);
+//            return basicJson;
+//        }
+
         LogUtil.E("code:"+verifyCode);
         request.getSession().setAttribute("verifyCode", verifyCode);
         request.getSession().setAttribute("phone", phone);
@@ -157,14 +156,16 @@ public class UserHandler
         appUserEntity.setPhone(phone);
         appUserEntity.setUserName(userName);
         appUserEntity.setPasswd(password);
+        appUserEntity.setRegisterTime(System.currentTimeMillis());
 
 
         Object o=userService.getAppUserInfoByPhoneRole(phone, UserType.OWNER);
         if (o==null)
         {
-            appUserEntity.setStatus(AppUserStatus.FORCHECK);
+            appUserEntity.setStatus(AppUserStatus.ENABLE);
             basicJson.getErrorMsg().setCode("100001");
-            request.getSession().setAttribute("appUser", appUserEntity);
+            baseService.save(appUserEntity);
+//            request.getSession().setAttribute("appUser", appUserEntity);
         }
         else
         {
@@ -202,9 +203,12 @@ public class UserHandler
         int role=Integer.valueOf(request.getParameter("role"));
         String phone= (String) httpSession.getAttribute("phone");
 
-        AppUserEntity appUserEntity= (AppUserEntity)request.getSession().getAttribute("appUser");
+//        AppUserEntity appUserEntity= (AppUserEntity)request.getSession().getAttribute("appUser");
+        AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone,AppUserEntity.class);
+
         appUserEntity.setPhone(phone);
         appUserEntity.setUserRole(role);
+        appUserEntity.setStatus(AppUserStatus.FORCHECK);
 
         try
         {
@@ -231,12 +235,11 @@ public class UserHandler
     {
         BasicJson basicJson=new BasicJson();
         String phone= (String) request.getSession().getAttribute("phone");
-        int role= (int) request.getSession().getAttribute("role");
+        AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone,AppUserEntity.class);
+        int role= appUserEntity.getUserRole();
         switch (action)
         {
             case "password":
-                AppUserEntity appUserEntity= (AppUserEntity) userService.getAppUserInfoByPhoneRole(phone, UserType
-                        .APPUSER);
                 String oldPassword=request.getParameter("oldPassword");
                 String newPassword=request.getParameter("newPassword");
                 if (!oldPassword.equals(appUserEntity.getPasswd()))
@@ -397,14 +400,16 @@ public class UserHandler
         BasicJson basicJson=new BasicJson();
         try
         {
-            basicJson.setJsonString(request.getSession().getAttribute("role"));
+            String phone= (String) request.getSession().getAttribute("phone");
+            AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone, AppUserEntity.class);
+            basicJson.setJsonString(appUserEntity.getUserRole());
         }
         catch (Exception e)
         {
             basicJson.getErrorMsg().setDescription("获取用户角色失败");
             return basicJson;
         }
-
+        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
         basicJson.setStatus(true);
         return basicJson;
     }

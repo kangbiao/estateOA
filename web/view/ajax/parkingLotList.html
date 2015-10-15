@@ -112,18 +112,160 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="addEstateFeeButton">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="parkLotEditModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑车位信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <fieldset>
+                            <legend>绑定用户列表</legend>
+                            <ul class="list-group" id="ownerInfo">
+
+                            </ul>
+                        </fieldset>
+                        <form id="ownerAddForm" method="post" class="form-horizontal">
+                            <fieldset>
+                                <legend>添加绑定</legend>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <input type="hidden" class="form-control" id="plId" name="plId" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">选择角色</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="ownerType">
+                                            <option value="1">拥有者</option>
+                                            <option value="2">使用者</option>
+                                            <option value="3">租用用户</option>
+                                            <option value="4">临时用户</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">电话号码</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="phone" />
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-primary">确定添加</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
-    $("#parkingLotListTable tbody").on('click', 'button#editRow',function(){
-        $("#parkLotAddModel").modal("show");
+    //设置车位的用户角色
+    $("#parkingLotListTable tbody").on('click', 'button#editRowBtn',function(){
+        var data = editTable.row($(this).parents('tr') ).data();
+        console.log(data);
+        $("#parkLotEditModal").modal("show");
+        $("#plId").val(data.id);
+
+        $.ajax({
+            type: "get",
+            async: true,
+            url: urlConfig.parkLotOwner+"/"+data.id,
+            dataType: "json",
+            success: function (result) {
+                if (result.status) {
+                    if(result.jsonString!=null)
+                    {
+                        var html="";
+//                        for(var i in result.jsonString)
+//                        {
+////                            options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+//                        }
+                        $("#ownerInfo").html(html);
+                    }
+                    else
+                    {
+                        $("#ownerInfo").html("");
+                    }
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
     });
+
+    function ownerAddValidator(){
+        $('#ownerAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitOwnerForm();
+        });
+    }
+    function submitOwnerForm()
+    {
+        var data=$("#ownerAddForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addParkLotOwner,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    console.log(result);
+                    $("#ownerAddForm")[0].reset();
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
+
 
     //增加车位
     $("#addParkLotBtn").click(function(){
@@ -284,6 +426,7 @@
                     "orderable": false,
                     "searchable": false,
                     "defaultContent":
+                            "<button id='editRowBtn' class='btn btn-primary' type='button'>编辑</button>&ensp;"+
                             "<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>"
                 }
 
@@ -331,5 +474,6 @@
         initVillageSelect();
         LoadDataTablesScripts(initDataTable);
         LoadBootstrapValidatorScript(parkLotAddAddValidator);
+        LoadBootstrapValidatorScript(ownerAddValidator);
     });
 </script>

@@ -2,6 +2,7 @@ package estate.app;
 
 import estate.common.AppUserStatus;
 import estate.common.UserType;
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.PropertyEntity;
@@ -73,13 +74,14 @@ public class PropertyHandler
     {
         BasicJson basicJson=new BasicJson();
         HttpSession httpSession=request.getSession();
-        int role= (int) httpSession.getAttribute("role");
-        if (role!= UserType.OWNER)
+        String phone= (String) request.getSession().getAttribute("phone");
+        AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone,AppUserEntity.class);
+        if (appUserEntity.getUserRole()!= UserType.OWNER)
         {
             basicJson.getErrorMsg().setDescription("非业主用户不能审核绑定");
             return basicJson;
         }
-
+        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
         Byte status=null;
         if (request.getParameter("status")!=null)
         {
@@ -92,13 +94,13 @@ public class PropertyHandler
             {
                 basicJson.getErrorMsg().setCode("100000");
                 basicJson.getErrorMsg().setDescription("客户端参数错误");
+                LogUtil.E(GsonUtil.getGson().toJson(basicJson));
                 return basicJson;
             }
         }
 
         try
         {
-            String phone= (String) httpSession.getAttribute("phone");
             ArrayList<PropertyAppUser> propertyAppUsers=new ArrayList<>();
             ArrayList<PropertyEntity> propertyEntities= propertyService.getPropertyByOwnerPhone(phone);
             for (PropertyEntity propertyEntity:propertyEntities)
@@ -120,8 +122,10 @@ public class PropertyHandler
         {
             LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setDescription("获取绑定信息出错");
+            LogUtil.E(GsonUtil.getGson().toJson(basicJson));
             return basicJson;
         }
+        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
 
         basicJson.setStatus(true);
         return basicJson;

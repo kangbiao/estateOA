@@ -32,8 +32,9 @@ public class AppFilterMain implements Filter
         String phone=(String) session.getAttribute("phone");
 
         String path = ((HttpServletRequest) req).getServletPath();
-        LogUtil.E("phone:" + phone + "    path:" +path);
-        if (!("/api/uc/login".equals(path)||path.contains("/uc/register/")))
+        LogUtil.E("phone:" + phone + "    path:" + path);
+        if (!("/api/uc/login".equals(path)||path.contains("/notice/")||path.contains("/uc/register/")||path.contains
+                ("/query/")))
         {
             if (phone == null || phone.equals(""))
             {

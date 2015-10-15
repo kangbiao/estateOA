@@ -2,6 +2,7 @@ package estate.entity.database;
 
 /**
  * Created by kangbiao on 15-10-14.
+ *
  */
 public class ParklotOwnerInfoEntity
 {
@@ -9,6 +10,7 @@ public class ParklotOwnerInfoEntity
     private Integer plId;
     private String ownerPhone;
     private Integer brakeId;
+    private Byte ownerType;
     private Byte enterBrakeAllowed;
 
 
@@ -60,5 +62,15 @@ public class ParklotOwnerInfoEntity
     public void setId(Integer id)
     {
         this.id = id;
+    }
+
+    public Byte getOwnerType()
+    {
+        return ownerType;
+    }
+
+    public void setOwnerType(Byte ownerType)
+    {
+        this.ownerType = ownerType;
     }
 }
