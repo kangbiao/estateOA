@@ -97,6 +97,7 @@ urlConfig.parkLotList=host+"parkLot/getList";
 urlConfig.parkLotDelete=host+"parkLot/delete/";
 urlConfig.parkLotOwner=host+"parkLot/getOwnerList/";
 urlConfig.addParkLotOwner=host+"parkLot/addOwner";
+urlConfig.deleteParkLotOwnerBind=host+"parkLot/deleteBind/";
 
 
 //搜索

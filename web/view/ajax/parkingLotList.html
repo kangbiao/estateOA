@@ -156,7 +156,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">电话号码</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="phone" />
+                                        <input type="text" class="form-control" name="ownerPhone" />
                                     </div>
                                 </div>
                             </fieldset>
@@ -181,6 +181,7 @@
 
     //设置车位的用户角色
     $("#parkingLotListTable tbody").on('click', 'button#editRowBtn',function(){
+        $("#ownerAddForm")[0].reset();
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
         $("#parkLotEditModal").modal("show");
@@ -189,17 +190,29 @@
         $.ajax({
             type: "get",
             async: true,
-            url: urlConfig.parkLotOwner+"/"+data.id,
+            url: urlConfig.parkLotOwner+data.id,
             dataType: "json",
             success: function (result) {
                 if (result.status) {
                     if(result.jsonString!=null)
                     {
                         var html="";
-//                        for(var i in result.jsonString)
-//                        {
-////                            options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
-//                        }
+                        for(var i in result.jsonString)
+                        {
+                            if(result.jsonString[i].ownerType==1)
+                                result.jsonString[i].ownerType="拥有者";
+                            else if(result.jsonString[i].ownerType==2)
+                                result.jsonString[i].ownerType="使用者";
+                            else if(result.jsonString[i].ownerType==3)
+                                result.jsonString[i].ownerType="月租用户";
+                            else if(result.jsonString[i].ownerType==4)
+                                result.jsonString[i].ownerType="临时用户";
+                            html+='<li id="bind'+result.jsonString[i].id+'" class="list-group-item">'+
+                                    result.jsonString[i].ownerPhone+'-'+result.jsonString[i].ownerType+
+                                    '<a class="btn-warning btn-sm" id="deleteOwnerBtn" href="javascript:deleteOwner('+
+                                    result.jsonString[i].id+');">&ensp;解除绑定</a>'+
+                                    '</li>';
+                        }
                         $("#ownerInfo").html(html);
                     }
                     else
@@ -218,11 +231,36 @@
         });
     });
 
+    function deleteOwner(id)
+    {
+        var con=confirm("确定解除该绑定关系?");
+        if(con) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.deleteParkLotOwnerBind+id,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        alert("操作成功");
+                        $("#bind"+id).remove();
+                    }
+                    else {
+                        alert("删除失败\n"+result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
+    }
+
     function ownerAddValidator(){
         $('#ownerAddForm').bootstrapValidator({
             message: '存在非法输入',
             fields: {
-                phone: {
+                ownerPhone: {
                     validators: {
                         notEmpty: {
                             message: '电话号码不能为空'
@@ -251,7 +289,12 @@
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    console.log(result);
+                    var html='<li id="bind'+result.jsonString.id+'" class="list-group-item">'+
+                            result.jsonString.ownerPhone+
+                            '<a class="btn-warning btn-sm" id="deleteOwnerBtn" href="javascript:deleteOwner('+
+                            result.jsonString.id+');">解除绑定</a>'+
+                            '</li>';
+                    $("#ownerInfo").append(html);
                     $("#ownerAddForm")[0].reset();
                 }
                 else

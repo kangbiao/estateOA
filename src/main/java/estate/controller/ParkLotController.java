@@ -2,6 +2,7 @@ package estate.controller;
 
 import estate.common.Config;
 import estate.common.ParkLot;
+import estate.common.ParkLotOwnerRole;
 import estate.common.util.LogUtil;
 import estate.entity.database.ParkingLotEntity;
 import estate.entity.database.ParklotOwnerInfoEntity;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by kangbiao on 15-10-14.
@@ -100,10 +103,25 @@ public class ParkLotController
     public BasicJson addOwner(ParklotOwnerInfoEntity parklotOwnerInfoEntity,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
+        ArrayList<ParklotOwnerInfoEntity> parklotOwnerInfoEntities=parkLotService.getByParkLotID
+                (parklotOwnerInfoEntity.getPlId());
+        if (parklotOwnerInfoEntities!=null)
+        {
+            for (ParklotOwnerInfoEntity parklotOwnerInfoEntity1:parklotOwnerInfoEntities)
+            {
+                if (Objects.equals(parklotOwnerInfoEntity1.getOwnerType(), ParkLotOwnerRole.OWNER)
+                        &&parklotOwnerInfoEntity1.getPlId().equals(parklotOwnerInfoEntity.getPlId()))
+                {
+                    basicJson.getErrorMsg().setDescription("该车位已添加拥有者");
+                    return basicJson;
+                }
+            }
+        }
         try
         {
             parklotOwnerInfoEntity.setEnterBrakeAllowed(Config.TRUE);
             baseService.save(parklotOwnerInfoEntity);
+            basicJson.setJsonString(parklotOwnerInfoEntity);
         }
         catch (Exception e)
         {
@@ -133,6 +151,28 @@ public class ParkLotController
         return basicJson;
     }
 
+    /**
+     * 解除绑定
+     */
+    @RequestMapping(value = "/deleteBind/{id}")
+    public BasicJson deleteBind(@PathVariable Integer id,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        ParklotOwnerInfoEntity parklotOwnerInfoEntity=new ParklotOwnerInfoEntity();
+        parklotOwnerInfoEntity.setId(id);
+        try
+        {
+            baseService.delete(parklotOwnerInfoEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("解除绑定失败\n"+e.getMessage());
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 
 
 
