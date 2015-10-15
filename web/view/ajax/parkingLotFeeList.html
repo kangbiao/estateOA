@@ -26,7 +26,9 @@
                     <thead>
                     <tr>
                         <th>车位类别</th>
-                        <th>单价</th>
+                        <th>管理费用</th>
+                        <th>按月计费</th>
+                        <th>按次计费</th>
                         <th>收费时间</th>
                         <th>生效时间</th>
                         <th>迟滞金单价</th>
@@ -41,7 +43,9 @@
                     <tfoot>
                     <tr>
                         <th>车位类别</th>
-                        <th>单价</th>
+                        <th>管理费用</th>
+                        <th>按月计费</th>
+                        <th>按次计费</th>
                         <th>收费时间</th>
                         <th>生效时间</th>
                         <th>迟滞金单价</th>
@@ -86,9 +90,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">单价</label>
+                                <label class="col-sm-2 control-label">管理费用</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="unitPrice"  class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">按月计费</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="monthPrice"  class="form-control" placeholder="月租费用">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">按次计费</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="perTimePrice"  class="form-control" placeholder="每次进出费用">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -217,14 +233,36 @@
                         }
                     }
                 },
-                unitPrice: {
+                perTimePrice:{
                     validators: {
                         notEmpty: {
-                            message: '单价不能为空'
+                            message: '按次计费项目不能为空'
                         },
                         regexp: {
                             regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
-                            message: '费用单价只能为两位小数或整数'
+                            message: '费用只能为两位小数或整数'
+                        }
+                    }
+                },
+                monthPrice:{
+                    validators: {
+                        notEmpty: {
+                            message: '按月计费项目不能为空'
+                        },
+                        regexp: {
+                            regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
+                            message: '费用只能为两位小数或整数'
+                        }
+                    }
+                },
+                unitPrice: {
+                    validators: {
+                        notEmpty: {
+                            message: '车位管理费不能为空'
+                        },
+                        regexp: {
+                            regexp: /^(([1-9]\d*)|0)(\.\d{1,2})?$/,
+                            message: '费用只能为两位小数或整数'
                         }
                     }
                 },
@@ -281,16 +319,29 @@
 
             },{
                 "targets": 2,
-                "data": "decription",
+                "data": "parkLotExtra.monthPrice",
                 "orderable": false,
-                "searchable": false,
-                "render": function ( data, type, row ) {
-                    var startend=data.split(";");
-                    return formatDate(startend[0],"yyyy-MM-dd")+"&nbsp;至&nbsp;"+formatDate(startend[1],"yyyy-MM-dd");
-                }
+                "searchable": false
 
             },{
                 "targets": 3,
+                "data": "parkLotExtra.perTimePrice",
+                "orderable": false,
+                "searchable": false
+
+            },{
+                "targets": 4,
+                "data": "parkLotExtra",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    var start=formatDate(data.payStartTime,"yyyy-MM-dd");
+                    var end=formatDate(data.payEndTime,"yyyy-MM-dd");
+                    return start+"&nbsp;至&nbsp;"+end;
+                }
+
+            },{
+                "targets": 5,
                 "data": "ruleEntity.startTime",
                 "orderable": false,
                 "searchable": false,
@@ -300,12 +351,12 @@
                     return start+"&nbsp;至&nbsp;"+end;
                 }
             },{
-                "targets": 4,
+                "targets": 6,
                 "data": "ruleEntity.overdueUnitPrice",
                 "orderable": false,
                 "searchable": false
             },{
-                "targets": 5,
+                "targets": 7,
                 "data": "ruleEntity.overdueUnit",
                 "orderable": false,
                 "searchable": false,
@@ -318,7 +369,7 @@
                         return "--";
                 }
             },{
-                "targets": 6,//删除
+                "targets": 8,//删除
                 "data": null,
                 "orderable": false,
                 "searchable": false,

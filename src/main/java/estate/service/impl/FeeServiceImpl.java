@@ -1,11 +1,15 @@
 package estate.service.impl;
 
+import estate.common.Config;
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.dao.*;
 import estate.entity.database.FeeItemEntity;
 import estate.entity.database.FeeItemOrderEntity;
 import estate.entity.database.PropertyEntity;
 import estate.entity.database.RuleEntity;
+import estate.entity.display.ParkLotFeeInfo;
+import estate.entity.json.ParkLotExtra;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.FeeService;
@@ -44,7 +48,29 @@ public class FeeServiceImpl implements FeeService
 
     public TableData feeList(TableFilter tableFilter,int feeType)
     {
-        return feeItemDao.getList(tableFilter,feeType);
+        if (feeType== Config.PARKING_LOT)
+        {
+            TableData tableData=feeItemDao.getList(tableFilter,feeType);
+            ArrayList<ParkLotFeeInfo> parkLotFeeInfos=new ArrayList<>();
+            ArrayList<FeeItemEntity> feeItemEntities= (ArrayList<FeeItemEntity>) tableData.getJsonString();
+            for (FeeItemEntity feeItemEntity:feeItemEntities)
+            {
+                ParkLotFeeInfo parkLotFeeInfo=new ParkLotFeeInfo();
+                parkLotFeeInfo.setParkLotExtra(GsonUtil.getGson()
+                        .fromJson(feeItemEntity.getDecription(),ParkLotExtra.class));
+                parkLotFeeInfo.setName(feeItemEntity.getName());
+                parkLotFeeInfo.setRuleEntity(feeItemEntity.getRuleEntity());
+                parkLotFeeInfo.setVillageId(feeItemEntity.getVillageId());
+                parkLotFeeInfo.setFeeTypeId(feeItemEntity.getFeeTypeId());
+                parkLotFeeInfo.setId(feeItemEntity.getId());
+                parkLotFeeInfo.setIsPeriodic(feeItemEntity.getIsPeriodic());
+                parkLotFeeInfos.add(parkLotFeeInfo);
+            }
+            tableData.setJsonString(parkLotFeeInfos);
+            return tableData;
+        }
+        else
+            return feeItemDao.getList(tableFilter,feeType);
     }
 
     public void deleteFee(Integer id)

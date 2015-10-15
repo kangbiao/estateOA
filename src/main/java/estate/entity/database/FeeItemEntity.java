@@ -6,16 +6,16 @@ package estate.entity.database;
  */
 public class FeeItemEntity
 {
-    private Integer id;
-    private String name;
-    private String decription;
-    private Integer feeTypeId;
-    private Integer ruleId;
-    private Byte isPeriodic;
-    private Integer villageId;
-    private RuleEntity ruleEntity;
-    private String payStartTime;
-    private String payEndTime;
+    protected Integer id;
+    protected String name;
+    protected String decription;
+    protected Integer feeTypeId;
+    protected Integer ruleId;
+    protected Byte isPeriodic;
+    protected Integer villageId;
+    protected RuleEntity ruleEntity;
+    protected String payStartTime;
+    protected String payEndTime;
 
 
     public String getName()

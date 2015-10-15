@@ -3,12 +3,14 @@ package estate.controller;
 import estate.common.Config;
 import estate.common.UserType;
 import estate.common.util.Convert;
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.entity.database.FeeItemEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.PropertyEntity;
 import estate.entity.database.RuleEntity;
 import estate.entity.json.BasicJson;
+import estate.entity.json.ParkLotExtra;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.PropertyNotBindFeeItemException;
@@ -109,9 +111,15 @@ public class FeeController
         BasicJson basicJson=new BasicJson();
         FeeItemEntity feeItemEntity=new FeeItemEntity();
         RuleEntity ruleEntity=new RuleEntity();
+        ParkLotExtra parkLotExtra=new ParkLotExtra();
 
         try
         {
+            parkLotExtra.setMonthPrice(request.getParameter("monthPrice"));
+            parkLotExtra.setPerTimePrice(request.getParameter("perTimePrice"));
+            parkLotExtra.setPayEndTime(Convert.time2num(request.getParameter("payEndTime")));
+            parkLotExtra.setPayStartTime(Convert.time2num(request.getParameter("payStartTime")));
+
             ruleEntity.setStartTime(Convert.time2num(request.getParameter("startTime")));
             ruleEntity.setEndTime(Convert.time2num(request.getParameter("endTime")));
             ruleEntity.setOverdueUnitPrice(request.getParameter("overdueUnitPrice"));
@@ -119,9 +127,7 @@ public class FeeController
             ruleEntity.setUnitPrice(request.getParameter("unitPrice"));
             feeItemEntity.setRuleEntity(ruleEntity);
             feeItemEntity.setName(request.getParameter("parkLotType"));
-            String payStartTime=String.valueOf(Convert.time2num(request.getParameter("payStartTime")));
-            String payEndTime=String.valueOf(Convert.time2num(request.getParameter("payEndTime")));
-            feeItemEntity.setDecription(payStartTime+";"+payEndTime);
+            feeItemEntity.setDecription(GsonUtil.getGson().toJson(parkLotExtra));
             feeItemEntity.setVillageId(Integer.valueOf(request.getParameter("villageId")));
             feeItemEntity.setFeeTypeId(Config.PARKING_LOT);
         }
@@ -146,7 +152,7 @@ public class FeeController
             return basicJson;
         }
 
-//        basicJson.setJsonString(feeItemEntity);
+        basicJson.setJsonString(feeItemEntity);
         basicJson.setStatus(true);
         return basicJson;
     }
