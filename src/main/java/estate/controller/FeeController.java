@@ -4,8 +4,10 @@ import estate.common.Config;
 import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
-import estate.common.util.Message;
-import estate.entity.database.*;
+import estate.entity.database.FeeItemEntity;
+import estate.entity.database.OwnerEntity;
+import estate.entity.database.PropertyEntity;
+import estate.entity.database.RuleEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -257,7 +259,7 @@ public class FeeController
             for (Object object:ownerEntities)
             {
                 OwnerEntity ownerEntity= (OwnerEntity) object;
-                LogUtil.E(Message.send(ownerEntity.getPhone(), "您有一笔待缴账单，账单生成日期"));
+//                LogUtil.E(Message.send(ownerEntity.getPhone(), "您有一笔待缴账单，账单生成日期"));
             }
         }
         catch (Exception e)
