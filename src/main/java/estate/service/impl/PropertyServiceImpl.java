@@ -98,6 +98,8 @@ public class PropertyServiceImpl implements PropertyService
     {
         ArrayList<Select2> entities = new ArrayList<>();
         ArrayList<BuildingEntity> list=buildingDao.getAllBuildingsByVillageId(id);
+        if (list==null)
+            return null;
         for (BuildingEntity buildingEntity:list)
         {
             Select2 select2=new Select2(String.valueOf(buildingEntity.getId()),buildingEntity.getBuildingName());
@@ -111,6 +113,8 @@ public class PropertyServiceImpl implements PropertyService
     {
         ArrayList<Select2> entities=new ArrayList<>();
         ArrayList<PropertyEntity> list=propertyDao.getPropertyByBuildingID(buildingID);
+        if (list==null)
+            return null;
         for (PropertyEntity propertyEntity:list)
         {
             Select2 select2=new Select2(String.valueOf(propertyEntity.getId()),propertyEntity.getLocation());
@@ -119,6 +123,13 @@ public class PropertyServiceImpl implements PropertyService
 
         return entities;
     }
+
+    @Override
+    public ArrayList<PropertyEntity> getByBuildingID(Integer id)
+    {
+        return propertyDao.getPropertyByBuildingID(id);
+    }
+
 
     @Override
     public ArrayList<PropertyEntity> getProperitiesByAppUserPhone(String phone)

@@ -1,11 +1,9 @@
-<link href="css/buttons.dataTables.min.css" rel="stylesheet">
-<link href="css/select.dataTables.min.css" rel="stylesheet">
 
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
-            <li><a href="#">verPass管理</a></li>
-            <li><a href="#">密钥查看</a></li>
+            <li><a href="#">物业管理</a></li>
+            <li><a href="#">楼栋信息</a></li>
         </ol>
     </div>
 </div>
@@ -14,6 +12,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
+                    <button id="addBuildingBtn" class="btn btn-info">添加楼栋</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -24,14 +23,13 @@
             </div>
             <div class="box-content no-padding">
                 <table class="table table-bordered table-striped table-hover table-heading table-datatable"
-                       id="secretListTable">
+                       id="buildingListTable">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>SSID</th>
-                        <th>密钥</th>
+                        <th>序号</th>
                         <th>楼栋编号</th>
                         <th>楼栋名称</th>
+                        <th>所属园区</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -41,11 +39,10 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>SSID</th>
-                        <th>密钥</th>
+                        <th>序号</th>
                         <th>楼栋编号</th>
                         <th>楼栋名称</th>
+                        <th>所属园区</th>
                         <th>操作</th>
                     </tr>
                     </tfoot>
@@ -54,39 +51,45 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document" style="width: 900px;">
+<div class="modal fade" role="dialog" id="buildingAddModal">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="gridSystemModalLabel">修改密钥</h4>
+                <h4 class="modal-title">添加楼栋</h4>
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12" id="editSecret">
-                            <form class="form-horizontal" id="secretConfigForm">
+                            <form id="addBuildingForm" method="post" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">楼栋编号</label>
+                                    <label class="col-sm-2 control-label">选择园区</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="building_code" class="form-control" placeholder="">
+                                        <select class="form-control" name="villageId" id="villageList"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">SSID</label>
+                                    <label class="col-sm-2 control-label">输入楼栋名称</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="ssid"  class="form-control" placeholder="">
+                                        <input type="text" class="form-control" name="buildingName"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">密钥</label>
+                                    <label class="col-sm-2 control-label">输入楼栋编号</label>
                                     <div class="col-sm-8">
-                                        <textarea name="secret" id="" class="form-control" rows="10"></textarea>
+                                        <input type="text" class="form-control" name="buildingCode"/>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label class="col-sm-2 control-label">输入描述(可选)</label>
+                                    <div class="col-sm-8">
+                                        <textarea name="description" class="form-control" id="description" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-2">
-                                        <button type="submit" class="btn btn-primary">确认</button>
+                                    <div class="col-sm-9 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">提交</button>
                                     </div>
                                 </div>
                             </form>
@@ -103,75 +106,136 @@
 <script type="text/javascript">
     var editTable;//全局的datatable变量
 
-    //删除数据
-    $('#secretListTable tbody').on( 'click', 'button#delRow', function () {
-        var comfirm=confirm("确定删除?")
-        if(comfirm)
-        {
-            alert("删除成功");
+    $('#buildingListTable tbody').on( 'click', 'button#delRowBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var con=confirm("确定该删除该楼栋?");
+        if(con) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.deleteBuilding + data.id,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        editTable.ajax.reload(null, false);
+                        alert("删除成功");
+                    }
+                    else {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
         }
     });
 
-    $('#secretListTable tbody').on( 'click', 'button#editRow', function () {
-        alert("暂时不能修改!");
-//        $("#formModel").modal("show");
+
+    $("#addBuildingBtn").click(function(){
+        $("#buildingAddModal").modal("show");
     });
-
-
+    function buildingAddValidator() {
+        $('#addBuildingForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                buildingName: {
+                    validators: {
+                        notEmpty: {
+                            message: '楼栋名称不能为空'
+                        }
+                    }
+                },
+                buildingCode: {
+                    validators: {
+                        notEmpty: {
+                            message: '楼栋编号不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9A-Za-z]+$/,
+                            message: '楼栋编号只能为数字和字母的组合'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+    function submitForm()
+    {
+        var data=$("#addBuildingForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addBuilding,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                    editTable.ajax.reload( null, false );
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
 
 
     //初始化表格数据
     function initDataTable(){
-        editTable=$('#secretListTable').DataTable({
+        editTable=$('#buildingListTable').DataTable({
             "processing":true,
             "serverSide": true,
             "ajax":{
-                "url": urlConfig.secretList,
+                "url": urlConfig.buildingList,
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{
                 "targets": 0,
-                "data": "id",
-                "visible": false,
+                "data":null,
                 "orderable": false,
-                "searchable": false
-
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
             },{
                 "targets": 1,
-                "data": "ssid",
+                "data": "buildingCode",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
 
             },{
                 "targets": 2,
-                "data": "secret",
+                "data": "buildingName",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
 
             },{
                 "targets": 3,
-                "data": "buildingEntity.buildingCode",
+                "data": "villageId",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
 
             },{
-                "targets": 4,
-                "data": "buildingEntity.buildingName",
-                "visible": true,
-                "orderable": false,
-                "searchable": false
-
-            },{
-                "targets": 5,//删除
+                "targets": 4,//删除
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
-                "<button id='editRow' class='btn btn-primary' type='button'>修改</button>&ensp;"+
-                "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
+                "<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>"
             }
             ],
             "aaSorting": [[ 1, "asc" ]],
@@ -205,17 +269,8 @@
 
     }
     $(document).ready(function() {
-        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
-            showButtonPanel:true,
-            closeText:"关闭",
-            yearSuffix: '年',
-            currentText:'今天',
-            showMonthAfterYear:true,
-            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-            dayNamesMin: ['日','一','二','三','四','五','六']
-        });
         LoadDataTablesScripts(initDataTable);
+        initVillageSelect();
+        LoadBootstrapValidatorScript(buildingAddValidator);
     });
 </script>

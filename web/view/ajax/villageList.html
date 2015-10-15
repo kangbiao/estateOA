@@ -27,8 +27,8 @@
                     <thead>
                     <tr>
                         <th>序号</th>
-                        <th>园区名称</th>
                         <th>园区编号</th>
+                        <th>园区名称</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -39,8 +39,8 @@
                     <tfoot>
                     <tr>
                         <th>序号</th>
-                        <th>园区名称</th>
                         <th>园区编号</th>
+                        <th>园区名称</th>
                         <th>操作</th>
                     </tr>
                     </tfoot>
@@ -62,15 +62,15 @@
                         <div class="col-md-12">
                             <form id="addVillageForm" method="post" class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">园区名称</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="name"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-2 control-label">园区编号</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" name="code"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">园区名称</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="name"/>
                                     </div>
                                 </div>
                                 <div class="form-group has-feedback">
@@ -97,6 +97,32 @@
 </div><!-- /.modal -->
 <script type="text/javascript">
     var editTable;//全局的datatable变量
+
+    $('#villageListTable tbody').on( 'click', 'button#delRowBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var con=confirm("确定该删除该园区?");
+        if(con) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.deleteVillage + data.id,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        editTable.ajax.reload(null, false);
+                        alert("删除成功");
+                    }
+                    else {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
+    });
+
 
     //增加园区
     $("#addVillageBtn").click(function(){
@@ -143,6 +169,7 @@
             success: function (result) {
                 if (result.status) {
                     alert("添加成功");
+                    editTable.ajax.reload( null, false );
                 }
                 else
                 {
@@ -161,7 +188,7 @@
             "processing":true,
             "serverSide": true,
             "ajax":{
-                "url": urlConfig.secretList,
+                "url": urlConfig.villageList,
                 "dataSrc": "jsonString"
             },
             "columnDefs": [{

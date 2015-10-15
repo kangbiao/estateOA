@@ -28,6 +28,7 @@ public class BaseDaoImpl implements BaseDao
         return sessionFactory.getCurrentSession();
     }
 
+
     @Override
     public Integer save(Object object)
     {

@@ -11,7 +11,7 @@ function initVillageSelect()
 	$.ajax({
 		type: "post",
 		async: true,
-		url: urlConfig.villageList,
+		url: urlConfig.getVillageSelect2,
 		dataType: "json", //返回数据形式为json
 		success: function (result) {
 			if (result.status) {

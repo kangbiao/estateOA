@@ -129,8 +129,8 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/propertyList.html">物业信息</a></li>
-						<li><a class="ajax-link" href="ajax/addVillage.html">增加园区</a></li>
-						<li><a class="ajax-link" href="ajax/addBuilding.html">增加楼栋</a></li>
+						<!--<li><a class="ajax-link" href="ajax/addVillage.html">增加园区</a></li>-->
+						<!--<li><a class="ajax-link" href="ajax/addBuilding.html">增加楼栋</a></li>-->
 						<li><a class="ajax-link" href="ajax/villageList.html">园区信息</a></li>
 						<li><a class="ajax-link" href="ajax/buildingList.html">楼栋信息</a></li>
 						<li><a class="ajax-link" href="ajax/addProperty.html">增加物业</a></li>
@@ -268,7 +268,7 @@
         $.ajax({
             type: "post",
             async: true,
-            url: urlConfig.villageList,
+            url: urlConfig.getVillageSelect2,
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {

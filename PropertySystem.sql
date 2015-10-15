@@ -203,7 +203,7 @@ CREATE TABLE `building` (
   `building_code` varchar(45) DEFAULT NULL,
   `building_name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`building_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `building` (
 
 LOCK TABLES `building` WRITE;
 /*!40000 ALTER TABLE `building` DISABLE KEYS */;
-INSERT INTO `building` VALUES (1,5,'sad','G1B1','园区1的楼栋1'),(2,4,'ds','G2B1','园区2的楼栋1'),(3,4,'fds','fdsf','dsf'),(4,6,'有1单元和2单元','z001','1栋'),(5,7,'独栋','52001','52栋');
+INSERT INTO `building` VALUES (1,5,'','G1B1','园区1的楼栋1'),(2,4,'','G2B1','园区2的楼栋1'),(3,4,'','LD002','测试楼栋'),(4,6,'有1单元和2单元','z001','1栋'),(5,7,'独栋','LD001','楼栋一');
 /*!40000 ALTER TABLE `building` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,7 +447,7 @@ CREATE TABLE `notice` (
   PRIMARY KEY (`notice_id`),
   KEY `FK_1nyd0erg10vfu0etf8fc8h0va` (`cu_id`),
   CONSTRAINT `FK_1nyd0erg10vfu0etf8fc8h0va` FOREIGN KEY (`cu_id`) REFERENCES `console_user` (`cu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -456,7 +456,7 @@ CREATE TABLE `notice` (
 
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES (3,'的范德萨范德萨','规范的广泛的',1444804892795,NULL,'股份的风格',NULL,1445356800000,1);
+INSERT INTO `notice` VALUES (4,'测试公告','内容',1444899774481,NULL,'描述',NULL,1445356800000,1);
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +537,7 @@ CREATE TABLE `parking_lot` (
   `village_id` int(10) unsigned DEFAULT NULL,
   `status` tinyint(2) DEFAULT NULL,
   PRIMARY KEY (`pl_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,7 +546,7 @@ CREATE TABLE `parking_lot` (
 
 LOCK TABLES `parking_lot` WRITE;
 /*!40000 ALTER TABLE `parking_lot` DISABLE KEYS */;
-INSERT INTO `parking_lot` VALUES (1,'CW001',NULL,'蓝光米兰香洲道闸一',2,NULL,1,6,0);
+INSERT INTO `parking_lot` VALUES (1,'CW001',NULL,'蓝光米兰香洲道闸一',2,NULL,1,6,0),(2,'CW002',NULL,'车位地址二',1,'巴拉巴拉',1,6,0);
 /*!40000 ALTER TABLE `parking_lot` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -857,7 +857,7 @@ CREATE TABLE `village` (
   `code` varchar(45) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`village_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -866,7 +866,7 @@ CREATE TABLE `village` (
 
 LOCK TABLES `village` WRITE;
 /*!40000 ALTER TABLE `village` DISABLE KEYS */;
-INSERT INTO `village` VALUES (4,'dfds','vb222',''),(5,'fdsdsf','dfdsds','fdsds'),(6,'蓝光米兰香洲','gp001','服务物业公司：蓝光物业'),(7,'万科城市花园','wk001','川师附近');
+INSERT INTO `village` VALUES (4,'测试园区','YQ002',''),(5,'园区一','YQ001',''),(6,'蓝光米兰香洲','gp001','服务物业公司：蓝光物业'),(7,'万科城市花园','wk001','川师附近');
 /*!40000 ALTER TABLE `village` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -879,4 +879,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-15 11:34:31
+-- Dump completed on 2015-10-15 17:03:42

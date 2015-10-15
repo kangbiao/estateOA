@@ -143,7 +143,9 @@ public class PropertyDaoImpl implements PropertyDao
         Session session=getSession();
         String hql="from PropertyEntity t where t.buildingId=:id";
         List list=session.createQuery(hql).setInteger("id", id).list();
-        return (ArrayList<PropertyEntity>) list;
+        if (list.size()>0)
+            return (ArrayList<PropertyEntity>) list;
+        return null;
     }
 
     @Override

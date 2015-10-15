@@ -2,9 +2,7 @@ package estate.controller;
 
 import estate.common.UserType;
 import estate.common.util.LogUtil;
-import estate.entity.database.BuildingEntity;
 import estate.entity.database.PropertyEntity;
-import estate.entity.database.VillageEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -40,58 +38,6 @@ public class PropertyController
     private FeeItemOrderService feeItemOrderService;
     @Autowired
     private BillService billService;
-
-    /**
-     * 增加物业信息
-     * @param villageEntity
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/addVillage")
-    public BasicJson addVillage(VillageEntity villageEntity,HttpServletRequest request)
-    {
-        BasicJson basicJson=new BasicJson(false);
-        try
-        {
-            baseService.save(villageEntity);
-        }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setCode("10294320");
-            basicJson.getErrorMsg().setDescription("添加出错,请重试.\n错误详情:"+e.getMessage());
-            return basicJson;
-        }
-
-        basicJson.setStatus(true);
-        basicJson.setJsonString(villageEntity);
-        return basicJson;
-    }
-
-    /**
-     * 增加楼栋信息
-     * @param buildingEntity
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/addBuilding")
-    public BasicJson addBuilding(BuildingEntity buildingEntity ,HttpServletRequest request)
-    {
-        BasicJson basicJson=new BasicJson(false);
-        basicJson.setJsonString(buildingEntity);
-        try
-        {
-            baseService.save(buildingEntity);
-        }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setCode("2130900");
-            basicJson.getErrorMsg().setDescription("楼栋信息添加失败\n详细信息:"+e.getMessage());
-            return basicJson;
-        }
-
-        basicJson.setStatus(true);
-        return basicJson;
-    }
 
     /**
      * 增加物业信息

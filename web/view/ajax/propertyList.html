@@ -250,7 +250,7 @@
 
     $('#propertyListTable tbody').on( 'click', 'button#delRowBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
-        var con=confirm("确定该物业?");
+        var con=confirm("确定删除该物业?");
         if(con) {
             $.ajax({
                 type: "get",

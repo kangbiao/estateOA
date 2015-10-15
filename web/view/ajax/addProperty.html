@@ -181,11 +181,11 @@
         $.ajax({
             type: "post",
             async: true,
-            url: urlConfig.buildingList+"/"+villageId,
+            url: urlConfig.getBuildingSelect2+"/"+villageId,
             dataType: "json",
             success: function (result) {
                 if (result.status) {
-                    if(result.jsonString.length>0)
+                    if(result.jsonString!=null)
                     {
                         var options="<option value=''>--请选择--</option>";
                         for(var i in result.jsonString)

@@ -1,6 +1,8 @@
 package estate.dao;
 
 import estate.entity.database.BuildingEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 
 import java.util.ArrayList;
 
@@ -10,6 +12,14 @@ import java.util.ArrayList;
  */
 public interface BuildingDao
 {
+
+    /**
+     * 获取datatable表格数据
+     * @param tableFilter
+     * @return
+     */
+    TableData getList(TableFilter tableFilter);
+
     /**
      * 通过楼栋编码获取楼栋的所有信息
      * @param code

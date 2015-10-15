@@ -50,6 +50,14 @@ public interface PropertyService
      */
     Object getPropertyByBuildingId(Integer buildingID);
 
+
+    /**
+     * 通过楼栋id返回该楼栋下的所有物业
+     * @param id
+     * @return
+     */
+    ArrayList<PropertyEntity> getByBuildingID(Integer id);
+
     /**
      * 根据APP用户的电话号码返回该app用户名下所有的物业
      * @param phone

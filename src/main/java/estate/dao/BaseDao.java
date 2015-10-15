@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public interface BaseDao
 {
+
     /**
      * 包含基础的增加和更新操作,适用于单个对象
      * @param object

@@ -3,9 +3,13 @@ package estate.service.impl;
 import estate.dao.BaseDao;
 import estate.dao.BuildingDao;
 import estate.entity.database.BuildingEntity;
+import estate.entity.json.TableData;
+import estate.entity.json.TableFilter;
 import estate.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-9-22.
@@ -20,6 +24,14 @@ public class BuildingServiceImpl implements BuildingService
     private BuildingDao buildingDao;
 
     @Override
+    public TableData getList(TableFilter tableFilter)
+    {
+        TableData tableData=buildingDao.getList(tableFilter);
+        tableData.setRecordsTotal(baseDao.count("BuildingEntity"));
+        return tableData;
+    }
+
+    @Override
     public Integer getIDByCode(String code)
     {
         BuildingEntity buildingEntity=buildingDao.getByCode(code);
@@ -31,5 +43,11 @@ public class BuildingServiceImpl implements BuildingService
         {
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<BuildingEntity> getByVillageID(Integer id)
+    {
+        return buildingDao.getAllBuildingsByVillageId(id);
     }
 }

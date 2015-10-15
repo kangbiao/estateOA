@@ -1,12 +1,13 @@
 package estate.controller;
 
-import estate.entity.database.VillageEntity;
+import estate.common.util.LogUtil;
+import estate.entity.database.BuildingEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.BaseService;
 import estate.service.BuildingService;
-import estate.service.VillageService;
+import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +20,16 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @RestController
-@RequestMapping("/web/village")
-public class VillageController
+@RequestMapping("/web/building")
+public class BuildingController
 {
+
     @Autowired
-    private VillageService villageService;
+    private BuildingService buildingService;
     @Autowired
     private BaseService baseService;
     @Autowired
-    private BuildingService buildingService;
+    private PropertyService propertyService;
 
     @RequestMapping(value = "/getList")
     public TableData getList(TableFilter tableFilter,HttpServletRequest request)
@@ -37,32 +39,33 @@ public class VillageController
             tableFilter.setSearchValue(null);
         try
         {
-            return villageService.getList(tableFilter);
+            return buildingService.getList(tableFilter);
         }
         catch (Exception e)
         {
+            LogUtil.E(e.getMessage());
             return null;
         }
     }
 
     /**
-     * 增加园区信息
-     * @param villageEntity
+     * 增加楼栋信息
+     * @param buildingEntity
      * @param request
      * @return
      */
     @RequestMapping(value = "/add")
-    public BasicJson addVillage(VillageEntity villageEntity,HttpServletRequest request)
+    public BasicJson addBuilding(BuildingEntity buildingEntity ,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
         try
         {
-            baseService.save(villageEntity);
+            baseService.save(buildingEntity);
         }
         catch (Exception e)
         {
-            basicJson.getErrorMsg().setCode("10294320");
-            basicJson.getErrorMsg().setDescription("添加出错,请重试.\n错误详情:"+e.getMessage());
+            basicJson.getErrorMsg().setCode("");
+            basicJson.getErrorMsg().setDescription("楼栋信息添加失败\n详细信息:"+e.getMessage());
             return basicJson;
         }
 
@@ -71,26 +74,27 @@ public class VillageController
     }
 
     /**
-     * 删除园区,如果该园区下面有楼栋的话将不能删除
-     * @param villageID
-     * @param request
+     * 删除楼栋,如果该园区下面有物业的话,则不能删除
+     * @param buildingID
      * @return
      */
-    @RequestMapping(value = "/delete/{villageID}")
-    public BasicJson delete(@PathVariable Integer villageID,HttpServletRequest request)
+    @RequestMapping(value = "/delete/{buildingID}")
+    public BasicJson delete(@PathVariable Integer buildingID)
     {
         BasicJson basicJson=new BasicJson();
-        if (buildingService.getByVillageID(villageID)!=null)
+
+        if (propertyService.getByBuildingID(buildingID)!=null)
         {
-            basicJson.getErrorMsg().setDescription("删除失败,请先删除该园区下面的所有楼栋");
+            basicJson.getErrorMsg().setDescription("删除失败,请先删除该楼栋下的所有物业");
             return basicJson;
         }
 
-        VillageEntity villageEntity=new VillageEntity();
-        villageEntity.setId(villageID);
+
+        BuildingEntity buildingEntity=new BuildingEntity();
+        buildingEntity.setId(buildingID);
         try
         {
-            baseService.delete(villageEntity);
+            baseService.delete(buildingEntity);
         }
         catch (Exception e)
         {

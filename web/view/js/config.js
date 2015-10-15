@@ -68,17 +68,22 @@ urlConfig.propertyList=host+"property/propertyList";
 urlConfig.getOwnerInfoByPropertyID=host+"property/owner/";
 urlConfig.getFeeInfoByPropertyID=host+"property/fee/";
 urlConfig.addProperty=host+"property/add";
-urlConfig.addVillage=host+"property/addVillage";
-urlConfig.addBuilding=host+"property/addBuilding";
-urlConfig.villageList=host+"property/villageList";
-urlConfig.buildingList=host+"property/buildingList";
 urlConfig.generateBill=host+"property/generateBill/";
 urlConfig.getOwnerPropertyInfoByID=host+"property/getMoreInfo/";
 urlConfig.deleteOwner=host+"property/deleteOwner";
 urlConfig.deleteProperty=host+"property/deleteProperty/";
 
 //园区相关的url
+urlConfig.getVillageSelect2=host+"property/villageList";
 urlConfig.villageList=host+"village/getList";
+urlConfig.addVillage=host+"village/add";
+urlConfig.deleteVillage=host+"village/delete/";
+
+//楼栋相关的url
+urlConfig.buildingList=host+"building/getList";
+urlConfig.getBuildingSelect2=host+"property/buildingList";
+urlConfig.addBuilding=host+"building/add";
+urlConfig.deleteBuilding=host+"building/delete/";
 
 //道闸相关的url
 urlConfig.brakeList=host+"brake/getList";
