@@ -7,6 +7,7 @@ package estate.entity.database;
 public class BrakeEntity
 {
     private int id;
+    private Integer parkLotNum;
     private String code;
     private String name;
     private String description;
@@ -62,5 +63,15 @@ public class BrakeEntity
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public Integer getParkLotNum()
+    {
+        return parkLotNum;
+    }
+
+    public void setParkLotNum(Integer parkLotNum)
+    {
+        this.parkLotNum = parkLotNum;
     }
 }

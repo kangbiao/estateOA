@@ -81,6 +81,12 @@ urlConfig.deleteProperty=host+"property/deleteProperty/";
 urlConfig.brakeList=host+"brake/getList";
 urlConfig.brakeDelete=host+"brake/delete/";
 urlConfig.brakeAdd=host+"brake/add";
+urlConfig.getBrakeListByVillageID=host+"brake/getByVillageID/";
+
+//车位相关的url
+urlConfig.parkLotAdd=host+"parkLot/add";
+urlConfig.parkLotList=host+"parkLot/getList";
+urlConfig.parkLotDelete=host+"parkLot/delete/";
 
 
 //搜索

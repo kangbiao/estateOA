@@ -1,9 +1,12 @@
 package estate.controller;
 
+import estate.common.ParkLot;
 import estate.entity.database.ParkingLotEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
+import estate.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/web/parkLot")
 public class ParkLotController
 {
+    @Autowired
+    private BaseService baseService;
 
     /**
      * 获取datatable数据
@@ -45,7 +50,17 @@ public class ParkLotController
     public BasicJson add(ParkingLotEntity parkingLotEntity,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
-
+        parkingLotEntity.setStatus(ParkLot.EMPTY);
+        try
+        {
+            baseService.save(parkingLotEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("保存车位信息失败\n"+e.getMessage());
+            return basicJson;
+        }
+        basicJson.setJsonString(parkingLotEntity);
         basicJson.setStatus(true);
         return basicJson;
     }

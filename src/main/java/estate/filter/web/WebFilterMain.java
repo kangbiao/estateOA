@@ -1,12 +1,8 @@
 package estate.filter.web;
 
-import estate.common.util.GsonUtil;
-import estate.common.util.LogUtil;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -29,32 +25,32 @@ public class WebFilterMain implements Filter
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        HttpSession session=request.getSession();
-
-        request.getCookies();
-//        LogUtil.E("cookie:" + GetVillage.get(request, response));
-        String path=request.getServletPath();
-        LogUtil.E("path:  " + path);
-        ArrayList<String> passUrl=new ArrayList<>();
-
-        passUrl.add("/img/");
-        passUrl.add("/js/");
-        passUrl.add("/css/");
-        passUrl.add("/plugins/");
-        passUrl.add("/view/403.html");
-        passUrl.add("/view/login.html");
-        passUrl.add("/web/auth");
-
-        LogUtil.E(GsonUtil.getGson().toJson(session.getAttribute("user")));
-
-        if (this.isDoFilter(passUrl,path))
-        {
-            if (session.getAttribute("user")==null)
-            {
-                response.sendRedirect(request.getContextPath() + "/view/login.html");
-                return;
-            }
-        }
+//        HttpSession session=request.getSession();
+//
+//        request.getCookies();
+////        LogUtil.E("cookie:" + GetVillage.get(request, response));
+//        String path=request.getServletPath();
+////        LogUtil.E("path:  " + path);
+//        ArrayList<String> passUrl=new ArrayList<>();
+//
+//        passUrl.add("/img/");
+//        passUrl.add("/js/");
+//        passUrl.add("/css/");
+//        passUrl.add("/plugins/");
+//        passUrl.add("/view/403.html");
+//        passUrl.add("/view/login.html");
+//        passUrl.add("/web/auth");
+//
+////        LogUtil.E(GsonUtil.getGson().toJson(session.getAttribute("user")));
+//
+//        if (this.isDoFilter(passUrl,path))
+//        {
+//            if (session.getAttribute("user")==null)
+//            {
+//                response.sendRedirect(request.getContextPath() + "/view/login.html");
+//                return;
+//            }
+//        }
         chain.doFilter(req,res);
     }
 

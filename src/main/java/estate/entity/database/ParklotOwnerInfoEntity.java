@@ -5,7 +5,7 @@ package estate.entity.database;
  */
 public class ParklotOwnerInfoEntity
 {
-    private int id;
+    private Integer id;
     private Integer plId;
     private String ownerPhone;
     private Integer brakeId;
@@ -52,12 +52,12 @@ public class ParklotOwnerInfoEntity
         this.enterBrakeAllowed = enterBrakeAllowed;
     }
 
-    public int getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }

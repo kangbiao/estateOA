@@ -1,5 +1,3 @@
-import estate.common.util.HexConvert;
-import estate.common.util.LogUtil;
 import org.junit.Test;
 
 import java.io.DataInputStream;
@@ -56,6 +54,5 @@ public class SocketTest {
     @Test
     public void test2()
     {
-        LogUtil.E(HexConvert.toHexString("0218000000000000000189000102030405060708"));
     }
 }

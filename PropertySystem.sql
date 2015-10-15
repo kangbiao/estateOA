@@ -536,10 +536,8 @@ CREATE TABLE `parking_lot` (
   `brake_id` int(10) unsigned DEFAULT NULL,
   `village_id` int(10) unsigned DEFAULT NULL,
   `status` tinyint(2) DEFAULT NULL,
-  `id` int(11) NOT NULL,
-  `property_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`pl_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -548,6 +546,7 @@ CREATE TABLE `parking_lot` (
 
 LOCK TABLES `parking_lot` WRITE;
 /*!40000 ALTER TABLE `parking_lot` DISABLE KEYS */;
+INSERT INTO `parking_lot` VALUES (1,'CW001',NULL,'蓝光米兰香洲道闸一',2,NULL,1,6,0);
 /*!40000 ALTER TABLE `parking_lot` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -565,7 +564,7 @@ CREATE TABLE `parklot_owner_info` (
   `brake_id` int(10) unsigned DEFAULT NULL,
   `enter_brake_allowed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`poi_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -880,4 +879,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-14 22:47:42
+-- Dump completed on 2015-10-15 11:34:31

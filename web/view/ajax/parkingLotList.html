@@ -1,6 +1,3 @@
-<link href="css/buttons.dataTables.min.css" rel="stylesheet">
-<link href="css/select.dataTables.min.css" rel="stylesheet">
-
 <div class="row">
     <div id="breadcrumb" class="col-md-12">
         <ol class="breadcrumb">
@@ -14,6 +11,7 @@
         <div class="box">
             <div class="box-header">
                 <div class="box-name">
+                    <button id="addParkLotBtn" class="btn btn-info">添加车位</button>
                 </div>
                 <div class="box-icons">
                     <a class="expand-link">
@@ -27,54 +25,24 @@
                        id="parkingLotListTable">
                     <thead>
                     <tr>
-                        <th>id</th>
                         <th>序号</th>
                         <th>车位编号</th>
+                        <th>车位地址</th>
                         <th>车位类型</th>
-                        <th>车位所属</th>
-                        <th>生效时间</th>
-                        <th>使用人</th>
-                        <th>联系电话</th>
+                        <th>所属道闸</th>
                         <th>操作</th>
                         <th>删除</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>B021</td>
-                        <td>大车位</td>
-                        <td>业主所有</td>
-                        <td>2015-5-8</td>
-                        <td>小明</td>
-                        <td>1369482402</td>
-                        <td><button id='clearRow' class='btn btn-primary' type='button'>清除使用人</button></td>
-                        <td><button class='delRow btn btn-primary' type='button'>删除</button></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>C021</td>
-                        <td>小车位</td>
-                        <td>业主所有</td>
-                        <td>2015-5-8</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td><button id='editRow' class='btn btn-primary' type='button'>设置使用人</button></td>
-                        <td><button class='delRow btn btn-primary' type='button'>删除</button></td>
-                    </tr>
                     </tbody>
                     <tfoot>
                     <tr>
-                        <th>id</th>
                         <th>序号</th>
                         <th>车位编号</th>
+                        <th>车位地址</th>
                         <th>车位类型</th>
-                        <th>车位所属</th>
-                        <th>生效时间</th>
-                        <th>使用人</th>
-                        <th>联系电话</th>
+                        <th>所属道闸</th>
                         <th>操作</th>
                         <th>删除</th>
                     </tr>
@@ -84,8 +52,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" role="dialog" id="formModel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" role="dialog" id="parkLotAddModel">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -94,17 +62,44 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <form class="form-horizontal" role="form" id="setParkingLotUserFrom">
+                        <form class="form-horizontal" id="parkLotAddForm">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">使用人姓名</label>
+                                <label class="col-sm-2 control-label">选择园区</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="fee_name" class="form-control" placeholder="">
+                                    <select class="form-control" name="villageId" id="villageList"></select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">使用人电话</label>
+                                <label class="col-sm-2 control-label">选择道闸</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="fee_name" class="form-control" placeholder="">
+                                    <select class="form-control" name="brakeId" id="brakeList"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">车位编号</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="code" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">车位类型</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="type" id="type">
+                                        <option value="1">小型车位</option>
+                                        <option value="2">中型车位</option>
+                                        <option value="3">大型车位</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">车位地址</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="location"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-2">
+                                    <button type="submit" class="btn btn-primary">确认</button>
                                 </div>
                             </div>
                         </form>
@@ -122,32 +117,121 @@
     var editTable;//全局的datatable变量
 
     $("#parkingLotListTable tbody").on('click', 'button#editRow',function(){
-        $("#formModel").modal("show");
+        $("#parkLotAddModel").modal("show");
     });
 
-    $("#parkingLotListTable tbody").on("click", "button#clearRow" ,function(){
-        var comfirm =confirm("确定清除该车位的使用者?");
-        if(comfirm)
-        {
-            alert("清除成功");
-        }
-    });
-    $("#parkingLotListTable tbody").on("click", "button.delRow" ,function(){
-        var comfirm =confirm("确定删除该车位信息?");
-        if(comfirm)
-        {
-            alert("删除成功");
-        }
+    //增加车位
+    $("#addParkLotBtn").click(function(){
+        $("#parkLotAddModel").modal("show");
     });
 
+    $("#villageList").change(function(){
+        var villageId=$("#villageList option:selected").val();
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.getBrakeListByVillageID+"/"+villageId,
+            dataType: "json",
+            success: function (result) {
+                if (result.status) {
+                    if(result.jsonString!=null)
+                    {
+                        var options="<option value=''>--请选择道闸--</option>";
+                        for(var i in result.jsonString)
+                        {
+                            options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                        }
+                        $("#brakeList").html(options);
+                    }
+                    else
+                    {
+                        $("#brakeList").html("<option value=''>--没有相应的道闸--</option>");
+                    }
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+
+    });
+
+    function parkLotAddAddValidator() {
+        $('#parkLotAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                brakeId: {
+                    validators: {
+                        notEmpty: {
+                            message: '请选择道闸'
+                        }
+                    }
+                },
+                code: {
+                    validators: {
+                        notEmpty: {
+                            message: '车位编号不能为空'
+                        },
+                        regexp: {
+                            regexp: /^[0-9A-Za-z]+$/,
+                            message: '道闸编号只能为数字和字母的组合'
+                        }
+                    }
+                },
+                location: {
+                    validators: {
+                        notEmpty: {
+                            message: '请输入车位地址'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+    function submitForm()
+    {
+        var data=$("#parkLotAddForm").serializeArray();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.parkLotAdd,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
 
     function initDataTable(){
         editTable=$('#parkingLotListTable').DataTable({
             "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.brakeList,
+                "dataSrc": "jsonString"
+            },
             "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,
             "sDom":
-                    "T<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
             "language": {
                 "emptyTable":     "没有相关数据",
                 "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
@@ -185,18 +269,8 @@
 
     }
     $(document).ready(function() {
-        $('.input_date').datepicker({
-            setDate: new Date(), dateFormat: "yy-mm-dd",
-            showButtonPanel: true,
-            closeText: "关闭",
-            yearSuffix: '年',
-            currentText: '今天',
-            showMonthAfterYear: true,
-            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-            dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-            dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-            dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
-        });
+        initVillageSelect();
         LoadDataTablesScripts(initDataTable);
+        LoadBootstrapValidatorScript(parkLotAddAddValidator);
     });
 </script>
