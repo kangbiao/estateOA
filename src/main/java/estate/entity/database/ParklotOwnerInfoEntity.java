@@ -12,6 +12,7 @@ public class ParklotOwnerInfoEntity
     private Integer brakeId;
     private Byte ownerType;
     private Byte enterBrakeAllowed;
+    private ParkingLotEntity parkingLotEntity;
 
 
     public Integer getPlId()
@@ -72,5 +73,15 @@ public class ParklotOwnerInfoEntity
     public void setOwnerType(Byte ownerType)
     {
         this.ownerType = ownerType;
+    }
+
+    public ParkingLotEntity getParkingLotEntity()
+    {
+        return parkingLotEntity;
+    }
+
+    public void setParkingLotEntity(ParkingLotEntity parkingLotEntity)
+    {
+        this.parkingLotEntity = parkingLotEntity;
     }
 }

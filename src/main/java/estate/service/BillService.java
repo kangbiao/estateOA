@@ -40,4 +40,11 @@ public interface BillService
      * @param id
      */
     void generateBillByPropertyID(Integer id) throws PropertyNotBindFeeItemException;
+
+    /**
+     * 通过用户的电话获取这个用户的车位费账单
+     * @param phone
+     * @return
+     */
+    Object getParkLotBillByPhone(String phone);
 }

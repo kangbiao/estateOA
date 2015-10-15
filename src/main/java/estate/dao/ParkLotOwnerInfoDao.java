@@ -11,9 +11,16 @@ import java.util.ArrayList;
 public interface ParkLotOwnerInfoDao
 {
     /**
-     * 通过车位id返回该车位对应的所用用户绑定关系
+     * 通过车位id返回该车位绑定的用户
      * @param id
      * @return
      */
     ArrayList<ParklotOwnerInfoEntity> getByParkLotID(Integer id);
+
+    /**
+     * 通过用户电话返回该用户绑定的所有车位信息
+     * @param phone
+     * @return
+     */
+    ArrayList<ParklotOwnerInfoEntity> getByPhone(String phone);
 }

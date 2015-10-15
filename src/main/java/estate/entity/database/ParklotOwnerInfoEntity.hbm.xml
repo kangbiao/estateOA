@@ -25,5 +25,9 @@
         <property name="enterBrakeAllowed">
             <column name="enter_brake_allowed" sql-type="tinyint"/>
         </property>
+        <many-to-one name="parkingLotEntity" insert="false" update="false" lazy="false"
+                     class="estate.entity.database.ParkingLotEntity">
+            <column name="pl_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

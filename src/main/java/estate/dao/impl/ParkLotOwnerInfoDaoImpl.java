@@ -36,4 +36,15 @@ public class ParkLotOwnerInfoDaoImpl implements ParkLotOwnerInfoDao
             return (ArrayList<ParklotOwnerInfoEntity>) list;
         return null;
     }
+
+    @Override
+    public ArrayList<ParklotOwnerInfoEntity> getByPhone(String phone)
+    {
+        Session session=getSession();
+        String hql="from ParklotOwnerInfoEntity t where t.ownerPhone=:phone";
+        List list=session.createQuery(hql).setString("phone",phone).list();
+        if (list.size()>0)
+            return (ArrayList<ParklotOwnerInfoEntity>) list;
+        return null;
+    }
 }

@@ -112,8 +112,9 @@ public class FeeItemDaoImpl implements FeeItemDao
                 .setInteger("villageID", villageID)
                 .setInteger("feeType", Config.PARKING_LOT)
                 .list();
+//        LogUtil.E(GsonUtil.getGson().toJson(list));
         if (list.size()>0)
-            return list;
+            return list.get(0);
         return null;
     }
 }

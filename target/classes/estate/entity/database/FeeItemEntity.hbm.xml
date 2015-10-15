@@ -27,7 +27,7 @@
         <property name="villageId">
             <column name="village_id" sql-type="int unsigned"/>
         </property>
-        <many-to-one name="ruleEntity" insert="false" update="false" class="estate.entity.database.RuleEntity">
+        <many-to-one name="ruleEntity" insert="false" update="false" lazy="false" class="estate.entity.database.RuleEntity">
             <column name="rule_id"/>
          </many-to-one>
     </class>

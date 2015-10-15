@@ -36,6 +36,9 @@ public class FeeHandler
     {
         BasicJson basicJson=new BasicJson();
         Byte billStatus=null;
+        LogUtil.E("start------------------");
+        LogUtil.E(GsonUtil.getGson().toJson(billService.getParkLotBillByPhone("18144240528")));
+        LogUtil.E("end-----------------------");
         try
         {
             String status=request.getParameter("status");
@@ -60,7 +63,7 @@ public class FeeHandler
                 basicJson.getErrorMsg().setDescription("暂无账单");
                 return basicJson;
             }
-            LogUtil.E(GsonUtil.getGson().toJson(entities));
+//            LogUtil.E(GsonUtil.getGson().toJson(entities));
             ArrayList<AppBill> bills=new ArrayList<>();
             for (BillEntity billEntity:entities)
             {
@@ -86,7 +89,23 @@ public class FeeHandler
                 appBill.setBillTime(Convert.num2time(billEntity.getBillGenerationTime(),"yyyy-MM"));
                 bills.add(appBill);
             }
-            LogUtil.E(GsonUtil.getGson().toJson(bills));
+//            LogUtil.E(GsonUtil.getGson().toJson(bills));
+            ArrayList<Select2> parkLotBills= (ArrayList<Select2>) billService.getParkLotBillByPhone(phone);
+            if (parkLotBills!=null)
+            {
+                float total=0;
+                for (Select2 select2:parkLotBills)
+                {
+                    total+=new Float(select2.getText());
+                }
+                AppBill appBill = new AppBill();
+                appBill.setItems(parkLotBills);
+                appBill.setId(99);
+                appBill.setTotal(String.valueOf(total));
+                appBill.setStatus((byte) 0);
+                appBill.setBillTime(Convert.num2time(System.currentTimeMillis()));
+                bills.add(appBill);
+            }
             basicJson.setJsonString(bills);
         }
         catch (Exception e)

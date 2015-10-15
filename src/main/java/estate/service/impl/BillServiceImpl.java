@@ -2,13 +2,15 @@ package estate.service.impl;
 
 import com.google.gson.Gson;
 import estate.common.FeeRuleUnit;
+import estate.common.ParkLotOwnerRole;
 import estate.common.util.Convert;
+import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.dao.*;
-import estate.entity.database.AppUserEntity;
-import estate.entity.database.BillEntity;
-import estate.entity.database.FeeItemOrderEntity;
-import estate.entity.database.PropertyEntity;
+import estate.entity.database.*;
+import estate.entity.display.ParkLotFeeInfo;
+import estate.entity.json.ParkLotExtra;
+import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.PropertyNotBindFeeItemException;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +40,10 @@ public class BillServiceImpl implements BillService
     private FeeItemOrderDao feeItemOrderDao;
     @Autowired
     private BaseDao baseDao;
+    @Autowired
+    private ParkLotOwnerInfoDao parkLotOwnerInfoDao;
+    @Autowired
+    private FeeItemDao feeItemDao;
 
     @Override
     public TableData getList(TableFilter tableFilter)
@@ -148,5 +155,52 @@ public class BillServiceImpl implements BillService
         LogUtil.E(gson.toJson(billEntity));
 
         baseDao.save(billEntity);
+    }
+
+    @Override
+    public Object getParkLotBillByPhone(String phone)
+    {
+        ArrayList<ParklotOwnerInfoEntity> parklotOwnerInfoEntities= parkLotOwnerInfoDao.getByPhone(phone);
+        ArrayList<Select2> select2s=new ArrayList<>();
+
+        for (ParklotOwnerInfoEntity parklotOwnerInfoEntity:parklotOwnerInfoEntities)
+        {
+            FeeItemEntity feeItemEntity= (FeeItemEntity) feeItemDao.getParkLotByVillageIdType(parklotOwnerInfoEntity
+                    .getParkingLotEntity()
+                    .getVillageId(), String.valueOf(parklotOwnerInfoEntity.getParkingLotEntity().getType()));
+            if (feeItemEntity!=null)
+            {
+                Select2 select2=new Select2();
+                ParkLotFeeInfo parkLotFeeInfo = new ParkLotFeeInfo();
+                parkLotFeeInfo.setParkLotExtra(GsonUtil.getGson().fromJson(feeItemEntity.getDecription(),
+                        ParkLotExtra.class));
+                parkLotFeeInfo.setName(feeItemEntity.getName());
+                parkLotFeeInfo.setRuleEntity(feeItemEntity.getRuleEntity());
+                parkLotFeeInfo.setVillageId(feeItemEntity.getVillageId());
+                parkLotFeeInfo.setFeeTypeId(feeItemEntity.getFeeTypeId());
+                parkLotFeeInfo.setId(feeItemEntity.getId());
+                parkLotFeeInfo.setIsPeriodic(feeItemEntity.getIsPeriodic());
+                if (Objects.equals(parklotOwnerInfoEntity.getOwnerType(), ParkLotOwnerRole.OWNER))
+                {
+                    select2.setId("车位费("+parklotOwnerInfoEntity.getParkingLotEntity().getCode() + ")");
+                    select2.setText(parkLotFeeInfo.getRuleEntity().getUnitPrice());
+                }
+                else if (Objects.equals(parklotOwnerInfoEntity.getOwnerType(), ParkLotOwnerRole.TENANT))
+                {
+                    select2.setId("车位费("+parklotOwnerInfoEntity.getParkingLotEntity().getCode()+")");
+                    select2.setText(parkLotFeeInfo.getParkLotExtra().getMonthPrice());
+                }
+                else if (Objects.equals(parklotOwnerInfoEntity.getOwnerType(), ParkLotOwnerRole.TEMP))
+                {
+                    select2.setId("车位费("+parklotOwnerInfoEntity.getParkingLotEntity().getCode()+")");
+                    select2.setText(parkLotFeeInfo.getParkLotExtra().getPerTimePrice());
+                }
+                LogUtil.E(GsonUtil.getGson().toJson(parkLotFeeInfo));
+                select2s.add(select2);
+            }
+        }
+        if (select2s.size()>0)
+            return select2s;
+        return null;
     }
 }
