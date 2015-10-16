@@ -11,10 +11,10 @@ public interface SsidSecretDao
 {
     /**
      * 通过ssid返回SsidSecretEntity实体
-     * @param ssid
+     * @param symbol
      * @return
      */
-    SsidSecretEntity getBySSID(String ssid);
+    SsidSecretEntity getBySymbol(String symbol);
 
     /**
      * 获取供datatable显示的数据

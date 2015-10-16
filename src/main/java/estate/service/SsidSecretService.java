@@ -11,11 +11,11 @@ import estate.entity.json.TableFilter;
 public interface SsidSecretService
 {
     /**
-     * 通过SSID返回整个SsidSecretEntity对象
-     * @param ssid
+     * 根据symbol返回整个SsidSecretEntity对象
+     * @param symbol
      * @return
      */
-    SsidSecretEntity getSelfBySsid(String ssid);
+    SsidSecretEntity getSelfBySymbol(String symbol);
 
     /**
      *

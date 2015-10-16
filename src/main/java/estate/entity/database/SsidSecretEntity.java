@@ -1,39 +1,37 @@
 package estate.entity.database;
 
 /**
- * Created by kangbiao on 15-9-21.
+ * Created by kangbiao on 15-10-16.
  */
 public class SsidSecretEntity
 {
     private Integer id;
-    private Integer buildingId;
-    private String ssid;
+    private Integer controlId;
+    private String symbol;
+    private Integer villageId;
     private String secret;
+    private String password;
     private Byte type;
-    private BuildingEntity buildingEntity;
 
-    public SsidSecretEntity()
+
+    public Integer getControlId()
     {
+        return controlId;
     }
 
-    public Integer getBuildingId()
+    public void setControlId(Integer controlId)
     {
-        return buildingId;
+        this.controlId = controlId;
     }
 
-    public void setBuildingId(Integer buildingId)
+    public String getSymbol()
     {
-        this.buildingId = buildingId;
+        return symbol;
     }
 
-    public Integer getId()
+    public void setSymbol(String symbol)
     {
-        return id;
-    }
-
-    public void setId(Integer id)
-    {
-        this.id = id;
+        this.symbol = symbol;
     }
 
     public String getSecret()
@@ -46,24 +44,14 @@ public class SsidSecretEntity
         this.secret = secret;
     }
 
-    public String getSsid()
+    public String getPassword()
     {
-        return ssid;
+        return password;
     }
 
-    public void setSsid(String ssid)
+    public void setPassword(String password)
     {
-        this.ssid = ssid;
-    }
-
-    public BuildingEntity getBuildingEntity()
-    {
-        return buildingEntity;
-    }
-
-    public void setBuildingEntity(BuildingEntity buildingEntity)
-    {
-        this.buildingEntity = buildingEntity;
+        this.password = password;
     }
 
     public Byte getType()
@@ -74,5 +62,25 @@ public class SsidSecretEntity
     public void setType(Byte type)
     {
         this.type = type;
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
+
+    public Integer getVillageId()
+    {
+        return villageId;
+    }
+
+    public void setVillageId(Integer villageId)
+    {
+        this.villageId = villageId;
     }
 }

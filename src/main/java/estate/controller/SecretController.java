@@ -34,29 +34,19 @@ public class SecretController
     public BasicJson add(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
-//        Integer buildingID=buildingService.getIDByCode(request.getParameter("building_code"));
-//        if (buildingID==null)
-//        {
-//            basicJson.getErrorMsg().setCode("102200");
-//            basicJson.getErrorMsg().setDescription("该楼栋不存在");
-//            return basicJson;
-//        }
-        String buildingId=request.getParameter("buildingId");
-        if (buildingId==null||buildingId.equals(""))
-        {
-            basicJson.getErrorMsg().setDescription("请选择楼栋");
-            return basicJson;
-        }
 
         SsidSecretEntity ssidSecretEntity=new SsidSecretEntity();
         ssidSecretEntity.setSecret(request.getParameter("secret"));
-        ssidSecretEntity.setSsid(request.getParameter("ssid"));
-        ssidSecretEntity.setBuildingId(Integer.valueOf(request.getParameter("buildingId")));
+        ssidSecretEntity.setVillageId(Integer.valueOf(request.getParameter("villageId")));
+        ssidSecretEntity.setControlId(Integer.valueOf(request.getParameter("controlId")));
+        ssidSecretEntity.setPassword(request.getParameter("password"));
+        ssidSecretEntity.setType(Byte.valueOf(request.getParameter("type")));
+        ssidSecretEntity.setSymbol(request.getParameter("symbol"));
 
-        if (ssidSecretService.getSelfBySsid(ssidSecretEntity.getSsid())!=null)
+        if (ssidSecretService.getSelfBySymbol(ssidSecretEntity.getSymbol())!=null)
         {
             basicJson.getErrorMsg().setCode("1000200");
-            basicJson.getErrorMsg().setDescription("该SSID已存在");
+            basicJson.getErrorMsg().setDescription("该密钥已存在");
             return basicJson;
         }
 
@@ -68,10 +58,10 @@ public class SecretController
         {
             LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setCode("102200");
-            basicJson.getErrorMsg().setDescription("添加失败,请重试");
+            basicJson.getErrorMsg().setDescription("添加失败,请重试\n"+e.getMessage());
             return basicJson;
         }
-
+        basicJson.setJsonString(ssidSecretEntity);
         basicJson.setStatus(true);
         return basicJson;
     }

@@ -83,7 +83,7 @@ urlConfig.deleteVillage=host+"village/delete/";
 
 //楼栋相关的url
 urlConfig.buildingList=host+"building/getList";
-urlConfig.getBuildingSelect2=host+"property/buildingList";
+urlConfig.getBuildingSelect2=host+"property/buildingList/";
 urlConfig.addBuilding=host+"building/add";
 urlConfig.deleteBuilding=host+"building/delete/";
 

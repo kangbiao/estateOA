@@ -29,11 +29,11 @@ public class SsidSecretDaoImpl implements SsidSecretDao
     }
 
     @Override
-    public SsidSecretEntity getBySSID(String ssid)
+    public SsidSecretEntity getBySymbol(String symbol)
     {
         Session session=getSession();
-        String hql="from SsidSecretEntity s where s.ssid=:ssid";
-        List list=session.createQuery(hql).setString("ssid",ssid).list();
+        String hql="from SsidSecretEntity s where s.symbol=:symbol";
+        List list=session.createQuery(hql).setString("symbol",symbol).list();
         if (list.size()>0)
             return (SsidSecretEntity)list.get(0);
         else

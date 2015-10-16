@@ -27,21 +27,21 @@ public class AuthorityHandler
     @Autowired
     SsidSecretService ssidSecretService;
 
-    @RequestMapping(value = "/getSecret/{ssid}",method = RequestMethod.GET)
-    public BasicJson getSsidSecret(@PathVariable String ssid,HttpServletRequest request)
+    @RequestMapping(value = "/getSecret/{symbol}",method = RequestMethod.GET)
+    public BasicJson getSsidSecret(@PathVariable String symbol,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
         SsidSecretEntity ssidSecretEntity;
         //TODO 从登陆的用户session中取出用户的电话号码
         String phone= (String) request.getSession().getAttribute("phone");
-        if (ssid!=null&&!ssid.equals(""))
+        if (symbol!=null&&!symbol.equals(""))
         {
             try
             {
-                ssidSecretEntity=ssidSecretService.getSelfBySsid(ssid);
+                ssidSecretEntity=ssidSecretService.getSelfBySymbol(symbol);
                 if (ssidSecretEntity==null)
                 {
-                    basicJson.getErrorMsg().setDescription("该ssid不存在!");
+                    basicJson.getErrorMsg().setDescription("该密钥未配置!");
                     return basicJson;
                 }
             }
@@ -64,7 +64,7 @@ public class AuthorityHandler
 //        if(ids.contains(ssidSecretEntity.getBuildingId()))
 //        {
         basicJson.setStatus(true);
-        basicJson.setJsonString(ssidSecretEntity.getSecret());
+        basicJson.setJsonString(ssidSecretEntity);
 //        }
 //        else
 //        {

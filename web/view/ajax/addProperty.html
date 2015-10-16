@@ -181,7 +181,7 @@
         $.ajax({
             type: "post",
             async: true,
-            url: urlConfig.getBuildingSelect2+"/"+villageId,
+            url: urlConfig.getBuildingSelect2+villageId,
             dataType: "json",
             success: function (result) {
                 if (result.status) {

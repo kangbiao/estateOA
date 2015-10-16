@@ -22,9 +22,9 @@ public class SsidSecretServiceImpl implements SsidSecretService
     private BaseDao baseDao;
 
     @Override
-    public SsidSecretEntity getSelfBySsid(String ssid)
+    public SsidSecretEntity getSelfBySymbol(String symbol)
     {
-        return ssidSecretDao.getBySSID(ssid);
+        return ssidSecretDao.getBySymbol(symbol);
     }
 
     @Override
