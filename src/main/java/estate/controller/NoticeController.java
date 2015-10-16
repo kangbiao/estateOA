@@ -81,10 +81,10 @@ public class NoticeController
      * @return
      */
     @RequestMapping(value = "/get/{noticeID}")
-    public BasicJson get(@PathVariable String noticeID)
+    public BasicJson get(@PathVariable Integer noticeID)
     {
         BasicJson basicJson=new BasicJson(false);
-        NoticeEntity noticeEntity=noticeService.getOne(noticeID);
+        NoticeEntity noticeEntity= (NoticeEntity) baseService.get(noticeID,NoticeEntity.class);
         if (noticeEntity==null)
         {
             basicJson.getErrorMsg().setCode("1000010");

@@ -36,9 +36,6 @@ public class FeeHandler
     {
         BasicJson basicJson=new BasicJson();
         Byte billStatus=null;
-        LogUtil.E("start------------------");
-        LogUtil.E(GsonUtil.getGson().toJson(billService.getParkLotBillByPhone("18144240528")));
-        LogUtil.E("end-----------------------");
         try
         {
             String status=request.getParameter("status");
@@ -55,7 +52,6 @@ public class FeeHandler
         String phone= (String) session.getAttribute("phone");
         try
         {
-
             ArrayList<BillEntity> entities=billService.getBillByAppUserPhone(phone,billStatus);
             if (entities==null||entities.size()<1)
             {
@@ -63,7 +59,6 @@ public class FeeHandler
                 basicJson.getErrorMsg().setDescription("暂无账单");
                 return basicJson;
             }
-//            LogUtil.E(GsonUtil.getGson().toJson(entities));
             ArrayList<AppBill> bills=new ArrayList<>();
             for (BillEntity billEntity:entities)
             {
@@ -89,7 +84,7 @@ public class FeeHandler
                 appBill.setBillTime(Convert.num2time(billEntity.getBillGenerationTime(),"yyyy-MM"));
                 bills.add(appBill);
             }
-//            LogUtil.E(GsonUtil.getGson().toJson(bills));
+            LogUtil.E(GsonUtil.getGson().toJson(bills));
             ArrayList<Select2> parkLotBills= (ArrayList<Select2>) billService.getParkLotBillByPhone(phone);
             if (parkLotBills!=null)
             {

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-10-6.
@@ -25,44 +26,46 @@ public class AppFilterMain implements Filter
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
             ServletException
     {
-        HttpServletRequest reqeust = (HttpServletRequest) req;
+        HttpServletRequest requst = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        HttpSession session = reqeust.getSession();
+        HttpSession session = requst.getSession();
         String phone=(String) session.getAttribute("phone");
+        ArrayList<String> passUrl=new ArrayList<>();
+        passUrl.add("/uc/login");
+        passUrl.add("/notice/");
+        passUrl.add("/uc/register/");
+        passUrl.add("/query/");
+        passUrl.add("/findPassword/");
 
-        String path = ((HttpServletRequest) req).getServletPath();
+        String path = requst.getServletPath();
         LogUtil.E("phone:" + phone + "    path:" + path);
-        if (!("/api/uc/login".equals(path)||path.contains("/notice/")||path.contains("/uc/register/")||path.contains
-                ("/query/")))
+        if (isDoFilter(passUrl,path))
         {
             if (phone == null || phone.equals(""))
             {
-                try
-                {
-                    response.setContentType("text/plain");
-                    response.setCharacterEncoding("UTF-8");
-                    response.getWriter().print("no hacked!");
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                chain.doFilter(req, res);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().print("no hacked!");
+                return;
             }
         }
-        else
-        {
-            chain.doFilter(req, res);
-        }
+        chain.doFilter(req, res);
     }
 
     @Override
     public void destroy()
     {
 
+    }
+
+    public boolean isDoFilter(ArrayList<String> paths,String path)
+    {
+        for (String context:paths)
+        {
+            if (path.contains(context))
+                return false;
+        }
+        return true;
     }
 }

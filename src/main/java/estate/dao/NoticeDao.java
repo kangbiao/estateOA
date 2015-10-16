@@ -12,26 +12,8 @@ import java.util.ArrayList;
  */
 public interface NoticeDao
 {
-    /**
-     *
-     * @param noticeID
-     * @return
-     */
-    NoticeEntity getNoticeByID(String noticeID);
-
-    /**
-     * 写入一条公告
-     * @param noticeEntity
-     */
-    void sava(NoticeEntity noticeEntity);
-
-    boolean delete(String noticeID);
 
     ArrayList<NoticeEntity> getSome(Integer num);
 
     TableData getList(TableFilter tableFilter);
-
-    Integer count();
-
-
 }

@@ -1,7 +1,7 @@
 package estate.app;
 
 import estate.common.HtmlSplit;
-import estate.common.util.LogUtil;
+import estate.dao.BaseDao;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
 import estate.service.NoticeService;
@@ -23,6 +23,8 @@ public class NoticeHandlder
 {
     @Autowired
     private NoticeService noticeService;
+    @Autowired
+    private BaseDao baseDao;
 
     /**
      * 获取指定数量的公告,按时间排序
@@ -37,12 +39,11 @@ public class NoticeHandlder
         if (noticeEntities==null)
         {
             basicJson.getErrorMsg().setCode("100123");
-            basicJson.getErrorMsg().setDescription("为获取到相应公告");
+            basicJson.getErrorMsg().setDescription("未获取到相应公告");
             return basicJson;
         }
         basicJson.setStatus(true);
         basicJson.setJsonString(noticeEntities);
-//        LogUtil.E(String.valueOf(number));
         return basicJson;
     }
 
@@ -52,11 +53,10 @@ public class NoticeHandlder
      * @return
      */
     @RequestMapping(value = "/get/{noticeID}")
-    public BasicJson get(@PathVariable String noticeID)
+    public BasicJson get(@PathVariable Integer noticeID)
     {
-        LogUtil.E("get--------------");
         BasicJson basicJson=new BasicJson(false);
-        NoticeEntity noticeEntity=noticeService.getOne(noticeID);
+        NoticeEntity noticeEntity= (NoticeEntity) baseDao.get(noticeID,NoticeEntity.class);
         if (noticeEntity==null)
         {
             basicJson.getErrorMsg().setCode("1000010");
@@ -69,9 +69,9 @@ public class NoticeHandlder
     }
 
     @RequestMapping(value = "/getContent/{noticeID}",produces = "text/html;charset=UTF-8")
-    public String getCOntent(@PathVariable String noticeID)
+    public String getCOntent(@PathVariable Integer noticeID)
     {
-        NoticeEntity noticeEntity=noticeService.getOne(noticeID);
+        NoticeEntity noticeEntity= (NoticeEntity) baseDao.get(noticeID,NoticeEntity.class);
         if (noticeEntity==null)
         {
             return null;

@@ -50,7 +50,6 @@ public class UserHandler
         BasicJson basicJson=new BasicJson(false);
         String phone=request.getParameter("phone");
         String password=request.getParameter("password");
-        LogUtil.E("phone:"+phone+"password:"+password);
         AppUserEntity appUserEntity= (AppUserEntity) appUserService.getByPhone(phone);
         if (appUserEntity==null)
         {
@@ -73,7 +72,6 @@ public class UserHandler
 //            return basicJson;
 //        }
 
-
         basicJson.setStatus(true);
         request.getSession().setAttribute("phone", phone);
         request.getSession().setAttribute("username", appUserEntity.getUserName());
@@ -81,6 +79,11 @@ public class UserHandler
         return basicJson;
     }
 
+    /**
+     * 注销登陆
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/loginOut",method = RequestMethod.GET)
     public BasicJson loginOut(HttpServletRequest request)
     {
@@ -90,7 +93,12 @@ public class UserHandler
         return basicJson;
     }
 
-    //TODO 全部要改
+    /**
+     * 获取验证码
+     * @param phone
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/register/getVerifyCode/{phone}",method = RequestMethod.GET)
     public BasicJson getVerifyCode(@PathVariable String phone,HttpServletRequest request)
     {
@@ -100,21 +108,21 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("请输入手机号!");
             return basicJson;
         }
-        if (appUserService.getByPhone(phone)!=null)
+        if (baseService.get(phone, AppUserEntity.class)!=null)
         {
             basicJson.getErrorMsg().setDescription("手机号码已注册");
             return basicJson;
         }
         String verifyCode=VerifyCodeGenerate.create();
 
-//        String msg=Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心");
-//        if (!msg.equals("succ"))
-//        {
-//            basicJson.getErrorMsg().setDescription(msg);
-//            return basicJson;
-//        }
+        String msg=Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心");
+        if (!msg.equals("succ"))
+        {
+            basicJson.getErrorMsg().setDescription(msg);
+            return basicJson;
+        }
 
-        LogUtil.E("code:"+verifyCode);
+        LogUtil.E("verifycode:"+verifyCode);
         request.getSession().setAttribute("verifyCode", verifyCode);
         request.getSession().setAttribute("phone", phone);
         basicJson.setStatus(true);
@@ -126,13 +134,13 @@ public class UserHandler
     @RequestMapping(value = "/register/checkVerifyCode/{verifyCode}",method = RequestMethod.GET)
     public BasicJson checkVerifyCode(HttpServletRequest request,@PathVariable String verifyCode)
     {
-        BasicJson basicJson=new BasicJson(false);
+        BasicJson basicJson=new BasicJson();
         if (verifyCode==null|| Objects.equals(verifyCode, ""))
         {
             basicJson.getErrorMsg().setDescription("请输入验证码");
             return basicJson;
         }
-        if (!verifyCode.equals("101010"))
+        if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
         {
             LogUtil.E("session:"+request.getSession().getAttribute("verifyCode")+"  post:"+verifyCode);
             basicJson.getErrorMsg().setDescription("验证码输入错误!");
@@ -147,7 +155,7 @@ public class UserHandler
     @RequestMapping(value = "/register/doRegister",method = RequestMethod.GET)
     public BasicJson regist(HttpServletRequest request)
     {
-        BasicJson basicJson=new BasicJson(false);
+        BasicJson basicJson=new BasicJson();
         AppUserEntity appUserEntity=new AppUserEntity();
         String phone= (String) request.getSession().getAttribute("phone");
         String userName=request.getParameter("nickname");
@@ -163,9 +171,9 @@ public class UserHandler
         if (o==null)
         {
             appUserEntity.setStatus(AppUserStatus.ENABLE);
+            appUserEntity.setUserRole(UserType.NOROLE);
             basicJson.getErrorMsg().setCode("100001");
             baseService.save(appUserEntity);
-//            request.getSession().setAttribute("appUser", appUserEntity);
         }
         else
         {
@@ -203,7 +211,6 @@ public class UserHandler
         int role=Integer.valueOf(request.getParameter("role"));
         String phone= (String) httpSession.getAttribute("phone");
 
-//        AppUserEntity appUserEntity= (AppUserEntity)request.getSession().getAttribute("appUser");
         AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone,AppUserEntity.class);
 
         appUserEntity.setPhone(phone);
@@ -357,7 +364,12 @@ public class UserHandler
         return basicJson;
     }
 
-
+    /**
+     * 找回密码发送短信
+     * @param phone
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/findPassword/{phone}",method = RequestMethod.GET)
     public BasicJson findPassword(@PathVariable String phone,HttpServletRequest request)
     {
@@ -365,16 +377,24 @@ public class UserHandler
         String verifyCode=VerifyCodeGenerate.create();
         request.getSession().setAttribute("phone", phone);
         request.getSession().setAttribute("verifyCode",verifyCode);
-        if (!Message.send(phone, "多能通用户注册验证码" + verifyCode+"(10分钟有效),消息来自:多能通安全中心").equals("succ"))
+        String msg=Message.send(phone, "多能通用户注册验证码" + verifyCode + "(10分钟有效),消息来自:多能通安全中心");
+        if (!msg.equals("succ"))
         {
-            basicJson.getErrorMsg().setDescription("验证码发送失败,请输入合法的手机号");
+            basicJson.getErrorMsg().setDescription(msg);
             return basicJson;
         }
 
         basicJson.setStatus(true);
+        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
         return basicJson;
     }
 
+    /**
+     * 核对找回密码的验证码
+     * @param verifyCode
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/findPassword/checkVerifyCode/{verifyCode}",method = RequestMethod.GET)
     public BasicJson checkVerifyCode(@PathVariable String verifyCode,HttpServletRequest request)
     {
@@ -386,6 +406,7 @@ public class UserHandler
         }
 
         basicJson.setStatus(true);
+        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
         return basicJson;
     }
 
@@ -409,7 +430,6 @@ public class UserHandler
             basicJson.getErrorMsg().setDescription("获取用户角色失败");
             return basicJson;
         }
-        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
         basicJson.setStatus(true);
         return basicJson;
     }

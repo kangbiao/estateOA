@@ -162,7 +162,8 @@ public class BillServiceImpl implements BillService
     {
         ArrayList<ParklotOwnerInfoEntity> parklotOwnerInfoEntities= parkLotOwnerInfoDao.getByPhone(phone);
         ArrayList<Select2> select2s=new ArrayList<>();
-
+        if (parklotOwnerInfoEntities==null)
+            return null;
         for (ParklotOwnerInfoEntity parklotOwnerInfoEntity:parklotOwnerInfoEntities)
         {
             FeeItemEntity feeItemEntity= (FeeItemEntity) feeItemDao.getParkLotByVillageIdType(parklotOwnerInfoEntity

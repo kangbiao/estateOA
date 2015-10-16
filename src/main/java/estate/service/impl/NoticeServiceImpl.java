@@ -1,5 +1,6 @@
 package estate.service.impl;
 
+import estate.dao.BaseDao;
 import estate.dao.NoticeDao;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.TableData;
@@ -17,47 +18,16 @@ import java.util.ArrayList;
 @Service("notice")
 public class NoticeServiceImpl implements NoticeService
 {
-    /**
-     * 根据filterEntity获取对应的公告
-     */
     @Autowired
     private NoticeDao noticeDao;
+    @Autowired
+    private BaseDao baseDao;
 
     public TableData getList(TableFilter filter)
     {
-        return noticeDao.getList(filter);
-    }
-
-    /**
-     * 添加公告信息
-     *
-     * @param noticeEntity 公告实体
-     */
-    public void add(NoticeEntity noticeEntity)
-    {
-        noticeDao.sava(noticeEntity);
-    }
-
-    /**
-     * 根据公告ID删除公告
-     *
-     * @param noticeID 公告ID
-     * @return 返回true或false
-     */
-    public boolean delete  (String noticeID)
-    {
-        return noticeDao.delete(noticeID);
-    }
-
-    /**
-     * 根据公告ID获取对应的公告
-     *
-     * @param noticeID 公告ID
-     * @return 返回公告
-     */
-    public NoticeEntity getOne(String noticeID)
-    {
-        return noticeDao.getNoticeByID(noticeID);
+        TableData tableData=noticeDao.getList(filter);
+        tableData.setRecordsTotal(baseDao.count("NoticeEntity"));
+        return tableData;
     }
 
     /**

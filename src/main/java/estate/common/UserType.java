@@ -12,6 +12,7 @@ public class UserType
     public static final int TENANT=2;
     public static final int OWNER=3;
     public static final int APPUSER=4;
+    public static final int NOROLE=0;
 
     public static boolean checkType(int type) throws TypeErrorException
     {

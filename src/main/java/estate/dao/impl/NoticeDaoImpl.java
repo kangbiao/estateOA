@@ -31,23 +31,6 @@ public class NoticeDaoImpl implements NoticeDao
         return sessionFactory.getCurrentSession();
     }
 
-    public NoticeEntity getNoticeByID(String noticeID)
-    {
-        return (NoticeEntity)getSession().get(NoticeEntity.class, Integer.valueOf(noticeID));
-    }
-
-
-    public void sava(NoticeEntity noticeEntity)
-    {
-        Session session=getSession();
-        session.save(noticeEntity);
-    }
-
-    public boolean delete(String noticeID)
-    {
-        return false;
-    }
-
     public ArrayList<NoticeEntity> getSome(Integer num)
     {
         ArrayList<NoticeEntity> entities;
@@ -78,16 +61,8 @@ public class NoticeDaoImpl implements NoticeDao
         Integer count=query.list().size();
         entities=(ArrayList<NoticeEntity>)query.setFirstResult(tableFilter.getStart()).setMaxResults(tableFilter
                 .getLength()).list();
-        tableData.setRecordsTotal(this.count());
         tableData.setRecordsFiltered(count);
         tableData.setJsonString(entities);
         return tableData;
-    }
-
-    public Integer count()
-    {
-        Session session=getSession();
-        String hql="select count(*) from NoticeEntity ";
-        return ((Long)session.createQuery(hql).uniqueResult()).intValue();
     }
 }
