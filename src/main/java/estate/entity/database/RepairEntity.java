@@ -13,7 +13,7 @@ public class RepairEntity
     private Long time;
     private String imageIdList;
     private Byte status;
-    private Integer remark;
+    private String remark;
     private String remarkText;
     private Integer cuId;
     private String result;
@@ -71,12 +71,12 @@ public class RepairEntity
         this.phone = phone;
     }
 
-    public Integer getRemark()
+    public String getRemark()
     {
         return remark;
     }
 
-    public void setRemark(Integer remark)
+    public void setRemark(String remark)
     {
         this.remark = remark;
     }

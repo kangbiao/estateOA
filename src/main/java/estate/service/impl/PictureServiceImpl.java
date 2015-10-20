@@ -3,7 +3,6 @@ package estate.service.impl;
 import estate.common.Config;
 import estate.common.util.LogUtil;
 import estate.dao.BaseDao;
-import estate.dao.PictureDao;
 import estate.entity.database.PictureEntity;
 import estate.exception.PictureUploadException;
 import estate.service.PictureService;
@@ -14,7 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by kangbiao on 15-9-13.
@@ -23,8 +25,6 @@ import java.util.*;
 @Service("picture")
 public class PictureServiceImpl implements PictureService
 {
-    @Autowired
-    private PictureDao pictureDao;
     @Autowired
     private BaseDao baseDao;
 
@@ -71,13 +71,7 @@ public class PictureServiceImpl implements PictureService
                 idString.append(",").append(pictureEntity.getId());
             temp++;
         }
-
         return idString.toString();
     }
 
-    public String getPathByID(Integer id)
-    {
-        PictureEntity pictureEntity=pictureDao.get(id);
-        return null;
-    }
 }

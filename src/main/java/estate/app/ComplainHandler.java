@@ -75,7 +75,13 @@ public class ComplainHandler
         return basicJson;
     }
 
-    @RequestMapping(value = "/add")
+    /**
+     * 增加一个投诉
+     * @param complainEntity
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     public BasicJson addComplain(ComplainEntity complainEntity,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
@@ -85,7 +91,10 @@ public class ComplainHandler
         complainEntity.setStatus(ComplainStatus.FORPROCESS);
         complainEntity.setPhone((String) httpSession.getAttribute("phone"));
         complainEntity.setTime(System.currentTimeMillis());
-        complainEntity.setDescription(complainEntity.getContent());
+        if (complainEntity.getContent().length()>25)
+            complainEntity.setDescription(complainEntity.getContent().substring(0,25));
+        else
+            complainEntity.setDescription(complainEntity.getContent());
 
         try
         {
@@ -108,7 +117,7 @@ public class ComplainHandler
         }
         catch (Exception e)
         {
-            basicJson.getErrorMsg().setDescription("投诉信息保存失败"+e.getMessage());
+            basicJson.getErrorMsg().setDescription("投诉信息保存失败");
             return basicJson;
         }
 

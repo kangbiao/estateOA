@@ -11,7 +11,7 @@ public class RepairStatus
     public final static Byte FORPROCESS=0;
     public final static Byte PROCESSING=1;
     public final static Byte FORCOMMENT=2;
-    public final static Byte HADCOMMENT=2;
+    public final static Byte HADCOMMENT=3;
 
     public static boolean checkType(Byte type) throws TypeErrorException
     {

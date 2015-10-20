@@ -45,6 +45,6 @@ public class RepairServiceImpl implements RepairService
     @Override
     public ArrayList<RepairEntity> getRepairByPhone(String phone, Byte status)
     {
-        return repairDao.getByPhone(phone,status);
+        return repairDao.getByPhone(phone, status);
     }
 }

@@ -31,7 +31,7 @@
             <column name="status" sql-type="tinyint" default="0"/>
         </property>
         <property name="remark">
-            <column name="remark" sql-type="int"/>
+            <column name="remark" sql-type="varchar" length="10"/>
         </property>
         <property name="remarkText">
             <column name="remark_text" sql-type="varchar" length="100"/>

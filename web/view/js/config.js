@@ -101,6 +101,9 @@ urlConfig.parkLotOwner=host+"parkLot/getOwnerList/";
 urlConfig.addParkLotOwner=host+"parkLot/addOwner";
 urlConfig.deleteParkLotOwnerBind=host+"parkLot/deleteBind/";
 
+//图片相关的url
+urlConfig.getPicturePathsByID=host+"picture/getPathsByID/";
+
 
 //搜索
 urlConfig.search=host+"search/";
