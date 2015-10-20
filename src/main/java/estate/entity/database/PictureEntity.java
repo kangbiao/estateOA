@@ -5,19 +5,18 @@ package estate.entity.database;
  */
 public class PictureEntity
 {
-    private int pictureId;
+    private int id;
     private String name;
-    private String description;
-    private String dir;
+    private Long uploadTime;
 
-    public int getPictureId()
+    public int getId()
     {
-        return pictureId;
+        return id;
     }
 
-    public void setPictureId(int pictureId)
+    public void setId(int id)
     {
-        this.pictureId = pictureId;
+        this.id = id;
     }
 
     public String getName()
@@ -30,55 +29,13 @@ public class PictureEntity
         this.name = name;
     }
 
-    public String getDescription()
+    public Long getUploadTime()
     {
-        return description;
+        return uploadTime;
     }
 
-    public void setDescription(String description)
+    public void setUploadTime(Long uploadTime)
     {
-        this.description = description;
-    }
-
-    public String getDir()
-    {
-        return dir;
-    }
-
-    public void setDir(String dir)
-    {
-        this.dir = dir;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        PictureEntity that = (PictureEntity) o;
-
-        if (pictureId != that.pictureId)
-            return false;
-        if (name != null ? !name.equals(that.name) : that.name != null)
-            return false;
-        if (description != null ? !description.equals(that.description) : that.description != null)
-            return false;
-        if (dir != null ? !dir.equals(that.dir) : that.dir != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int result = pictureId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (dir != null ? dir.hashCode() : 0);
-        return result;
+        this.uploadTime = uploadTime;
     }
 }

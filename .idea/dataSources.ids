@@ -223,11 +223,10 @@
       <index name="FK_9ey4yw5vexd37wpqp8eeb6wbl" unique="false" columns="pl_id"/>
     </table>
     <table name="picture" schema="" catalog="PropertySystem" type="TABLE">
-      <column name="picture_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="description" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="dir" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="PRIMARY" columns="picture_id"/>
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="upload_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="property" schema="" catalog="PropertySystem" type="TABLE">
       <column name="property_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

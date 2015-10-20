@@ -22,12 +22,6 @@ public class PictureDaoImpl implements PictureDao
         return sessionFactory.getCurrentSession();
     }
 
-    public String savePictureReturnID(PictureEntity pictureEntity)
-    {
-        Session session=getSession();
-        session.save(pictureEntity);
-        return String.valueOf(pictureEntity.getPictureId());
-    }
 
     public PictureEntity get(Integer id)
     {

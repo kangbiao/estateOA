@@ -8,7 +8,6 @@ import estate.entity.database.PictureEntity;
  */
 public interface PictureDao
 {
-    String savePictureReturnID(PictureEntity pictureEntity);
 
     PictureEntity get(Integer id);
 }

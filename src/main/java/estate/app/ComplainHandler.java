@@ -1,11 +1,12 @@
 package estate.app;
 
 import estate.common.ComplainStatus;
-import estate.common.util.LogUtil;
 import estate.entity.database.ComplainEntity;
 import estate.entity.json.BasicJson;
+import estate.exception.PictureUploadException;
 import estate.service.BaseService;
 import estate.service.ComplainService;
+import estate.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +31,8 @@ public class ComplainHandler
     private ComplainService complainService;
     @Autowired
     private BaseService baseService;
+    @Autowired
+    private PictureService pictureService;
 
     /**
      * 获取我的投诉
@@ -83,21 +86,30 @@ public class ComplainHandler
         complainEntity.setPhone((String) httpSession.getAttribute("phone"));
         complainEntity.setTime(System.currentTimeMillis());
         complainEntity.setDescription(complainEntity.getContent());
+
+        try
+        {
+            complainEntity.setImageIdList(pictureService.saveAndReturnID(map));
+        }
+        catch (PictureUploadException e)
+        {
+            basicJson.getErrorMsg().setDescription(e.getMessage());
+            return basicJson;
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("图片上传失败,请重试");
+            return basicJson;
+        }
+
         try
         {
             baseService.save(complainEntity);
         }
         catch (Exception e)
         {
-            basicJson.getErrorMsg().setDescription("投诉信息保存失败");
+            basicJson.getErrorMsg().setDescription("投诉信息保存失败"+e.getMessage());
             return basicJson;
-        }
-
-        for (String key: map.keySet())
-        {
-            MultipartFile fileItem= map.get(key);
-            String fileName = fileItem.getOriginalFilename();
-            LogUtil.E("FILENAME:" + fileName);
         }
 
         basicJson.setStatus(true);
