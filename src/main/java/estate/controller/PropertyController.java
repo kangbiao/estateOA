@@ -1,6 +1,6 @@
 package estate.controller;
 
-import estate.common.UserType;
+import estate.common.config.UserType;
 import estate.common.util.LogUtil;
 import estate.entity.database.PropertyEntity;
 import estate.entity.json.BasicJson;

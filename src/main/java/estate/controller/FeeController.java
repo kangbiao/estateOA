@@ -1,7 +1,7 @@
 package estate.controller;
 
 import estate.common.Config;
-import estate.common.UserType;
+import estate.common.config.UserType;
 import estate.common.util.Convert;
 import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;

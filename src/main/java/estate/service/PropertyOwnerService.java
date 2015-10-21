@@ -1,7 +1,12 @@
 package estate.service;
 
+import estate.entity.database.PropertyOwnerInfoEntity;
+
+import java.util.ArrayList;
+
 /**
  * Created by kangbiao on 15-10-13.
+ *
  */
 public interface PropertyOwnerService
 {
@@ -13,4 +18,27 @@ public interface PropertyOwnerService
      * @param propertyID
      */
     void deleteOwnerPropertyBind(String phone,Integer propertyID);
+
+    /**
+     * 通过用户的电话返回用户的角色
+     * @param phone
+     * @return
+     */
+    String getRoleStringByPhone(String phone);
+
+    /**
+     * 通过用户电话返回用户物业关系
+     * @param phone
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPhone(String phone);
+
+    /**
+     * 通过物业的id获取绑定到该物业的用户信息
+     * @param propertyID
+     * @param status 业主是否同意审核
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID,Byte status);
+
 }

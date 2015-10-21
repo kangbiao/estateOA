@@ -1,6 +1,6 @@
 package estate.app;
 
-import estate.common.ComplainStatus;
+import estate.common.config.ComplainStatus;
 import estate.entity.database.ComplainEntity;
 import estate.entity.json.BasicJson;
 import estate.exception.PictureUploadException;

@@ -1,7 +1,6 @@
 package estate.dao.impl;
 
-import estate.common.AppUserStatus;
-import estate.common.UserType;
+import estate.common.config.UserType;
 import estate.dao.UserDao;
 import estate.entity.database.AppUserEntity;
 import estate.entity.json.TableData;
@@ -12,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,7 +179,7 @@ public class UserDaoImpl implements UserDao
     }
 
     @Override
-    public Object getUserInfoByPhone(String phone, int type)
+    public Object getUserInfoByPhoneRole(String phone, int type)
     {
         Session session=getSession();
         String hql;

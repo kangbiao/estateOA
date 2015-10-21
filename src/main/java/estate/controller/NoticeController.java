@@ -1,7 +1,6 @@
 package estate.controller;
 
 import estate.common.util.Convert;
-import estate.common.util.Message;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.ConsoleUserEntity;
 import estate.entity.database.NoticeEntity;
@@ -12,6 +11,7 @@ import estate.service.BaseService;
 import estate.service.NoticeService;
 import estate.service.PictureService;
 import estate.service.UserService;
+import estate.thirdApi.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -162,7 +162,7 @@ public class NoticeController
             }
             for (AppUserEntity appUserEntity:appUserEntities)
             {
-                Message.send(appUserEntity.getPhone(),"公告推送，系统向您推送了一条新的公告["+noticeEntity.getTitle()+"]，请您登陆app查看");
+                Message.send(appUserEntity.getPhone(), "公告推送，系统向您推送了一条新的公告[" + noticeEntity.getTitle() + "]，请您登陆app查看");
             }
         }
         catch (Exception e)

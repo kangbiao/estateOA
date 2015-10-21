@@ -42,7 +42,7 @@ public interface PropertyDao
      * @param role
      * @return
      */
-    ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone,int role);
+    ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone,Byte role);
 
 
     /**

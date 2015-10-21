@@ -1,6 +1,6 @@
 package estate.controller;
 
-import estate.common.UserType;
+import estate.common.config.UserType;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
@@ -110,15 +110,15 @@ public class UserController
 
         if(userService.getAppUserInfoByPhoneRole(ownerEntity.getPhone(), UserType.OWNER)!=null)
         {
-            try
-            {
-                propertyOwnerInfoEntity.setOwnerPhone(ownerEntity.getPhone());
-                baseService.save(propertyOwnerInfoEntity);
-            }
-            catch (Exception e)
-            {
-                LogUtil.E(e.getMessage());
-            }
+//            try
+//            {
+//                propertyOwnerInfoEntity.setOwnerPhone(ownerEntity.getPhone());
+//                baseService.save(propertyOwnerInfoEntity);
+//            }
+//            catch (Exception e)
+//            {
+//                LogUtil.E(e.getMessage());
+//            }
 
         }
         else
@@ -126,7 +126,7 @@ public class UserController
             try
             {
                 baseService.save(ownerEntity);
-                propertyOwnerInfoEntity.setOwnerPhone(ownerEntity.getPhone());
+//                propertyOwnerInfoEntity.setOwnerPhone(ownerEntity.getPhone());
                 baseService.save(propertyOwnerInfoEntity);
             }
             catch (Exception e)
@@ -385,7 +385,7 @@ public class UserController
         {
             AppUserEntity appUserEntity=new AppUserEntity();
             appUserEntity.setPhone(phone);
-            appUserEntity.setStatus(status);
+//            appUserEntity.setStatus(status);
             try
             {
                 userService.changeAppUserStatus(appUserEntity);

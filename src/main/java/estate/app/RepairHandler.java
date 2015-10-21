@@ -1,6 +1,6 @@
 package estate.app;
 
-import estate.common.RepairStatus;
+import estate.common.config.RepairStatus;
 import estate.entity.database.PictureEntity;
 import estate.entity.database.RepairEntity;
 import estate.entity.json.BasicJson;

@@ -1,4 +1,4 @@
-package estate.common;
+package estate.common.config;
 
 import estate.exception.TypeErrorException;
 
@@ -8,11 +8,11 @@ import estate.exception.TypeErrorException;
  */
 public class UserType
 {
-    public static final int FAMILY=1;
-    public static final int TENANT=2;
-    public static final int OWNER=3;
-    public static final int APPUSER=4;
-    public static final int NOROLE=0;
+    public static final byte FAMILY=1;
+    public static final byte TENANT=2;
+    public static final byte OWNER=3;
+    public static final byte APPUSER=4;
+    public static final byte NOROLE=0;
 
     public static boolean checkType(int type) throws TypeErrorException
     {

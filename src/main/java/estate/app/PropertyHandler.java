@@ -1,14 +1,17 @@
 package estate.app;
 
-import estate.common.AppUserStatus;
-import estate.common.UserType;
+import estate.common.config.AppUserStatus;
+import estate.common.config.UserType;
 import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
+import estate.entity.app.MyProperty;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.PropertyEntity;
+import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.display.PropertyAppUser;
 import estate.entity.json.BasicJson;
 import estate.service.BaseService;
+import estate.service.PropertyOwnerService;
 import estate.service.PropertyService;
 import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,14 @@ public class PropertyHandler
     private UserService userService;
     @Autowired
     private BaseService baseService;
+    @Autowired
+    private PropertyOwnerService propertyOwnerService;
 
+    /**
+     * 获取我绑定的所有物业
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getMyPropery",method = RequestMethod.GET)
     public BasicJson getMyProperty(HttpServletRequest request)
     {
@@ -44,20 +54,23 @@ public class PropertyHandler
         String phone= (String) request.getSession().getAttribute("phone");
         try
         {
-            AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone, AppUserEntity.class);
-            if (appUserEntity.getStatus().equals(AppUserStatus.FORCHECK))
+            ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities=propertyOwnerService.getByPhone(phone);
+            if (propertyOwnerInfoEntities==null)
             {
-                basicJson.getErrorMsg().setDescription("物业待审核");
-                return basicJson;
-            }
-            ArrayList<PropertyEntity> propertyEntities=propertyService.getProperitiesByAppUserPhone(phone);
-            if (propertyEntities==null)
-            {
-                LogUtil.E("获取用户绑定物业时程序错误");
                 basicJson.getErrorMsg().setDescription("未绑定任何物业");
                 return basicJson;
             }
-            basicJson.setJsonString(propertyEntities);
+            ArrayList<MyProperty> myProperties=new ArrayList<>();
+            for (PropertyOwnerInfoEntity propertyOwnerInfoEntity:propertyOwnerInfoEntities)
+            {
+                MyProperty myProperty=new MyProperty();
+                myProperty.setUserRole(propertyOwnerInfoEntity.getUserRole());
+                myProperty.setStatus(propertyOwnerInfoEntity.getStatus());
+                myProperty.setId(propertyOwnerInfoEntity.getId());
+                myProperty.setPropertyEntity(propertyOwnerInfoEntity.getPropertyEntity());
+                myProperties.add(myProperty);
+            }
+            basicJson.setJsonString(myProperties);
         }
         catch (Exception e)
         {
@@ -69,19 +82,18 @@ public class PropertyHandler
         return basicJson;
     }
 
+    /**
+     * 业主获取申请绑定到自己物业的用户
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getBind")
     public BasicJson checkBind(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
         HttpSession httpSession=request.getSession();
-        String phone= (String) request.getSession().getAttribute("phone");
-        AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone,AppUserEntity.class);
-        if (appUserEntity.getUserRole()!= UserType.OWNER)
-        {
-            basicJson.getErrorMsg().setDescription("非业主用户不能审核绑定");
-            return basicJson;
-        }
-        LogUtil.E(GsonUtil.getGson().toJson(basicJson));
+        String phone= (String) httpSession.getAttribute("phone");
+
         Byte status=null;
         if (request.getParameter("status")!=null)
         {
@@ -103,6 +115,19 @@ public class PropertyHandler
         {
             ArrayList<PropertyAppUser> propertyAppUsers=new ArrayList<>();
             ArrayList<PropertyEntity> propertyEntities= propertyService.getPropertyByOwnerPhone(phone);
+
+
+            ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities = propertyOwnerService.getByPhone(phone);
+            for (PropertyOwnerInfoEntity propertyOwnerInfoEntity:propertyOwnerInfoEntities)
+            {
+                ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities1=propertyOwnerService
+                        .getBindBypropertyIDStatus(propertyOwnerInfoEntity.getPropertyId(), status);
+                for (PropertyOwnerInfoEntity propertyOwnerInfoEntity1:propertyOwnerInfoEntities1)
+                {
+
+                }
+            }
+
             for (PropertyEntity propertyEntity:propertyEntities)
             {
                 PropertyAppUser propertyAppUser=new PropertyAppUser();
@@ -149,7 +174,7 @@ public class PropertyHandler
             {
                 case "agree":
                     AppUserEntity appUserEntity = (AppUserEntity) baseService.get(phone, AppUserEntity.class);
-                    appUserEntity.setStatus(AppUserStatus.ENABLE);
+//                    appUserEntity.setStatus(AppUserStatus.ENABLE);
                     userService.changeAppUserStatus(appUserEntity);
                     break;
                 case "refuse":

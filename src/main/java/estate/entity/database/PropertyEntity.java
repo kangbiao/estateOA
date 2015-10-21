@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 
 /**
  * Created by kangbiao on 15-9-13.
+ *
  */
 public class PropertyEntity
 {
     private Integer id;
     private String code;
-    private String ownerNameList;
     private String location;
     private Byte type;
     private BigDecimal propertySquare;
@@ -17,6 +17,7 @@ public class PropertyEntity
     private Integer villageId;
     private Integer buildingId;
     private Byte status;
+    private Byte openDoorStatus;
 
 
     public String getCode()
@@ -27,16 +28,6 @@ public class PropertyEntity
     public void setCode(String code)
     {
         this.code = code;
-    }
-
-    public String getOwnerNameList()
-    {
-        return ownerNameList;
-    }
-
-    public void setOwnerNameList(String ownerNameList)
-    {
-        this.ownerNameList = ownerNameList;
     }
 
     public String getLocation()
@@ -117,5 +108,15 @@ public class PropertyEntity
     public void setBuildingId(Integer buildingId)
     {
         this.buildingId = buildingId;
+    }
+
+    public Byte getOpenDoorStatus()
+    {
+        return openDoorStatus;
+    }
+
+    public void setOpenDoorStatus(Byte openDoorStatus)
+    {
+        this.openDoorStatus = openDoorStatus;
     }
 }

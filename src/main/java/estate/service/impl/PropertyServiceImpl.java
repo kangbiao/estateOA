@@ -1,6 +1,6 @@
 package estate.service.impl;
 
-import estate.common.UserType;
+import estate.common.config.UserType;
 import estate.common.enums.Entity;
 import estate.common.util.Convert;
 import estate.dao.*;
@@ -134,12 +134,13 @@ public class PropertyServiceImpl implements PropertyService
     @Override
     public ArrayList<PropertyEntity> getProperitiesByAppUserPhone(String phone)
     {
-        AppUserEntity appUserEntity;
-        appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
-        if (appUserEntity==null)
-            return null;
-        int userRole=appUserEntity.getUserRole();
-        return propertyDao.getPropertiesByPhoneRole(phone,userRole);
+//        AppUserEntity appUserEntity;
+//        appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
+//        if (appUserEntity==null)
+//            return null;
+//        int userRole=appUserEntity.getUserRole();
+//        return propertyDao.getPropertiesByPhoneRole(phone,userRole);
+        return null;
     }
 
     @Override

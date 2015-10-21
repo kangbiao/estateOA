@@ -28,4 +28,19 @@ public interface PropertyOwnerInfoDao
 
     void deleteByPhonePropertyID(String phone,Integer id);
 
+    /**
+     * 通过电话返回物业和用户的绑定关系
+     * @param phone
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPhone(String phone);
+
+    /**
+     * 通过物业id和状态返回
+     * @param propertyID
+     * @param status
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID,Byte status);
+
 }

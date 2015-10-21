@@ -51,11 +51,11 @@ DROP TABLE IF EXISTS `app_user`;
 CREATE TABLE `app_user` (
   `phone` varchar(15) NOT NULL COMMENT '手机号码',
   `passwd` varchar(45) DEFAULT NULL,
-  `user_role` tinyint(2) DEFAULT NULL COMMENT '1-注册用户；2-业主绑定用户；3-家属用户；4-租户；5-物业认证用户',
-  `user_name` varchar(45) DEFAULT NULL,
+  `salt` varchar(15) DEFAULT NULL,
+  `nickname` varchar(45) DEFAULT NULL,
   `register_time` bigint(25) DEFAULT NULL COMMENT '时间戳',
-  `status` tinyint(2) DEFAULT '1',
-  `owner_id` int(10) unsigned DEFAULT NULL,
+  `status` tinyint(2) DEFAULT '0' COMMENT '-1为删除,1为正常,0为禁用',
+  `last_login` bigint(25) DEFAULT NULL,
   PRIMARY KEY (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -66,7 +66,7 @@ CREATE TABLE `app_user` (
 
 LOCK TABLES `app_user` WRITE;
 /*!40000 ALTER TABLE `app_user` DISABLE KEYS */;
-INSERT INTO `app_user` VALUES ('13688195630','123',1,'xcz',1444984898543,0,NULL),('15114052120','123456',3,'小明',1444977650491,1,NULL),('18144240528','123456',3,'康彪',NULL,1,NULL),('18224425362','123456',1,'康彪的家属',1444926645533,1,NULL),('18224456832','123456',2,'小明的租客',1444977771619,1,NULL),('18224489258','123456',2,'康彪的租户',1444934117229,1,NULL),('18224489343','123456',2,'康彪的租户',1444922772393,1,NULL),('18980485651','qqqqqq',3,'江大人',NULL,1,NULL);
+INSERT INTO `app_user` VALUES ('18144240528','123456',NULL,'kangbiao',144444505050,1,NULL);
 /*!40000 ALTER TABLE `app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -616,16 +616,16 @@ DROP TABLE IF EXISTS `property`;
 CREATE TABLE `property` (
   `property_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(45) DEFAULT NULL COMMENT '房产证编码',
-  `owner_name_list` varchar(100) DEFAULT NULL,
   `location` varchar(100) DEFAULT NULL COMMENT '房产证上位置信息',
   `type` tinyint(2) DEFAULT NULL COMMENT '1:普通住房；2:商铺；3:车位',
   `property_square` decimal(11,2) DEFAULT NULL,
   `owner_type` tinyint(2) DEFAULT NULL COMMENT '1：个人所有；2:物业所有',
   `village_id` int(10) unsigned DEFAULT NULL COMMENT '园区',
   `building_id` int(10) unsigned NOT NULL,
-  `status` tinyint(4) DEFAULT NULL COMMENT '1.自住 ／出租\n2.已入住／未入住\n3.已收房／未收房',
+  `status` tinyint(2) DEFAULT NULL COMMENT '1.自住 ／出租\n2.已入住／未入住\n3.已收房／未收房',
+  `open_door_status` tinyint(2) DEFAULT '1',
   PRIMARY KEY (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -634,7 +634,7 @@ CREATE TABLE `property` (
 
 LOCK TABLES `property` WRITE;
 /*!40000 ALTER TABLE `property` DISABLE KEYS */;
-INSERT INTO `property` VALUES (1,'B638',NULL,'半山蓝湾-2栋-18号',1,445.00,NULL,1,1,-1),(2,'D546',NULL,'半山蓝湾-2栋-27号',2,199.21,NULL,2,1,1),(7,'B123432',NULL,'抚琴西路199号1栋1单元11号',1,211.00,NULL,1,2,1),(8,'yc001',NULL,'抚琴西路199号1栋1单元10号',2,109.00,NULL,1,2,-1),(9,'yc002',NULL,'抚琴西路199号1栋1单元9号',2,108.00,NULL,2,2,-1),(10,'yc003',NULL,'抚琴西路199号1栋1单元8号',1,107.00,NULL,1,3,-1),(11,'yc004',NULL,'抚琴西路199号1栋1单元6好',1,105.00,NULL,2,3,-1),(27,'wy002',NULL,'万科城市花园52栋',2,200.00,NULL,7,5,1);
+INSERT INTO `property` VALUES (28,'A001','半山蓝湾一单元',1,115.55,1,5,1,1,1),(29,'A002','半山蓝湾二单元',1,222.11,1,5,1,1,1);
 /*!40000 ALTER TABLE `property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -646,15 +646,18 @@ DROP TABLE IF EXISTS `property_owner_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `property_owner_info` (
-  `po_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `poi_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `property_id` int(10) unsigned DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `status` tinyint(2) DEFAULT '0',
+  `user_role` tinyint(2) DEFAULT NULL,
   `building_id` int(10) unsigned DEFAULT NULL,
-  `owner_phone` varchar(15) DEFAULT NULL,
-  `open_door_allowed` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`po_id`),
+  PRIMARY KEY (`poi_id`),
   KEY `FK_7oq20rni7t96houjm1d7flnox` (`property_id`),
+  KEY `FK_cmeyqayotl7586xjrqrlnvgm1` (`phone`),
+  CONSTRAINT `FK_cmeyqayotl7586xjrqrlnvgm1` FOREIGN KEY (`phone`) REFERENCES `app_user` (`phone`),
   CONSTRAINT `FK_7oq20rni7t96houjm1d7flnox` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -663,7 +666,7 @@ CREATE TABLE `property_owner_info` (
 
 LOCK TABLES `property_owner_info` WRITE;
 /*!40000 ALTER TABLE `property_owner_info` DISABLE KEYS */;
-INSERT INTO `property_owner_info` VALUES (1,1,1,'18144240528',1),(2,7,1,'18144240528',0),(3,8,1,'18144240528',0),(4,9,1,'18224489342',0),(5,10,2,'18224489342',0),(6,11,1,'18565656262',0),(17,9,NULL,'18980485651',NULL),(18,27,NULL,'18980485651',NULL),(26,2,NULL,'18144240528',NULL),(28,1,NULL,'15114052120',NULL);
+INSERT INTO `property_owner_info` VALUES (1,28,'18144240528',1,3,NULL),(2,29,'18144240528',1,2,NULL);
 /*!40000 ALTER TABLE `property_owner_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -884,4 +887,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-21 19:26:52
+-- Dump completed on 2015-10-21 22:47:34

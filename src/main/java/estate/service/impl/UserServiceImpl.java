@@ -1,7 +1,5 @@
 package estate.service.impl;
 
-import estate.common.AppUserStatus;
-import estate.common.UserType;
 import estate.common.util.Convert;
 import estate.dao.*;
 import estate.entity.database.AppUserEntity;
@@ -49,27 +47,27 @@ public class UserServiceImpl implements UserService
     public void register(AppUserEntity appUserEntity, Integer propertyID)
     {
         baseDao.save(appUserEntity);
-        switch (appUserEntity.getUserRole())
-        {
-            case UserType.TENANT:
-                TenantEntity tenantEntity=new TenantEntity();
-                tenantEntity.setPhone(appUserEntity.getPhone());
-                tenantEntity.setAuthStatus(AppUserStatus.FORCHECK);
-                tenantEntity.setName(appUserEntity.getUserName());
-                tenantEntity.setPropertyId(propertyID);
-                baseDao.save(tenantEntity);
-                break;
-            case UserType.FAMILY:
-                FamilyEntity familyEntity=new FamilyEntity();
-                familyEntity.setName(appUserEntity.getUserName());
-                familyEntity.setPhone(appUserEntity.getPhone());
-                familyEntity.setAuthStatus(AppUserStatus.FORCHECK);
-                familyEntity.setPropertyId(propertyID);
-                baseDao.save(familyEntity);
-                break;
-            default:
-                break;
-        }
+//        switch (appUserEntity.getUserRole())
+//        {
+//            case UserType.TENANT:
+//                TenantEntity tenantEntity=new TenantEntity();
+//                tenantEntity.setPhone(appUserEntity.getPhone());
+//                tenantEntity.setAuthStatus(AppUserStatus.FORCHECK);
+//                tenantEntity.setName(appUserEntity.getUserName());
+//                tenantEntity.setPropertyId(propertyID);
+//                baseDao.save(tenantEntity);
+//                break;
+//            case UserType.FAMILY:
+//                FamilyEntity familyEntity=new FamilyEntity();
+//                familyEntity.setName(appUserEntity.getUserName());
+//                familyEntity.setPhone(appUserEntity.getPhone());
+//                familyEntity.setAuthStatus(AppUserStatus.FORCHECK);
+//                familyEntity.setPropertyId(propertyID);
+//                baseDao.save(familyEntity);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     public TableData getOwnerList(TableFilter tableFilter)
@@ -173,42 +171,43 @@ public class UserServiceImpl implements UserService
     {
         AppUserEntity appUserEntity1;
         appUserEntity1=(AppUserEntity)baseDao.get(appUserEntity.getPhone(), appUserEntity);
-        appUserEntity1.setStatus(appUserEntity.getStatus());
+//        appUserEntity1.setStatus(appUserEntity.getStatus());
         baseDao.save(appUserEntity1);
     }
 
     @Override
     public Object getAppUserInfoByPhoneRole(String phone, int type)
     {
-        return userDao.getUserInfoByPhone(phone, type);
+        return userDao.getUserInfoByPhoneRole(phone, type);
     }
 
     @Override
     public Object getUserDetailByPhone(String phone) throws AppUserNotExitException
     {
-        AppUserEntity appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
-        if (appUserEntity==null)
-            throw new AppUserNotExitException("该用户不存在");
-        return userDao.getUserInfoByPhone(phone,appUserEntity.getUserRole());
+//        AppUserEntity appUserEntity= (AppUserEntity) baseDao.get(phone,AppUserEntity.class);
+//        if (appUserEntity==null)
+//            throw new AppUserNotExitException("该用户不存在");
+//        return userDao.getUserInfoByPhoneRole(phone,appUserEntity.getUserRole());
+        return null;
     }
 
     @Override
     public void deleteUserByPhone(String phone, int type)
     {
-        switch (type)
-        {
-            case UserType.OWNER:
-                userDao.deleteUserByPhone(phone, UserType.OWNER);
-                userDao.deleteUserByPhone(phone, UserType.APPUSER);
-                break;
-            case UserType.APPUSER:
-                userDao.deleteUserByPhone(phone,UserType.FAMILY);
-                userDao.deleteUserByPhone(phone,UserType.TENANT);
-                userDao.deleteUserByPhone(phone,UserType.APPUSER);
-                break;
-            default:
-                break;
-        }
+//        switch (type)
+//        {
+//            case OWNER:
+//                userDao.deleteUserByPhone(phone, OWNER);
+//                userDao.deleteUserByPhone(phone, UserType.APPUSER);
+//                break;
+//            case APPUSER:
+//                userDao.deleteUserByPhone(phone,UserType.FAMILY);
+//                userDao.deleteUserByPhone(phone,UserType.TENANT);
+//                userDao.deleteUserByPhone(phone,UserType.APPUSER);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     @Override
@@ -220,17 +219,17 @@ public class UserServiceImpl implements UserService
     @Override
     public ArrayList<Object> getUserInfoByProperityID(Integer id,int userType) throws UserTypeErrorException
     {
-        switch (userType)
-        {
-            case UserType.OWNER:
-                return userDao.getOwnersByPropertyID(id);
-            case UserType.FAMILY:
-                return userDao.getAppUserByPropertyID(id);
-            case UserType.TENANT:
-                break;
-            default:
-                throw new UserTypeErrorException("用户类型错误");
-        }
+//        switch (userType)
+//        {
+//            case OWNER:
+//                return userDao.getOwnersByPropertyID(id);
+//            case UserType.FAMILY:
+//                return userDao.getAppUserByPropertyID(id);
+//            case UserType.TENANT:
+//                break;
+//            default:
+//                throw new UserTypeErrorException("用户类型错误");
+//        }
         return null;
     }
 
@@ -268,6 +267,12 @@ public class UserServiceImpl implements UserService
     public ArrayList<AppUserEntity> getAllAppUser()
     {
         return userDao.getAllAppUser();
+    }
+
+    @Override
+    public Object getUserInfoByPhoneRole(String phone, Byte userRole)
+    {
+        return userDao.getUserInfoByPhoneRole(phone,userRole);
     }
 
 

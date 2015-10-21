@@ -1,4 +1,4 @@
-package estate.common;
+package estate.common.config;
 
 /**
  * Created by kangbiao on 15-10-15.

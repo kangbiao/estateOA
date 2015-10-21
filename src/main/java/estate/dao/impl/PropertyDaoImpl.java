@@ -1,6 +1,6 @@
 package estate.dao.impl;
 
-import estate.common.UserType;
+import estate.common.config.UserType;
 import estate.dao.BaseDao;
 import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
@@ -149,7 +149,7 @@ public class PropertyDaoImpl implements PropertyDao
     }
 
     @Override
-    public ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone, int role)
+    public ArrayList<PropertyEntity> getPropertiesByPhoneRole(String phone, Byte role)
     {
         Session session=getSession();
         String hql;
@@ -162,7 +162,7 @@ public class PropertyDaoImpl implements PropertyDao
                 hql="select p from TenantEntity t ,PropertyEntity p where t.phone=:phone and p.id=t.propertyId";
                 break;
             case UserType.OWNER:
-                hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.ownerPhone=:phone";
+                hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone";
                 break;
             default:
                 return null;

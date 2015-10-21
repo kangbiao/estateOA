@@ -2,16 +2,28 @@ package estate.entity.database;
 
 /**
  * Created by kangbiao on 15-9-13.
+ *
  */
 public class PropertyOwnerInfoEntity
 {
     private Integer id;
     private Integer propertyId;
-    private String ownerPhone;
+    private String phone;
     private Integer buildingId;
-    private Byte openDoorAllowed;
+    private Byte status;
+    private Byte userRole;
     private PropertyEntity propertyEntity;
+    private AppUserEntity appUserEntity;
 
+    public Integer getBuildingId()
+    {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId)
+    {
+        this.buildingId = buildingId;
+    }
 
     public Integer getId()
     {
@@ -23,24 +35,14 @@ public class PropertyOwnerInfoEntity
         this.id = id;
     }
 
-    public Byte getOpenDoorAllowed()
+    public String getPhone()
     {
-        return openDoorAllowed;
+        return phone;
     }
 
-    public void setOpenDoorAllowed(Byte openDoorAllowed)
+    public void setPhone(String phone)
     {
-        this.openDoorAllowed = openDoorAllowed;
-    }
-
-    public String getOwnerPhone()
-    {
-        return ownerPhone;
-    }
-
-    public void setOwnerPhone(String ownerPhone)
-    {
-        this.ownerPhone = ownerPhone;
+        this.phone = phone;
     }
 
     public Integer getPropertyId()
@@ -53,14 +55,24 @@ public class PropertyOwnerInfoEntity
         this.propertyId = propertyId;
     }
 
-    public Integer getBuildingId()
+    public Byte getStatus()
     {
-        return buildingId;
+        return status;
     }
 
-    public void setBuildingId(Integer buildingId)
+    public void setStatus(Byte status)
     {
-        this.buildingId = buildingId;
+        this.status = status;
+    }
+
+    public Byte getUserRole()
+    {
+        return userRole;
+    }
+
+    public void setUserRole(Byte userRole)
+    {
+        this.userRole = userRole;
     }
 
     public PropertyEntity getPropertyEntity()
@@ -71,5 +83,15 @@ public class PropertyOwnerInfoEntity
     public void setPropertyEntity(PropertyEntity propertyEntity)
     {
         this.propertyEntity = propertyEntity;
+    }
+
+    public AppUserEntity getAppUserEntity()
+    {
+        return appUserEntity;
+    }
+
+    public void setAppUserEntity(AppUserEntity appUserEntity)
+    {
+        this.appUserEntity = appUserEntity;
     }
 }

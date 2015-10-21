@@ -2,16 +2,37 @@ package estate.entity.database;
 
 /**
  * Created by kangbiao on 15-9-13.
+ *
  */
 public class AppUserEntity
 {
     private String phone;
     private String passwd;
-    private int userRole;
-    private String userName;
-    private Long registerTime;
-    private Integer ownerId;
+    private String salt;
+    private String nickname;
     private Byte status;
+    private Long registerTime;
+    private Long lastLogin;
+
+    public Long getLastLogin()
+    {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Long lastLogin)
+    {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getNickname()
+    {
+        return nickname;
+    }
+
+    public void setNickname(String nickname)
+    {
+        this.nickname = nickname;
+    }
 
     public String getPasswd()
     {
@@ -43,34 +64,14 @@ public class AppUserEntity
         this.registerTime = registerTime;
     }
 
-    public String getUserName()
+    public String getSalt()
     {
-        return userName;
+        return salt;
     }
 
-    public void setUserName(String userName)
+    public void setSalt(String salt)
     {
-        this.userName = userName;
-    }
-
-    public int getUserRole()
-    {
-        return userRole;
-    }
-
-    public void setUserRole(int userRole)
-    {
-        this.userRole = userRole;
-    }
-
-    public Integer getOwnerId()
-    {
-        return ownerId;
-    }
-
-    public void setOwnerId(Integer ownerId)
-    {
-        this.ownerId = ownerId;
+        this.salt = salt;
     }
 
     public Byte getStatus()

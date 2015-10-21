@@ -7,23 +7,31 @@
     <class name="estate.entity.database.PropertyOwnerInfoEntity" table="property_owner_info" schema=""
            catalog="PropertySystem">
         <id name="id">
-            <column name="po_id" sql-type="int unsigned" not-null="true"/>
+            <column name="poi_id" sql-type="int unsigned" not-null="true"/>
             <generator class="identity"/>
         </id>
         <property name="propertyId">
             <column name="property_id" sql-type="int unsigned"/>
         </property>
-        <property name="ownerPhone">
-            <column name="owner_phone" sql-type="varchar" length="15"/>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="tinyint"/>
+        </property>
+        <property name="userRole">
+            <column name="user_role" sql-type="tinyint"/>
         </property>
         <property name="buildingId">
             <column name="building_id" sql-type="int unsigned"/>
         </property>
-        <property name="openDoorAllowed">
-            <column name="open_door_allowed" sql-type="tinyint"/>
-        </property>
-        <many-to-one name="propertyEntity" insert="false" update="false" class="estate.entity.database.PropertyEntity">
+        <many-to-one name="propertyEntity" insert="false" update="false" lazy="false"
+                     class="estate.entity.database.PropertyEntity">
             <column name="property_id"/>
+        </many-to-one>
+        <many-to-one name="appUserEntity" insert="false" update="false" lazy="false"
+                     class="estate.entity.database.AppUserEntity">
+            <column name="phone"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

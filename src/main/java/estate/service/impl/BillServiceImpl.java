@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Created by kangbiao on 15-10-6.
@@ -73,16 +72,16 @@ public class BillServiceImpl implements BillService
 
         //先获取该用户所有的物业
         ArrayList<PropertyEntity> propertyEntities;
-        propertyEntities = propertyDao.getPropertiesByPhoneRole(phone,appUserEntity.getUserRole());
-        if (propertyEntities==null)
-            return null;
+//        propertyEntities = propertyDao.getPropertiesByPhoneRole(phone,appUserEntity.getUserRole());
+//        if (propertyEntities==null)
+//            return null;
 
         //遍历该用户绑定的物业,获取每个物业的账单
-        for (PropertyEntity propertyEntity:propertyEntities)
-        {
-            ArrayList<BillEntity> billEntityArrayList=billDao.getByPropertyID(propertyEntity.getId(),status);
-            billEntities.addAll(billEntityArrayList.stream().collect(Collectors.toList()));
-        }
+//        for (PropertyEntity propertyEntity:propertyEntities)
+//        {
+//            ArrayList<BillEntity> billEntityArrayList=billDao.getByPropertyID(propertyEntity.getId(),status);
+//            billEntities.addAll(billEntityArrayList.stream().collect(Collectors.toList()));
+//        }
         return billEntities;
     }
 

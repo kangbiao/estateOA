@@ -12,9 +12,6 @@
         <property name="code">
             <column name="code" sql-type="varchar" length="45"/>
         </property>
-        <property name="ownerNameList">
-            <column name="owner_name_list" sql-type="varchar" length="100"/>
-        </property>
         <property name="location">
             <column name="location" sql-type="varchar" length="100"/>
         </property>
@@ -32,6 +29,9 @@
         </property>
         <property name="buildingId">
             <column name="building_id" sql-type="int unsigned"/>
+        </property>
+        <property name="openDoorStatus">
+            <column name="open_door_status" sql-type="tinyint"/>
         </property>
         <property name="status">
             <column name="status" sql-type="tinyint"/>

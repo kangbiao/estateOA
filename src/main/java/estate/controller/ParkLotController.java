@@ -1,7 +1,7 @@
 package estate.controller;
 
 import estate.common.Config;
-import estate.common.ParkLot;
+import estate.common.config.ParkLot;
 import estate.common.ParkLotOwnerRole;
 import estate.common.util.LogUtil;
 import estate.entity.database.ParkingLotEntity;

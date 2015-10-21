@@ -10,7 +10,7 @@ import java.net.*;
  * Created by kangbiao on 15-9-15.
  * 发送短信通知
  */
-public class Message
+public class Messages
 {
     public static String send(String mobile, String content)
     {

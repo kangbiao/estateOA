@@ -1,4 +1,4 @@
-package estate.common;
+package estate.common.config;
 
 import estate.exception.TypeErrorException;
 

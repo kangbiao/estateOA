@@ -99,4 +99,13 @@ public interface UserService
     ArrayList<AppUserEntity> getAllAppUser();
 
 
+    /**
+     * 通过用户的电话和角色获取用户详细信息
+     * @param phone
+     * @param userRole
+     * @return
+     */
+    Object getUserInfoByPhoneRole(String phone,Byte userRole);
+
+
 }
