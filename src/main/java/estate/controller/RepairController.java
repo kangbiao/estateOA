@@ -1,5 +1,7 @@
 package estate.controller;
 
+import estate.common.RepairStatus;
+import estate.entity.database.ConsoleUserEntity;
 import estate.entity.database.PictureEntity;
 import estate.entity.database.RepairEntity;
 import estate.entity.json.BasicJson;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 
 /**
@@ -48,17 +51,19 @@ public class RepairController
     public BasicJson setRepairMan(HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
-        RepairEntity repairEntity=new RepairEntity();
-        repairEntity.setId(Integer.valueOf(request.getParameter("repairID")));
-        repairEntity.setRepirmanPhone(request.getParameter("repair"));
+        HttpSession httpSession=request.getSession();
+        ConsoleUserEntity consoleUserEntity= (ConsoleUserEntity) httpSession.getAttribute("user");
         try
         {
-            String msg=repairService.setRepairMan(repairEntity);
-            if (!msg.equals("succ"))
-            {
-                basicJson.getErrorMsg().setDescription(msg);
-                return basicJson;
-            }
+            Integer repairID=Integer.valueOf(request.getParameter("repairID"));
+            String phone=request.getParameter("repair");
+            RepairEntity repairEntity= (RepairEntity) baseService.get(repairID, RepairEntity.class);
+            repairEntity.setCuId(consoleUserEntity.getId());
+            repairEntity.setStatus(RepairStatus.PROCESSING);
+            repairEntity.setRepirmanPhone(phone);
+            baseService.save(repairEntity);
+
+            //TODO 给维修人员发送短信
         }
         catch (Exception e)
         {
@@ -116,17 +121,19 @@ public class RepairController
         try
         {
             RepairEntity repairEntity = (RepairEntity) baseService.get(repairID, RepairEntity.class);
-
             StringBuilder paths = new StringBuilder();
-
+            int temp=0;
             for (String idString : Arrays.asList(repairEntity.getImageIdList().split(",")))
             {
-                PictureEntity pictureEntity = (PictureEntity) baseService.get(Integer.valueOf(idString), PictureEntity.class);
-
-                paths.append(baseUrl).append(pictureEntity.getName());
+                PictureEntity pictureEntity = (PictureEntity) baseService
+                        .get(Integer.valueOf(idString), PictureEntity.class);
+                if (temp==0)
+                    paths.append(baseUrl).append(pictureEntity.getName());
+                else
+                    paths.append(",").append(baseUrl).append(pictureEntity.getName());
+                temp++;
             }
             basicJson.setJsonString(paths.toString());
-
         }
         catch (Exception e)
         {
@@ -134,6 +141,32 @@ public class RepairController
             return basicJson;
         }
 
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 改变维修的状态
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/changeStatus")
+    public BasicJson changeStatus(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            Integer repairID= Integer.valueOf(request.getParameter("id"));
+            Byte status= Byte.valueOf(request.getParameter("status"));
+            RepairEntity repairEntity= (RepairEntity) baseService.get(repairID, RepairEntity.class);
+            repairEntity.setStatus(status);
+            baseService.save(repairEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("设置失败\n"+e.getMessage());
+            return basicJson;
+        }
         basicJson.setStatus(true);
         return basicJson;
     }

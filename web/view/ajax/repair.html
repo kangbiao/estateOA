@@ -156,7 +156,16 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-
+                            <div id="titleArea"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="descriptionArea"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="contentArea"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="picArea"></div>
                         </div>
                     </div>
                 </div>
@@ -181,10 +190,10 @@
 
     });
 
-    //删除该条投诉
+    //删除报修
     $('#repairListTable tbody').on( 'click', 'button#deleteRowBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
-        var con=confirm("确定删除该条投诉?");
+        var con=confirm("确定删除该条报修?");
         if(con)
         {
             $.ajax({
@@ -213,31 +222,60 @@
     $('#repairListTable tbody').on( 'click', 'button#changeStatusBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         console.log(data);
-        console.log($(this).val());
+        var status=$(this).val();
+        var con=confirm("确定将状态标记为已完成?");
+        if(con) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.changeRepairStatus,
+                data: {
+                    id: data.id,
+                    status: status
+                },
+                dataType: "json",
+                success: function (result) {
+                    if (result.status) {
+                        alert("设置成功");
+                        editTable.ajax.reload(null, false);
+                    }
+                    else {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("网络连接错误");
+                }
+            });
+        }
 
     });
 
     //查看报修的详情
     $('#repairListTable tbody').on( 'click', 'button#detailRowBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
-        console.log(data);
+
+        $("#repairInfoModal #titleArea").html("标题:"+data.title);
+        $("#repairInfoModal #descriptionArea").html("简介:"+data.description);
+        $("#repairInfoModal #contentArea").html("详情:<p>"+data.content+"</p>");
         $.ajax({
             type: "post",
             async: true,
-            url: urlConfig.deleteRepair+data.id,
+            url: urlConfig.getPicturePathsByID+data.id,
             dataType: "json",
             success: function (result) {
-                if (result.status) {
-                    alert("删除成功!");
-                    editTable.ajax.reload( null, false );
-                }
-                else
+                if(result.status)
                 {
-                    alert(result.errorMsg.description);
+                    var imgList="";
+                    var pathString=result.jsonString.split(",");
+                    $.each(pathString,function(index,value){
+                        imgList+='<img width="100%" src="'+value+'" alt=""/><hr/>';
+                    });
+                    $("#picArea").html(imgList);
                 }
             },
             error: function () {
-                alert("服务器连接失败,请重试!");
+
             }
         });
         $("#repairInfoModal").modal("show");

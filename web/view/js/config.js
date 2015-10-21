@@ -41,6 +41,8 @@ urlConfig.pushBill=host+"fee/pushBill/";
 urlConfig.repairList=host+"repair/list";
 urlConfig.setRepairMan=host+"repair/setRepairMan";
 urlConfig.deleteRepair=host+"repair/delete/";
+urlConfig.getPicturePathsByID=host+"repair/getPathsByID/";
+urlConfig.changeRepairStatus=host+"repair/changeStatus";
 
 //投诉相关的URL
 urlConfig.complainList=host+"complain/list";
@@ -100,9 +102,6 @@ urlConfig.parkLotDelete=host+"parkLot/delete/";
 urlConfig.parkLotOwner=host+"parkLot/getOwnerList/";
 urlConfig.addParkLotOwner=host+"parkLot/addOwner";
 urlConfig.deleteParkLotOwnerBind=host+"parkLot/deleteBind/";
-
-//图片相关的url
-urlConfig.getPicturePathsByID=host+"picture/getPathsByID/";
 
 
 //搜索
