@@ -48,7 +48,7 @@ public interface UserDao
      * @param phone
      * @param type
      */
-    void deleteUserByPhone(String phone,int type);
+    void deleteUserByPhone(String phone,byte type);
 
     /**
      * 通过物业id获取该物业的所有业主

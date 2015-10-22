@@ -201,7 +201,7 @@ public class UserDaoImpl implements UserDao
     }
 
     @Override
-    public void deleteUserByPhone(String phone, int type)
+    public void deleteUserByPhone(String phone, byte type)
     {
         Session session=getSession();
         String hql;
@@ -214,7 +214,7 @@ public class UserDaoImpl implements UserDao
         else if (type==UserType.FAMILY)
             hql="delete from FamilyEntity t where t.phone=:phone";
         else
-        return;
+            return;
         session.createQuery(hql).setString("phone",phone).executeUpdate();
     }
 

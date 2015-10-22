@@ -13,13 +13,12 @@ import java.util.ArrayList;
 public interface PropertyOwnerService
 {
     /**
-     * 通过业主的电话和物业ID删除对应的业主物业绑定关系<br/>
-     * 同时会查询该业主是否还绑定有其他物业,如果没有,则会从app用户中将该业主的账号删除<br/>
+     * 通过用户的电话和物业ID以及绑定关系删除对应的业主物业绑定关系<br/>
      *
      * @param phone
      * @param propertyID
      */
-    void deleteOwnerPropertyBind(String phone,Integer propertyID);
+    void deleteOwnerPropertyBind(String phone,Integer propertyID,Byte role);
 
     /**
      * 通过用户的电话返回用户的角色
@@ -59,5 +58,13 @@ public interface PropertyOwnerService
      * @return 成功则返回succ,其余为错误信息
      */
     String addOwnerToProperty(OwnerEntity ownerEntity,Integer propertyID);
+
+    /**
+     * 根据物业id获取相应的绑定用户关系
+     * @param propertyID
+     * @param role 绑定关系
+     * @return 返回用户信息
+     */
+    Object getOwnerByPropertyIdRole(Integer propertyID,Byte role);
 
 }

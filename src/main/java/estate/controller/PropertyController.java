@@ -171,7 +171,7 @@ public class PropertyController
 
         try
         {
-            propertyOwnerService.deleteOwnerPropertyBind(phone, propertyID);
+            propertyOwnerService.deleteOwnerPropertyBind(phone, propertyID,UserType.OWNER);
         }
         catch (Exception e)
         {
@@ -283,16 +283,7 @@ public class PropertyController
                 basicJson.setJsonString(feeItemOrderService.getFeeItemsByPropertyID(propertyID));
                 break;
             case "owner":
-                try
-                {
-                    basicJson.setJsonString(userService.getUserInfoByProperityID(propertyID, UserType.OWNER));
-                }
-                catch (UserTypeErrorException e)
-                {
-                    LogUtil.E(e.getMessage());
-                    basicJson.setJsonString("获取业主信息失败:"+e.getMessage());
-                    return basicJson;
-                }
+                basicJson.setJsonString(propertyOwnerService.getOwnerByPropertyIdRole(propertyID, UserType.OWNER));
                 break;
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");

@@ -39,5 +39,9 @@
         <property name="modifyTime">
             <column name="modify_time" sql-type="bigint" default="0"/>
         </property>
+        <many-to-one name="buildingEntity" insert="false" update="false"
+                     lazy="false" class="estate.entity.database.BuildingEntity">
+            <column name="building_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

@@ -1,9 +1,9 @@
 package estate.service.impl;
 
+import estate.common.config.UserType;
 import estate.common.util.Convert;
 import estate.dao.*;
 import estate.entity.database.AppUserEntity;
-import estate.entity.database.FamilyEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.TenantEntity;
 import estate.entity.display.Owner;
@@ -191,30 +191,13 @@ public class UserServiceImpl implements UserService
         return null;
     }
 
-    @Override
-    public void deleteUserByPhone(String phone, int type)
-    {
-//        switch (type)
-//        {
-//            case OWNER:
-//                userDao.deleteUserByPhone(phone, OWNER);
-//                userDao.deleteUserByPhone(phone, UserType.APPUSER);
-//                break;
-//            case APPUSER:
-//                userDao.deleteUserByPhone(phone,UserType.FAMILY);
-//                userDao.deleteUserByPhone(phone,UserType.TENANT);
-//                userDao.deleteUserByPhone(phone,UserType.APPUSER);
-//                break;
-//            default:
-//                break;
-//        }
-    }
 
     @Override
-    public Object getPropertiesByPhone(String phone,int userType)
+    public void deleteOwner(String phone)
     {
-        return propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
+        userDao.deleteUserByPhone(phone, UserType.OWNER);
     }
+
 
     @Override
     public ArrayList<Object> getUserInfoByProperityID(Integer id,int userType) throws UserTypeErrorException
@@ -233,46 +216,11 @@ public class UserServiceImpl implements UserService
         return null;
     }
 
-    @Override
-    public ArrayList<AppUserEntity> getBindUserByPropertyID(Integer id, Byte status)
-    {
-        ArrayList<AppUserEntity> appUserEntities=new ArrayList<>();
-        ArrayList<TenantEntity> tenantEntities=tenantDao.getTenantByPropertyID(id);
-        ArrayList<FamilyEntity> familyEntities=familyDao.getFamilByPropertyID(id);
-
-        if (tenantEntities!=null)
-        {
-            for (TenantEntity tenantEntity:tenantEntities)
-            {
-                AppUserEntity appUserEntity=userDao.getByPhoneStatus(tenantEntity.getPhone(), status);
-                if (appUserEntity!=null)
-                    appUserEntities.add(appUserEntity);
-            }
-        }
-        if (familyEntities!=null)
-        {
-            for (FamilyEntity familyEntity:familyEntities)
-            {
-                AppUserEntity appUserEntity=userDao.getByPhoneStatus(familyEntity.getPhone(), status);
-                if (appUserEntity!=null)
-                    appUserEntities.add(appUserEntity);
-            }
-        }
-        if (appUserEntities.size()>0)
-            return appUserEntities;
-        return null;
-    }
 
     @Override
     public ArrayList<AppUserEntity> getAllAppUser()
     {
         return userDao.getAllAppUser();
-    }
-
-    @Override
-    public Object getUserInfoByPhoneRole(String phone, Byte userRole)
-    {
-        return userDao.getUserInfoByPhoneRole(phone,userRole);
     }
 
 

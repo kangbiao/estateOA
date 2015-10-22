@@ -29,9 +29,5 @@
                      class="estate.entity.database.PropertyEntity">
             <column name="property_id"/>
         </many-to-one>
-        <many-to-one name="appUserEntity" insert="false" update="false" lazy="false"
-                     class="estate.entity.database.AppUserEntity">
-            <column name="phone"/>
-        </many-to-one>
     </class>
 </hibernate-mapping>

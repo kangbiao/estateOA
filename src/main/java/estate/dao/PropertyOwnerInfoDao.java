@@ -26,7 +26,13 @@ public interface PropertyOwnerInfoDao
     ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone);
 
 
-    void deleteByPhonePropertyID(String phone,Integer id);
+    /**
+     * 通过电话,物业id和绑定关系删除绑定记录
+     * @param phone
+     * @param id
+     * @param role
+     */
+    void deleteByPhonePropertyID(String phone,Integer id,Byte role);
 
     /**
      * 通过电话返回物业和用户的绑定关系
@@ -51,6 +57,14 @@ public interface PropertyOwnerInfoDao
      * @return
      */
     PropertyOwnerInfoEntity getByPhonePropertyID(String phone , Integer propertyID);
+
+    /**
+     * 根据物业id和用户角色返回对应的绑定关系
+     * @param propertyID
+     * @param role
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPropertyIdRole(Integer propertyID,Byte role);
 
 
 }

@@ -19,6 +19,7 @@ public class PropertyEntity
     private Byte status;
     private Byte openDoorStatus;
     private Long modifyTime;
+    private BuildingEntity buildingEntity;
 
 
     public String getCode()
@@ -129,5 +130,15 @@ public class PropertyEntity
     public void setModifyTime(Long modifyTime)
     {
         this.modifyTime = modifyTime;
+    }
+
+    public BuildingEntity getBuildingEntity()
+    {
+        return buildingEntity;
+    }
+
+    public void setBuildingEntity(BuildingEntity buildingEntity)
+    {
+        this.buildingEntity = buildingEntity;
     }
 }

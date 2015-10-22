@@ -51,11 +51,12 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     }
 
     @Override
-    public void deleteByPhonePropertyID(String phone, Integer id)
+    public void deleteByPhonePropertyID(String phone, Integer id,Byte role)
     {
         Session session=getSession();
-        String hql="delete from PropertyOwnerInfoEntity t where t.propertyId=:id and t.phone=:phone";
-        session.createQuery(hql).setInteger("id",id).setString("phone",phone).executeUpdate();
+        String hql="delete from PropertyOwnerInfoEntity t where t.propertyId=:id and t.phone=:phone and t" +
+                ".userRole=:role";
+        session.createQuery(hql).setInteger("id",id).setString("phone",phone).setByte("role",role).executeUpdate();
     }
 
     @Override
@@ -95,10 +96,20 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     {
         Session session=getSession();
         String hql="from PropertyOwnerInfoEntity t where t.propertyId=:propertyID and t.phone=:phone";
-
         List list=session.createQuery(hql).setInteger("propertyID",propertyID).setString("phone",phone).list();
         if (list.size()>0)
             return (PropertyOwnerInfoEntity) list.get(0);
+        return null;
+    }
+
+    @Override
+    public ArrayList<PropertyOwnerInfoEntity> getByPropertyIdRole(Integer propertyID, Byte role)
+    {
+        Session session=getSession();
+        String hql="from PropertyOwnerInfoEntity t where t.propertyId=:id and t.userRole=:role";
+        List list=session.createQuery(hql).setInteger("id",propertyID).setByte("role",role).list();
+        if (list.size()>0)
+            return (ArrayList<PropertyOwnerInfoEntity>) list;
         return null;
     }
 

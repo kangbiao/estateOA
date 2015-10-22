@@ -13,7 +13,6 @@ public class PropertyOwnerInfoEntity
     private Byte status;
     private Byte userRole;
     private PropertyEntity propertyEntity;
-    private AppUserEntity appUserEntity;
 
     public Integer getBuildingId()
     {
@@ -85,13 +84,4 @@ public class PropertyOwnerInfoEntity
         this.propertyEntity = propertyEntity;
     }
 
-    public AppUserEntity getAppUserEntity()
-    {
-        return appUserEntity;
-    }
-
-    public void setAppUserEntity(AppUserEntity appUserEntity)
-    {
-        this.appUserEntity = appUserEntity;
-    }
 }

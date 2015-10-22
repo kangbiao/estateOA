@@ -2,11 +2,14 @@ package estate.service.impl;
 
 import estate.common.config.BindStatus;
 import estate.common.config.UserType;
+import estate.common.util.GsonUtil;
+import estate.common.util.LogUtil;
 import estate.dao.BaseDao;
 import estate.dao.PropertyOwnerInfoDao;
 import estate.dao.UserDao;
 import estate.entity.app.BindPropertyAppUser;
 import estate.entity.app.BindUserInfo;
+import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.service.PropertyOwnerService;
@@ -31,14 +34,9 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
     private BaseDao baseDao;
 
     @Override
-    public void deleteOwnerPropertyBind(String phone, Integer propertyID)
+    public void deleteOwnerPropertyBind(String phone, Integer propertyID,Byte role)
     {
-        if(propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone).size()==1)
-        {
-            userDao.deleteUserByPhone(phone, UserType.OWNER);
-            userDao.deleteUserByPhone(phone, UserType.APPUSER);
-        }
-        propertyOwnerInfoDao.deleteByPhonePropertyID(phone, propertyID);
+        propertyOwnerInfoDao.deleteByPhonePropertyID(phone, propertyID,UserType.OWNER);
     }
 
     @Override
@@ -101,7 +99,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
                         BindUserInfo bindUserInfo = new BindUserInfo();
                         bindUserInfo.setStatus(propertyOwnerInfoEntity1.getStatus());
                         bindUserInfo.setRole(propertyOwnerInfoEntity1.getUserRole());
-                        bindUserInfo.setAppUserEntity(propertyOwnerInfoEntity1.getAppUserEntity());
+                        bindUserInfo.setAppUserEntity((AppUserEntity) baseDao.get(propertyOwnerInfoEntity1.getPhone(), AppUserEntity
+                                .class));
                         bindUserInfo.setBindId(propertyOwnerInfoEntity1.getId());
                         bindUserInfos.add(bindUserInfo);
                     }
@@ -129,7 +128,7 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
     public String addOwnerToProperty(OwnerEntity ownerEntity, Integer propertyID)
     {
         if (propertyOwnerInfoDao.getByPhonePropertyID(ownerEntity.getPhone(),propertyID)!=null)
-            return "该物业已绑定该业主";
+            return "该物业已经和该用户绑定";
         OwnerEntity ownerEntity1= (OwnerEntity) userDao.getUserInfoByPhoneRole(ownerEntity.getPhone(), UserType.OWNER);
         if (ownerEntity1!=null)
         {
@@ -152,6 +151,27 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
         propertyOwnerInfoEntity.setPhone(ownerEntity.getPhone());
         baseDao.save(propertyOwnerInfoEntity);
         return "succ";
+    }
+
+    @Override
+    public Object getOwnerByPropertyIdRole(Integer propertyID, Byte role)
+    {
+        ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities=propertyOwnerInfoDao.
+                getByPropertyIdRole(propertyID, role);
+        if (propertyOwnerInfoEntities==null)
+            return null;
+        ArrayList<OwnerEntity> ownerEntities=new ArrayList<>();
+        LogUtil.E(GsonUtil.getGson().toJson(propertyOwnerInfoEntities));
+        for (PropertyOwnerInfoEntity propertyOwnerInfoEntity:propertyOwnerInfoEntities)
+        {
+            OwnerEntity ownerEntity= (OwnerEntity) userDao.
+                    getUserInfoByPhoneRole(propertyOwnerInfoEntity.getPhone(), UserType.OWNER);
+            if (ownerEntity!=null)
+                ownerEntities.add(ownerEntity);
+        }
+        if (ownerEntities.size()>0)
+            return ownerEntities;
+        return null;
     }
 
 

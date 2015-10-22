@@ -193,6 +193,7 @@
                 dataType: "json", //返回数据形式为json
                 success: function (result) {
                     if (result.status) {
+                        alert("删除成功");
                         editTable.ajax.reload( null, false );
                     }
                     else
@@ -207,15 +208,6 @@
         }
     });
 
-    $("#ownerListTable tbody").on('click','button#editRow',function(){
-        alert("暂时不能编辑业主信息!");
-//        $("#anotherFormModel").modal("show");
-    });
-
-    $("#addOwnerBtn").click(function(){
-        $("#ownerAddForm")[0].reset();
-        $("#addOwnerModal").modal("show");
-    });
 
     //显示业主的个人信息和房产信息
     $('#ownerListTable').on( 'click', 'button#detailRow', function () {
@@ -228,18 +220,6 @@
         $("#ownerInfo #authenticationTime").text(data.authenticationTime);
         $("#ownerInfo #identityType").text(data.identityType);
         $("#ownerInfo #urgent").text(data.urgentName+"("+data.urgentPhone+")");
-//        $("#propertyInfo").empty();
-//        for(var i in data.propertyEntities)
-//        {
-//            var temp='<ul class="list-group">' +
-//                        '<li class="list-group-item">物业编号: <span id="code">'+data.propertyEntities[i].code+'</span></li>'+
-//                        '<li class="list-group-item">物业地址: <span id="location">'+data.propertyEntities[i].location+'</span></li>'+
-//                        '<li class="list-group-item">状态: <span id="status">'+data.propertyEntities[i].status+'</span></li>' +
-//                        '<li class="list-group-item">物业面积: <span id="propertySquare">'+data.propertyEntities[i].propertySquare+'</span></li>'+
-//                    '</ul>';
-//            $("#propertyInfo").append(temp);
-//
-//        }
 
         $.ajax({
             type: "get",
@@ -268,6 +248,9 @@
                                     '<li class="list-group-item">面积: <span id="status">'+result.jsonString[i].propertySquare+'</span></li>' +
                                     '<li class="list-group-item">状态: <span id="status">'+result.jsonString[i].status+'</span></li>' +
                                     '<li class="list-group-item">物业类型: <span id="status">'+result.jsonString[i].type+'</span></li>' +
+                                    '<li class="list-group-item">更新时间: <span id="status">'+formatDate(result.jsonString[i].modifyTime,"yyyy-MM-dd")+'</span></li>' +
+                                    '<li class="list-group-item">所属楼栋: <span id="status">'+result.jsonString[i].buildingEntity.buildingCode+
+                                    '--'+result.jsonString[i].buildingEntity.buildingName+'</span></li>' +
                                 '</ul>';
                         }
                         $("#propertyInfo").html(html);
@@ -412,112 +395,7 @@
 
     }
 
-    function initSelect2()
-    {
-        $('#s2_with_tag').select2({placeholder: "选择一个或多个物业信息"});
-    }
-
-    //增加业主
-    function submitForm()
-    {
-        var data=$("#ownerAddForm").serializeArray();
-        console.log(data);
-        $.ajax({
-            type: "post",
-            async: true,
-            url: urlConfig.addOwner,
-            data: data,
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.status) {
-                    alert("添加成功");
-                }
-                else
-                {
-                    alert(result.errorMsg.description);
-                }
-            },
-            error: function () {
-                alert("服务器连接失败,请重试!");
-            }
-        });
-    }
-
-    function ownerAddValidator(){
-        $('#ownerAddForm').bootstrapValidator({
-            message: '存在非法输入',
-            fields: {
-                name: {
-                    message: '用户名不合法',
-                    validators: {
-                        notEmpty: {
-                            message: '用户名不能为空'
-                        },
-                        stringLength: {
-                            min: 2,
-                            max: 10,
-                            message: '用户名在2到10个字符之间'
-                        }
-                    }
-                },
-                address:{
-                    validators: {
-                        notEmpty: {
-                            message: '地址不能为空'
-                        }
-                    }
-                },
-                identityCode:{
-                    validators: {
-                        notEmpty: {
-                            message: '证件号码不能为空'
-                        },
-                        regexp: {
-                            regexp:/^[A-Za-z0-9]+$/,
-                            message: '证件号码只能为数字或者字母的组合'
-                        }
-                    }
-                },
-                vehicleIdList:{
-                    validators: {
-                        regexp: {
-                            regexp: /^[0-9a-zA-Z]{5}(;[0-9a-zA-Z]{5})*$/,
-                            message: '车牌号不合法'
-                        }
-                    }
-                },
-                phone: {
-                    validators: {
-                        notEmpty: {
-                            message: '电话号码不能为空'
-                        },
-                        regexp: {
-                            regexp: /^1[3-8][0-9]{9}$/,
-                            message: '电话号码不合法'
-                        }
-                    }
-                }
-            }
-        }).on("success.form.bv",function(e){
-            e.preventDefault();
-            submitForm();
-        });
-    }
-
     $(document).ready(function() {
-        $('.input_date').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
-            showButtonPanel:true,
-            closeText:"关闭",
-            yearSuffix: '年',
-            currentText:'',
-            showMonthAfterYear:true,
-            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
-            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
-            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
-            dayNamesMin: ['日','一','二','三','四','五','六']
-        });
         LoadDataTablesScripts(initDataTable);
-//        LoadSelect2Script(initSelect2);
-        LoadBootstrapValidatorScript(ownerAddValidator);
     });
 </script>

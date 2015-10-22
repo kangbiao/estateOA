@@ -53,8 +53,9 @@
                         <th>物业类型</th>
                         <th>地址信息</th>
                         <th>面积</th>
-                        <th>所属园区</th>
+                        <th>所属楼栋</th>
                         <th>状态</th>
+                        <th>更新时间</th>
                         <th>更多信息</th>
                         <th>操作</th>
                     </tr>
@@ -68,8 +69,9 @@
                         <th>物业类型</th>
                         <th>地址信息</th>
                         <th>面积</th>
-                        <th>所属园区</th>
+                        <th>所属楼栋</th>
                         <th>状态</th>
+                        <th>更新时间</th>
                         <th>更多信息</th>
                         <th>操作</th>
                     </tr>
@@ -290,7 +292,7 @@
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-                    if(result.jsonString.length>0)
+                    if(result.jsonString!=null)
                     {
                         var html="";
                         var date=new Date();
@@ -341,7 +343,7 @@
                     }
                     else
                     {
-                        $("#ownerList").html("");
+                        $("#ownerList").html("该物业暂未绑定业主");
                     }
                 }
                 else
@@ -350,7 +352,7 @@
                 }
             },
             error: function () {
-                alert("服务器连接失败,请重试!");
+                $("#ownerInfo").html("服务器连接失败");
             }
         });
 
@@ -626,32 +628,6 @@
         });
     });
 
-    $('#propertyListTable tbody').on( 'click', 'button#generateBillBtn', function (){
-        var data = editTable.row($(this).parents('tr') ).data();
-        var thisBtn=$(this);
-        thisBtn.html('生成中<i class="fa fa-spinner fa-spin">');
-        $.ajax({
-            type: "get",
-            async: true,
-            url: urlConfig.generateBill+data.id,
-            dataType: "json", //返回数据形式为json
-            success: function (result) {
-                if (result.status) {
-                    alert("账单生成成功");
-                    thisBtn.html("生成账单");
-                }
-                else
-                {
-                    alert(result.errorMsg.description);
-                    thisBtn.html("生成账单");
-                }
-            },
-            error: function () {
-                alert("服务器连接失败,请重试!");
-                thisBtn.html("生成账单");
-            }
-        });
-    });
     //初始化表格数据
     function initDataTable(){
         editTable=$('#propertyListTable').DataTable({
@@ -711,10 +687,12 @@
                 "searchable": false
             },{
                 "targets": 5,
-                "data": "villageId",
+                "data": "buildingEntity",
                 "orderable": false,
-                "searchable": false
-                //TODO 根据园区id render得到园区的名称
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return data.buildingCode+"--"+data.buildingName;
+                }
             },{
                 "targets": 6,
                 "data": "status",
@@ -726,24 +704,31 @@
                     else if (data==1)
                         return "<font color='green'>自用</font>";
                     else
-                        return "<font color='red'>数据异常</font>"
+                        return "<font color='red'>数据异常</font>";
                 }
             },{
                 "targets": 7,
-                "data": null,
+                "data": "modifyTime",
                 "orderable": false,
                 "searchable": false,
-                "defaultContent":
-                    "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
             },{
                 "targets": 8,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
+                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>"
+            },{
+                "targets": 9,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
                     "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>&ensp;"+
-                    "<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>&ensp;"+
-                    "<button id='generateBillBtn' class='btn btn-primary' type='button'>生成账单</button>"
+                    "<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>&ensp;"
             }],
             "aaSorting": [[ 1, "asc" ]],
             "autoWidth":false,

@@ -3,9 +3,7 @@ package estate.controller;
 import estate.common.config.UserType;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
-import estate.entity.database.AppUserEntity;
-import estate.entity.database.OwnerEntity;
-import estate.entity.database.PropertyEntity;
+import estate.entity.database.*;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -105,6 +103,7 @@ public class UserController
         }
         catch (Exception e)
         {
+            LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setDescription("绑定出错,请重试");
             return basicJson;
         }
@@ -126,14 +125,17 @@ public class UserController
         BasicJson basicJson=new BasicJson(false);
         try
         {
-            if (userRole.equals("owner"))
-                basicJson.setJsonString(propertyService.getPropertyByOwnerPhone(phone));
-            else if (userRole.equals("appuser"))
-                basicJson.setJsonString(propertyService.getProperitiesByAppUserPhone(phone));
-            else
+            switch (userRole)
             {
-                basicJson.getErrorMsg().setDescription("用户类型参数错误");
-                return basicJson;
+                case "owner":
+                    basicJson.setJsonString(propertyService.getPropertyByOwnerPhone(phone));
+                    break;
+                case "appuser":
+                    basicJson.setJsonString(propertyService.getProperitiesByAppUserPhone(phone));
+                    break;
+                default:
+                    basicJson.getErrorMsg().setDescription("用户类型参数错误");
+                    return basicJson;
             }
         }
         catch (Exception e)
@@ -157,8 +159,8 @@ public class UserController
     @RequestMapping(value = "/{userType}/delete/{phone}")
     public BasicJson deleteOwner(@PathVariable String userType,@PathVariable String phone)
     {
-        BasicJson basicJson=new BasicJson(false);
-        int type;
+        BasicJson basicJson=new BasicJson();
+        byte type;
         switch (userType)
         {
             case "owner":
@@ -176,16 +178,21 @@ public class UserController
             //如果用户类型是业主的话,需要判断该业主是否绑定物业,若绑定了则不允许删除
             if (type==UserType.OWNER)
             {
-                ArrayList<PropertyEntity> entities = (ArrayList<PropertyEntity>) userService.getPropertiesByPhone
-                        (phone,type);
-                if (entities!=null)
+                ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities= propertyOwnerService.getByPhone(phone);
+                if (propertyOwnerInfoEntities!=null)
                 {
-                    basicJson.getErrorMsg().setDescription("该业主已绑定物业,不能删除");
-                    return basicJson;
+                    for (PropertyOwnerInfoEntity propertyOwnerInfoEntity : propertyOwnerInfoEntities)
+                    {
+                        if (propertyOwnerInfoEntity.getUserRole() == UserType.OWNER)
+                        {
+                            basicJson.getErrorMsg().setDescription("该业主已绑定物业,不能删除");
+                            return basicJson;
+                        }
+                    }
                 }
             }
 
-            userService.deleteUserByPhone(phone, type);
+            userService.deleteOwner(phone);
         }
         catch (Exception e)
         {

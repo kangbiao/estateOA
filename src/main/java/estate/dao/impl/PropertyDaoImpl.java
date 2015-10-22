@@ -162,12 +162,12 @@ public class PropertyDaoImpl implements PropertyDao
                 hql="select p from TenantEntity t ,PropertyEntity p where t.phone=:phone and p.id=t.propertyId";
                 break;
             case UserType.OWNER:
-                hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone";
+                hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone and t.userRole=:role";
                 break;
             default:
                 return null;
         }
-        List list=session.createQuery(hql).setString("phone",phone).list();
+        List list=session.createQuery(hql).setString("phone",phone).setByte("role",UserType.OWNER).list();
         if (list.size()>0)
             return (ArrayList<PropertyEntity>) list;
         else return null;
