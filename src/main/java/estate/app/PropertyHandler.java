@@ -1,19 +1,14 @@
 package estate.app;
 
 import estate.common.config.AppUserStatus;
-import estate.common.config.UserType;
+import estate.common.config.BindStatus;
 import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.entity.app.MyProperty;
-import estate.entity.database.AppUserEntity;
-import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
-import estate.entity.display.PropertyAppUser;
 import estate.entity.json.BasicJson;
 import estate.service.BaseService;
 import estate.service.PropertyOwnerService;
-import estate.service.PropertyService;
-import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +28,6 @@ import java.util.ArrayList;
 public class PropertyHandler
 {
 
-    @Autowired
-    private PropertyService propertyService;
-    @Autowired
-    private UserService userService;
     @Autowired
     private BaseService baseService;
     @Autowired
@@ -77,7 +68,6 @@ public class PropertyHandler
             basicJson.getErrorMsg().setDescription("获取物业信息失败");
             return basicJson;
         }
-
         basicJson.setStatus(true);
         return basicJson;
     }
@@ -93,7 +83,6 @@ public class PropertyHandler
         BasicJson basicJson=new BasicJson();
         HttpSession httpSession=request.getSession();
         String phone= (String) httpSession.getAttribute("phone");
-
         Byte status=null;
         if (request.getParameter("status")!=null)
         {
@@ -110,44 +99,13 @@ public class PropertyHandler
                 return basicJson;
             }
         }
-
         try
         {
-            ArrayList<PropertyAppUser> propertyAppUsers=new ArrayList<>();
-            ArrayList<PropertyEntity> propertyEntities= propertyService.getPropertyByOwnerPhone(phone);
-
-
-            ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities = propertyOwnerService.getByPhone(phone);
-            for (PropertyOwnerInfoEntity propertyOwnerInfoEntity:propertyOwnerInfoEntities)
-            {
-                ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities1=propertyOwnerService
-                        .getBindBypropertyIDStatus(propertyOwnerInfoEntity.getPropertyId(), status);
-                for (PropertyOwnerInfoEntity propertyOwnerInfoEntity1:propertyOwnerInfoEntities1)
-                {
-
-                }
-            }
-
-            for (PropertyEntity propertyEntity:propertyEntities)
-            {
-                PropertyAppUser propertyAppUser=new PropertyAppUser();
-                ArrayList<AppUserEntity> appUserEntities=userService.getBindUserByPropertyID(propertyEntity.getId(),
-                        status);
-                if (appUserEntities!=null)
-                {
-                    propertyAppUser.setPropertyEntity(propertyEntity);
-                    propertyAppUser.setAppUserEntities(appUserEntities);
-                    propertyAppUsers.add(propertyAppUser);
-                }
-            }
-            if (propertyAppUsers.size()>0)
-                basicJson.setJsonString(propertyAppUsers);
+            basicJson.setJsonString(propertyOwnerService.getBindInfoByOwnerInfo(phone,status));
         }
         catch (Exception e)
         {
-            LogUtil.E(e.getMessage());
             basicJson.getErrorMsg().setDescription("获取绑定信息出错");
-            LogUtil.E(GsonUtil.getGson().toJson(basicJson));
             return basicJson;
         }
         LogUtil.E(GsonUtil.getGson().toJson(basicJson));
@@ -159,26 +117,26 @@ public class PropertyHandler
     /**
      * 业主审核
      * @param operate 只能为agree或者refuse
-     * @param phone
+     * @param bindID
      * @param request
      * @return
      */
-    @RequestMapping(value = "/submitBind/{operate}/{phone}",method = RequestMethod.GET)
-    public BasicJson submitBind(@PathVariable String operate,@PathVariable String phone,HttpServletRequest request)
+    @RequestMapping(value = "/submitBind/{operate}/{bindID}",method = RequestMethod.GET)
+    public BasicJson submitBind(@PathVariable String operate,@PathVariable Integer bindID,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
-
         try
         {
+            PropertyOwnerInfoEntity propertyOwnerInfoEntity= (PropertyOwnerInfoEntity) baseService.
+                                                                get(bindID, PropertyOwnerInfoEntity.class);
             switch (operate)
             {
                 case "agree":
-                    AppUserEntity appUserEntity = (AppUserEntity) baseService.get(phone, AppUserEntity.class);
-//                    appUserEntity.setStatus(AppUserStatus.ENABLE);
-                    userService.changeAppUserStatus(appUserEntity);
+                    propertyOwnerInfoEntity.setStatus(BindStatus.CHECKED);
+                    baseService.save(propertyOwnerInfoEntity);
                     break;
                 case "refuse":
-                    userService.deleteUserByPhone(phone, UserType.APPUSER);
+                    baseService.delete(propertyOwnerInfoEntity);
                     break;
                 default:
                     basicJson.getErrorMsg().setCode("100000");
@@ -188,11 +146,9 @@ public class PropertyHandler
         }
         catch (Exception e)
         {
-            LogUtil.E("业主审核出错;"+e.getMessage());
-            basicJson.getErrorMsg().setDescription("审核失败");
+            basicJson.getErrorMsg().setDescription("审核操作失败");
             return basicJson;
         }
-
         basicJson.setStatus(true);
         return basicJson;
     }

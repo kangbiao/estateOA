@@ -1,5 +1,6 @@
 package estate.service;
 
+import estate.entity.app.BindPropertyAppUser;
 import estate.entity.database.PropertyOwnerInfoEntity;
 
 import java.util.ArrayList;
@@ -40,5 +41,13 @@ public interface PropertyOwnerService
      * @return
      */
     ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID,Byte status);
+
+    /**
+     * 根据业主的电话获取该业主名下物业的所有绑定
+     * @param phone
+     * @param status 审核状态
+     * @return
+     */
+    ArrayList<BindPropertyAppUser> getBindInfoByOwnerInfo(String phone,Byte status);
 
 }

@@ -35,6 +35,7 @@ public interface PropertyOwnerInfoDao
      */
     ArrayList<PropertyOwnerInfoEntity> getByPhone(String phone);
 
+
     /**
      * 通过物业id和状态返回
      * @param propertyID
@@ -42,5 +43,6 @@ public interface PropertyOwnerInfoDao
      * @return
      */
     ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID,Byte status);
+
 
 }

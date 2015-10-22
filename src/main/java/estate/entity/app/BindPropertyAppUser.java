@@ -1,19 +1,17 @@
 package estate.entity.app;
 
-import estate.entity.database.AppUserEntity;
 import estate.entity.database.PropertyEntity;
 
 import java.util.ArrayList;
 
 /**
  * Created by kangbiao on 15-10-21.
- * 
+ *
  */
 public class BindPropertyAppUser
 {
     private PropertyEntity propertyEntity;
-    private ArrayList<AppUserEntity> appUserEntities;
-
+    private ArrayList<BindUserInfo> bindUserInfos=new ArrayList<>();
 
     public PropertyEntity getPropertyEntity()
     {
@@ -25,13 +23,13 @@ public class BindPropertyAppUser
         this.propertyEntity = propertyEntity;
     }
 
-    public ArrayList<AppUserEntity> getAppUserEntities()
+    public ArrayList<BindUserInfo> getBindUserInfos()
     {
-        return appUserEntities;
+        return bindUserInfos;
     }
 
-    public void setAppUserEntities(ArrayList<AppUserEntity> appUserEntities)
+    public void setBindUserInfos(ArrayList<BindUserInfo> bindUserInfos)
     {
-        this.appUserEntities = appUserEntities;
+        this.bindUserInfos = bindUserInfos;
     }
 }

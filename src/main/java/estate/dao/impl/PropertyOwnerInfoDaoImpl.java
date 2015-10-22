@@ -73,10 +73,21 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     public ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID, Byte status)
     {
         Session session=getSession();
-        String hql="from  PropertyOwnerInfoEntity t where t.propertyId=:propertyID and t.status=:status";
-        List list=session.createQuery(hql).setInteger("propertyID", propertyID).setByte("status",status).list();
+        String hql;
+        List list;
+        if (status==null)
+        {
+            hql = "from  PropertyOwnerInfoEntity t where t.propertyId=:propertyID and t.userRole!=3";
+            list = session.createQuery(hql).setInteger("propertyID", propertyID).list();
+        }
+        else
+        {
+            hql = "from  PropertyOwnerInfoEntity t where t.propertyId=:propertyID and t.status=:status and t.userRole!=3";
+            list = session.createQuery(hql).setInteger("propertyID", propertyID).setByte("status", status).list();
+        }
         if (list.size()>0)
             return (ArrayList<PropertyOwnerInfoEntity>) list;
         return null;
     }
+
 }
