@@ -44,5 +44,13 @@ public interface PropertyOwnerInfoDao
      */
     ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID,Byte status);
 
+    /**
+     * 通过电话和物业id获取绑定关系
+     * @param phone
+     * @param propertyID
+     * @return
+     */
+    PropertyOwnerInfoEntity getByPhonePropertyID(String phone , Integer propertyID);
+
 
 }

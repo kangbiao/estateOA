@@ -59,13 +59,12 @@ public class PropertyController
         }
         catch (EntityTypeErrorException e)
         {
-            LogUtil.E("内部参数错误:"+e.getMessage());
             basicJson.getErrorMsg().setDescription("内部参数错误,请查看日志文件");
             return basicJson;
         }
-        propertyService.getAllProperty();
         try
         {
+            propertyEntity.setModifyTime(System.currentTimeMillis());
             baseService.save(propertyEntity);
         }
         catch (Exception e)

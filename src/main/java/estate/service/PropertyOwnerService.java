@@ -1,6 +1,7 @@
 package estate.service;
 
 import estate.entity.app.BindPropertyAppUser;
+import estate.entity.database.OwnerEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 
 import java.util.ArrayList;
@@ -49,5 +50,14 @@ public interface PropertyOwnerService
      * @return
      */
     ArrayList<BindPropertyAppUser> getBindInfoByOwnerInfo(String phone,Byte status);
+
+
+    /**
+     * 给物业增加业主,如果该业主信息则更新,否则创建
+     * @param ownerEntity
+     * @param propertyID
+     * @return 成功则返回succ,其余为错误信息
+     */
+    String addOwnerToProperty(OwnerEntity ownerEntity,Integer propertyID);
 
 }

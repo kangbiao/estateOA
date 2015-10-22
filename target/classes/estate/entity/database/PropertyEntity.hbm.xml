@@ -36,5 +36,8 @@
         <property name="status">
             <column name="status" sql-type="tinyint"/>
         </property>
+        <property name="modifyTime">
+            <column name="modify_time" sql-type="bigint" default="0"/>
+        </property>
     </class>
 </hibernate-mapping>

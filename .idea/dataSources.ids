@@ -240,6 +240,7 @@
       <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" remarks="MS7oh6rkvY8g77yP5Ye656efCjIu5bey5YWl5L2P77yP5pyq5YWl5L2PCjMu5bey5pS25oi/77yP5pyq5pS25oi/"/>
       <column name="open_door_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MQ=="/>
+      <column name="modify_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PRIMARY" columns="property_id"/>
       <exported-key name="FK_7oq20rni7t96houjm1d7flnox" table="property_owner_info" schema="" catalog="PropertySystem" columns="property_id"/>
     </table>

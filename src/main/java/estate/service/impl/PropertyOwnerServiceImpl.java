@@ -1,10 +1,13 @@
 package estate.service.impl;
 
+import estate.common.config.BindStatus;
 import estate.common.config.UserType;
+import estate.dao.BaseDao;
 import estate.dao.PropertyOwnerInfoDao;
 import estate.dao.UserDao;
 import estate.entity.app.BindPropertyAppUser;
 import estate.entity.app.BindUserInfo;
+import estate.entity.database.OwnerEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.service.PropertyOwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
     private PropertyOwnerInfoDao propertyOwnerInfoDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private BaseDao baseDao;
 
     @Override
     public void deleteOwnerPropertyBind(String phone, Integer propertyID)
@@ -118,6 +123,35 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
         }
 
         return null;
+    }
+
+    @Override
+    public String addOwnerToProperty(OwnerEntity ownerEntity, Integer propertyID)
+    {
+        if (propertyOwnerInfoDao.getByPhonePropertyID(ownerEntity.getPhone(),propertyID)!=null)
+            return "该物业已绑定该业主";
+        OwnerEntity ownerEntity1= (OwnerEntity) userDao.getUserInfoByPhoneRole(ownerEntity.getPhone(), UserType.OWNER);
+        if (ownerEntity1!=null)
+        {
+            ownerEntity1.setName(ownerEntity.getName());
+            ownerEntity1.setSex(ownerEntity.getSex());
+            ownerEntity1.setIdentityType(ownerEntity.getIdentityType());
+            ownerEntity1.setIdentityCode(ownerEntity.getIdentityCode());
+            ownerEntity1.setAuthenticationTime(ownerEntity.getAuthenticationTime());
+            baseDao.save(ownerEntity1);
+        }
+        else
+        {
+            baseDao.save(ownerEntity);
+        }
+
+        PropertyOwnerInfoEntity propertyOwnerInfoEntity=new PropertyOwnerInfoEntity();
+        propertyOwnerInfoEntity.setStatus(BindStatus.CHECKED);
+        propertyOwnerInfoEntity.setUserRole(UserType.OWNER);
+        propertyOwnerInfoEntity.setPropertyId(propertyID);
+        propertyOwnerInfoEntity.setPhone(ownerEntity.getPhone());
+        baseDao.save(propertyOwnerInfoEntity);
+        return "succ";
     }
 
 

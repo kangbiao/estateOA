@@ -32,7 +32,7 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     {
         Session session=getSession();
         String hql="from PropertyOwnerInfoEntity t where t.propertyId=:id";
-        List list=session.createQuery(hql).setInteger("id",id).list();
+        List list=session.createQuery(hql).setInteger("id", id).list();
         if (list.size()>0)
             return (PropertyOwnerInfoEntity)list.get(0);
         else
@@ -87,6 +87,18 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
         }
         if (list.size()>0)
             return (ArrayList<PropertyOwnerInfoEntity>) list;
+        return null;
+    }
+
+    @Override
+    public PropertyOwnerInfoEntity getByPhonePropertyID(String phone, Integer propertyID)
+    {
+        Session session=getSession();
+        String hql="from PropertyOwnerInfoEntity t where t.propertyId=:propertyID and t.phone=:phone";
+
+        List list=session.createQuery(hql).setInteger("propertyID",propertyID).setString("phone",phone).list();
+        if (list.size()>0)
+            return (PropertyOwnerInfoEntity) list.get(0);
         return null;
     }
 

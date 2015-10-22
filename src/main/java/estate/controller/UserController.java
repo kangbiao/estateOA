@@ -6,12 +6,12 @@ import estate.common.util.LogUtil;
 import estate.entity.database.AppUserEntity;
 import estate.entity.database.OwnerEntity;
 import estate.entity.database.PropertyEntity;
-import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.AppUserNotExitException;
 import estate.service.BaseService;
+import estate.service.PropertyOwnerService;
 import estate.service.PropertyService;
 import estate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +39,8 @@ public class UserController
     private PropertyService propertyService;
     @Autowired
     private BaseService baseService;
+    @Autowired
+    private PropertyOwnerService propertyOwnerService;
 
 
     /**
@@ -75,7 +77,7 @@ public class UserController
     @RequestMapping(value = "/addOwner",method = RequestMethod.POST)
     public BasicJson addOwner(OwnerEntity ownerEntity,HttpServletRequest request)
     {
-        BasicJson basicJson=new BasicJson(false);
+        BasicJson basicJson=new BasicJson();
         Integer propertyID;
         try
         {
@@ -91,50 +93,20 @@ public class UserController
             basicJson.getErrorMsg().setDescription("未获取到正确的参数"+e.getMessage());
             return basicJson;
         }
-        if (!propertyService.checkOwnerPropertyExit(ownerEntity.getPhone(),propertyID))
-        {
-            basicJson.getErrorMsg().setDescription("该物业已经添加此业主!");
-            return basicJson;
-        }
         ownerEntity.setAuthenticationTime(Convert.time2num(request.getParameter("authTime")));
-        PropertyOwnerInfoEntity propertyOwnerInfoEntity=new PropertyOwnerInfoEntity();
         try
         {
-            propertyOwnerInfoEntity.setPropertyId(Integer.valueOf(request.getParameter("propertyID")));
+            String msg=propertyOwnerService.addOwnerToProperty(ownerEntity, propertyID);
+            if (!msg.equals("succ"))
+            {
+                basicJson.getErrorMsg().setDescription(msg);
+                return basicJson;
+            }
         }
         catch (Exception e)
         {
-            basicJson.getErrorMsg().setDescription("参数错误");
+            basicJson.getErrorMsg().setDescription("绑定出错,请重试");
             return basicJson;
-        }
-
-        if(userService.getAppUserInfoByPhoneRole(ownerEntity.getPhone(), UserType.OWNER)!=null)
-        {
-//            try
-//            {
-//                propertyOwnerInfoEntity.setOwnerPhone(ownerEntity.getPhone());
-//                baseService.save(propertyOwnerInfoEntity);
-//            }
-//            catch (Exception e)
-//            {
-//                LogUtil.E(e.getMessage());
-//            }
-
-        }
-        else
-        {
-            try
-            {
-                baseService.save(ownerEntity);
-//                propertyOwnerInfoEntity.setOwnerPhone(ownerEntity.getPhone());
-                baseService.save(propertyOwnerInfoEntity);
-            }
-            catch (Exception e)
-            {
-                basicJson.getErrorMsg().setCode("1028330");
-                basicJson.getErrorMsg().setDescription("添加业主信息出错\n详细信息:"+e.getMessage());
-                return basicJson;
-            }
         }
 
         basicJson.setStatus(true);
