@@ -29,9 +29,8 @@
                     <tr>
                         <th></th>
                         <th>序号</th>
-                        <th>姓名</th>
+                        <th>昵称</th>
                         <th>手机</th>
-                        <th>用户类型</th>
                         <th>注册时间</th>
                         <th>状态</th>
                         <th>物业信息</th>
@@ -45,9 +44,8 @@
                     <tr>
                         <th></th>
                         <th>序号</th>
-                        <th>姓名</th>
+                        <th>昵称</th>
                         <th>手机</th>
-                        <th>用户类型</th>
                         <th>注册时间</th>
                         <th>状态</th>
                         <th>物业信息</th>
@@ -146,14 +144,10 @@
 
 <script type="text/javascript">
     var editTable;//全局的datatable变量
-
-
     $('#appUserListTable tbody').on( 'click', 'button#doorRecordBtn', function () {
         $("#doorRecordModal").modal("show");
-
     });
-
-    $('#appUserListTable tbody').on( 'click', 'button#delRow', function () {
+    $('#appUserListTable tbody').on( 'click', 'button#delRowBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         var comfirm=confirm("确定删除该用户?");
         if(comfirm)
@@ -178,7 +172,6 @@
             });
         }
     });
-
     $('#appUserListTable tbody').on( 'click', 'button#changeStatus', function () {
         var status=$(this).attr("status");
         var comfirm;
@@ -216,7 +209,6 @@
             });
         }
     });
-
     $('#appUserListTable tbody').on( 'click', 'button#propertyInfoBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         $.ajax({
@@ -266,13 +258,9 @@
         });
         $("#propertyInfoModal").modal("show");
     });
-
     $('#appUserListTable tbody').on( 'click', 'button#selfInfoBtn', function () {
         $("#selfInfoModal").modal("show");
     });
-
-
-
     //显示绑定用户的详细信息
     function format ( d ) {
         console.log(d);
@@ -294,7 +282,6 @@
                             result.jsonString.sex="男";
                         else if(result.jsonString.sex==1)
                             result.jsonString.sex="女";
-
                         console.log(result.jsonString);
                         html='<ul class="list-group">' +
                                 '<li class="list-group-item">姓名: <span id="code">'+result.jsonString.name+'</span></li>'+
@@ -316,7 +303,6 @@
         });
         return html;
     }
-
     //初始化表格数据
     function initDataTable(){
         editTable=$('#appUserListTable').DataTable({
@@ -334,7 +320,6 @@
                 "orderable":      false,
                 "data":           null,
                 "defaultContent": "<i class='fa fa-plus-circle'></i>"
-
             },{
                 "targets": 1,
                 "data":null,
@@ -346,37 +331,18 @@
                 }
             },{
                 "targets": 2,
-                "data":"userName",
+                "data":"nickname",
                 "visible": true,
                 "orderable": false,
                 "searchable": false
-
             },{
                 "targets": 3,
                 "data":"phone",
                 "visible": true,
                 "orderable": true,
                 "searchable": false
-
             },{
                 "targets": 4,
-                "data":"userRole",
-                "visible": true,
-                "orderable": false,
-                "searchable": false,
-                "render": function ( data, type, row ) {
-                    if (data==1)
-                        return "<font color='#4b0082'>家庭成员</font>";
-                    else if (data==2)
-                        return "<font color='#8b0000'>租户</font>";
-                    else if(data==3)
-                        return "<font color='green'>业主</font>";
-                    else
-                        return "--";
-                }
-
-            },{
-                "targets": 5,
                 "data":"registerTime",
                 "visible": true,
                 "orderable": false,
@@ -386,9 +352,8 @@
                     register_date.setTime(data);
                     return register_date.toLocaleDateString().replace(/\//g, "-");
                 }
-
             },{
-                "targets": 6,
+                "targets": 5,
                 "data":"status",
                 "visible": true,
                 "orderable": false,
@@ -396,47 +361,40 @@
                 "render": function ( data, type, row ) {
                     if (data==1)
                         return "正常";
-                    else if(data==-1)
-                        return "<font color='red'>禁用</font>";
                     else if(data==0)
-                        return "<font color='yellow'>待审核</font>";
+                        return "<font color='red'>禁用</font>";
                     else
-                        return "--";
+                        return "已删除";
                 }
-
             },{
-                "targets": 7,
-                "data": "userRole",
+                "targets": 6,
+                "data": null,
                 "orderable": false,
                 "searchable": false,
-                "render": function ( data, type, row ) {
-                    if (data==3)
-                        return "<button id='propertyInfoBtn' class='btn btn-success' type='button'>名下物业</button>";
-                    else
-                        return "<button id='propertyInfoBtn' class='btn btn-primary' type='button'>绑定物业</button>";
-                }
+                "defaultContent":
+                        "<button id='bindInfoBtn' class='btn btn-primary' type='button'>绑定物业</button>"
             },{
-                "targets": 8,
+                "targets": 7,
                 "data": null,
                 "orderable": false,
                 "searchable": false,
                 "defaultContent":
                         "<button id='doorRecordBtn' class='btn btn-primary' type='button'>门禁记录</button>"
             },{
-                "targets": 9,
+                "targets": 8,
                 "data": "status",
                 "orderable": false,
                 "searchable": false,
                 "render": function ( data, type, row ) {
                     if(data==0)
-                        return "<button id='changeStatus' status='agree' class='btn btn-primary' type='button'>通过审核" +
-                                "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
+                        return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用" +
+                                "</button>&ensp;<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>";
                     else if(data==1)
                         return "<button id='changeStatus' status='disable' class='btn btn-primary' type='button'>禁用" +
-                                "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
+                                "</button>&ensp;<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>";
                     else
                         return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用" +
-                                "</button>&ensp;<button id='delRow' class='btn btn-primary' type='button'>删除</button>";
+                                "</button>&ensp;<button id='delRowBtn' class='btn btn-primary' type='button'>删除</button>";
                 }
             }],
             "aaSorting": [[ 2, "asc" ]],
@@ -467,14 +425,11 @@
                 }
             }
         });
-
         var detailRows = [];
-
         $('#appUserListTable tbody').on( 'click', 'tr td.details-control', function () {
             var tr = $(this).closest('tr');
             var row = editTable.row( tr );
             var idx = $.inArray( tr.attr('id'), detailRows );
-
             if ( row.child.isShown() ) {
                 tr.removeClass( 'details' );
                 row.child.hide();
@@ -498,7 +453,6 @@
                 $('#'+id+' td.details-control').trigger( 'click' );
             } );
         } );
-
     }
     $(document).ready(function() {
         LoadDataTablesScripts(initDataTable);
