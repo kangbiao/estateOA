@@ -44,39 +44,6 @@ public class RepairController
     }
 
     /**
-     * 设置维修人员
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/setRepairMan")
-    public BasicJson setRepairMan(HttpServletRequest request)
-    {
-        BasicJson basicJson=new BasicJson(false);
-        HttpSession httpSession=request.getSession();
-        ConsoleUserEntity consoleUserEntity= (ConsoleUserEntity) httpSession.getAttribute("user");
-        try
-        {
-            Integer repairID=Integer.valueOf(request.getParameter("repairID"));
-            String phone=request.getParameter("repair");
-            RepairEntity repairEntity= (RepairEntity) baseService.get(repairID, RepairEntity.class);
-            repairEntity.setCuId(consoleUserEntity.getId());
-            repairEntity.setStatus(RepairStatus.PROCESSING);
-            repairEntity.setRepirmanPhone(phone);
-            baseService.save(repairEntity);
-
-            //TODO 给维修人员发送短信
-        }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setCode("100015");
-            basicJson.getErrorMsg().setDescription("操作失败");
-            return basicJson;
-        }
-        basicJson.setStatus(true);
-        return basicJson;
-    }
-
-    /**
      * 删除报修
      * @param repairID
      * @param request
@@ -151,21 +118,21 @@ public class RepairController
      * @param request
      * @return
      */
-    @RequestMapping(value = "/changeStatus")
-    public BasicJson changeStatus(HttpServletRequest request)
+    @RequestMapping(value = "/finish/{repairID}")
+    public BasicJson changeStatus(@PathVariable Integer repairID,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
         try
         {
-            Integer repairID= Integer.valueOf(request.getParameter("id"));
-            Byte status= Byte.valueOf(request.getParameter("status"));
             RepairEntity repairEntity= (RepairEntity) baseService.get(repairID, RepairEntity.class);
-            repairEntity.setStatus(status);
+            repairEntity.setStatus(RepairStatus.FORCOMMENT);
+            repairEntity.setFinishTime(System.currentTimeMillis());
             baseService.save(repairEntity);
         }
         catch (Exception e)
         {
-            basicJson.getErrorMsg().setDescription("设置失败\n"+e.getMessage());
+            basicJson.getErrorMsg().setCode(e.getMessage());
+            basicJson.getErrorMsg().setDescription("设置失败");
             return basicJson;
         }
         basicJson.setStatus(true);
@@ -217,6 +184,40 @@ public class RepairController
             return basicJson;
         }
 
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 设置维修人员
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/setRepairMan")
+    public BasicJson setRepairMan(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        HttpSession httpSession=request.getSession();
+        ConsoleUserEntity consoleUserEntity= (ConsoleUserEntity) httpSession.getAttribute("user");
+        try
+        {
+            Integer repairID=Integer.valueOf(request.getParameter("repairID"));
+            Integer repairManId= Integer.valueOf(request.getParameter("repairManID"));
+            RepairEntity repairEntity= (RepairEntity) baseService.get(repairID, RepairEntity.class);
+            repairEntity.setCuId(consoleUserEntity.getId());
+            repairEntity.setStatus(RepairStatus.PROCESSING);
+            repairEntity.setRepairManId(repairManId);
+            repairEntity.setProcessTime(System.currentTimeMillis());
+            baseService.save(repairEntity);
+
+            //TODO 给维修人员发送短信
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode("100015");
+            basicJson.getErrorMsg().setDescription("操作失败");
+            return basicJson;
+        }
         basicJson.setStatus(true);
         return basicJson;
     }

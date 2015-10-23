@@ -266,14 +266,16 @@
       <column name="content" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
       <column name="description" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
-      <column name="time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="repair_man_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="submit_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="process_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="finish_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="image_id_list" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA==" remarks="MS7mnKrmj5DkuqQyLuW3suaPkOS6pOacquWkhOeQhjMu5aSE55CG5LitNOWkhOeQhuWujA=="/>
       <column name="remark" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
       <column name="remark_text" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="57u05L+u5Lq65ZGY5aGr5YaZ55qE5aSE55CG6K+05piO"/>
-      <column name="repirman_phone" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="FK_oc5vf2v77386b82n98ejj4qcd" columns="cu_id" ref-table="console_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="cu_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="FK_oc5vf2v77386b82n98ejj4qcd" unique="false" columns="cu_id"/>

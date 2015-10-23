@@ -9,6 +9,7 @@ import estate.service.BaseService;
 import estate.service.PictureService;
 import estate.service.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,7 @@ public class RepairHandler
     public BasicJson getMyRepair(HttpServletRequest request)
     {
         String urlBase=request.getContextPath()+"/file/picture/";
-        BasicJson basicJson=new BasicJson();
+        BasicJson basicJson=new BasicJson(false);
         HttpSession httpSession=request.getSession();
         String phone= (String) httpSession.getAttribute("phone");
         Byte status=null;
@@ -112,10 +113,10 @@ public class RepairHandler
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public BasicJson addRepair(RepairEntity repairEntity,HttpServletRequest request)
     {
-        BasicJson basicJson=new BasicJson();
+        BasicJson basicJson=new BasicJson(false);
         HttpSession httpSession=request.getSession();
         repairEntity.setPhone((String) httpSession.getAttribute("phone"));
-        repairEntity.setTime(System.currentTimeMillis());
+        repairEntity.setSubmitTime(System.currentTimeMillis());
         repairEntity.setStatus(RepairStatus.FORPROCESS);
         if (repairEntity.getContent().length()>25)
             repairEntity.setDescription(repairEntity.getContent().substring(0,25));
@@ -163,7 +164,7 @@ public class RepairHandler
     @RequestMapping(value = "/remark",method = RequestMethod.POST)
     public BasicJson remarkRepair(HttpServletRequest request)
     {
-        BasicJson basicJson=new BasicJson();
+        BasicJson basicJson=new BasicJson(false);
         Integer repairID;
         String remark;
         String remarkText;
@@ -193,6 +194,32 @@ public class RepairHandler
             return basicJson;
         }
 
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+
+    /**
+     * 用户确认报修已完成
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/confirmFinish/{repairID}")
+    public BasicJson confirmFinish(@PathVariable Integer repairID,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        try
+        {
+            RepairEntity repairEntity = (RepairEntity) baseService.get(repairID, RepairEntity.class);
+            repairEntity.setStatus(RepairStatus.FORCOMMENT);
+            repairEntity.setFinishTime(System.currentTimeMillis());
+            baseService.save(repairEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("设置失败,请重试");
+            return basicJson;
+        }
         basicJson.setStatus(true);
         return basicJson;
     }

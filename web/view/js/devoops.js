@@ -36,6 +36,8 @@ function initVillageSelect()
 
 function formatDate(timestamp,format)
 {
+	if(timestamp==null||timestamp=="")
+		return "--";
 	Date.prototype.format = function (format)
 	{
 		var o = {

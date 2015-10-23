@@ -6,19 +6,22 @@ package estate.entity.database;
 public class RepairEntity
 {
     private Integer id;
+    private String phone;
+    private Integer repairManId;
     private String title;
     private String content;
     private String description;
-    private String phone;
-    private Long time;
+    private Long submitTime;
+    private Long processTime;
+    private Long finishTime;
     private String imageIdList;
     private Byte status;
     private String remark;
     private String remarkText;
     private Integer cuId;
     private String result;
-    private String repirmanPhone;
     private ConsoleUserEntity consoleUserEntity;
+    private RepairManEntity repairManEntity;
 
 
     public String getContent()
@@ -91,16 +94,6 @@ public class RepairEntity
         this.remarkText = remarkText;
     }
 
-    public String getRepirmanPhone()
-    {
-        return repirmanPhone;
-    }
-
-    public void setRepirmanPhone(String repirmanPhone)
-    {
-        this.repirmanPhone = repirmanPhone;
-    }
-
     public String getResult()
     {
         return result;
@@ -119,16 +112,6 @@ public class RepairEntity
     public void setStatus(Byte status)
     {
         this.status = status;
-    }
-
-    public Long getTime()
-    {
-        return time;
-    }
-
-    public void setTime(Long time)
-    {
-        this.time = time;
     }
 
     public String getTitle()
@@ -159,5 +142,55 @@ public class RepairEntity
     public void setCuId(Integer cuId)
     {
         this.cuId = cuId;
+    }
+
+    public Long getSubmitTime()
+    {
+        return submitTime;
+    }
+
+    public void setSubmitTime(Long submitTime)
+    {
+        this.submitTime = submitTime;
+    }
+
+    public Long getProcessTime()
+    {
+        return processTime;
+    }
+
+    public void setProcessTime(Long processTime)
+    {
+        this.processTime = processTime;
+    }
+
+    public Long getFinishTime()
+    {
+        return finishTime;
+    }
+
+    public void setFinishTime(Long finishTime)
+    {
+        this.finishTime = finishTime;
+    }
+
+    public RepairManEntity getRepairManEntity()
+    {
+        return repairManEntity;
+    }
+
+    public void setRepairManEntity(RepairManEntity repairManEntity)
+    {
+        this.repairManEntity = repairManEntity;
+    }
+
+    public Integer getRepairManId()
+    {
+        return repairManId;
+    }
+
+    public void setRepairManId(Integer repairManId)
+    {
+        this.repairManId = repairManId;
     }
 }

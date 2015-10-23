@@ -42,7 +42,7 @@ urlConfig.repairList=host+"repair/list";
 urlConfig.setRepairMan=host+"repair/setRepairMan";
 urlConfig.deleteRepair=host+"repair/delete/";
 urlConfig.getPicturePathsByID=host+"repair/getPathsByID/";
-urlConfig.changeRepairStatus=host+"repair/changeStatus";
+urlConfig.finishRepair=host+"repair/finish/";
 urlConfig.addRepairMan=host+"repair/addRepairMan";
 urlConfig.getRepairManList=host+"repair/getRepairManList";
 
