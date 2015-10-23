@@ -2,13 +2,13 @@ package estate.controller;
 
 import estate.common.config.RepairStatus;
 import estate.entity.database.ConsoleUserEntity;
-import estate.entity.database.PictureEntity;
 import estate.entity.database.RepairEntity;
 import estate.entity.database.RepairManEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.BaseService;
+import estate.service.PictureService;
 import estate.service.RepairService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 
 /**
  * Created by kangbiao on 15-9-15.
@@ -31,6 +30,8 @@ public class RepairController
     private RepairService repairService;
     @Autowired
     private BaseService baseService;
+    @Autowired
+    private PictureService pictureService;
 
     @RequestMapping(value = "/list")
     public TableData getList(TableFilter tableFilter,HttpServletRequest request)
@@ -84,24 +85,10 @@ public class RepairController
     public BasicJson getPathByID(@PathVariable Integer repairID,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
-        String baseUrl=request.getContextPath()+"/file/picture/";
-
         try
         {
             RepairEntity repairEntity = (RepairEntity) baseService.get(repairID, RepairEntity.class);
-            StringBuilder paths = new StringBuilder();
-            int temp=0;
-            for (String idString : Arrays.asList(repairEntity.getImageIdList().split(",")))
-            {
-                PictureEntity pictureEntity = (PictureEntity) baseService
-                        .get(Integer.valueOf(idString), PictureEntity.class);
-                if (temp==0)
-                    paths.append(baseUrl).append(pictureEntity.getName());
-                else
-                    paths.append(",").append(baseUrl).append(pictureEntity.getName());
-                temp++;
-            }
-            basicJson.setJsonString(paths.toString());
+            basicJson.setJsonString(pictureService.getPathsByIDs(repairEntity.getImageIdList(),request));
         }
         catch (Exception e)
         {

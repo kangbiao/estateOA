@@ -3,6 +3,7 @@ package estate.service;
 import estate.exception.PictureUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -17,5 +18,14 @@ public interface PictureService
      * @return
      */
     String saveAndReturnID(Map<String,MultipartFile> fileMap) throws PictureUploadException;
+
+
+    /**
+     * 通过图片id字符串返回图片路径字符串
+     * @param ids
+     * @param request
+     * @return
+     */
+    String getPathsByIDs(String ids,HttpServletRequest request);
 
 }

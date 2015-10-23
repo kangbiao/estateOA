@@ -1,16 +1,19 @@
 package estate.app;
 
 import estate.common.HtmlSplit;
-import estate.dao.BaseDao;
+import estate.entity.app.Notice;
 import estate.entity.database.NoticeEntity;
 import estate.entity.json.BasicJson;
+import estate.service.BaseService;
 import estate.service.NoticeService;
+import estate.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +27,9 @@ public class NoticeHandlder
     @Autowired
     private NoticeService noticeService;
     @Autowired
-    private BaseDao baseDao;
+    private BaseService baseService;
+    @Autowired
+    private PictureService pictureService;
 
     /**
      * 获取指定数量的公告,按时间排序
@@ -32,18 +37,39 @@ public class NoticeHandlder
      * @return
      */
     @RequestMapping(value = "/getSome/{number}",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
-    public BasicJson getSome(@PathVariable Integer number)
+    public BasicJson getSome(@PathVariable Integer number,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson(false);
-        ArrayList<NoticeEntity> noticeEntities=noticeService.getNewestNotice(number);
-        if (noticeEntities==null)
+        try
         {
-            basicJson.getErrorMsg().setCode("100123");
-            basicJson.getErrorMsg().setDescription("未获取到相应公告");
+            ArrayList<NoticeEntity> noticeEntities=noticeService.getNewestNotice(number);
+            ArrayList<Notice> notices =null;
+            if (noticeEntities!=null)
+            {
+                notices = new ArrayList<>();
+                for (NoticeEntity noticeEntity : noticeEntities)
+                {
+                    Notice notice = new Notice(
+                            null,
+                            noticeEntity.getTime(),
+                            noticeEntity.getDescription(),
+                            noticeEntity.getId(),
+                            noticeEntity.getTitle()
+                    );
+
+                    notice.setPicturePathList(pictureService.getPathsByIDs(noticeEntity.getPictureIdList(),request));
+                    notices.add(notice);
+                }
+            }
+
+            basicJson.setJsonString(notices);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("获取公告错误");
             return basicJson;
         }
         basicJson.setStatus(true);
-        basicJson.setJsonString(noticeEntities);
         return basicJson;
     }
 
@@ -56,7 +82,7 @@ public class NoticeHandlder
     public BasicJson get(@PathVariable Integer noticeID)
     {
         BasicJson basicJson=new BasicJson(false);
-        NoticeEntity noticeEntity= (NoticeEntity) baseDao.get(noticeID,NoticeEntity.class);
+        NoticeEntity noticeEntity= (NoticeEntity) baseService.get(noticeID,NoticeEntity.class);
         if (noticeEntity==null)
         {
             basicJson.getErrorMsg().setCode("1000010");
@@ -68,10 +94,15 @@ public class NoticeHandlder
         return basicJson;
     }
 
+    /**
+     * 获取该公告详情的webview显示
+     * @param noticeID
+     * @return
+     */
     @RequestMapping(value = "/getContent/{noticeID}",produces = "text/html;charset=UTF-8")
     public String getCOntent(@PathVariable Integer noticeID)
     {
-        NoticeEntity noticeEntity= (NoticeEntity) baseDao.get(noticeID,NoticeEntity.class);
+        NoticeEntity noticeEntity= (NoticeEntity) baseService.get(noticeID,NoticeEntity.class);
         if (noticeEntity==null)
         {
             return null;

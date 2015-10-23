@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -72,6 +73,31 @@ public class PictureServiceImpl implements PictureService
             temp++;
         }
         return idString.toString();
+    }
+
+    @Override
+    public String getPathsByIDs(String ids, HttpServletRequest request)
+    {
+        if (ids==null||ids.equals(""))
+            return null;
+        String baseUrl=request.getContextPath()+"/file/picture/";
+        StringBuilder paths = new StringBuilder();
+        int temp=0;
+        for (String idString : Arrays.asList(ids.split(",")))
+        {
+            Object o=baseDao.get(Integer.valueOf(idString), PictureEntity.class);
+            if (o!=null)
+            {
+                PictureEntity pictureEntity = (PictureEntity) o;
+
+                if (temp == 0)
+                    paths.append(baseUrl).append(pictureEntity.getName());
+                else
+                    paths.append(",").append(baseUrl).append(pictureEntity.getName());
+                temp++;
+            }
+        }
+        return paths.toString();
     }
 
 }

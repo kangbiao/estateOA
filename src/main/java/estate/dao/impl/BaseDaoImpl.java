@@ -67,7 +67,11 @@ public class BaseDaoImpl implements BaseDao
     @Override
     public Object get(Serializable id, Class cls)
     {
-        return getSession().get(cls,id);
+        Object o=getSession().get(cls,id);
+        if (o!=null)
+            return getSession().get(cls,id);
+        else
+            return null;
     }
 
     @Override

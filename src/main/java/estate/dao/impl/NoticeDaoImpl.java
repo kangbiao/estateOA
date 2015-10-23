@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kangbiao on 15-9-4.
@@ -33,12 +34,13 @@ public class NoticeDaoImpl implements NoticeDao
 
     public ArrayList<NoticeEntity> getSome(Integer num)
     {
-        ArrayList<NoticeEntity> entities;
+        Long now=System.currentTimeMillis();
         Session session=getSession();
-        String hql="from NoticeEntity n order by n.time desc ";
-        Query query=session.createQuery(hql).setFirstResult(0).setMaxResults(num);
-        entities= (ArrayList<NoticeEntity>) query.list();
-        return entities;
+        String hql="from NoticeEntity n where n.expiretime>="+now+" order by n.time desc ";
+        List list=session.createQuery(hql).setFirstResult(0).setMaxResults(num).list();
+        if (list.size()>0)
+            return (ArrayList<NoticeEntity>) list;
+        return null;
     }
 
     public TableData getList(TableFilter tableFilter)
