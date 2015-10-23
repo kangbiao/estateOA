@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -134,7 +135,7 @@ public class UserHandler
      * @return
      */
     @RequestMapping(value = "/register/checkVerifyCode/{verifyCode}",method = RequestMethod.GET)
-    public BasicJson checkVerifyCode(HttpServletRequest request,@PathVariable String verifyCode)
+    public BasicJson checkVerifyCodeR(HttpServletRequest request,@PathVariable String verifyCode)
     {
         BasicJson basicJson=new BasicJson();
         if (verifyCode==null|| Objects.equals(verifyCode, ""))
@@ -291,14 +292,14 @@ public class UserHandler
     {
         BasicJson basicJson=new BasicJson();
         String verifyCode=VerifyCodeGenerate.create();
-        request.getSession().setAttribute("phone", phone);
-        request.getSession().setAttribute("verifyCode",verifyCode);
         String msg=Message.sendFindPasswordVerifyCode(phone,verifyCode);
         if (!msg.equals("succ"))
         {
             basicJson.getErrorMsg().setDescription(msg);
             return basicJson;
         }
+        request.getSession().setAttribute("phone", phone);
+        request.getSession().setAttribute("verifyCode",verifyCode);
 
         basicJson.setStatus(true);
         return basicJson;
@@ -311,7 +312,7 @@ public class UserHandler
      * @return
      */
     @RequestMapping(value = "/findPassword/checkVerifyCode/{verifyCode}",method = RequestMethod.GET)
-    public BasicJson checkVerifyCode(@PathVariable String verifyCode,HttpServletRequest request)
+    public BasicJson checkVerifyCodeFD(@PathVariable String verifyCode,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
         if (!verifyCode.equals(request.getSession().getAttribute("verifyCode")))
@@ -320,6 +321,39 @@ public class UserHandler
             return basicJson;
         }
 
+        request.getSession().setAttribute("findPassword","yes");
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 重置密码
+     * @return
+     */
+    @RequestMapping(value = "/findPassword/reset/{newPassword}",method = RequestMethod.GET)
+    public BasicJson resetPassword(@PathVariable String newPassword,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        HttpSession httpSession=request.getSession();
+        String phone= (String) httpSession.getAttribute("phone");
+        String symbol= (String) httpSession.getAttribute("findPassword");
+        if (!symbol.equals("yes"))
+        {
+            basicJson.getErrorMsg().setDescription("请先通过短信认证");
+            return basicJson;
+        }
+        try
+        {
+            AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone, AppUserEntity.class);
+            appUserEntity.setPasswd(newPassword);
+            baseService.save(appUserEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("修改失败,请退出重试");
+            return basicJson;
+        }
+        httpSession.removeAttribute("findPassword");
         basicJson.setStatus(true);
         return basicJson;
     }
