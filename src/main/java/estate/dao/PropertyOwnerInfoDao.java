@@ -12,13 +12,6 @@ import java.util.ArrayList;
 public interface PropertyOwnerInfoDao
 {
     /**
-     * 通过物业id查询是否有绑定
-     * @param id
-     * @return
-     */
-    PropertyOwnerInfoEntity getByPropertyID(Integer id);
-
-    /**
      * 通过业主的电话返回该业主名下的所有物业信息实体
      * @param phone
      * @return
@@ -61,7 +54,7 @@ public interface PropertyOwnerInfoDao
     /**
      * 根据物业id和用户角色返回对应的绑定关系
      * @param propertyID
-     * @param role
+     * @param role 为null则返回所有角色的绑定关系
      * @return
      */
     ArrayList<PropertyOwnerInfoEntity> getByPropertyIdRole(Integer propertyID,Byte role);

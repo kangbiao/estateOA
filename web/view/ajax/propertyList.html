@@ -421,8 +421,8 @@
             dataType: "json", //返回数据形式为json
             success: function (result) {
                 if (result.status) {
-
                     alert("修改成功");
+                    editTable.ajax.reload( null, false );
                 }
                 else
                 {

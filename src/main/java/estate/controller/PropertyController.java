@@ -3,6 +3,7 @@ package estate.controller;
 import estate.common.config.UserType;
 import estate.common.util.LogUtil;
 import estate.entity.database.PropertyEntity;
+import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -105,6 +106,7 @@ public class PropertyController
 //            propertyEntity.setPropertySquare(new BigDecimal(request.getParameter("propertySquare")).setScale(2,
 //                    BigDecimal.ROUND_HALF_UP));
             propertyEntity.setStatus(Byte.valueOf(request.getParameter("status")));
+            propertyEntity.setModifyTime(System.currentTimeMillis());
 //            propertyEntity.setType(Byte.valueOf(request.getParameter("type")));
         }
         catch (Exception e)
@@ -191,19 +193,28 @@ public class PropertyController
      * @throws UserTypeErrorException
      */
     @RequestMapping(value = "/deleteProperty/{propertyID}")
-    public BasicJson deleteProperty(@PathVariable Integer propertyID,HttpServletRequest request) throws UserTypeErrorException
+    public BasicJson deleteProperty(@PathVariable Integer propertyID,HttpServletRequest request)
 
     {
         BasicJson basicJson=new BasicJson();
-        if (userService.getUserInfoByProperityID(propertyID,UserType.OWNER).size()>0)
+        ArrayList<PropertyOwnerInfoEntity> ownerInfoEntities=propertyOwnerService.getByPropertyID(propertyID);
+        if (ownerInfoEntities!=null)
         {
-            basicJson.getErrorMsg().setDescription("请先删除该物业绑定的业主");
+            basicJson.getErrorMsg().setDescription("请先解除该物业的绑定关系后再删除");
             return basicJson;
         }
 
         PropertyEntity propertyEntity=new PropertyEntity();
         propertyEntity.setId(propertyID);
-        baseService.delete(propertyEntity);
+        try
+        {
+            baseService.delete(propertyEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("删除失败\n"+e.getMessage());
+            return basicJson;
+        }
 
         basicJson.setStatus(true);
         return basicJson;

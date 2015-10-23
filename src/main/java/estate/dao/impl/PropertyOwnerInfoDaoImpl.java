@@ -28,18 +28,6 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
 
 
     @Override
-    public PropertyOwnerInfoEntity getByPropertyID(Integer id)
-    {
-        Session session=getSession();
-        String hql="from PropertyOwnerInfoEntity t where t.propertyId=:id";
-        List list=session.createQuery(hql).setInteger("id", id).list();
-        if (list.size()>0)
-            return (PropertyOwnerInfoEntity)list.get(0);
-        else
-            return null;
-    }
-
-    @Override
     public ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone)
     {
         Session session=getSession();
@@ -106,8 +94,18 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     public ArrayList<PropertyOwnerInfoEntity> getByPropertyIdRole(Integer propertyID, Byte role)
     {
         Session session=getSession();
-        String hql="from PropertyOwnerInfoEntity t where t.propertyId=:id and t.userRole=:role";
-        List list=session.createQuery(hql).setInteger("id",propertyID).setByte("role",role).list();
+        String hql;
+        List list;
+        if (role==null)
+        {
+            hql = "from PropertyOwnerInfoEntity t where t.propertyId=:id";
+            list = session.createQuery(hql).setInteger("id", propertyID).list();
+        }
+        else
+        {
+            hql = "from PropertyOwnerInfoEntity t where t.propertyId=:id and t.userRole=:role";
+            list = session.createQuery(hql).setInteger("id", propertyID).setByte("role", role).list();
+        }
         if (list.size()>0)
             return (ArrayList<PropertyOwnerInfoEntity>) list;
         return null;

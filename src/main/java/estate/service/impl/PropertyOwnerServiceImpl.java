@@ -2,8 +2,6 @@ package estate.service.impl;
 
 import estate.common.config.BindStatus;
 import estate.common.config.UserType;
-import estate.common.util.GsonUtil;
-import estate.common.util.LogUtil;
 import estate.dao.BaseDao;
 import estate.dao.PropertyOwnerInfoDao;
 import estate.dao.UserDao;
@@ -161,7 +159,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
         if (propertyOwnerInfoEntities==null)
             return null;
         ArrayList<OwnerEntity> ownerEntities=new ArrayList<>();
-        LogUtil.E(GsonUtil.getGson().toJson(propertyOwnerInfoEntities));
         for (PropertyOwnerInfoEntity propertyOwnerInfoEntity:propertyOwnerInfoEntities)
         {
             OwnerEntity ownerEntity= (OwnerEntity) userDao.
@@ -172,6 +169,12 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
         if (ownerEntities.size()>0)
             return ownerEntities;
         return null;
+    }
+
+    @Override
+    public ArrayList<PropertyOwnerInfoEntity> getByPropertyID(Integer propertyID)
+    {
+        return propertyOwnerInfoDao.getByPropertyIdRole(propertyID,null);
     }
 
 

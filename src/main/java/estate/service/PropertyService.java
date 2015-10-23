@@ -24,13 +24,6 @@ public interface PropertyService
     TableData getList(TableFilter tableFilter);
 
     /**
-     * 通过物业id获取该物业绑定的一个业主(后期可能需要返回多个业主)
-     * @param id
-     * @return
-     */
-    Object getByProperID(Integer id);
-
-    /**
      * 获取所有的园区信息,以select2的数组返回
      * @return
      */

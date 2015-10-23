@@ -67,4 +67,11 @@ public interface PropertyOwnerService
      */
     Object getOwnerByPropertyIdRole(Integer propertyID,Byte role);
 
+    /**
+     * 根据物业id获取该物业的绑定信息,包含业主和费业主用户
+     * @param propertyID
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPropertyID(Integer propertyID);
+
 }

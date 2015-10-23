@@ -75,12 +75,6 @@ public class PropertyServiceImpl implements PropertyService
     }
 
     @Override
-    public Object getByProperID(Integer id)
-    {
-        return propertyOwnerInfoDao.getByPropertyID(id);
-    }
-
-    @Override
     public Object getAllVillage()
     {
         ArrayList<Select2> entities = new ArrayList<>();
