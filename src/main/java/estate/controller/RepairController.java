@@ -4,6 +4,7 @@ import estate.common.config.RepairStatus;
 import estate.entity.database.ConsoleUserEntity;
 import estate.entity.database.PictureEntity;
 import estate.entity.database.RepairEntity;
+import estate.entity.database.RepairManEntity;
 import estate.entity.json.BasicJson;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
@@ -167,6 +168,55 @@ public class RepairController
             basicJson.getErrorMsg().setDescription("设置失败\n"+e.getMessage());
             return basicJson;
         }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 添加维修人员
+     * @param repairManEntity
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/addRepairMan")
+    public BasicJson addRepairMan(RepairManEntity repairManEntity,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            baseService.save(repairManEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode(e.getMessage());
+            basicJson.getErrorMsg().setDescription("添加失败");
+            return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        return basicJson;
+    }
+
+    /**
+     * 获取所有的维修人员列表
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/getRepairManList")
+    public BasicJson getRepairManList(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        try
+        {
+            basicJson.setJsonString(baseService.getAll(RepairManEntity.class));
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setCode(e.getMessage());
+            basicJson.getErrorMsg().setDescription("获取维修人员信息出错");
+            return basicJson;
+        }
+
         basicJson.setStatus(true);
         return basicJson;
     }

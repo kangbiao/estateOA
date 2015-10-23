@@ -16,6 +16,9 @@ public interface BaseService
 
     Object get(Integer id,Class object);
 
+
+    Object getAll(Class cls);
+
     void delete(Object object);
 
 }

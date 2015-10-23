@@ -21,4 +21,5 @@ public interface RepairService
      * @return
      */
     ArrayList<RepairEntity> getRepairByPhone(String phone,Byte status);
+
 }

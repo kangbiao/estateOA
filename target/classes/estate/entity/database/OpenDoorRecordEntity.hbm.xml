@@ -7,16 +7,23 @@
     <class name="estate.entity.database.OpenDoorRecordEntity" table="open_door_record" schema=""
            catalog="PropertySystem">
         <id name="id">
-            <column name="id" sql-type="int unsigned" not-null="true"/>
+            <column name="odr_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
         </id>
-        <property name="userId">
-            <column name="user_id" sql-type="int unsigned"/>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15"/>
         </property>
         <property name="openTime">
             <column name="open_time" sql-type="bigint"/>
         </property>
-        <property name="openCode">
-            <column name="open_code" sql-type="varchar" length="100"/>
+        <property name="status">
+            <column name="status" sql-type="tinyint"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="100"/>
+        </property>
+        <property name="level">
+            <column name="level" sql-type="tinyint"/>
         </property>
     </class>
 </hibernate-mapping>

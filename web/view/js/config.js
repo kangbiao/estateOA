@@ -43,6 +43,8 @@ urlConfig.setRepairMan=host+"repair/setRepairMan";
 urlConfig.deleteRepair=host+"repair/delete/";
 urlConfig.getPicturePathsByID=host+"repair/getPathsByID/";
 urlConfig.changeRepairStatus=host+"repair/changeStatus";
+urlConfig.addRepairMan=host+"repair/addRepairMan";
+urlConfig.getRepairManList=host+"repair/getRepairManList";
 
 //投诉相关的URL
 urlConfig.complainList=host+"complain/list";

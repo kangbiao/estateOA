@@ -71,6 +71,19 @@ public class BaseDaoImpl implements BaseDao
     }
 
     @Override
+    public Object getAll(Class cls)
+    {
+        Session session=getSession();
+
+        String entity=cls.getSimpleName();
+        String hql="from "+entity+" t";
+        List list=session.createQuery(hql).list();
+        if (list.size()>0)
+            return list;
+        return null;
+    }
+
+    @Override
     public void delete(Object object)
     {
         Session session=getSession();

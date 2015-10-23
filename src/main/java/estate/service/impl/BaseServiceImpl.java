@@ -42,6 +42,12 @@ public class BaseServiceImpl implements BaseService
     }
 
     @Override
+    public Object getAll(Class cls)
+    {
+        return baseDao.getAll(cls);
+    }
+
+    @Override
     public void delete(Object object)
     {
         baseDao.delete(object);

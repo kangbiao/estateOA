@@ -27,6 +27,7 @@ public interface BaseDao
     Object get(Serializable id,Object object);
     Object get(Serializable id,Class object);
 
+    Object getAll(Class cls);
 
     /**
      * 根据对象信息删除某个对象
