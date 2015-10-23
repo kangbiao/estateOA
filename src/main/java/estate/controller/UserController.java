@@ -128,10 +128,10 @@ public class UserController
             switch (userRole)
             {
                 case "owner":
-                    basicJson.setJsonString(propertyService.getPropertyByOwnerPhone(phone));
+                    basicJson.setJsonString(propertyService.getPropertyByPhoneRole(phone, UserType.OWNER));
                     break;
                 case "appuser":
-                    basicJson.setJsonString(propertyService.getProperitiesByAppUserPhone(phone));
+                    basicJson.setJsonString(propertyOwnerService.getByPhone(phone));
                     break;
                 default:
                     basicJson.getErrorMsg().setDescription("用户类型参数错误");

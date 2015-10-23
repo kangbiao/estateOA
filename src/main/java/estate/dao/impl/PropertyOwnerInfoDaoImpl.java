@@ -1,7 +1,6 @@
 package estate.dao.impl;
 
 import estate.dao.PropertyOwnerInfoDao;
-import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,18 +23,6 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     private Session getSession()
     {
         return sessionFactory.getCurrentSession();
-    }
-
-
-    @Override
-    public ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone)
-    {
-        Session session=getSession();
-        String hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone";
-        List list=session.createQuery(hql).setString("phone",phone).list();
-        if (list.size()>0)
-            return (ArrayList<PropertyEntity>) list;
-        return null;
     }
 
     @Override

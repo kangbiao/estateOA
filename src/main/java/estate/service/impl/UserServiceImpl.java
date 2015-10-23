@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public Object getAppUserInfoByPhoneRole(String phone, int type)
+    public Object getUserInfoByPhoneRole(String phone, int type)
     {
         return userDao.getUserInfoByPhoneRole(phone, type);
     }

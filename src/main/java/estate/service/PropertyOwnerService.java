@@ -50,7 +50,6 @@ public interface PropertyOwnerService
      */
     ArrayList<BindPropertyAppUser> getBindInfoByOwnerInfo(String phone,Byte status);
 
-
     /**
      * 给物业增加业主,如果该业主信息则更新,否则创建
      * @param ownerEntity
@@ -68,7 +67,7 @@ public interface PropertyOwnerService
     Object getOwnerByPropertyIdRole(Integer propertyID,Byte role);
 
     /**
-     * 根据物业id获取该物业的绑定信息,包含业主和费业主用户
+     * 根据物业id获取该物业的绑定信息,包含业主和非业主用户
      * @param propertyID
      * @return
      */

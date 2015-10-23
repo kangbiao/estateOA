@@ -3,7 +3,6 @@ package estate.service;
 import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.display.Property;
-import estate.entity.json.Select2;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.EntityTypeErrorException;
@@ -66,19 +65,11 @@ public interface PropertyService
     PropertyEntity getByCode(String code) throws EntityTypeErrorException;
 
     /**
-     * 保证业主电话和物业id的组合为唯一
-     * @param phone
-     * @param id
-     * @return
-     */
-    boolean checkOwnerPropertyExit(String phone,Integer id);
-
-    /**
-     * 通过业主电话获取该业主名下所有的物业
+     * 通过用户电话和类型获取用户绑定的所有的物业
      * @param phone
      * @return
      */
-    ArrayList<PropertyEntity> getPropertyByOwnerPhone(String phone);
+    ArrayList<PropertyEntity> getPropertyByPhoneRole(String phone, Byte userRole);
 
     /**
      * 通过园区id获取该园区下的所有物业
@@ -86,9 +77,6 @@ public interface PropertyService
      * @return
      */
     ArrayList<PropertyEntity> getAllPropertyByVillageID(Integer id);
-
-    //TODO 项目验收,待删除
-    ArrayList<Select2> getAllProperty();
 
 
 }

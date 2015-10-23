@@ -52,7 +52,7 @@ public interface UserService
      * @param type
      * @return
      */
-    Object getAppUserInfoByPhoneRole(String phone, int type);
+    Object getUserInfoByPhoneRole(String phone, int type);
 
     /**
      * 通过App用户的电话返回该用户的详细信息

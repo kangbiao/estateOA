@@ -1,10 +1,12 @@
 package estate.service.impl;
 
-import estate.common.config.UserType;
 import estate.common.enums.Entity;
 import estate.common.util.Convert;
 import estate.dao.*;
-import estate.entity.database.*;
+import estate.entity.database.BuildingEntity;
+import estate.entity.database.PropertyEntity;
+import estate.entity.database.PropertyOwnerInfoEntity;
+import estate.entity.database.VillageEntity;
 import estate.entity.display.Property;
 import estate.entity.json.Select2;
 import estate.entity.json.TableData;
@@ -14,7 +16,10 @@ import estate.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -143,24 +148,11 @@ public class PropertyServiceImpl implements PropertyService
         return (PropertyEntity) baseDao.getByCode(code, Entity.PROPERTY);
     }
 
-    @Override
-    public boolean checkOwnerPropertyExit(String phone, Integer id)
-    {
-        ArrayList<PropertyEntity> propertyEntities=propertyOwnerInfoDao.getPropertiesByOwnerPhone(phone);
-        if (propertyEntities==null)
-            return true;
-        for (PropertyEntity propertyEntity:propertyEntities)
-        {
-            if (Objects.equals(propertyEntity.getId(), id))
-                return false;
-        }
-        return true;
-    }
 
     @Override
-    public ArrayList<PropertyEntity> getPropertyByOwnerPhone(String phone)
+    public ArrayList<PropertyEntity> getPropertyByPhoneRole(String phone, Byte userRole)
     {
-        return propertyDao.getPropertiesByPhoneRole(phone, UserType.OWNER);
+        return propertyDao.getPropertiesByPhoneRole(phone, userRole);
     }
 
     @Override
@@ -169,22 +161,4 @@ public class PropertyServiceImpl implements PropertyService
         return propertyDao.getAllProperty();
     }
 
-    //TODO 项目验收,待删除
-    @Override
-    public ArrayList<Select2> getAllProperty()
-    {
-        ArrayList<PropertyEntity> properties=propertyDao.getAllProperty();
-        if (properties==null)
-            return null;
-        ArrayList<Select2> items=new ArrayList<>();
-        for (PropertyEntity propertyEntity:properties)
-        {
-            Select2 select2=new Select2();
-            select2.setId(String.valueOf(propertyEntity.getId()));
-            select2.setText(propertyEntity.getLocation());
-            items.add(select2);
-        }
-        return items;
-
-    }
 }

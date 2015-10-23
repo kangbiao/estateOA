@@ -209,7 +209,7 @@
             });
         }
     });
-    $('#appUserListTable tbody').on( 'click', 'button#propertyInfoBtn', function () {
+    $('#appUserListTable tbody').on( 'click', 'button#bindInfoBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
         $.ajax({
             type: "get",
@@ -224,20 +224,39 @@
                         var html="";
                         for (var i in result.jsonString)
                         {
-                            if(result.jsonString[i].type==2)
-                                result.jsonString[i].type="住宅";
-                            else if(result.jsonString[i].type==1)
-                                result.jsonString[i].type="商户";
-                            if(result.jsonString[i].status==-1)
-                                result.jsonString[i].status="出租";
-                            if(result.jsonString[i].status==1)
-                                result.jsonString[i].status="自用";
+                            if(result.jsonString[i].propertyEntity.type==2)
+                                result.jsonString[i].propertyEntity.type="住宅";
+                            else if(result.jsonString[i].propertyEntity.type==1)
+                                result.jsonString[i].propertyEntity.type="商户";
+                            if(result.jsonString[i].propertyEntity.status==-1)
+                                result.jsonString[i].propertyEntity.status="出租";
+                            if(result.jsonString[i].propertyEntity.status==1)
+                                result.jsonString[i].propertyEntity.status="自用";
+                            if(result.jsonString[i].status==0)
+                                result.jsonString[i].status="<font color='red'>待业主审核</font>";
+                            else
+                                result.jsonString[i].status="<font color='green'>正常</font>";
+
+                            if( result.jsonString[i].userRole==1)
+                                result.jsonString[i].userRole="家庭成员";
+                            else if(result.jsonString[i].userRole==2)
+                                result.jsonString[i].userRole="租客";
+                            else if(result.jsonString[i].userRole==3)
+                                result.jsonString[i].userRole="<font color='blue'>业主</font>";
+                            else
+                                result.jsonString[i].userRole="--";
+
+
                             html+='<ul class="list-group">' +
-                                    '<li class="list-group-item">物业编号: <span id="code">'+result.jsonString[i].code+'</span></li>'+
-                                    '<li class="list-group-item">物业地址: <span id="location">'+result.jsonString[i].location+'</span></li>'+
-                                    '<li class="list-group-item">面积: <span id="status">'+result.jsonString[i].propertySquare+'</span></li>' +
-                                    '<li class="list-group-item">状态: <span id="status">'+result.jsonString[i].status+'</span></li>' +
-                                    '<li class="list-group-item">物业类型: <span id="status">'+result.jsonString[i].type+'</span></li>' +
+                                    '<li class="list-group-item">绑定角色: <span id="code">'+result.jsonString[i].userRole+'</span></li>'+
+                                    '<li class="list-group-item">状态: <span id="code">'+result.jsonString[i].status+'</span></li>'+
+                                    '<li class="list-group-item">房产编号: <span id="code">'+result.jsonString[i].propertyEntity.code+'</span></li>'+
+                                    '<li class="list-group-item">物业地址: <span id="location">'+result.jsonString[i].propertyEntity.location+'</span></li>'+
+                                    '<li class="list-group-item">面积: <span id="status">'+result.jsonString[i].propertyEntity.propertySquare+'</span></li>' +
+                                    '<li class="list-group-item">状态: <span id="status">'+result.jsonString[i].propertyEntity.status+'</span></li>' +
+                                    '<li class="list-group-item">物业类型: <span id="status">'+result.jsonString[i].propertyEntity.type+'</span></li>' +
+                                    '<li class="list-group-item">所属楼栋: <span id="status">'+result.jsonString[i].propertyEntity.buildingEntity.buildingCode+
+                                    '--'+result.jsonString[i].propertyEntity.buildingEntity.buildingName+'</span></li>' +
                                     '</ul>';
                         }
                         $("#propertyInfoList").html(html);

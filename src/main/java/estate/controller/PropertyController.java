@@ -173,7 +173,7 @@ public class PropertyController
 
         try
         {
-            propertyOwnerService.deleteOwnerPropertyBind(phone, propertyID,UserType.OWNER);
+            propertyOwnerService.deleteOwnerPropertyBind(phone, propertyID, UserType.OWNER);
         }
         catch (Exception e)
         {
@@ -295,6 +295,9 @@ public class PropertyController
                 break;
             case "owner":
                 basicJson.setJsonString(propertyOwnerService.getOwnerByPropertyIdRole(propertyID, UserType.OWNER));
+                break;
+            case "allOwner":
+                basicJson.setJsonString(propertyOwnerService.getByPropertyID(propertyID));
                 break;
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");

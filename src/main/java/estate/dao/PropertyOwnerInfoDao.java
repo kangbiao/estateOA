@@ -1,6 +1,5 @@
 package estate.dao;
 
-import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 
 import java.util.ArrayList;
@@ -11,12 +10,6 @@ import java.util.ArrayList;
  */
 public interface PropertyOwnerInfoDao
 {
-    /**
-     * 通过业主的电话返回该业主名下的所有物业信息实体
-     * @param phone
-     * @return
-     */
-    ArrayList<PropertyEntity> getPropertiesByOwnerPhone(String phone);
 
 
     /**

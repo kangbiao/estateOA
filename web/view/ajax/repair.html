@@ -156,12 +156,15 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                            <h3>主题</h3>
                             <div id="titleArea"></div>
                         </div>
                         <div class="col-md-12">
+                            <h3>概要</h3>
                             <div id="descriptionArea"></div>
                         </div>
                         <div class="col-md-12">
+                            <h3>详细描述</h3>
                             <div id="contentArea"></div>
                         </div>
                         <div class="col-md-12">
@@ -255,9 +258,9 @@
     $('#repairListTable tbody').on( 'click', 'button#detailRowBtn', function () {
         var data = editTable.row($(this).parents('tr') ).data();
 
-        $("#repairInfoModal #titleArea").html("标题:"+data.title);
-        $("#repairInfoModal #descriptionArea").html("简介:"+data.description);
-        $("#repairInfoModal #contentArea").html("详情:<p>"+data.content+"</p>");
+        $("#repairInfoModal #titleArea").html(data.title);
+        $("#repairInfoModal #descriptionArea").html(data.description);
+        $("#repairInfoModal #contentArea").html("<p>"+data.content+"</p>");
         $.ajax({
             type: "post",
             async: true,

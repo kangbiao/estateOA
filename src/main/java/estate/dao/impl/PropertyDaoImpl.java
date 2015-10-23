@@ -1,6 +1,5 @@
 package estate.dao.impl;
 
-import estate.common.config.UserType;
 import estate.dao.BaseDao;
 import estate.dao.PropertyDao;
 import estate.entity.database.PropertyEntity;
@@ -153,21 +152,18 @@ public class PropertyDaoImpl implements PropertyDao
     {
         Session session=getSession();
         String hql;
-        switch (role)
+        List list;
+        if (role==null)
         {
-            case UserType.FAMILY:
-                hql="select p from FamilyEntity t ,PropertyEntity p where t.phone=:phone and p.id=t.propertyId";
-                break;
-            case UserType.TENANT:
-                hql="select p from TenantEntity t ,PropertyEntity p where t.phone=:phone and p.id=t.propertyId";
-                break;
-            case UserType.OWNER:
-                hql="select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone and t.userRole=:role";
-                break;
-            default:
-                return null;
+            hql = "select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone";
+            list=session.createQuery(hql).setString("phone",phone).list();
         }
-        List list=session.createQuery(hql).setString("phone",phone).setByte("role",UserType.OWNER).list();
+        else
+        {
+            hql = "select t.propertyEntity from PropertyOwnerInfoEntity t where t.phone=:phone and t.userRole=:role";
+            list=session.createQuery(hql).setString("phone",phone).setByte("role",role).list();
+        }
+
         if (list.size()>0)
             return (ArrayList<PropertyEntity>) list;
         else return null;

@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">物业编号</label>
+                            <label class="col-sm-2 control-label">房产编号</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="code"/>
                             </div>
@@ -219,11 +219,11 @@
                 code: {
                     validators: {
                         notEmpty: {
-                            message: '物业编号不能为空'
+                            message: '房产编号不能为空'
                         },
                         regexp: {
                             regexp: /^[0-9A-Za-z]+$/,
-                            message: '物业编号只能为数字和字母的组合'
+                            message: '房产编号只能为数字和字母的组合'
                         }
                     }
                 },

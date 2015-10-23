@@ -76,6 +76,7 @@ urlConfig.generateBill=host+"property/generateBill/";
 urlConfig.getOwnerPropertyInfoByID=host+"property/getMoreInfo/";
 urlConfig.deleteOwner=host+"property/deleteOwner";
 urlConfig.deleteProperty=host+"property/deleteProperty/";
+urlConfig.getBindInfo=host+"property/getBindInfo";
 
 //园区相关的url
 urlConfig.getVillageSelect2=host+"property/villageList";

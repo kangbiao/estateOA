@@ -176,7 +176,7 @@ public class UserHandler
         Object owner;
         try
         {
-            owner=userService.getAppUserInfoByPhoneRole(phone, UserType.OWNER);
+            owner=userService.getUserInfoByPhoneRole(phone, UserType.OWNER);
             baseService.save(appUserEntity);
         }
         catch (Exception e)
@@ -193,7 +193,8 @@ public class UserHandler
         {
             try
             {
-                ArrayList<PropertyEntity> propertyEntities = propertyService.getPropertyByOwnerPhone(phone);
+                ArrayList<PropertyEntity> propertyEntities = propertyService.getPropertyByPhoneRole(phone, UserType
+                        .OWNER);
                 for (PropertyEntity propertyEntity : propertyEntities)
                 {
                     PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
@@ -288,7 +289,7 @@ public class UserHandler
 //            case "getProfile":
 //                try
 //                {
-//                    Object o=userService.getAppUserInfoByPhoneRole(phone, role);
+//                    Object o=userService.getUserInfoByPhoneRole(phone, role);
 //                    if (o==null)
 //                    {
 //                        basicJson.getErrorMsg().setDescription("获取用户信息失败");
