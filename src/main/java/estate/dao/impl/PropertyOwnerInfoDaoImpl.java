@@ -46,6 +46,17 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     }
 
     @Override
+    public ArrayList<PropertyOwnerInfoEntity> getByPhoneProperID(String phone, Integer propertyID)
+    {
+        Session session=getSession();
+        String hql="from PropertyOwnerInfoEntity t where t.phone=:phone and t.propertyId=:id";
+        List list=session.createQuery(hql).setString("phone",phone).setInteger("id",propertyID).list();
+        if (list.size()>0)
+            return (ArrayList<PropertyOwnerInfoEntity>) list;
+        return null;
+    }
+
+    @Override
     public ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID, Byte status)
     {
         Session session=getSession();
@@ -67,13 +78,13 @@ public class PropertyOwnerInfoDaoImpl implements PropertyOwnerInfoDao
     }
 
     @Override
-    public PropertyOwnerInfoEntity getByPhonePropertyID(String phone, Integer propertyID)
+    public ArrayList<PropertyOwnerInfoEntity> getByPhonePropertyID(String phone, Integer propertyID)
     {
         Session session=getSession();
         String hql="from PropertyOwnerInfoEntity t where t.propertyId=:propertyID and t.phone=:phone";
         List list=session.createQuery(hql).setInteger("propertyID",propertyID).setString("phone",phone).list();
         if (list.size()>0)
-            return (PropertyOwnerInfoEntity) list.get(0);
+            return (ArrayList<PropertyOwnerInfoEntity>) list;
         return null;
     }
 

@@ -35,20 +35,30 @@ public interface PropertyOwnerService
     ArrayList<PropertyOwnerInfoEntity> getByPhone(String phone);
 
     /**
-     * 通过物业的id获取绑定到该物业的用户信息
-     * @param propertyID
-     * @param status 业主是否同意审核
-     * @return
-     */
-    ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID,Byte status);
-
-    /**
      * 根据业主的电话获取该业主名下物业的所有绑定
      * @param phone
      * @param status 审核状态
      * @return
      */
     ArrayList<BindPropertyAppUser> getBindInfoByOwnerInfo(String phone,Byte status);
+
+
+    /**
+     * 通过物业id和用户电话返回绑定关系
+     * @param phone
+     * @param propertyID
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPhonePropertyID(String phone ,Integer propertyID);
+
+    /**
+     * 通过物业id和用户角色返回绑定关系<br/>
+     * role为null则返回该物业的所有绑定
+     * @param propertyID
+     * @param role
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPropertyIdRole(Integer propertyID,Byte role);
 
     /**
      * 给物业增加业主,如果该业主信息则更新,否则创建
@@ -66,11 +76,5 @@ public interface PropertyOwnerService
      */
     Object getOwnerByPropertyIdRole(Integer propertyID,Byte role);
 
-    /**
-     * 根据物业id获取该物业的绑定信息,包含业主和非业主用户
-     * @param propertyID
-     * @return
-     */
-    ArrayList<PropertyOwnerInfoEntity> getByPropertyID(Integer propertyID);
 
 }

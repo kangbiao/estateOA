@@ -2,6 +2,7 @@ package estate.app;
 
 import estate.common.config.AppUserStatus;
 import estate.common.config.BindStatus;
+import estate.common.config.UserType;
 import estate.common.util.GsonUtil;
 import estate.common.util.LogUtil;
 import estate.entity.app.MyProperty;
@@ -32,6 +33,44 @@ public class PropertyHandler
     private BaseService baseService;
     @Autowired
     private PropertyOwnerService propertyOwnerService;
+
+    /**
+     * 用户申请绑定
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/bind",method = RequestMethod.POST)
+    public BasicJson bindOwner(HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson();
+        HttpSession httpSession=request.getSession();
+        Integer propertyId=Integer.valueOf(request.getParameter("propertyID"));
+        Byte role=Byte.valueOf(request.getParameter("role"));
+        String phone= (String) httpSession.getAttribute("phone");
+        try
+        {
+            UserType.checkType(role);
+            if (propertyOwnerService.getByPhonePropertyID(phone, propertyId)!=null)
+            {
+                LogUtil.E(GsonUtil.getGson().toJson(propertyOwnerService.getByPhonePropertyID(phone, propertyId)));
+                basicJson.getErrorMsg().setDescription("您已申请或已经绑定到该物业,请不要重复申请");
+                return basicJson;
+            }
+            PropertyOwnerInfoEntity propertyOwnerInfoEntity=new PropertyOwnerInfoEntity();
+            propertyOwnerInfoEntity.setPhone(phone);
+            propertyOwnerInfoEntity.setStatus(BindStatus.FORCHECK);
+            propertyOwnerInfoEntity.setPropertyId(propertyId);
+            propertyOwnerInfoEntity.setUserRole(role);
+            baseService.save(propertyOwnerInfoEntity);
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("绑定失败,"+e.getMessage());
+            return basicJson;
+        }
+        basicJson.setStatus(true);
+        return basicJson;
+    }
 
     /**
      * 获取我绑定的所有物业

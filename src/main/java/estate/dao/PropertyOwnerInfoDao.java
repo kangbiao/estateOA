@@ -27,6 +27,13 @@ public interface PropertyOwnerInfoDao
      */
     ArrayList<PropertyOwnerInfoEntity> getByPhone(String phone);
 
+    /**
+     * 通过物业id和用户电话返回绑定关系
+     * @param phone
+     * @param propertyID
+     * @return
+     */
+    ArrayList<PropertyOwnerInfoEntity> getByPhoneProperID(String phone, Integer propertyID);
 
     /**
      * 通过物业id和状态返回
@@ -42,7 +49,7 @@ public interface PropertyOwnerInfoDao
      * @param propertyID
      * @return
      */
-    PropertyOwnerInfoEntity getByPhonePropertyID(String phone , Integer propertyID);
+    ArrayList<PropertyOwnerInfoEntity> getByPhonePropertyID(String phone , Integer propertyID);
 
     /**
      * 根据物业id和用户角色返回对应的绑定关系

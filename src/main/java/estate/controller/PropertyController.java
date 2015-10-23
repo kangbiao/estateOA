@@ -197,7 +197,7 @@ public class PropertyController
 
     {
         BasicJson basicJson=new BasicJson();
-        ArrayList<PropertyOwnerInfoEntity> ownerInfoEntities=propertyOwnerService.getByPropertyID(propertyID);
+        ArrayList<PropertyOwnerInfoEntity> ownerInfoEntities=propertyOwnerService.getByPropertyIdRole(propertyID, null);
         if (ownerInfoEntities!=null)
         {
             basicJson.getErrorMsg().setDescription("请先解除该物业的绑定关系后再删除");
@@ -297,7 +297,7 @@ public class PropertyController
                 basicJson.setJsonString(propertyOwnerService.getOwnerByPropertyIdRole(propertyID, UserType.OWNER));
                 break;
             case "allOwner":
-                basicJson.setJsonString(propertyOwnerService.getByPropertyID(propertyID));
+                basicJson.setJsonString(propertyOwnerService.getByPropertyIdRole(propertyID,null));
                 break;
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");

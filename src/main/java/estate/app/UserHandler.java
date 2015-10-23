@@ -9,7 +9,10 @@ import estate.entity.database.AppUserEntity;
 import estate.entity.database.PropertyEntity;
 import estate.entity.database.PropertyOwnerInfoEntity;
 import estate.entity.json.BasicJson;
-import estate.service.*;
+import estate.service.BaseService;
+import estate.service.PropertyOwnerService;
+import estate.service.PropertyService;
+import estate.service.UserService;
 import estate.thirdApi.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -171,8 +173,6 @@ public class UserHandler
         appUserEntity.setPasswd(password);
         appUserEntity.setRegisterTime(System.currentTimeMillis());
         appUserEntity.setStatus(AppUserStatus.ENABLE);
-
-
         Object owner;
         try
         {
@@ -193,61 +193,29 @@ public class UserHandler
         {
             try
             {
-                ArrayList<PropertyEntity> propertyEntities = propertyService.getPropertyByPhoneRole(phone, UserType
-                        .OWNER);
-                for (PropertyEntity propertyEntity : propertyEntities)
+                ArrayList<PropertyEntity> propertyEntities = propertyService.
+                        getPropertyByPhoneRole(phone, UserType.OWNER);
+                if (propertyEntities!=null)
                 {
-                    PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
-                    propertyOwnerInfoEntity.setUserRole(UserType.OWNER);
-                    propertyOwnerInfoEntity.setPhone(phone);
-                    propertyOwnerInfoEntity.setPropertyId(propertyEntity.getId());
-                    propertyOwnerInfoEntity.setStatus(BindStatus.CHECKED);
-                    baseService.save(propertyOwnerInfoEntity);
+                    for (PropertyEntity propertyEntity : propertyEntities)
+                    {
+                        PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
+                        propertyOwnerInfoEntity.setUserRole(UserType.OWNER);
+                        propertyOwnerInfoEntity.setPhone(phone);
+                        propertyOwnerInfoEntity.setPropertyId(propertyEntity.getId());
+                        propertyOwnerInfoEntity.setStatus(BindStatus.CHECKED);
+                        baseService.save(propertyOwnerInfoEntity);
+                    }
                 }
             }
             catch (Exception e)
             {
-                LogUtil.E("绑定到业主时出现错误:"+e.getMessage());
-                basicJson.getErrorMsg().setDescription("绑定业主时出现错误");
+                basicJson.getErrorMsg().setDescription("注册成功,但绑定业主时出现错误");
                 return basicJson;
             }
             basicJson.getErrorMsg().setCode("100000");
         }
 
-        basicJson.setStatus(true);
-        return basicJson;
-    }
-
-    /**
-     * 绑定业主
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/bind",method = RequestMethod.POST)
-    public BasicJson bindOwner(HttpServletRequest request)
-    {
-        BasicJson basicJson=new BasicJson();
-        HttpSession httpSession=request.getSession();
-        Integer propertyId=Integer.valueOf(request.getParameter("propertyID"));
-        Byte role=Byte.valueOf(request.getParameter("role"));
-        String phone= (String) httpSession.getAttribute("phone");
-        AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone,AppUserEntity.class);
-        appUserEntity.setPhone(phone);
-        try
-        {
-            UserType.checkType(role);
-            PropertyOwnerInfoEntity propertyOwnerInfoEntity=new PropertyOwnerInfoEntity();
-            propertyOwnerInfoEntity.setPhone(phone);
-            propertyOwnerInfoEntity.setStatus(BindStatus.FORCHECK);
-            propertyOwnerInfoEntity.setPropertyId(propertyId);
-            propertyOwnerInfoEntity.setUserRole(role);
-            baseService.save(propertyOwnerInfoEntity);
-        }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setDescription("绑定失败");
-            return basicJson;
-        }
         basicJson.setStatus(true);
         return basicJson;
     }

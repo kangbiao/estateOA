@@ -66,12 +66,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
     }
 
     @Override
-    public ArrayList<PropertyOwnerInfoEntity> getBindBypropertyIDStatus(Integer propertyID, Byte status)
-    {
-        return propertyOwnerInfoDao.getBindBypropertyIDStatus(propertyID,status);
-    }
-
-    @Override
     public ArrayList<BindPropertyAppUser> getBindInfoByOwnerInfo(String phone, Byte status)
     {
         ArrayList<PropertyOwnerInfoEntity> propertyOwnerInfoEntities = propertyOwnerInfoDao.getByPhone(phone);
@@ -123,6 +117,18 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
     }
 
     @Override
+    public ArrayList<PropertyOwnerInfoEntity> getByPhonePropertyID(String phone, Integer propertyID)
+    {
+        return propertyOwnerInfoDao.getByPhonePropertyID(phone,propertyID);
+    }
+
+    @Override
+    public ArrayList<PropertyOwnerInfoEntity> getByPropertyIdRole(Integer propertyID, Byte role)
+    {
+        return propertyOwnerInfoDao.getByPropertyIdRole(propertyID,role);
+    }
+
+    @Override
     public String addOwnerToProperty(OwnerEntity ownerEntity, Integer propertyID)
     {
         if (propertyOwnerInfoDao.getByPhonePropertyID(ownerEntity.getPhone(),propertyID)!=null)
@@ -169,12 +175,6 @@ public class PropertyOwnerServiceImpl implements PropertyOwnerService
         if (ownerEntities.size()>0)
             return ownerEntities;
         return null;
-    }
-
-    @Override
-    public ArrayList<PropertyOwnerInfoEntity> getByPropertyID(Integer propertyID)
-    {
-        return propertyOwnerInfoDao.getByPropertyIdRole(propertyID,null);
     }
 
 

@@ -14,8 +14,10 @@ public class UserType
     public static final byte APPUSER=4;
     public static final byte NOROLE=0;
 
-    public static boolean checkType(int type) throws TypeErrorException
+    public static boolean checkType(byte type) throws TypeErrorException
     {
+        if (!(type==FAMILY||type==TENANT))
+            throw new TypeErrorException("用户类型非法");
         return true;
     }
 
