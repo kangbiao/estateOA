@@ -106,6 +106,10 @@ urlConfig.parkLotOwner=host+"parkLot/getOwnerList/";
 urlConfig.addParkLotOwner=host+"parkLot/addOwner";
 urlConfig.deleteParkLotOwnerBind=host+"parkLot/deleteBind/";
 
+//excel导入
+urlConfig.propertyImport=host+"upload/excel/property";
+urlConfig.bindImport=host+"upload/excel/bind";
+
 
 //搜索
 urlConfig.search=host+"search/";

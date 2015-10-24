@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -142,14 +144,34 @@ public class UploadController
      * @return
      */
     @RequestMapping(value = "/excel/{type}")
-    public BasicJson uploadExcel(@PathVariable String type,HttpServletRequest request)
+    public BasicJson uploadExcel(@PathVariable String type,HttpServletRequest request) throws IOException
     {
         BasicJson basicJson=new BasicJson(false);
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        Map<String,MultipartFile> map= multipartRequest.getFileMap();
+        InputStream inputStream=null;
+        for (String key:map.keySet())
+        {
+            String fileName=map.get(key).getOriginalFilename();
+            String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+            if (!(fileExt.equals("xls")||fileExt.equals("xlsx")))
+            {
+                basicJson.getErrorMsg().setDescription("非法的文件格式");
+                return basicJson;
+            }
+            inputStream=map.get(key).getInputStream();
+        }
+
         ExcelParse excelParse=new ExcelParse();
         List<Map<String,String>> result;
         try
         {
-            result=excelParse.parseExcel("/home/kangbiao/桌面/test.xlsx");
+            if (inputStream==null)
+            {
+                basicJson.getErrorMsg().setDescription("请选择文件");
+                return basicJson;
+            }
+            result=excelParse.parseExcel(inputStream);
         }
         catch (Exception e)
         {
@@ -169,7 +191,7 @@ public class UploadController
                 }
                 catch (Exception e)
                 {
-                    basicJson.getErrorMsg().setDescription("未知异常,请修改数据后重新导入");
+                    basicJson.getErrorMsg().setDescription("excel文件内容不合法!");
                     basicJson.getErrorMsg().setCode(e.getMessage());
                     return basicJson;
                 }
@@ -181,7 +203,7 @@ public class UploadController
                 }
                 catch (Exception e)
                 {
-                    basicJson.getErrorMsg().setDescription("未知异常,请修改数据后重新导入");
+                    basicJson.getErrorMsg().setDescription("excel文件内容不合法!");
                     basicJson.getErrorMsg().setCode(e.getMessage());
                     return basicJson;
                 }
