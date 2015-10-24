@@ -1,7 +1,6 @@
 package estate.service;
 
 import estate.entity.database.AppUserEntity;
-import estate.entity.display.Owner;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.AppUserNotExitException;
@@ -37,8 +36,6 @@ public interface UserService
     TableData getAppUserList(TableFilter tableFilter);
 
     TableData getList(TableFilter tableFilter,Object object);
-
-    Owner getOnerInfoByID(Integer id);
 
     /**
      * 改变app用户的状态

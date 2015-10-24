@@ -1,14 +1,11 @@
 package estate.service;
 
 import estate.entity.database.PropertyEntity;
-import estate.entity.database.PropertyOwnerInfoEntity;
-import estate.entity.display.Property;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.exception.EntityTypeErrorException;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Created by kangbiao on 15-9-16.
@@ -16,9 +13,6 @@ import java.util.Set;
  */
 public interface PropertyService
 {
-    Integer save(PropertyOwnerInfoEntity object);
-
-    Set<Property> getPropertiesByString(String string);
 
     TableData getList(TableFilter tableFilter);
 

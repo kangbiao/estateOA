@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -30,30 +28,28 @@ public class BaseDaoImpl implements BaseDao
 
 
     @Override
-    public Integer save(Object object)
+    public void save(Object object)
     {
         Session session=getSession();
         session.saveOrUpdate(object);
         session.flush();
         session.evict(object);
-        Class c=object.getClass();
-        Method[] methods=c.getMethods();
-        for (Method method:methods)
-        {
-            if (method.getName().matches("^getId$"))
-            {
-                try
-                {
-                    return (Integer)method.invoke(object);
-                }
-                catch (IllegalAccessException | InvocationTargetException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return null;
+//        Class c=object.getClass();
+//        Method[] methods=c.getMethods();
+//        for (Method method:methods)
+//        {
+//            if (method.getName().matches("^getId$"))
+//            {
+//                try
+//                {
+//                    return (Integer)method.invoke(object);
+//                }
+//                catch (IllegalAccessException | InvocationTargetException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 
 

@@ -304,30 +304,6 @@ public class UserController
     }
 
     /**
-     *根据业主的id查看业主的详细信息
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/ownerInfo/{id}")
-    public BasicJson getOwnerInfoByID(@PathVariable Integer id)
-    {
-        BasicJson basicJson=new BasicJson(false);
-        try
-        {
-            basicJson.setJsonString(userService.getOnerInfoByID(id));
-        }
-        catch (Exception e)
-        {
-            basicJson.getErrorMsg().setCode("100660");
-            basicJson.getErrorMsg().setDescription("获取业主信息错误");
-            return basicJson;
-        }
-
-        basicJson.setStatus(true);
-        return basicJson;
-    }
-
-    /**
      * 改变appuser的状态,是否禁用该用户.
      * @param request
      * @return

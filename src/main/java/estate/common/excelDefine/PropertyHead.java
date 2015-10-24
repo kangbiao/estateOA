@@ -11,5 +11,6 @@ public class PropertyHead
     public static String STATUS="状态";
     public static String ADDRESS="地址";
     public static String TYPE="物业类型";
+    public static String BUILDINGCODE="楼栋编号";
 
 }

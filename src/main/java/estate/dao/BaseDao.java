@@ -17,7 +17,7 @@ public interface BaseDao
      * @param object
      * @return
      */
-    Integer save(Object object);
+    void save(Object object);
 
     /**
      * 根据ID获取某个对象

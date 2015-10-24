@@ -149,7 +149,7 @@ public class UploadController
         List<Map<String,String>> result;
         try
         {
-            result=excelParse.parseExcel("lalala");
+            result=excelParse.parseExcel("/home/kangbiao/桌面/test.xlsx");
         }
         catch (Exception e)
         {
@@ -163,10 +163,28 @@ public class UploadController
         switch (type)
         {
             case "property":
-                excelImportReport=excelImportService.importProperty(result);
+                try
+                {
+                    excelImportReport = excelImportService.importProperty(result);
+                }
+                catch (Exception e)
+                {
+                    basicJson.getErrorMsg().setDescription("未知异常,请修改数据后重新导入");
+                    basicJson.getErrorMsg().setCode(e.getMessage());
+                    return basicJson;
+                }
                 break;
             case "bind":
-                excelImportReport=excelImportService.importBind(result);
+                try
+                {
+                    excelImportReport = excelImportService.importBind(result);
+                }
+                catch (Exception e)
+                {
+                    basicJson.getErrorMsg().setDescription("未知异常,请修改数据后重新导入");
+                    basicJson.getErrorMsg().setCode(e.getMessage());
+                    return basicJson;
+                }
                 break;
             default:
                 basicJson.getErrorMsg().setDescription("请求路径错误");

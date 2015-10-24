@@ -18,9 +18,9 @@ public class BaseServiceImpl implements BaseService
     private BaseDao baseDao;
 
     @Override
-    public Integer save(Object object)
+    public void save(Object object)
     {
-        return baseDao.save(object);
+        baseDao.save(object);
     }
 
     @Override

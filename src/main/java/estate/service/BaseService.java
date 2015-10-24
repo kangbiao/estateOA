@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public interface BaseService
 {
-    Integer save(Object object);
+    void save(Object object);
 
     Object get(Integer id,Object object);
 

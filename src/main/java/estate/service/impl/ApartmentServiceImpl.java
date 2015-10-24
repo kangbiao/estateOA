@@ -2,8 +2,6 @@ package estate.service.impl;
 
 import estate.dao.ApartmentDao;
 import estate.dao.BaseDao;
-import estate.entity.database.ApartmentEntity;
-import estate.entity.database.PropertyEntity;
 import estate.entity.json.TableData;
 import estate.entity.json.TableFilter;
 import estate.service.ApartmentService;
@@ -28,13 +26,5 @@ public class ApartmentServiceImpl implements ApartmentService
         TableData tableData=apartmentDao.getList(tableFilter);
         tableData.setRecordsTotal(baseDao.count("ApartmentEntity"));
         return tableData;
-    }
-
-    @Override
-    public Integer saveApartment(PropertyEntity propertyEntity, ApartmentEntity apartmentEntity)
-    {
-        Integer propertyID= baseDao.save(propertyEntity);
-        apartmentEntity.setPropertyId(propertyID);
-        return baseDao.save(apartmentEntity);
     }
 }

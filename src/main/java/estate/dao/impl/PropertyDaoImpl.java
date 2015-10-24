@@ -31,22 +31,6 @@ public class PropertyDaoImpl implements PropertyDao
         return sessionFactory.getCurrentSession();
     }
 
-
-    public Integer save(PropertyEntity object)
-    {
-        return null;
-    }
-
-    public PropertyEntity get(Integer id)
-    {
-        return (PropertyEntity)getSession().get(PropertyEntity.class, id);
-    }
-
-    public void delete(PropertyEntity object)
-    {
-
-    }
-
     @Override
     public TableData getList(TableFilter tableFilter)
     {
@@ -178,6 +162,18 @@ public class PropertyDaoImpl implements PropertyDao
         if (list.size()>0)
             return (ArrayList<PropertyEntity>) list;
         return null;
+    }
+
+    @Override
+    public PropertyEntity getByCode(String code)
+    {
+        Session session=getSession();
+        String  hql="from PropertyEntity t where t.code=:code";
+        List list=session.createQuery(hql).setString("code",code).list();
+        if (list.size()>0)
+            return (PropertyEntity) list.get(0);
+        else
+            return null;
     }
 
 

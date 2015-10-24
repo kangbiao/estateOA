@@ -12,21 +12,6 @@ import java.util.ArrayList;
  */
 public interface PropertyDao
 {
-
-    /**
-     * 根据ID获取某个对象
-     * @param id
-     * @return
-     */
-    PropertyEntity get(Integer id);
-
-    /**
-     * 根据对象信息删除某个对象
-     * @param object
-     */
-    void delete(PropertyEntity object);
-
-
     TableData getList(TableFilter tableFilter);
 
     /**
@@ -50,5 +35,12 @@ public interface PropertyDao
      * @return
      */
     ArrayList<PropertyEntity> getAllProperty();
+
+    /**
+     * 通过编号获取物业信息
+     * @param code
+     * @return
+     */
+    PropertyEntity getByCode(String code);
 
 }

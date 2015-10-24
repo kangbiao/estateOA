@@ -141,31 +141,6 @@ public class UserServiceImpl implements UserService
         return userDao.getAppUserList(tableFilter);
     }
 
-    public Owner getOnerInfoByID(Integer id)
-    {
-        OwnerEntity ownerEntity=new OwnerEntity();
-        Owner owner=new Owner();
-        ownerEntity=(OwnerEntity)baseDao.get(id,ownerEntity);
-
-        owner.setName(ownerEntity.getName());
-        owner.setPhone(ownerEntity.getPhone());
-        owner.setIdentityCode(ownerEntity.getIdentityCode());
-        owner.setPropertyIdList(ownerEntity.getPropertyIdList());
-        owner.setVehicleIdIst(ownerEntity.getVehicleIdIst());
-        owner.setUrgentName(ownerEntity.getUrgentName());
-        owner.setUrgentPhone(ownerEntity.getUrgentPhone());
-
-        owner.setSex(Convert.num2sex(ownerEntity.getSex()));
-        owner.setIdentityType(Convert.num2idtype(ownerEntity.getIdentityType()));
-        owner.setAuthenticationTime(Convert.num2time(ownerEntity.getAuthenticationTime()));
-        owner.setBirthday(Convert.num2time(ownerEntity.getBirthday()));
-
-        owner.setFamilies(familyService.getFamiliesByOwnerID(ownerEntity.getId()));
-        owner.setPropertyEntities(propertyService.getPropertiesByString(ownerEntity.getPropertyIdList()));
-
-        return owner;
-    }
-
     @Override
     public void changeAppUserStatus(AppUserEntity appUserEntity)
     {
