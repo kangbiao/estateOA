@@ -26,4 +26,11 @@ public interface ExcelImportService
      */
     ExcelImportReport importBind(List<Map<String,String>> result);
 
+    /**
+     * 导入密钥
+     * @param result
+     * @return
+     */
+    ExcelImportReport importSecret(List<Map<String,String>> result);
+
 }

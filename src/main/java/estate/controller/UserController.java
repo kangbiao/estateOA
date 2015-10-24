@@ -1,5 +1,6 @@
 package estate.controller;
 
+import estate.common.config.AppUserStatus;
 import estate.common.config.UserType;
 import estate.common.util.Convert;
 import estate.common.util.LogUtil;
@@ -318,13 +319,10 @@ public class UserController
         switch (statusStr)
         {
             case "enable":
-                status = 1;
+                status = AppUserStatus.ENABLE;
                 break;
             case "disable":
-                status = -1;
-                break;
-            case "agree":
-                status = 1;
+                status = AppUserStatus.DISABLE;
                 break;
             default:
                 basicJson.getErrorMsg().setDescription("参数错误!");
@@ -338,17 +336,16 @@ public class UserController
         }
         else
         {
-            AppUserEntity appUserEntity=new AppUserEntity();
-            appUserEntity.setPhone(phone);
-//            appUserEntity.setStatus(status);
             try
             {
-                userService.changeAppUserStatus(appUserEntity);
+                AppUserEntity appUserEntity= (AppUserEntity) baseService.get(phone, AppUserEntity.class);
+                appUserEntity.setStatus(status);
+                baseService.save(appUserEntity);
             }
             catch (Exception e)
             {
-                basicJson.getErrorMsg().setCode("10540");
-                basicJson.getErrorMsg().setDescription("错误");
+                basicJson.getErrorMsg().setCode(e.getMessage());
+                basicJson.getErrorMsg().setDescription("操作失败");
                 return basicJson;
             }
         }

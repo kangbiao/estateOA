@@ -146,7 +146,7 @@
                                     <label class="col-sm-2 control-label">选择角色</label>
                                     <div class="col-sm-8">
                                         <select class="form-control" name="ownerType">
-                                            <option value="1">拥有者</option>
+                                            <option value="1">业主</option>
                                             <option value="2">使用者</option>
                                             <option value="3">租用用户</option>
                                             <option value="4">临时用户</option>
@@ -200,7 +200,7 @@
                         for(var i in result.jsonString)
                         {
                             if(result.jsonString[i].ownerType==1)
-                                result.jsonString[i].ownerType="拥有者";
+                                result.jsonString[i].ownerType="业主";
                             else if(result.jsonString[i].ownerType==2)
                                 result.jsonString[i].ownerType="使用者";
                             else if(result.jsonString[i].ownerType==3)

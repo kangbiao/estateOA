@@ -109,7 +109,7 @@ public class ExcelParse
      */
     public List<Map<String,String>> parseExcel(InputStream inputStream) throws Exception
     {
-        Workbook wb = WorkbookFactory.create(new File("/home/kangbiao/桌面/property.xlsx"));
+        Workbook wb = WorkbookFactory.create(inputStream);
         errorRowIndex=new ArrayList<>();
         List<Map<String,String>> result= new ArrayList<>();
 

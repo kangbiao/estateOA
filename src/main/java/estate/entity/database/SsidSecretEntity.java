@@ -2,11 +2,13 @@ package estate.entity.database;
 
 /**
  * Created by kangbiao on 15-10-16.
+ *
  */
 public class SsidSecretEntity
 {
     private Integer id;
     private Integer controlId;
+    private Byte controlType;
     private String symbol;
     private Integer villageId;
     private String secret;
@@ -82,5 +84,15 @@ public class SsidSecretEntity
     public void setVillageId(Integer villageId)
     {
         this.villageId = villageId;
+    }
+
+    public Byte getControlType()
+    {
+        return controlType;
+    }
+
+    public void setControlType(Byte controlType)
+    {
+        this.controlType = controlType;
     }
 }

@@ -5,12 +5,14 @@ import estate.common.Config;
 import estate.common.config.PropertyStatus;
 import estate.common.config.PropertyType;
 import estate.common.excelDefine.PropertyHead;
+import estate.common.excelDefine.SecretHead;
 import estate.dao.BaseDao;
 import estate.dao.BuildingDao;
 import estate.dao.PropertyDao;
 import estate.dao.PropertyOwnerInfoDao;
 import estate.entity.database.BuildingEntity;
 import estate.entity.database.PropertyEntity;
+import estate.entity.database.SsidSecretEntity;
 import estate.entity.json.ExcelImportReport;
 import estate.service.ExcelImportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,6 +181,49 @@ public class ExcelImportServiceImpl implements ExcelImportService
     {
         ExcelImportReport excelImportReport=new ExcelImportReport();
 
+        return excelImportReport;
+    }
+
+    @Override
+    public ExcelImportReport importSecret(List<Map<String, String>> result)
+    {
+        ExcelImportReport excelImportReport=new ExcelImportReport();
+        Integer errorNum=0;
+        Integer succNum=0;
+        boolean check;
+        Gson gson=new Gson();
+        List<String> errorDescription=new ArrayList<>();
+        for (Map<String, String> map : result)
+        {
+            check=true;
+            SsidSecretEntity ssidSecretEntity=new SsidSecretEntity();
+
+            //设置锁的编码
+            if (check)
+            {
+                String code=map.get(SecretHead.CODE);
+                if (code.equals(""))
+                {
+                    errorNum+=1;
+                    errorDescription.add("锁的编号不能为空: "+gson.toJson(map));
+                    check=false;
+                }
+                else
+                    ssidSecretEntity.setSymbol(code);
+            }
+
+            //设置锁的控制对象类型
+            if (check)
+            {
+                Byte controlType= Byte.valueOf(map.get(SecretHead.CONTROLTYPE));
+                ssidSecretEntity.setControlType(controlType);
+            }
+
+            //设置锁的控制对象id
+
+            //设置
+
+        }
         return excelImportReport;
     }
 }

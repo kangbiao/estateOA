@@ -21,6 +21,7 @@ function initVillageSelect()
 					options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
 				}
 				$("#villageList").append(options);
+				$(".villageList").append(options);
 			}
 			else
 			{

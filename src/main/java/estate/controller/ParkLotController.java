@@ -2,7 +2,6 @@ package estate.controller;
 
 import estate.common.Config;
 import estate.common.config.ParkLot;
-import estate.common.ParkLotOwnerRole;
 import estate.common.util.LogUtil;
 import estate.entity.database.ParkingLotEntity;
 import estate.entity.database.ParklotOwnerInfoEntity;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by kangbiao on 15-10-14.
@@ -103,20 +100,20 @@ public class ParkLotController
     public BasicJson addOwner(ParklotOwnerInfoEntity parklotOwnerInfoEntity,HttpServletRequest request)
     {
         BasicJson basicJson=new BasicJson();
-        ArrayList<ParklotOwnerInfoEntity> parklotOwnerInfoEntities=parkLotService.getByParkLotID
-                (parklotOwnerInfoEntity.getPlId());
-        if (parklotOwnerInfoEntities!=null)
-        {
-            for (ParklotOwnerInfoEntity parklotOwnerInfoEntity1:parklotOwnerInfoEntities)
-            {
-                if (Objects.equals(parklotOwnerInfoEntity1.getOwnerType(), ParkLotOwnerRole.OWNER)
-                        &&parklotOwnerInfoEntity1.getPlId().equals(parklotOwnerInfoEntity.getPlId()))
-                {
-                    basicJson.getErrorMsg().setDescription("该车位已添加拥有者");
-                    return basicJson;
-                }
-            }
-        }
+//        ArrayList<ParklotOwnerInfoEntity> parklotOwnerInfoEntities=parkLotService.getByParkLotID
+//                (parklotOwnerInfoEntity.getPlId());
+//        if (parklotOwnerInfoEntities!=null)
+//        {
+//            for (ParklotOwnerInfoEntity parklotOwnerInfoEntity1:parklotOwnerInfoEntities)
+//            {
+//                if (Objects.equals(parklotOwnerInfoEntity1.getOwnerType(), ParkLotOwnerRole.OWNER)
+//                        &&parklotOwnerInfoEntity1.getPlId().equals(parklotOwnerInfoEntity.getPlId()))
+//                {
+//                    basicJson.getErrorMsg().setDescription("该车位已添加业主");
+//                    return basicJson;
+//                }
+//            }
+//        }
         try
         {
             parklotOwnerInfoEntity.setEnterBrakeAllowed(Config.TRUE);
