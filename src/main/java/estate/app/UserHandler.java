@@ -322,6 +322,7 @@ public class UserHandler
         }
 
         request.getSession().setAttribute("findPassword","yes");
+        request.getSession().removeAttribute("verifyCode");
         basicJson.setStatus(true);
         return basicJson;
     }

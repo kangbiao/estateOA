@@ -1,10 +1,16 @@
 package estate.controller;
 
 import estate.common.Config;
+import estate.common.util.ExcelParse;
 import estate.common.util.LogUtil;
+import estate.entity.json.BasicJson;
+import estate.entity.json.ExcelImportReport;
 import estate.entity.json.KindEditor;
+import estate.service.ExcelImportService;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +29,8 @@ import java.util.*;
 @RequestMapping("/web/upload")
 public class UploadController
 {
-
+    @Autowired
+    private ExcelImportService excelImportService;
 
     @RequestMapping(value = "/kindeditor")
     public KindEditor kindEditorUploader(HttpServletRequest request)
@@ -125,6 +132,50 @@ public class UploadController
 
         kindEditor.setMessage("上传异常");
         return kindEditor;
+    }
+
+
+    /**
+     * excel导入
+     * @param type
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/excel/{type}")
+    public BasicJson uploadExcel(@PathVariable String type,HttpServletRequest request)
+    {
+        BasicJson basicJson=new BasicJson(false);
+        ExcelParse excelParse=new ExcelParse();
+        List<Map<String,String>> result;
+        try
+        {
+            result=excelParse.parseExcel("lalala");
+        }
+        catch (Exception e)
+        {
+            basicJson.getErrorMsg().setDescription("解析文件出现错误,请检查文件是否合法");
+            basicJson.getErrorMsg().setCode(e.getMessage());
+            return basicJson;
+        }
+
+        //导入结果报告
+        ExcelImportReport excelImportReport;
+        switch (type)
+        {
+            case "property":
+                excelImportReport=excelImportService.importProperty(result);
+                break;
+            case "bind":
+                excelImportReport=excelImportService.importBind(result);
+                break;
+            default:
+                basicJson.getErrorMsg().setDescription("请求路径错误");
+                return basicJson;
+        }
+
+        basicJson.setStatus(true);
+        basicJson.setJsonString(excelImportReport);
+        return basicJson;
     }
 
 }

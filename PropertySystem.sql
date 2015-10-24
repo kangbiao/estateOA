@@ -66,7 +66,7 @@ CREATE TABLE `app_user` (
 
 LOCK TABLES `app_user` WRITE;
 /*!40000 ALTER TABLE `app_user` DISABLE KEYS */;
-INSERT INTO `app_user` VALUES ('18144240528','123456',NULL,'kangbiao',144444505050,1,NULL);
+INSERT INTO `app_user` VALUES ('13981111434','123456',NULL,'xiaozhang',155515151500,1,NULL),('15114052120','123456',NULL,'xiaoming',155212121000,1,NULL),('18144240528','123456',NULL,'kangbiao',144444505050,1,NULL);
 /*!40000 ALTER TABLE `app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +239,7 @@ CREATE TABLE `complain` (
   PRIMARY KEY (`id`),
   KEY `FK_axsavu84vcq195a7mqw9x2xj4` (`cu_id`),
   CONSTRAINT `FK_axsavu84vcq195a7mqw9x2xj4` FOREIGN KEY (`cu_id`) REFERENCES `console_user` (`cu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,7 @@ CREATE TABLE `complain` (
 
 LOCK TABLES `complain` WRITE;
 /*!40000 ALTER TABLE `complain` DISABLE KEYS */;
-INSERT INTO `complain` VALUES (5,'楼下太吵','dfssad','打算倒萨','18144240528',23663323056,NULL,1,0,1,NULL,NULL),(9,'eeeeee','eeeee','eeeee','18980485651',1444561809750,NULL,0,0,NULL,NULL,NULL),(10,'车辆乱停','楼下车辆乱停乱放，每次回家车都要堵很久','楼下车辆乱停乱放，每次回家车都要堵很久','15114052120',1444829922188,'',NULL,0,NULL,NULL,NULL),(11,'垃圾乱放','楼下垃圾没有人管理，很臭','楼下垃圾没有人管理，很臭','15114052120',1444978958534,NULL,NULL,0,NULL,NULL,NULL),(12,'test','testcontent','testcontent','18224425362',1445328800249,'6',NULL,0,NULL,NULL,NULL),(13,'test','testcontent','testcontent','18224425362',1445328829931,'7,8',NULL,0,NULL,NULL,NULL),(14,'test','testcontent','testcontent','18224425362',1445337145666,'9,10',NULL,0,NULL,NULL,NULL),(15,'test','testcontent','testcontent','18224425362',1445337566310,'',NULL,0,NULL,NULL,NULL),(16,'test','testcontent','testcontent','18224425362',1445337567104,'',NULL,0,NULL,NULL,NULL),(17,'test','testcontent','testcontent','18224425362',1445337571365,'',NULL,0,NULL,NULL,NULL);
+INSERT INTO `complain` VALUES (5,'楼下太吵','dfssad','打算倒萨','18144240528',23663323056,NULL,1,0,1,NULL,NULL),(9,'eeeeee','eeeee','eeeee','18980485651',1444561809750,NULL,0,0,NULL,NULL,NULL),(10,'车辆乱停','楼下车辆乱停乱放，每次回家车都要堵很久','楼下车辆乱停乱放，每次回家车都要堵很久','15114052120',1444829922188,'',NULL,0,NULL,NULL,NULL),(11,'垃圾乱放','楼下垃圾没有人管理，很臭','楼下垃圾没有人管理，很臭','15114052120',1444978958534,NULL,NULL,0,NULL,NULL,NULL),(12,'test','testcontent','testcontent','18224425362',1445328800249,'6',NULL,0,NULL,NULL,NULL),(13,'test','testcontent','testcontent','18224425362',1445328829931,'7,8',NULL,0,NULL,NULL,NULL),(14,'test','testcontent','testcontent','18224425362',1445337145666,'9,10',NULL,0,NULL,NULL,NULL),(15,'test','testcontent','testcontent','18224425362',1445337566310,'',NULL,0,NULL,NULL,NULL),(16,'test','testcontent','testcontent','18224425362',1445337567104,'',NULL,0,NULL,NULL,NULL),(17,'test','testcontent','testcontent','18224425362',1445337571365,'',NULL,0,NULL,NULL,NULL),(18,'测试投诉','测试投诉','测试投诉','18144240528',1445666212672,'26,27',NULL,0,NULL,NULL,NULL),(19,'test','testcontent','testcontent','18144240528',1445666334264,'',NULL,0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `complain` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -457,7 +457,7 @@ CREATE TABLE `notice` (
 
 LOCK TABLES `notice` WRITE;
 /*!40000 ALTER TABLE `notice` DISABLE KEYS */;
-INSERT INTO `notice` VALUES (4,'测试公告','<h1>内容</h1>',1444899774481,NULL,'描述',NULL,1445356800000,1),(6,'周本顺杨栋梁严重违纪被双开','<span class=\"img_descr\"></span> \n<div class=\"img_wrapper\" align=\"center\">\n	<img alt=\"周本顺。资料图\" src=\"http://n.sinaimg.cn/transform/20151016/9T3d-fxivsch3638703.jpg\" /> <span class=\"img_descr\">周本顺。资料图</span> \n</div>\n<p>\n	<strong>河北省委原书记、省人大常委会原主任周本顺严重违纪被开除党籍和公职</strong>\n</p>\n<p>\n	日前，经中共中央批准，中共中央纪委对第十八届中央委员，河北省委原书记、省人大常委会原主任<a href=\"http://news.sina.com.cn/2015-09-01/doc-ifxhkafe6245218.shtml\" target=\"_blank\">周本顺严重违纪问题</a>进行了立案审查。\n</p>\n<p>\n	经查，<span>周本顺</span>严重违反政治纪律和政治规矩，在重大问题上发表违背中央精神的言论，不认真落实党风廉政建设主体责任，\n干扰、妨碍组织审查；严重违反组织纪律，为提拔职务进行非组织活动，违规选拔任用干部，隐瞒不报个人有关事项；严重违反中央八项规定精神，超标准公务接\n待、公款吃喝，频繁出入私人会所，生活奢侈、挥霍浪费，违反中央精简会议文件、改进宣传报道的有关规定；严重违反廉洁纪律，利用职务上的便利在企业经营等\n方面为他人谋取利益并收受财物，收受礼金、礼品，为其子经营活动谋取利益，家风败坏、对配偶子女放任纵容；严重违反工作纪律，私存涉密资料，泄露党和国家\n秘密。其中，利用职务上的便利为他人谋取利益，收受财物问题涉嫌犯罪。\n</p>\n<p>\n	周本顺身为中央委员，理想信念丧失，严重违反党的纪律，且党的十八大后仍不收敛、不收手，性质恶劣、情节特别严重。依据《中国共产党纪律处分条\n例》等有关规定，经中央纪委常委会议研究并报中共中央政治局会议审议，决定给予周本顺开除党籍、开除公职处分；收缴其违纪所得；将其涉嫌犯罪问题、线索及\n所涉款物移送司法机关依法处理。给予其开除党籍的处分，待召开中央委员会全体会议时予以追认。\n</p>\n<p>\n	<strong>国家安全生产监督管理总局原党组书记、局长杨栋梁严重违纪被开除党籍和公职</strong>\n</p>\n<p>\n	日前，经中共中央批准，中共中央纪委对第十八届中央委员，国家安全生产监督管理总局原党组书记、局长<a href=\"http://news.sina.com.cn/c/nd/2015-08-26/doc-ifxhcvry1080625.shtml\" target=\"_blank\">杨栋梁严重违纪问题</a>进行了立案审查。\n</p>',1444977998184,NULL,'河北省委原书记、省人大常委会原主任周本顺严重违纪被开除党籍和公职',NULL,1445443200000,1);
+INSERT INTO `notice` VALUES (4,'测试公告','<h1>内容</h1>',1444899774481,'19','描述',NULL,1545356800000,1),(6,'周本顺杨栋梁严重违纪被双开','<span class=\"img_descr\"></span> \n<div class=\"img_wrapper\" align=\"center\">\n	<img alt=\"周本顺。资料图\" src=\"http://n.sinaimg.cn/transform/20151016/9T3d-fxivsch3638703.jpg\" /> <span class=\"img_descr\">周本顺。资料图</span> \n</div>\n<p>\n	<strong>河北省委原书记、省人大常委会原主任周本顺严重违纪被开除党籍和公职</strong>\n</p>\n<p>\n	日前，经中共中央批准，中共中央纪委对第十八届中央委员，河北省委原书记、省人大常委会原主任<a href=\"http://news.sina.com.cn/2015-09-01/doc-ifxhkafe6245218.shtml\" target=\"_blank\">周本顺严重违纪问题</a>进行了立案审查。\n</p>\n<p>\n	经查，<span>周本顺</span>严重违反政治纪律和政治规矩，在重大问题上发表违背中央精神的言论，不认真落实党风廉政建设主体责任，\n干扰、妨碍组织审查；严重违反组织纪律，为提拔职务进行非组织活动，违规选拔任用干部，隐瞒不报个人有关事项；严重违反中央八项规定精神，超标准公务接\n待、公款吃喝，频繁出入私人会所，生活奢侈、挥霍浪费，违反中央精简会议文件、改进宣传报道的有关规定；严重违反廉洁纪律，利用职务上的便利在企业经营等\n方面为他人谋取利益并收受财物，收受礼金、礼品，为其子经营活动谋取利益，家风败坏、对配偶子女放任纵容；严重违反工作纪律，私存涉密资料，泄露党和国家\n秘密。其中，利用职务上的便利为他人谋取利益，收受财物问题涉嫌犯罪。\n</p>\n<p>\n	周本顺身为中央委员，理想信念丧失，严重违反党的纪律，且党的十八大后仍不收敛、不收手，性质恶劣、情节特别严重。依据《中国共产党纪律处分条\n例》等有关规定，经中央纪委常委会议研究并报中共中央政治局会议审议，决定给予周本顺开除党籍、开除公职处分；收缴其违纪所得；将其涉嫌犯罪问题、线索及\n所涉款物移送司法机关依法处理。给予其开除党籍的处分，待召开中央委员会全体会议时予以追认。\n</p>\n<p>\n	<strong>国家安全生产监督管理总局原党组书记、局长杨栋梁严重违纪被开除党籍和公职</strong>\n</p>\n<p>\n	日前，经中共中央批准，中共中央纪委对第十八届中央委员，国家安全生产监督管理总局原党组书记、局长<a href=\"http://news.sina.com.cn/c/nd/2015-08-26/doc-ifxhcvry1080625.shtml\" target=\"_blank\">杨栋梁严重违纪问题</a>进行了立案审查。\n</p>',1444977998184,'21,22','河北省委原书记、省人大常委会原主任周本顺严重违纪被开除党籍和公职',NULL,1545443200000,1);
 /*!40000 ALTER TABLE `notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -469,11 +469,14 @@ DROP TABLE IF EXISTS `open_door_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `open_door_record` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned DEFAULT NULL,
+  `odr_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `phone` varchar(15) DEFAULT NULL,
   `open_time` bigint(25) DEFAULT NULL,
-  `open_code` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `symbol` varchar(45) DEFAULT NULL,
+  `status` tinyint(2) DEFAULT '1',
+  `description` varchar(100) DEFAULT NULL,
+  `level` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`odr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -516,7 +519,7 @@ CREATE TABLE `owner` (
 
 LOCK TABLES `owner` WRITE;
 /*!40000 ALTER TABLE `owner` DISABLE KEYS */;
-INSERT INTO `owner` VALUES (1,'18144240528','康彪',0,1441641600000,'何科松','18224489342',0,'511321199305205856','','',1541214000),(2,'18224489342','何科松',0,737827200000,'小红','120819186555',0,'510819120196123185',NULL,'1',165874000),(3,'18980485651','江谊',0,NULL,NULL,NULL,1,'511811000000000000',NULL,NULL,1445184000000),(4,'18565656262','test',1,NULL,NULL,NULL,1,'5555',NULL,NULL,1444233600000),(10,'15114052120','小明',0,NULL,NULL,NULL,1,'510704199405281715',NULL,NULL,1445616000000);
+INSERT INTO `owner` VALUES (1,'18144240528','康彪',1,1441641600000,'何科松','18224489342',1,'510704199405281715','','',1445529600000),(3,'18980485651','江谊',0,NULL,NULL,NULL,1,'511811000000000000',NULL,NULL,1445184000000),(10,'15114052120','小明1',0,NULL,NULL,NULL,1,'510704199405281715',NULL,NULL,1445356800000);
 /*!40000 ALTER TABLE `owner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -593,7 +596,7 @@ CREATE TABLE `picture` (
   `name` varchar(100) DEFAULT NULL,
   `upload_time` bigint(25) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -602,7 +605,7 @@ CREATE TABLE `picture` (
 
 LOCK TABLES `picture` WRITE;
 /*!40000 ALTER TABLE `picture` DISABLE KEYS */;
-INSERT INTO `picture` VALUES (15,'20151020185229_238.jpg',1445338349298),(16,'20151020185229_726.jpg',1445338349304),(17,'20151020200424_586.jpg',1445342664309),(18,'20151020200424_142.jpg',1445342664326);
+INSERT INTO `picture` VALUES (15,'20151020185229_238.jpg',1445338349298),(16,'20151020185229_726.jpg',1445338349304),(17,'20151020200424_586.jpg',1445342664309),(18,'20151020200424_142.jpg',1445342664326),(19,'20151023171656_889.jpg',1445591816229),(20,'20151023171656_985.jpg',1445591816234),(21,'20151023191327_823.jpg',1445598807305),(22,'20151023191327_820.jpg',1445598807355),(23,'20151023195951_376.png',1445601591516),(24,'20151023195951_707.jpg',1445601591529),(25,'20151023200206_797.jpg',1445601726073),(26,'20151024135652_286.jpg',1445666212694),(27,'20151024135652_263.png',1445666212723);
 /*!40000 ALTER TABLE `picture` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -624,8 +627,11 @@ CREATE TABLE `property` (
   `building_id` int(10) unsigned NOT NULL,
   `status` tinyint(2) DEFAULT NULL COMMENT '1.自住 ／出租\n2.已入住／未入住\n3.已收房／未收房',
   `open_door_status` tinyint(2) DEFAULT '1',
-  PRIMARY KEY (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+  `modify_time` bigint(25) DEFAULT NULL,
+  PRIMARY KEY (`property_id`),
+  KEY `FK_jhl7ds2u1dndpgntggd4l1m5n` (`building_id`),
+  CONSTRAINT `FK_jhl7ds2u1dndpgntggd4l1m5n` FOREIGN KEY (`building_id`) REFERENCES `building` (`building_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -634,7 +640,7 @@ CREATE TABLE `property` (
 
 LOCK TABLES `property` WRITE;
 /*!40000 ALTER TABLE `property` DISABLE KEYS */;
-INSERT INTO `property` VALUES (28,'A001','半山蓝湾一单元',1,115.55,1,5,1,1,1),(29,'A002','半山蓝湾二单元',1,222.11,1,5,1,1,1);
+INSERT INTO `property` VALUES (28,'A001','半山蓝湾一单元',1,115.55,1,5,1,1,1,1445581460913),(29,'A002','半山蓝湾二单元',1,222.11,1,5,1,1,1,1345504275966),(30,'B001','万科城市花园二单元十号',2,192.22,NULL,7,5,-1,NULL,1245505275966),(31,'B009','园区一二单元10号',1,99.50,NULL,5,1,-1,NULL,1444405275966);
 /*!40000 ALTER TABLE `property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -655,9 +661,8 @@ CREATE TABLE `property_owner_info` (
   PRIMARY KEY (`poi_id`),
   KEY `FK_7oq20rni7t96houjm1d7flnox` (`property_id`),
   KEY `FK_cmeyqayotl7586xjrqrlnvgm1` (`phone`),
-  CONSTRAINT `FK_cmeyqayotl7586xjrqrlnvgm1` FOREIGN KEY (`phone`) REFERENCES `app_user` (`phone`),
   CONSTRAINT `FK_7oq20rni7t96houjm1d7flnox` FOREIGN KEY (`property_id`) REFERENCES `property` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -666,7 +671,7 @@ CREATE TABLE `property_owner_info` (
 
 LOCK TABLES `property_owner_info` WRITE;
 /*!40000 ALTER TABLE `property_owner_info` DISABLE KEYS */;
-INSERT INTO `property_owner_info` VALUES (1,28,'18144240528',1,3,NULL),(2,29,'18144240528',1,2,NULL);
+INSERT INTO `property_owner_info` VALUES (1,28,'18144240528',1,3,NULL),(2,29,'18144240528',1,3,NULL),(5,28,'13981111434',0,2,NULL),(6,28,'15114052120',0,1,NULL),(7,31,'18144240528',1,3,NULL),(11,30,'15114052120',1,3,NULL),(12,29,'15114052120',0,1,NULL);
 /*!40000 ALTER TABLE `property_owner_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -683,18 +688,22 @@ CREATE TABLE `repair` (
   `content` text,
   `description` varchar(100) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
-  `time` bigint(25) DEFAULT NULL,
+  `repair_man_id` int(10) unsigned DEFAULT NULL,
+  `submit_time` bigint(25) DEFAULT NULL,
+  `process_time` bigint(25) DEFAULT NULL,
+  `finish_time` bigint(25) DEFAULT NULL,
   `image_id_list` varchar(50) DEFAULT NULL,
   `status` tinyint(2) DEFAULT '0' COMMENT '1.未提交2.已提交未处理3.处理中4处理完',
   `remark` varchar(10) DEFAULT NULL,
   `remark_text` varchar(100) DEFAULT NULL,
   `cu_id` int(10) unsigned DEFAULT NULL,
   `result` varchar(200) DEFAULT NULL COMMENT '维修人员填写的处理说明',
-  `repirman_phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_oc5vf2v77386b82n98ejj4qcd` (`cu_id`),
+  KEY `FK_cwawwq5yle93o0u418f6r9t2l` (`repair_man_id`),
+  CONSTRAINT `FK_cwawwq5yle93o0u418f6r9t2l` FOREIGN KEY (`repair_man_id`) REFERENCES `repair_man` (`rp_id`),
   CONSTRAINT `FK_oc5vf2v77386b82n98ejj4qcd` FOREIGN KEY (`cu_id`) REFERENCES `console_user` (`cu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -703,7 +712,7 @@ CREATE TABLE `repair` (
 
 LOCK TABLES `repair` WRITE;
 /*!40000 ALTER TABLE `repair` DISABLE KEYS */;
-INSERT INTO `repair` VALUES (13,'test','testcontent','testcontent','18224425362',1445342664296,'17,18',1,NULL,NULL,1,NULL,'15114052120');
+INSERT INTO `repair` VALUES (17,'test','testcontent','testcontent','18144240528',1,1445601726069,1445601733972,1445601752302,'25',3,'22','很好',1,NULL);
 /*!40000 ALTER TABLE `repair` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -719,7 +728,7 @@ CREATE TABLE `repair_man` (
   `phone` varchar(15) NOT NULL COMMENT '手机号码',
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`rp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -728,6 +737,7 @@ CREATE TABLE `repair_man` (
 
 LOCK TABLES `repair_man` WRITE;
 /*!40000 ALTER TABLE `repair_man` DISABLE KEYS */;
+INSERT INTO `repair_man` VALUES (1,'15114052120','小明'),(2,'18144240528','小张');
 /*!40000 ALTER TABLE `repair_man` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -887,4 +897,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-21 22:47:34
+-- Dump completed on 2015-10-24 16:05:17

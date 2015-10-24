@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -60,17 +61,24 @@ public class ComplainHandler
                 return basicJson;
             }
         }
-
         try
         {
-            basicJson.setJsonString(complainService.getComplainByPhone(phone,status));
+            ArrayList<ComplainEntity> complainEntities=complainService.getComplainByPhone(phone, status);
+            if (complainEntities!=null)
+            {
+                for (ComplainEntity complainEntity:complainEntities)
+                {
+                    complainEntity.setConsoleUserEntity(null);
+                    complainEntity.setImageIdList(pictureService.getPathsByIDs(complainEntity.getImageIdList(),request));
+                }
+            }
+            basicJson.setJsonString(complainEntities);
         }
         catch (Exception e)
         {
             basicJson.getErrorMsg().setDescription("获取投诉失败");
             return basicJson;
         }
-
         basicJson.setStatus(true);
         return basicJson;
     }
@@ -95,7 +103,6 @@ public class ComplainHandler
             complainEntity.setDescription(complainEntity.getContent().substring(0,25));
         else
             complainEntity.setDescription(complainEntity.getContent());
-
         try
         {
             complainEntity.setImageIdList(pictureService.saveAndReturnID(map));
@@ -110,7 +117,6 @@ public class ComplainHandler
             basicJson.getErrorMsg().setDescription("图片上传失败,请重试");
             return basicJson;
         }
-
         try
         {
             baseService.save(complainEntity);
@@ -120,7 +126,6 @@ public class ComplainHandler
             basicJson.getErrorMsg().setDescription("投诉信息保存失败");
             return basicJson;
         }
-
         basicJson.setStatus(true);
         return basicJson;
     }

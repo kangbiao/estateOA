@@ -172,6 +172,20 @@
             <version>4.0.2</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- 导入解析excel依赖 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.12</version>
+        </dependency>
+
+
     </dependencies>
 
     <!-- 避免springsecurity和4.1.7的classpath而导入的依赖 -->

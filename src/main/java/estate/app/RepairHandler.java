@@ -1,7 +1,6 @@
 package estate.app;
 
 import estate.common.config.RepairStatus;
-import estate.entity.database.PictureEntity;
 import estate.entity.database.RepairEntity;
 import estate.entity.json.BasicJson;
 import estate.exception.PictureUploadException;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -46,7 +44,6 @@ public class RepairHandler
     @RequestMapping(value = "/getMyRepair")
     public BasicJson getMyRepair(HttpServletRequest request)
     {
-        String urlBase=request.getContextPath()+"/file/picture/";
         BasicJson basicJson=new BasicJson(false);
         HttpSession httpSession=request.getSession();
         String phone= (String) httpSession.getAttribute("phone");
@@ -73,23 +70,7 @@ public class RepairHandler
             {
                 for (RepairEntity repairEntity : repairEntities)
                 {
-                    String imageIdList = repairEntity.getImageIdList();
-                    if (!imageIdList.equals(""))
-                    {
-                        StringBuilder imagePathString = new StringBuilder();
-                        int temp = 0;
-                        for (String imageIdString : Arrays.asList(imageIdList.split(",")))
-                        {
-                            PictureEntity pictureEntity = (PictureEntity) baseService.
-                                    get(Integer.valueOf(imageIdString), PictureEntity.class);
-                            if (temp == 0)
-                                imagePathString.append(urlBase).append(pictureEntity.getName());
-                            else
-                                imagePathString.append(",").append(urlBase).append(pictureEntity.getName());
-                            temp++;
-                        }
-                        repairEntity.setImageIdList(imagePathString.toString());
-                    }
+                    repairEntity.setImageIdList(pictureService.getPathsByIDs(repairEntity.getImageIdList(),request));
                     repairEntity.setConsoleUserEntity(null);
                 }
             }
