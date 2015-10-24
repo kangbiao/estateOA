@@ -188,6 +188,7 @@ public class UploadController
                 try
                 {
                     excelImportReport = excelImportService.importProperty(result);
+//                    LogUtil.E(result.size());
                 }
                 catch (Exception e)
                 {

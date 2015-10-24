@@ -33,7 +33,6 @@ public class ExcelParse
         {
             //获取一张工作表
             Sheet sheet=wb.getSheetAt(sheetIndex);
-            LogUtil.E(sheet.getLastRowNum());
             for (int rowIndex=1; rowIndex<=sheet.getLastRowNum();rowIndex++)
             {
                 //获取一行数据
@@ -76,7 +75,6 @@ public class ExcelParse
         {
             //获取一张工作表
             Sheet sheet=wb.getSheetAt(sheetIndex);
-            LogUtil.E(sheet.getLastRowNum());
             for (int rowIndex=1; rowIndex<=sheet.getLastRowNum();rowIndex++)
             {
                 //获取一行数据
@@ -111,7 +109,7 @@ public class ExcelParse
      */
     public List<Map<String,String>> parseExcel(InputStream inputStream) throws Exception
     {
-        Workbook wb = WorkbookFactory.create(inputStream);
+        Workbook wb = WorkbookFactory.create(new File("/home/kangbiao/桌面/property.xlsx"));
         errorRowIndex=new ArrayList<>();
         List<Map<String,String>> result= new ArrayList<>();
 
@@ -119,7 +117,6 @@ public class ExcelParse
         {
             //获取一张工作表
             Sheet sheet=wb.getSheetAt(sheetIndex);
-            LogUtil.E(sheet.getLastRowNum());
             for (int rowIndex=1; rowIndex<=sheet.getLastRowNum();rowIndex++)
             {
                 //获取一行数据
@@ -130,10 +127,16 @@ public class ExcelParse
                     for (int cellIndex = 0; cellIndex < row.getLastCellNum(); cellIndex++)
                     {
                         //获取一格数据
-                        row.getCell(cellIndex).setCellType(Cell.CELL_TYPE_STRING);
-                        rowData.put(sheet.getRow(0).getCell(cellIndex).getStringCellValue(),
-                                row.getCell(cellIndex).getStringCellValue());
-
+                        if (row.getCell(cellIndex)==null)
+                        {
+                            rowData.put(sheet.getRow(0).getCell(cellIndex).getStringCellValue(), "");
+                        }
+                        else
+                        {
+                            row.getCell(cellIndex).setCellType(Cell.CELL_TYPE_STRING);
+                            rowData.put(sheet.getRow(0).getCell(cellIndex).getStringCellValue(), row.getCell
+                                    (cellIndex).getStringCellValue());
+                        }
                     }
                     result.add(rowData);
                 }

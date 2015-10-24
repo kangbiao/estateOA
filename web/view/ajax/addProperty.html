@@ -174,6 +174,7 @@
 
     $("#submitBtn").click(function(){
         var formData = new FormData($("#uploadForm")[0]);
+        $(this).attr("disabled","disabled");
         $("#importInfo #countArea").html("");
         $("#importInfo #errorArea").html('<button class="btn btn-danger btn-app btn-circle" type="button">' +
                 '<i class="fa fa-spinner fa-spin"></i></button>');
@@ -207,10 +208,12 @@
                     alert(result.errorMsg.description);
                     $("#importInfo #errorArea").html("");
                 }
+                $("#submitBtn").removeAttr("disabled");
                 console.log(result);
             },
             error: function () {
                 alert("服务器连接失败,请重试!");
+                $("#submitBtn").removeAttr("disabled");
                 $("#importInfo #errorArea").html("");
             }
         });
