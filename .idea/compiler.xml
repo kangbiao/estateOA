@@ -25,7 +25,7 @@
         <module name="estateOA" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel>
       <module name="estateOA" target="1.8" />
     </bytecodeTargetLevel>
   </component>

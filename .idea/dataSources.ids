@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - PropertySystem@localhost" uuid="0fc5e3eb-785a-4e21-bae3-fbda9a11ca58">
+  <data-source name="MySQL - PropertySystem@localhost" uuid="e32d16b3-4f74-41ad-9345-39da34f5012f">
     <database-info product="MySQL" version="5.5.44-0ubuntu0.14.10.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -24,7 +24,6 @@
       <column name="status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA==" remarks="LTHkuLrliKDpmaQsMeS4uuato+W4uCww5Li656aB55So"/>
       <column name="last_login" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PRIMARY" columns="phone"/>
-      <exported-key name="FK_cmeyqayotl7586xjrqrlnvgm1" table="property_owner_info" schema="" catalog="PropertySystem" columns="phone"/>
     </table>
     <table name="authenticated_record" schema="" catalog="PropertySystem" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -78,6 +77,7 @@
       <column name="building_code" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <column name="building_name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="building_id"/>
+      <exported-key name="FK_jhl7ds2u1dndpgntggd4l1m5n" table="property" schema="" catalog="PropertySystem" columns="building_id"/>
     </table>
     <table name="complain" schema="" catalog="PropertySystem" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -245,7 +245,9 @@
       <column name="open_door_status" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MQ=="/>
       <column name="modify_time" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PRIMARY" columns="property_id"/>
+      <foreign-key name="FK_jhl7ds2u1dndpgntggd4l1m5n" columns="building_id" ref-table="building" ref-schema="" ref-catalog="PropertySystem" ref-columns="building_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <exported-key name="FK_7oq20rni7t96houjm1d7flnox" table="property_owner_info" schema="" catalog="PropertySystem" columns="property_id"/>
+      <index name="FK_jhl7ds2u1dndpgntggd4l1m5n" unique="false" columns="building_id"/>
     </table>
     <table name="property_owner_info" schema="" catalog="PropertySystem" type="TABLE">
       <column name="poi_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -255,7 +257,6 @@
       <column name="user_role" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="building_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="poi_id"/>
-      <foreign-key name="FK_cmeyqayotl7586xjrqrlnvgm1" columns="phone" ref-table="app_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="phone" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_7oq20rni7t96houjm1d7flnox" columns="property_id" ref-table="property" ref-schema="" ref-catalog="PropertySystem" ref-columns="property_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="FK_7oq20rni7t96houjm1d7flnox" unique="false" columns="property_id"/>
       <index name="FK_cmeyqayotl7586xjrqrlnvgm1" unique="false" columns="phone"/>
@@ -277,7 +278,9 @@
       <column name="cu_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="result" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12" remarks="57u05L+u5Lq65ZGY5aGr5YaZ55qE5aSE55CG6K+05piO"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_cwawwq5yle93o0u418f6r9t2l" columns="repair_man_id" ref-table="repair_man" ref-schema="" ref-catalog="PropertySystem" ref-columns="rp_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_oc5vf2v77386b82n98ejj4qcd" columns="cu_id" ref-table="console_user" ref-schema="" ref-catalog="PropertySystem" ref-columns="cu_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_cwawwq5yle93o0u418f6r9t2l" unique="false" columns="repair_man_id"/>
       <index name="FK_oc5vf2v77386b82n98ejj4qcd" unique="false" columns="cu_id"/>
     </table>
     <table name="repair_man" schema="" catalog="PropertySystem" type="TABLE">
@@ -285,6 +288,7 @@
       <column name="phone" sqlType="VARCHAR" precision="15" scale="0" nullable="false" jdbcType="12" remarks="5omL5py65Y+356CB"/>
       <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="rp_id"/>
+      <exported-key name="FK_cwawwq5yle93o0u418f6r9t2l" table="repair" schema="" catalog="PropertySystem" columns="repair_man_id"/>
     </table>
     <table name="rule" schema="" catalog="PropertySystem" type="TABLE">
       <column name="rule_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
