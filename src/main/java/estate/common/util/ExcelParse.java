@@ -124,7 +124,7 @@ public class ExcelParse
                 {
                     Row row=sheet.getRow(rowIndex);
                     Map<String, String> rowData = new HashMap<>();
-                    for (int cellIndex = 0; cellIndex < row.getLastCellNum(); cellIndex++)
+                    for (int cellIndex = 0; cellIndex < sheet.getRow(0).getLastCellNum(); cellIndex++)
                     {
                         //获取一格数据
                         if (row.getCell(cellIndex)==null)

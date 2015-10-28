@@ -2,26 +2,21 @@ package estate.service.impl;
 
 import com.google.gson.Gson;
 import estate.common.Config;
-import estate.common.config.PropertyStatus;
-import estate.common.config.PropertyType;
+import estate.common.config.*;
+import estate.common.excelDefine.BindHead;
 import estate.common.excelDefine.PropertyHead;
 import estate.common.excelDefine.SecretHead;
-import estate.dao.BaseDao;
-import estate.dao.BuildingDao;
-import estate.dao.PropertyDao;
-import estate.dao.PropertyOwnerInfoDao;
-import estate.entity.database.BuildingEntity;
-import estate.entity.database.PropertyEntity;
-import estate.entity.database.SsidSecretEntity;
+import estate.common.util.Convert;
+import estate.common.util.Validator;
+import estate.dao.*;
+import estate.entity.database.*;
 import estate.entity.json.ExcelImportReport;
 import estate.service.ExcelImportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by kangbiao on 15-10-24.
@@ -39,6 +34,9 @@ public class ExcelImportServiceImpl implements ExcelImportService
     private BaseDao baseDao;
     @Autowired
     private BuildingDao buildingDao;
+    @Autowired
+    private UserDao userDao;
+
 
     @Override
     public ExcelImportReport importProperty(List<Map<String, String>> result)
@@ -68,7 +66,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                         break;
                     default:
                         errorNum += 1;
-                        errorDescription.add("物业状态不合法: " + gson.toJson(map));
+                        errorDescription.add("物业状态不合法: <br/>" + gson.toJson(map));
                         check = false;
                         break;
                 }
@@ -81,7 +79,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                 if (propertyEntity1!=null)
                 {
                     errorNum+=1;
-                    errorDescription.add("该物业编号已存在: "+gson.toJson(map));
+                    errorDescription.add("该物业编号已存在: <br/>"+gson.toJson(map));
                     check=false;
                 }
                 else
@@ -99,7 +97,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                 else
                 {
                     errorNum+=1;
-                    errorDescription.add("地址信息不能为空: "+gson.toJson(map));
+                    errorDescription.add("地址信息不能为空: <br/>"+gson.toJson(map));
                     check=false;
                 }
             }
@@ -116,7 +114,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                 catch (Exception e)
                 {
                     errorNum+=1;
-                    errorDescription.add("房屋面积信息不合法: "+gson.toJson(map));
+                    errorDescription.add("房屋面积信息不合法: <br/>"+gson.toJson(map));
                     check=false;
                 }
             }
@@ -128,7 +126,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                 if (buildingEntity == null)
                 {
                     errorNum += 1;
-                    errorDescription.add("该楼栋编号不存在: " + gson.toJson(map));
+                    errorDescription.add("该楼栋编号不存在: <br/>" + gson.toJson(map));
                     check = false;
                 }
                 else
@@ -148,7 +146,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                 else
                 {
                     errorNum += 1;
-                    errorDescription.add("物业类型错误: " + gson.toJson(map));
+                    errorDescription.add("物业类型错误: <br/>" + gson.toJson(map));
                     check = false;
                 }
             }
@@ -166,7 +164,7 @@ public class ExcelImportServiceImpl implements ExcelImportService
                 catch (Exception e)
                 {
                     errorNum+=1;
-                    errorDescription.add("插入数据库失败: "+gson.toJson(map));
+                    errorDescription.add("插入数据库失败: <br/>"+gson.toJson(map));
                 }
             }
         }
@@ -180,7 +178,189 @@ public class ExcelImportServiceImpl implements ExcelImportService
     public ExcelImportReport importBind(List<Map<String, String>> result)
     {
         ExcelImportReport excelImportReport=new ExcelImportReport();
+        Integer errorNum=0;
+        Integer succNum=0;
+        boolean check;
+        Gson gson=new Gson();
+        List<String> errorDescription=new ArrayList<>();
+        for (Map<String,String> map:result)
+        {
 
+            check=true;
+            OwnerEntity ownerEntity=new OwnerEntity();
+
+            //基本的数据检验
+            if (Validator.isMobile(map.get(BindHead.PHONE)))
+            {
+                ownerEntity.setPhone(map.get(BindHead.PHONE));
+            }
+            else
+            {
+                errorNum += 1;
+                errorDescription.add("手机号码不合法: <br/>" + gson.toJson(map));
+                check = false;
+            }
+            ownerEntity.setName(map.get(BindHead.NAME));
+            if (check)
+            {
+                if (map.get(BindHead.SEX).equals("男"))
+                    ownerEntity.setSex(Sex.MAN);
+                else if (map.get(BindHead.SEX).equals("女"))
+                    ownerEntity.setSex(Sex.WOMAN);
+                else
+                {
+                    errorNum += 1;
+                    errorDescription.add("性别不合法: <br/>" + gson.toJson(map));
+                    check = false;
+                }
+            }
+            if (check)
+            {
+                Long birthday=Convert.time2num(map.get(BindHead.BIRTHDAY));
+                ownerEntity.setBirthday(birthday);
+                if (birthday==null)
+                {
+                    errorNum += 1;
+                    errorDescription.add("出生日期不合法: <br/>" + gson.toJson(map));
+                    check = false;
+                }
+            }
+            ownerEntity.setUrgentName(map.get(BindHead.URGENTNAME));
+            if (check)
+            {
+                if (!map.get(BindHead.URGENTPHONE).equals(""))
+                {
+                    if (Validator.isMobile(map.get(BindHead.URGENTPHONE)))
+                    {
+                        ownerEntity.setUrgentPhone(map.get(BindHead.URGENTPHONE));
+                    }
+                    else
+                    {
+                        errorNum += 1;
+                        errorDescription.add("紧急联系人手机号码不合法: <br/>" + gson.toJson(map));
+                        check = false;
+                    }
+                }
+            }
+            if (check)
+            {
+                String idTypeString=map.get(BindHead.IDTYPE);
+                switch (idTypeString)
+                {
+                    case "身份证":
+                        ownerEntity.setIdentityType(CardType.IDCARD);
+                        break;
+                    case "军官证":
+                        ownerEntity.setIdentityType(CardType.SOLDIERCARD);
+                        break;
+                    default:
+                        errorNum += 1;
+                        errorDescription.add("证件类型不合法: <br/>" + gson.toJson(map));
+                        check = false;
+                        break;
+                }
+            }
+            if (check)
+            {
+                if (Validator.isIDCard(map.get(BindHead.IDCODE)))
+                {
+                    ownerEntity.setIdentityCode(map.get(BindHead.IDCODE));
+                }
+                else
+                {
+                    errorNum += 1;
+                    errorDescription.add("证件号码不合法: <br/>" + gson.toJson(map));
+                    check = false;
+                }
+            }
+            if (check)
+            {
+                Long authTime=Convert.time2num(map.get(BindHead.AUTHTIME));
+                ownerEntity.setAuthenticationTime(authTime);
+            }
+
+            //检查用户绑定的每一个物业编号以及该绑定关系是否存在
+            if (check)
+            {
+                try
+                {
+                    String propertyCodeList = map.get(BindHead.PROPERTYCODELIST);
+                    for (String propertyCode : Arrays.asList(propertyCodeList.split(";")))
+                    {
+                        PropertyEntity propertyEntity = propertyDao.getByCode(propertyCode);
+                        if (propertyEntity == null)
+                        {
+                            errorNum += 1;
+                            errorDescription.add("该物业编号不存在: <br/>" + gson.toJson(map));
+                            check = false;
+                            break;
+                        }
+                        else if (propertyOwnerInfoDao.
+                                getByPhonePropertyID(ownerEntity.getPhone(), propertyEntity.getId())!=null)
+                        {
+                            errorNum += 1;
+                            errorDescription.add("该用户已和该物业绑定: <br/>" + gson.toJson(map));
+                            check = false;
+                            break;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    errorNum += 1;
+                    errorDescription.add("非法的物业编号: <br/>" + gson.toJson(map));
+                    check = false;
+                }
+            }
+
+            //经过检查后将用户信息和绑定信息写入数据库
+            if (check)
+            {
+                try
+                {
+                    OwnerEntity ownerEntity1 = (OwnerEntity) userDao.getUserInfoByPhoneRole(ownerEntity.getPhone(), UserType.OWNER);
+                    if (ownerEntity1 != null)
+                    {
+                        ownerEntity1.setName(ownerEntity.getName());
+                        ownerEntity1.setSex(ownerEntity.getSex());
+                        ownerEntity1.setBirthday(ownerEntity.getBirthday());
+                        ownerEntity1.setIdentityType(ownerEntity.getIdentityType());
+                        ownerEntity1.setIdentityCode(ownerEntity.getIdentityCode());
+                        ownerEntity1.setAuthenticationTime(ownerEntity.getAuthenticationTime());
+                        ownerEntity1.setUrgentName(ownerEntity.getUrgentName());
+                        ownerEntity1.setUrgentPhone(ownerEntity.getUrgentPhone());
+                        baseDao.save(ownerEntity1);
+                    }
+                    else
+                    {
+                        baseDao.save(ownerEntity);
+                    }
+                    String propertyCodeList = map.get(BindHead.PROPERTYCODELIST);
+                    for (String propertyCode : Arrays.asList(propertyCodeList.split(";")))
+                    {
+                        PropertyEntity propertyEntity = propertyDao.getByCode(propertyCode);
+                        PropertyOwnerInfoEntity propertyOwnerInfoEntity = new PropertyOwnerInfoEntity();
+                        propertyOwnerInfoEntity.setStatus(BindStatus.CHECKED);
+                        propertyOwnerInfoEntity.setUserRole(UserType.OWNER);
+                        propertyOwnerInfoEntity.setPhone(ownerEntity.getPhone());
+                        propertyOwnerInfoEntity.setPropertyId(propertyEntity.getId());
+                        propertyOwnerInfoEntity.setBuildingId(propertyEntity.getBuildingId());
+                        baseDao.save(propertyOwnerInfoEntity);
+                    }
+                    succNum+=1;
+                }
+                catch (Exception e)
+                {
+                    errorNum += 1;
+                    errorDescription.add("写入失败: <br/>"+e.getMessage() + gson.toJson(map));
+                }
+            }
+
+        }
+
+        excelImportReport.setErrorNum(errorNum);
+        excelImportReport.setErrorDescription(errorDescription);
+        excelImportReport.setSuccNum(succNum);
         return excelImportReport;
     }
 

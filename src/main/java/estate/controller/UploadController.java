@@ -172,6 +172,7 @@ public class UploadController
                 return basicJson;
             }
             result=excelParse.parseExcel(inputStream);
+            LogUtil.E(result);
         }
         catch (Exception e)
         {
@@ -188,7 +189,6 @@ public class UploadController
                 try
                 {
                     excelImportReport = excelImportService.importProperty(result);
-//                    LogUtil.E(result.size());
                 }
                 catch (Exception e)
                 {
@@ -200,6 +200,7 @@ public class UploadController
             case "bind":
                 try
                 {
+                    LogUtil.E(result);
                     excelImportReport = excelImportService.importBind(result);
                 }
                 catch (Exception e)

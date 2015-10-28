@@ -6,13 +6,15 @@ package estate.common.excelDefine;
  */
 public class BindHead
 {
-    private static String name="姓名";
-    private static String sex="性别";
-    private static String phone="手机号码";
-    private static String idType="证件类型";
-    private static String idCode="证件号码";
-    private static String birthday="出生日期";
-    private static String propertyCodeList="物业列表";
-    private static String authTime="入住时间";
+    public static String NAME="姓名";
+    public static String SEX="性别";
+    public static String PHONE="手机号码";
+    public static String IDTYPE="证件类型";
+    public static String IDCODE="证件号码";
+    public static String BIRTHDAY="出生日期";
+    public static String PROPERTYCODELIST="物业列表";
+    public static String AUTHTIME="入住时间";
+    public static String URGENTNAME="紧急联系人姓名";
+    public static String URGENTPHONE="紧急联系人电话";
 
 }

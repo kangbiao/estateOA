@@ -19,7 +19,7 @@
             </div>
             <div class="box-content">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <form id="addPropertyForm" method="post"
                               class="form-horizontal">
                             <fieldset>
@@ -142,10 +142,10 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <form id="uploadForm" action="" class="form-horizontal">
                             <fieldset>
-                                <legend>批量导入</legend>
+                                <legend>批量导入物业信息</legend>
                                 <br/>
                                 <input type="file" name="file"/>
                                 <br/>
@@ -157,6 +157,27 @@
                                 <h4 id="countArea"></h4>
                                 <div style="height:400px;overflow: auto;">
                                     <ol id="errorArea">
+
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <form id="uploadBindForm" action="" class="form-horizontal">
+                            <fieldset>
+                                <legend>批量导入业主信息</legend>
+                                <br/>
+                                <input type="file" name="file"/>
+                                <br/>
+                                <input type="button" class="btn btn-primary" id="submitBindBtn" value="提交"/>
+                            </fieldset>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12" id="importBindInfo">
+                                <h4 id="countBindArea"></h4>
+                                <div style="height:400px;overflow: auto;">
+                                    <ol id="errorBindArea">
 
                                     </ol>
                                 </div>
@@ -215,6 +236,53 @@
                 alert("服务器连接失败,请重试!");
                 $("#submitBtn").removeAttr("disabled");
                 $("#importInfo #errorArea").html("");
+            }
+        });
+    });
+
+    $("#submitBindBtn").click(function(){
+        var formData = new FormData($("#uploadBindForm")[0]);
+        $(this).attr("disabled","disabled");
+        $("#importBindInfo #countBindArea").html("");
+        $("#importBindInfo #errorBindArea").html('<button class="btn btn-danger btn-app btn-circle" type="button">' +
+                '<i class="fa fa-spinner fa-spin"></i></button>');
+        $.ajax({
+            url: urlConfig.bindImport ,
+            type: 'POST',
+            data: formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if(result.status)
+                {
+                    var html="";
+                    var coutInfo="<font color='green'>成功条数:"+result.jsonString.succNum+
+                            "</font>/<font color='red'>失败条数:"+result.jsonString.errorNum+
+                            "</font>";
+                    $("#importBindInfo #countBindArea").html(coutInfo);
+                    var errors=result.jsonString.errorDescription;
+                    if(errors!=null&&errors!="")
+                    {
+                        $.each(errors,function(k,v){
+                            html+="<li>"+v+"</li>"
+                        });
+                    }
+                    $("#importBindInfo #errorBindArea").html(html);
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                    $("#importBindInfo #errorBindArea").html("");
+                }
+                $("#submitBindBtn").removeAttr("disabled");
+                console.log(result);
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+                $("#submitBindBtn").removeAttr("disabled");
+                $("#importBindInfo #errorBindArea").html("");
             }
         });
     });
